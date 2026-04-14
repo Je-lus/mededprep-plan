@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedEdPrep — CE Market Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0e14;
+    --bg-surface: #111820;
+    --bg-card: #151c25;
+    --bg-card-hover: #1a2331;
+    --bg-elevated: #1e2733;
+    --border: #243040;
+    --border-subtle: #1c2535;
+    --text-primary: #e8edf4;
+    --text-secondary: #8899aa;
+    --text-muted: #5a6a7a;
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+    --teal-glow: rgba(45,212,191,0.06);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.12);
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.12);
+    --orange: #fb923c;
+    --orange-dim: rgba(251,146,60,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.12);
+    --nav-width: 240px;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg-base);
+    background-image: radial-gradient(circle at 1px 1px, rgba(45,212,191,0.02) 1px, transparent 0);
+    background-size: 40px 40px;
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--purple), var(--blue), var(--teal));
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+    z-index: 200;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* -- NAV -- */
+  nav {
+    width: var(--nav-width);
+    min-width: var(--nav-width);
+    background: rgba(17,24,32,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  nav::-webkit-scrollbar { width: 0; }
+
+  .nav-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .nav-brand-name {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--teal), #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-brand-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links { flex: 1; padding: 4px 0; }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+  }
+  nav a:hover {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.04);
+    border-left-color: var(--teal);
+  }
+  nav a.active {
+    color: var(--teal);
+    background: rgba(45,212,191,0.08);
+    border-left-color: var(--teal);
+    font-weight: 600;
+  }
+  nav a .nav-icon {
+    font-size: 15px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .nav-divider {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 12px 24px;
+  }
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    padding: 8px 24px 4px;
+  }
+
+  .nav-footer {
+    padding: 20px 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .nav-footer-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .nav-footer-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  /* -- HERO -- */
+  .hero {
+    margin-left: var(--nav-width);
+    padding: 56px 56px 44px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #080c12 0%, #0d1520 30%, #0a1420 60%, #080e18 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: 8%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(45,212,191,0.06) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 15%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(167,139,250,0.04) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--teal);
+    opacity: 0.4;
+  }
+
+  .hero-headline {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f0f4f8 25%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+
+  .hero-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 800px;
+    margin-top: 8px;
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 14px 0;
+    align-items: center;
+  }
+  .badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .badge-teal { background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(45,212,191,0.2); }
+  .badge-amber { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(251,191,36,0.2); }
+  .badge-red { background: var(--red-dim); color: var(--red); border: 1px solid rgba(248,113,113,0.2); }
+  .badge-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(167,139,250,0.2); }
+  .badge-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(74,222,128,0.2); }
+  .badge-blue { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(96,165,250,0.2); }
+  .badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+    position: relative;
+  }
+  .metric-card {
+    background: rgba(21,28,37,0.7);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    backdrop-filter: blur(10px);
+  }
+  .metric-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .metric-value {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .metric-sub {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* -- MAIN CONTENT -- */
+  .main-inner {
+    margin-left: var(--nav-width);
+    padding: 40px 56px 80px;
+    max-width: 1400px;
+  }
+
+  /* -- SECTIONS -- */
+  .section {
+    margin-bottom: 32px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-card);
+    overflow: hidden;
+  }
+  .section-header {
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+    position: relative;
+  }
+  .section-header:hover { background: rgba(45,212,191,0.03); }
+  .section-header::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--teal), var(--purple));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .section.open .section-header::before { opacity: 1; }
+  .section-icon { font-size: 18px; }
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    flex: 1;
+  }
+  .section-toggle {
+    font-size: 14px;
+    color: var(--text-muted);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .section.open .section-toggle { transform: rotate(180deg); }
+  .section-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .section.open .section-body { max-height: 99999px; }
+  .section-inner { padding: 0 28px 28px; }
+
+  /* -- STRATEGIC CALLOUT -- */
+  .strategic-callout {
+    background: linear-gradient(135deg, rgba(45,212,191,0.06) 0%, rgba(167,139,250,0.04) 100%);
+    border: 1px solid rgba(45,212,191,0.25);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .strategic-callout::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--teal), var(--purple));
+  }
+  .callout-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .callout-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* -- DATA TABLES -- */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .data-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .data-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: middle;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.01); }
+  .data-table .highlight-row td {
+    background: var(--teal-dim);
+    font-weight: 600;
+  }
+
+  /* -- BAR CHARTS -- */
+  .bar-chart { margin: 16px 0; }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .bar-label {
+    font-size: 12px;
+    font-weight: 600;
+    width: 160px;
+    flex-shrink: 0;
+    text-align: right;
+    color: var(--text-secondary);
+  }
+  .bar-track {
+    flex: 1;
+    height: 28px;
+    background: rgba(255,255,255,0.03);
+    border-radius: var(--radius-xs);
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: var(--radius-xs);
+    transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    min-width: fit-content;
+  }
+  .bar-value {
+    font-size: 12px;
+    font-weight: 600;
+    width: 100px;
+    flex-shrink: 0;
+    color: var(--text-secondary);
+  }
+
+  /* -- DONUT CHART -- */
+  .donut-container {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    margin: 16px 0;
+  }
+  .donut-wrap {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    flex-shrink: 0;
+  }
+  .donut-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .donut-center-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+  .donut-center-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .donut-legend {
+    flex: 1;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .legend-item:last-child { border-bottom: none; }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .legend-name {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .legend-value {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .legend-pct {
+    font-size: 12px;
+    color: var(--text-muted);
+    width: 50px;
+    text-align: right;
+  }
+
+  /* -- PRICING STRIP -- */
+  .price-strip {
+    position: relative;
+    margin: 32px 0 16px;
+    padding: 0 0 60px;
+  }
+  .price-axis {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    position: relative;
+    margin: 40px 0;
+  }
+  .price-tick {
+    position: absolute;
+    top: -8px;
+    width: 2px;
+    height: 18px;
+    background: var(--border);
+  }
+  .price-tick-label {
+    position: absolute;
+    top: 18px;
+    font-size: 10px;
+    color: var(--text-muted);
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .price-dot {
+    position: absolute;
+    top: -6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 2;
+  }
+  .price-dot:hover {
+    transform: translateX(-50%) scale(1.4);
+    z-index: 5;
+  }
+  .price-dot-label {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--text-secondary);
+    pointer-events: none;
+  }
+  .price-band {
+    position: absolute;
+    top: -16px;
+    height: 34px;
+    border-radius: var(--radius-xs);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  /* -- FEATURE MATRIX -- */
+  .feature-matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .feature-matrix th {
+    padding: 10px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border);
+    text-align: center;
+    white-space: nowrap;
+  }
+  .feature-matrix th:first-child { text-align: left; }
+  .feature-matrix td {
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--border-subtle);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .feature-matrix td:first-child {
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .feature-matrix tr:hover td { background: rgba(255,255,255,0.015); }
+  .feature-matrix .gap-col {
+    background: rgba(248,113,113,0.04);
+  }
+  .feature-matrix .gap-col-header {
+    background: rgba(248,113,113,0.08);
+    color: var(--red);
+  }
+  .feature-matrix .mededprep-row td {
+    background: var(--teal-dim);
+    border-bottom: none;
+  }
+  .feature-matrix .mededprep-row td:first-child {
+    color: var(--teal);
+    font-weight: 800;
+  }
+  .feat-yes { color: var(--green); font-weight: 700; }
+  .feat-no { color: var(--red); opacity: 0.5; }
+  .feat-partial { color: var(--amber); }
+
+  /* -- PROVIDER CARDS -- */
+  .provider-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .provider-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    transition: all 0.2s;
+  }
+  .provider-card:hover {
+    border-color: var(--teal);
+    background: var(--bg-card-hover);
+  }
+  .provider-name {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .provider-parent {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .provider-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .provider-price {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--teal);
+    margin-bottom: 4px;
+  }
+  .provider-revenue {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .provider-detail {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  /* -- SEGMENT QUADRANT -- */
+  .quadrant {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    aspect-ratio: 1;
+    margin: 24px auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .quadrant-axis-x {
+    position: absolute;
+    top: 50%;
+    left: 0; right: 0;
+    height: 1px;
+    background: var(--border);
+  }
+  .quadrant-axis-y {
+    position: absolute;
+    left: 50%;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+  .quadrant-label {
+    position: absolute;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    opacity: 0.7;
+  }
+  .quadrant-dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .quadrant-dot:hover {
+    transform: translate(-50%, -50%) scale(1.6);
+    z-index: 10;
+  }
+  .quadrant-dot-label {
+    position: absolute;
+    left: 14px;
+    top: -3px;
+    font-size: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--text-secondary);
+  }
+
+  /* -- STACKED BAR -- */
+  .stacked-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .stacked-bar-label {
+    width: 100px;
+    flex-shrink: 0;
+    text-align: right;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+  .stacked-bar-track {
+    flex: 1;
+    height: 32px;
+    display: flex;
+    border-radius: var(--radius-xs);
+    overflow: hidden;
+  }
+  .stacked-bar-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .stacked-bar-total {
+    width: 60px;
+    flex-shrink: 0;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* -- RADAR CHART (CSS approximation) -- */
+  .radar-wrap {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    margin: 20px 0;
+  }
+  .radar-chart {
+    width: 300px;
+    height: 300px;
+    flex-shrink: 0;
+  }
+  .radar-legend {
+    flex: 1;
+  }
+  .radar-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .radar-legend-item:last-child { border-bottom: none; }
+  .radar-legend-color {
+    width: 16px;
+    height: 3px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* -- REVENUE PIE -- */
+  .pie-container {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    margin: 24px 0;
+  }
+  .pie-wrap {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    flex-shrink: 0;
+  }
+
+  /* -- UTILS -- */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-24 { margin-top: 24px; }
+  .mb-16 { margin-bottom: 16px; }
+  .mb-24 { margin-bottom: 24px; }
+  .text-teal { color: var(--teal); }
+  .text-purple { color: var(--purple); }
+  .text-amber { color: var(--amber); }
+  .text-red { color: var(--red); }
+  .text-green { color: var(--green); }
+  .text-blue { color: var(--blue); }
+
+  .gap-banner {
+    background: linear-gradient(135deg, rgba(248,113,113,0.08) 0%, rgba(251,191,36,0.04) 100%);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: var(--radius);
+    padding: 20px 28px;
+    margin-top: 24px;
+    text-align: center;
+  }
+  .gap-banner p {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+  .gap-banner .highlight {
+    color: var(--teal);
+  }
+
+  .win-banner {
+    background: linear-gradient(135deg, rgba(45,212,191,0.08) 0%, rgba(96,165,250,0.04) 100%);
+    border: 1px solid rgba(45,212,191,0.3);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-top: 24px;
+  }
+  .win-banner p {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+
+  .info-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .info-card {
+    flex: 1;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+  }
+  .info-card-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .info-card-value {
+    font-size: 20px;
+    font-weight: 800;
+  }
+  .info-card-sub {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  /* -- RESPONSIVE -- */
+  @media (max-width: 1100px) {
+    .hero-metrics { grid-template-columns: repeat(3, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .donut-container { flex-direction: column; }
+  }
+  @media (max-width: 900px) {
+    .hero { padding: 40px 32px 32px; }
+    .main-inner { padding: 32px 32px 60px; }
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    nav { display: none; }
+    .hero { margin-left: 0; }
+    .main-inner { margin-left: 0; }
+    .hero-metrics { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-name">Domination</div>
+    <div class="nav-brand-sub">Strategic Command</div>
+  </div>
+  <div style="padding: 0 16px 12px; display: flex; flex-direction: column; gap: 6px;">
+    <a href="ce-launch-plan.html" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--teal-dim); border: 1px solid rgba(45,212,191,0.25); border-radius: var(--radius-xs); color: var(--teal); text-decoration: none; font-size: 12px; font-weight: 600; transition: all 0.2s;">
+      <span style="font-size: 14px;">&#9670;</span> CE Launch Plan
+    </a>
+    <a href="hub.html" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--purple-dim); border: 1px solid rgba(167,139,250,0.25); border-radius: var(--radius-xs); color: var(--purple); text-decoration: none; font-size: 12px; font-weight: 600; transition: all 0.2s;">
+      <span style="font-size: 14px;">&#9679;</span> Command Center
+    </a>
+  </div>
+  <div class="nav-links">
+    <div class="nav-section-label">Overview</div>
+    <a href="hub.html"><span class="nav-icon">&#x2B21;</span> Hub</a>
+    <a href="dashboard.html"><span class="nav-icon">&#x25A3;</span> Dashboard</a>
+    <a href="action-center.html"><span class="nav-icon">&#x26A1;</span> Action Center</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">Entities</div>
+    <a href="entity-company-a.html"><span class="nav-icon">&#x1F393;</span> Company A</a>
+    <a href="entity-company-c.html"><span class="nav-icon">&#x1F3AF;</span> Company C</a>
+    <a href="entity-nonprofit.html"><span class="nav-icon">&#x2764;</span> Foundation</a>
+    <a href="entity-market.html"><span class="nav-icon">&#x1F4CA;</span> Market</a>
+    <a href="entity-ce-market.html" class="active"><span class="nav-icon">&#x1F4D6;</span> CE Market</a>
+    <a href="entity-ip-vault.html"><span class="nav-icon">&#x1F512;</span> IP Vault</a>
+    <a href="entity-psychometric.html"><span class="nav-icon">&#x1F9E0;</span> Psychometric</a>
+    <a href="entity-timeline.html"><span class="nav-icon">&#x23F3;</span> Timeline</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">Plans</div>
+    <a href="one-year-plan.html"><span class="nav-icon">&#x1F4C5;</span> One-Year Plan</a>
+    <a href="grant-tracker.html"><span class="nav-icon">&#x1F4B0;</span> Grant Tracker</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">This Page</div>
+    <a href="#market-overview" onclick="scrollToSection('market-overview')"><span class="nav-icon">&#x2192;</span> Market Overview</a>
+    <a href="#workforce" onclick="scrollToSection('workforce')"><span class="nav-icon">&#x2192;</span> Workforce</a>
+    <a href="#ce-demand" onclick="scrollToSection('ce-demand')"><span class="nav-icon">&#x2192;</span> CE Hour Demand</a>
+    <a href="#providers" onclick="scrollToSection('providers')"><span class="nav-icon">&#x2192;</span> Provider Landscape</a>
+    <a href="#pricing" onclick="scrollToSection('pricing')"><span class="nav-icon">&#x2192;</span> Pricing Spectrum</a>
+    <a href="#revenue" onclick="scrollToSection('revenue')"><span class="nav-icon">&#x2192;</span> Revenue Estimates</a>
+    <a href="#feature-gap" onclick="scrollToSection('feature-gap')"><span class="nav-icon">&#x2605;</span> Feature Gap Matrix</a>
+    <a href="#segments" onclick="scrollToSection('segments')"><span class="nav-icon">&#x2192;</span> Market Segments</a>
+    <a href="#positioning" onclick="scrollToSection('positioning')"><span class="nav-icon">&#x2192;</span> MedEdPrep Position</a>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-footer-label">Last Updated</div>
+    <div class="nav-footer-date">April 14, 2026</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Continuing Education Market Intelligence</div>
+  <h1 class="hero-headline">EMS CE Competitive Landscape</h1>
+  <div class="hero-badges">
+    <span class="badge badge-teal"><span class="dot"></span> CAPCE Accreditation In Progress</span>
+    <span class="badge badge-green"><span class="dot"></span> 40+ Providers Mapped</span>
+    <span class="badge badge-amber"><span class="dot"></span> $50-150M Market</span>
+    <span class="badge badge-purple"><span class="dot"></span> Zero Adaptive Competitors</span>
+  </div>
+  <p class="hero-subtitle">Comprehensive competitive intelligence on the EMS continuing education market. MedEdPrep is entering as the first CAPCE-accredited provider with adaptive learning, psychometric diagnostics, and interactive assessment.</p>
+  <div class="hero-metrics">
+    <div class="metric-card">
+      <div class="metric-label">EMS Professionals</div>
+      <div class="metric-value text-teal">~1M</div>
+      <div class="metric-sub">Needing CE nationwide</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">NREMT Certified</div>
+      <div class="metric-value text-purple">557K</div>
+      <div class="metric-sub">EMR + EMT + AEMT + NRP</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Annual Market</div>
+      <div class="metric-value text-amber">$50-150M</div>
+      <div class="metric-sub">CE spending per year</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">CE Hours / Year</div>
+      <div class="metric-value text-blue">~12.5M</div>
+      <div class="metric-sub">Hours consumed annually</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Providers Mapped</div>
+      <div class="metric-value text-green">40+</div>
+      <div class="metric-sub">Across 4 tiers</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-inner">
+
+  <!-- SECTION 1: WORKFORCE BREAKDOWN -->
+  <div class="section open" id="workforce">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#x1F465;</span>
+      <span class="section-title">Workforce Breakdown</span>
+      <span class="section-toggle">&#x25BC;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div class="donut-container">
+          <div class="donut-wrap">
+            <svg viewBox="0 0 220 220" width="220" height="220">
+              <!-- Donut chart: EMT 66%, Paramedic 25.9%, AEMT 5.1%, EMR 2.9% -->
+              <!-- Background circle -->
+              <circle cx="110" cy="110" r="85" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="30"/>
+              <!-- EMT: 66% = 237.6deg, starts at -90deg -->
+              <circle cx="110" cy="110" r="85" fill="none" stroke="#2dd4bf" stroke-width="30"
+                stroke-dasharray="351.86 534.07" stroke-dashoffset="0"
+                transform="rotate(-90 110 110)" stroke-linecap="butt"/>
+              <!-- Paramedic: 25.9% = 93.24deg -->
+              <circle cx="110" cy="110" r="85" fill="none" stroke="#a78bfa" stroke-width="30"
+                stroke-dasharray="138.30 534.07" stroke-dashoffset="-351.86"
+                transform="rotate(-90 110 110)" stroke-linecap="butt"/>
+              <!-- AEMT: 5.1% = 18.36deg -->
+              <circle cx="110" cy="110" r="85" fill="none" stroke="#fbbf24" stroke-width="30"
+                stroke-dasharray="27.24 534.07" stroke-dashoffset="-490.16"
+                transform="rotate(-90 110 110)" stroke-linecap="butt"/>
+              <!-- EMR: 2.9% = 10.44deg -->
+              <circle cx="110" cy="110" r="85" fill="none" stroke="#5a6a7a" stroke-width="30"
+                stroke-dasharray="15.49 534.07" stroke-dashoffset="-517.40"
+                transform="rotate(-90 110 110)" stroke-linecap="butt"/>
+            </svg>
+            <div class="donut-center">
+              <div class="donut-center-value">557K</div>
+              <div class="donut-center-label">NREMT Certified</div>
+            </div>
+          </div>
+          <div class="donut-legend">
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #2dd4bf;"></span>
+              <span class="legend-name">EMT</span>
+              <span class="legend-value">367,740</span>
+              <span class="legend-pct">66.0%</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #a78bfa;"></span>
+              <span class="legend-name">Paramedic</span>
+              <span class="legend-value">144,218</span>
+              <span class="legend-pct">25.9%</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #fbbf24;"></span>
+              <span class="legend-name">AEMT</span>
+              <span class="legend-value">28,691</span>
+              <span class="legend-pct">5.2%</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #5a6a7a;"></span>
+              <span class="legend-name">EMR</span>
+              <span class="legend-value">16,285</span>
+              <span class="legend-pct">2.9%</span>
+            </div>
+          </div>
+        </div>
+        <div class="strategic-callout">
+          <div class="callout-title">Key Insight</div>
+          <div class="callout-text">Paramedics are 26% of the market but consume 35% of CE hours (60 hrs vs 40 hrs per cycle). They also have higher willingness to pay. This makes Paramedic-level CE the highest-value segment per user.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: CE HOUR DEMAND -->
+  <div class="section open" id="ce-demand">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#x23F1;</span>
+      <span class="section-title">CE Hour Demand (2-Year NCCP Cycle)</span>
+      <span class="section-toggle">&#x25BC;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div class="bar-chart">
+          <div class="stacked-bar-row">
+            <span class="stacked-bar-label">Paramedic</span>
+            <div class="stacked-bar-track">
+              <div class="stacked-bar-seg" style="width:50%; background: var(--teal);">30 hrs</div>
+              <div class="stacked-bar-seg" style="width:25%; background: var(--amber);">15 hrs</div>
+              <div class="stacked-bar-seg" style="width:25%; background: var(--purple);">15 hrs</div>
+            </div>
+            <span class="stacked-bar-total">60 hrs</span>
+          </div>
+          <div class="stacked-bar-row">
+            <span class="stacked-bar-label">AEMT</span>
+            <div class="stacked-bar-track">
+              <div class="stacked-bar-seg" style="width:50%; background: var(--teal);">25 hrs</div>
+              <div class="stacked-bar-seg" style="width:25%; background: var(--amber);">12.5</div>
+              <div class="stacked-bar-seg" style="width:25%; background: var(--purple);">12.5</div>
+            </div>
+            <span class="stacked-bar-total">50 hrs</span>
+          </div>
+          <div class="stacked-bar-row">
+            <span class="stacked-bar-label">EMT</span>
+            <div class="stacked-bar-track">
+              <div class="stacked-bar-seg" style="width:50%; background: var(--teal);">20 hrs</div>
+              <div class="stacked-bar-seg" style="width:25%; background: var(--amber);">10 hrs</div>
+              <div class="stacked-bar-seg" style="width:25%; background: var(--purple);">10 hrs</div>
+            </div>
+            <span class="stacked-bar-total">40 hrs</span>
+          </div>
+          <div class="stacked-bar-row">
+            <span class="stacked-bar-label">EMR</span>
+            <div class="stacked-bar-track">
+              <div class="stacked-bar-seg" style="width:50%; background: var(--teal);">8 hrs</div>
+              <div class="stacked-bar-seg" style="width:25%; background: var(--amber);">4 hrs</div>
+              <div class="stacked-bar-seg" style="width:25%; background: var(--purple);">4 hrs</div>
+            </div>
+            <span class="stacked-bar-total">16 hrs</span>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-card">
+            <div class="info-card-label">National Component</div>
+            <div class="info-card-value text-teal">50%</div>
+            <div class="info-card-sub">CAPCE-approved or state-approved CE</div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">Local/State</div>
+            <div class="info-card-value text-amber">25%</div>
+            <div class="info-card-sub">Agency-directed, local protocols</div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">Individual</div>
+            <div class="info-card-value text-purple">25%</div>
+            <div class="info-card-sub">Self-selected CE -- MedEdPrep's entry point</div>
+          </div>
+        </div>
+        <div class="strategic-callout mt-24">
+          <div class="callout-title">Regulatory Tailwind</div>
+          <div class="callout-text">As of 2023, NREMT permanently removed all limits on distributive (online) education. All 40-60 CE hours can now be completed 100% online. Some states (e.g., California) still require 50% live, but the trend is toward full online acceptance.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: PRICING SPECTRUM -->
+  <div class="section open" id="pricing">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#x1F4B2;</span>
+      <span class="section-title">Pricing Spectrum</span>
+      <span class="section-toggle">&#x25BC;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div class="bar-chart">
+          <!-- Sorted by price ascending -->
+          <div class="bar-row">
+            <span class="bar-label">Guardian CME</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 1%; background: var(--green);">FREE</div>
+            </div>
+            <span class="bar-value" style="color: var(--green);">Free</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Bound Tree EDU</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 1%; background: var(--green);">FREE*</div>
+            </div>
+            <span class="bar-value" style="color: var(--text-muted);">5 free courses</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">CSUtest</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 7%; background: var(--blue);">$35</div>
+            </div>
+            <span class="bar-value">$35/yr</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Prodigy EMS</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 8%; background: var(--blue);">$39</div>
+            </div>
+            <span class="bar-value">$39/yr*</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">JEMS Training</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 12%; background: var(--purple);">$59</div>
+            </div>
+            <span class="bar-value">$59/yr</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Recert (JBL/NAEMT)</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 12%; background: var(--purple);">$62</div>
+            </div>
+            <span class="bar-value">$61.95/yr</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">HSI / 24-7 EMS</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 13%; background: var(--purple);">$65</div>
+            </div>
+            <span class="bar-value">$65/yr</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">CE Solutions</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 16%; background: var(--amber);">$79</div>
+            </div>
+            <span class="bar-value">$79-179/pkg</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">EMSconnect</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 18%; background: var(--amber);">$90</div>
+            </div>
+            <span class="bar-value">$90/yr</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Fire Eng Training</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 19%; background: var(--amber);">$95</div>
+            </div>
+            <span class="bar-value">$95/yr</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">FOAMfrat</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 32%; background: var(--orange);">$160</div>
+            </div>
+            <span class="bar-value">$159.99/yr</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">DistanceCME</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 56%; background: var(--pink);">$278-341</div>
+            </div>
+            <span class="bar-value">$278-341/pkg</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Lexipol / Vector</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 40%; background: linear-gradient(90deg, var(--teal), var(--purple));">Enterprise</div>
+            </div>
+            <span class="bar-value">Custom B2B</span>
+          </div>
+        </div>
+        <div class="strategic-callout">
+          <div class="callout-title">Pricing White Space</div>
+          <div class="callout-text">The $50-80/yr range is crowded with "good enough" commodity CE. Nobody in this tier offers adaptive learning or diagnostic feedback. MedEdPrep can price competitively ($59-79/yr) while delivering fundamentally better technology. Same price neighborhood, different universe of features.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: REVENUE ESTIMATES -->
+  <div class="section" id="revenue">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#x1F4B0;</span>
+      <span class="section-title">Revenue Estimates (Annual)</span>
+      <span class="section-toggle">&#x25BC;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Estimates based on pricing, employee counts, PE valuations, and public claims. CE/training segment only where separable from parent company.</p>
+        <div class="bar-chart">
+          <div class="bar-row">
+            <span class="bar-label">Lexipol (CE segment)</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 85%; background: linear-gradient(90deg, var(--teal), rgba(45,212,191,0.6));">$50-100M</div>
+            </div>
+            <span class="bar-value">$50-100M</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Vector (pub safety)</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 70%; background: linear-gradient(90deg, var(--purple), rgba(167,139,250,0.6));">$50-85M</div>
+            </div>
+            <span class="bar-value">$50-85M</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">HSI (24-7 EMS line)</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 18%; background: var(--blue);">$10-20M</div>
+            </div>
+            <span class="bar-value">$10-20M</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">JEMS + Fire Eng</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 10%; background: var(--amber);">$5-12M</div>
+            </div>
+            <span class="bar-value">$5-12M</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Allied Medical</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 6%; background: var(--green);">$2-7M</div>
+            </div>
+            <span class="bar-value">$2-7M</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Impact EMS</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 4%; background: var(--green);">$1-3.5M</div>
+            </div>
+            <span class="bar-value">$1-3.5M</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">NEMSA (Acadian)</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 4%; background: var(--green);">$1-5M</div>
+            </div>
+            <span class="bar-value">$1-5M</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">FOAMfrat</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 1.5%; background: var(--orange);">$0.8-1.2M</div>
+            </div>
+            <span class="bar-value">$800K-1.2M</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">CE Solutions</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 1%; background: var(--pink);">$240-600K</div>
+            </div>
+            <span class="bar-value">$240-600K</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Prodigy EMS</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 1%; background: var(--pink);">$300K-1M</div>
+            </div>
+            <span class="bar-value">$300K-1M</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">CSUtest</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 0.5%; background: var(--pink);">$150-450K</div>
+            </div>
+            <span class="bar-value">$150-450K</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">GA EMS Academy</span>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: 0.3%; background: rgba(255,255,255,0.2);">$50-175K</div>
+            </div>
+            <span class="bar-value">$50-175K</span>
+          </div>
+        </div>
+        <div class="strategic-callout">
+          <div class="callout-title">Market Concentration</div>
+          <div class="callout-text">Lexipol and Vector Solutions capture an estimated 60-70% of total CE revenue through enterprise B2B contracts. The remaining 30-40% is fragmented across 35+ providers fighting over individual subscribers and small agencies.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: FEATURE GAP MATRIX (CENTERPIECE) -->
+  <div class="section open" id="feature-gap">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#x2605;</span>
+      <span class="section-title">Feature Gap Matrix</span>
+      <span class="section-toggle">&#x25BC;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div style="overflow-x: auto;">
+          <table class="feature-matrix">
+            <thead>
+              <tr>
+                <th>Provider</th>
+                <th>CAPCE</th>
+                <th class="gap-col-header">Adaptive Learning</th>
+                <th class="gap-col-header">Psychometric Analytics</th>
+                <th class="gap-col-header">Interactive Items</th>
+                <th class="gap-col-header">Diagnostic Reports</th>
+                <th>Mobile App</th>
+                <th>VILT (F5)</th>
+                <th>Agency Dashboard</th>
+                <th>NREMT Sync</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Lexipol / EMS1</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="feat-partial">~</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-partial">~</td>
+              </tr>
+              <tr>
+                <td>Vector Solutions</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-partial">~</td>
+              </tr>
+              <tr>
+                <td>FOAMfrat</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="feat-partial">~</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-yes">&#x2713;</td>
+              </tr>
+              <tr>
+                <td>HSI / 24-7 EMS</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="feat-partial">~</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-no">&#x2717;</td>
+              </tr>
+              <tr>
+                <td>Recert (JBL/NAEMT)</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-partial">~</td>
+                <td class="feat-no">&#x2717;</td>
+                <td class="feat-no">&#x2717;</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-yes">&#x2713;</td>
+              </tr>
+              <tr>
+                <td>JEMS Training</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-no">&#x2717;</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-no">&#x2717;</td>
+              </tr>
+              <tr>
+                <td>Prodigy EMS</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="feat-no">&#x2717;</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-partial">~</td>
+                <td class="feat-no">&#x2717;</td>
+              </tr>
+              <tr>
+                <td>CSUtest</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="feat-no">&#x2717;</td>
+                <td class="feat-no">&#x2717;</td>
+                <td class="feat-partial">~</td>
+                <td class="feat-no">&#x2717;</td>
+              </tr>
+              <tr>
+                <td>CE Solutions</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="feat-no">&#x2717;</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-no">&#x2717;</td>
+                <td class="feat-no">&#x2717;</td>
+              </tr>
+              <tr>
+                <td>Guardian CME</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="feat-no">&#x2717;</td>
+                <td class="feat-no">&#x2717;</td>
+                <td class="feat-no">&#x2717;</td>
+                <td class="feat-no">&#x2717;</td>
+              </tr>
+              <tr>
+                <td>GA EMS Academy</td>
+                <td class="feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="gap-col feat-no">&#x2717;</td>
+                <td class="feat-no">&#x2717;</td>
+                <td class="feat-no">&#x2717;</td>
+                <td class="feat-no">&#x2717;</td>
+                <td class="feat-no">&#x2717;</td>
+              </tr>
+              <!-- MEDEDPREP ROW -->
+              <tr class="mededprep-row">
+                <td>MedEdPrep</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="gap-col feat-yes">&#x2713;</td>
+                <td class="gap-col feat-yes">&#x2713;</td>
+                <td class="gap-col feat-yes">&#x2713;</td>
+                <td class="gap-col feat-yes">&#x2713;</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-partial">Planned</td>
+                <td class="feat-yes">&#x2713;</td>
+                <td class="feat-yes">&#x2713;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="gap-banner">
+          <p>Zero providers in the EMS CE market offer adaptive learning or psychometric diagnostic reporting.<br><span class="highlight">MedEdPrep would be the first.</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: PROVIDER LANDSCAPE (TIERED) -->
+  <div class="section" id="providers">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#x1F3E2;</span>
+      <span class="section-title">Provider Landscape (40+ Providers, 4 Tiers)</span>
+      <span class="section-toggle">&#x25BC;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <!-- TIER 1 -->
+        <h3 style="font-size: 13px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px;">Tier 1 -- National Scale</h3>
+        <div class="provider-grid">
+          <div class="provider-card">
+            <div class="provider-name">Lexipol / EMS1 Academy</div>
+            <div class="provider-parent">PE: Riverside Company | 800-1,200 employees</div>
+            <div class="provider-meta">
+              <span class="badge badge-teal">B2B Enterprise</span>
+              <span class="badge badge-green">12K+ Agencies</span>
+            </div>
+            <div class="provider-price">Custom</div>
+            <div class="provider-revenue">Est. $50-100M (training segment)</div>
+            <div class="provider-detail">Policy + training + wellness bundle. Owns EMS1 media (500K+ members). Acquired CareerCert (2022). The 800-lb gorilla in agency sales.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">Vector Solutions</div>
+            <div class="provider-parent">PE: Francisco Partners / Leeds Equity | ~$1B valuation</div>
+            <div class="provider-meta">
+              <span class="badge badge-teal">B2B Enterprise</span>
+              <span class="badge badge-green">10K+ Agencies</span>
+            </div>
+            <div class="provider-price">Custom</div>
+            <div class="provider-revenue">Est. $50-85M (public safety)</div>
+            <div class="provider-detail">Training + records management + scheduling. 2M+ first responders. Fire-first DNA, expanded to EMS. 250+ CAPCE hours.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">FOAMfrat</div>
+            <div class="provider-parent">Independent | ~13 employees</div>
+            <div class="provider-meta">
+              <span class="badge badge-purple">B2C Premium</span>
+              <span class="badge badge-amber">Best Content</span>
+            </div>
+            <div class="provider-price">$159.99/yr</div>
+            <div class="provider-revenue">Est. $800K-1.2M</div>
+            <div class="provider-detail">Widely considered best content quality in EMS CE. 200+ hours. 54K FB, 34K IG. CAPCE + ANCC + IBSC. Founder is a 3D animator + flight paramedic.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">HSI / 24-7 EMS</div>
+            <div class="provider-parent">PE: Waud Capital | 730+ employees</div>
+            <div class="provider-meta">
+              <span class="badge badge-blue">Cross-Discipline</span>
+              <span class="badge badge-green">22K Customers</span>
+            </div>
+            <div class="provider-price">$65/yr</div>
+            <div class="provider-revenue">Est. $10-20M (first responder line)</div>
+            <div class="provider-detail">Enterprise EHSQ company. EMS CE is a minor product line. 100+ EMS courses. 51K+ affiliate instructors. Low price is hard to undercut.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">Recert.com (JBL / NAEMT)</div>
+            <div class="provider-parent">Ascend Learning ($2B+, KKR-backed, 5,800 employees)</div>
+            <div class="provider-meta">
+              <span class="badge badge-purple">B2C Value</span>
+              <span class="badge badge-blue">NAEMT Backed</span>
+              <span class="badge badge-green">54K FB (PSG)</span>
+            </div>
+            <div class="provider-price">$61.95/yr</div>
+            <div class="provider-revenue">Est. $2.5-7M</div>
+            <div class="provider-detail">200+ scenario-based courses. NAEMT partnership. JBL textbook ecosystem. Also owns Fisdap + Navigate. Textbook-to-CE pipeline creates career-long lock-in. F3 only (no live).</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">DistanceCME</div>
+            <div class="provider-parent">Independent | Philadelphia area | Since 2011</div>
+            <div class="provider-meta">
+              <span class="badge badge-amber">VILT Leader</span>
+              <span class="badge badge-blue">14.6K FB</span>
+            </div>
+            <div class="provider-price">$278-341/pkg</div>
+            <div class="provider-revenue">Est. $500K-1.5M</div>
+            <div class="provider-detail">25K+ cumulative users. 800+ live hours/month. 143 products. Only provider fully built around F5 VILT. Critical Care 30-module series. TX/AR specific courses.</div>
+          </div>
+        </div>
+
+        <!-- TIER 2 -->
+        <h3 style="font-size: 13px; font-weight: 700; color: var(--purple); text-transform: uppercase; letter-spacing: 0.08em; margin: 28px 0 12px;">Tier 2 -- Mid-Size / Established</h3>
+        <div class="provider-grid">
+          <div class="provider-card">
+            <div class="provider-name">JEMS Training</div>
+            <div class="provider-parent">Clarion Events (Blackstone) | 414K FB</div>
+            <div class="provider-meta"><span class="badge badge-blue">Media-Backed</span></div>
+            <div class="provider-price">$59/yr</div>
+            <div class="provider-detail">490+ courses. Leverages JEMS magazine brand. First Due integration. "AI-driven" marketing. Sister to Fire Engineering Training.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">Fire Engineering Training</div>
+            <div class="provider-parent">Clarion Events (Blackstone) | 460K FB</div>
+            <div class="provider-meta"><span class="badge badge-blue">Media-Backed</span></div>
+            <div class="provider-price">$95/yr</div>
+            <div class="provider-detail">1,000+ courses. Founded 1877. FDIC International (37K attendees). Fire-first with CAPCE EMS. Largest social following.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">Impact EMS Training</div>
+            <div class="provider-parent">Independent | Texas-based</div>
+            <div class="provider-meta"><span class="badge badge-amber">Full Lifecycle</span></div>
+            <div class="provider-price">$37/mo (prep)</div>
+            <div class="provider-detail">Cert + prep + CE + flight medicine. "Big three" flight course. Merger of EMT & Fire Training + IA MED.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">Prodigy EMS</div>
+            <div class="provider-parent">PRO EMS (Cambridge, MA)</div>
+            <div class="provider-meta"><span class="badge badge-green">Real Patient Video</span></div>
+            <div class="provider-price">$39-160/yr</div>
+            <div class="provider-detail">ReelDX real patient encounter videos. Ran Refresh 2021 (37K students). Born from top-tier 911 system.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">CE Solutions</div>
+            <div class="provider-parent">Independent | Burnet, TX | Since 1998</div>
+            <div class="provider-meta"><span class="badge badge-amber">TX/CA Specialist</span></div>
+            <div class="provider-price">$79-179/pkg</div>
+            <div class="provider-detail">28 years operating. MP3/podcast CE format. CA F5 hours. "Test out" feature. Staff member Gilbert is legendary for service.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">CSUtest</div>
+            <div class="provider-parent">Savvik Buying Group (17K+ agencies)</div>
+            <div class="provider-meta"><span class="badge badge-green">Budget Leader</span></div>
+            <div class="provider-price">$35/yr</div>
+            <div class="provider-detail">Cheapest paid CAPCE CE. "Death by PowerPoint" reputation. Massive Savvik distribution channel. 200+ hours.</div>
+          </div>
+        </div>
+
+        <!-- TIER 3 -->
+        <h3 style="font-size: 13px; font-weight: 700; color: var(--amber); text-transform: uppercase; letter-spacing: 0.08em; margin: 28px 0 12px;">Tier 3 -- Regional / Niche / Free</h3>
+        <div class="provider-grid">
+          <div class="provider-card">
+            <div class="provider-name">Guardian CME</div>
+            <div class="provider-parent">Independent | Royal Oak, MI | 2-3 person volunteer operation</div>
+            <div class="provider-meta"><span class="badge badge-green">FREE CAPCE</span></div>
+            <div class="provider-price">Free</div>
+            <div class="provider-revenue">Est. $30-120K (test prep side)</div>
+            <div class="provider-detail">Very small: "hundreds" of active users, top course has 2,992 cumulative enrollments. EMS 20/20 podcast (237 episodes). Dated .NET LMS. Donation-funded.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">Bound Tree EDU</div>
+            <div class="provider-parent">Sarnova ($989M) / Investor AB</div>
+            <div class="provider-meta"><span class="badge badge-green">Free Loss Leader</span></div>
+            <div class="provider-price">5 free, then $160/yr</div>
+            <div class="provider-detail">FOAMfrat content. NOT Henry Schein (competitor). Customer acquisition for EMS supply distribution business.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">Limmer Education</div>
+            <div class="provider-parent">Dan Limmer (Brady textbook co-author) | 13 employees</div>
+            <div class="provider-meta">
+              <span class="badge badge-purple">Podcast CE</span>
+              <span class="badge badge-amber">10.1K FB</span>
+            </div>
+            <div class="provider-price">Per-course ($15-75)</div>
+            <div class="provider-revenue">Est. $500K-1.5M</div>
+            <div class="provider-detail">CAPCE Provider Spotlight Feb 2026. LC-Ready platform (Rails). "7 Things EMS" podcast (26 eps, dormant since June 2025). NREMT remediation niche. Brand authority from textbook.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">EMSconnect</div>
+            <div class="provider-parent">Independent | Spokane, WA | 3 employees</div>
+            <div class="provider-meta">
+              <span class="badge badge-purple">Growing</span>
+              <span class="badge badge-blue">Best Tech (Angular 21)</span>
+            </div>
+            <div class="provider-price">$90/yr ($7.50/mo)</div>
+            <div class="provider-revenue">Est. $100-250K</div>
+            <div class="provider-detail">300+ hours. Modern Angular SSR platform (best tech of the niche players). Live monthly physician Q&A. Military pricing ($5/member/mo). Agency roster/skills tracking. 5.8K FB.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">GA EMS Academy</div>
+            <div class="provider-parent">CrewSolutions, Inc. | 1 person</div>
+            <div class="provider-meta"><span class="badge badge-red">NOT CAPCE</span></div>
+            <div class="provider-price">$40</div>
+            <div class="provider-detail">Georgia state-approved only. Website from 2007. $40 for 60 hrs. Lifestyle business. Direct local competitor.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">National EMS Academy</div>
+            <div class="provider-parent">Acadian Ambulance (5,300+ employees)</div>
+            <div class="provider-meta"><span class="badge badge-blue">Institutional</span></div>
+            <div class="provider-price">Portal-based</div>
+            <div class="provider-detail">14 campuses, 3 states. CAAHEP + CAPCE. ~2% of all new US paramedics. Workforce pipeline for Acadian.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">Allied Medical Training</div>
+            <div class="provider-parent">Independent | Minneapolis</div>
+            <div class="provider-meta"><span class="badge badge-blue">National Online</span></div>
+            <div class="provider-price">$125-300</div>
+            <div class="provider-detail">CAPCE F3+F5. Self-paced NCCP. CA/FL state-specific. MyCAA military funding. Modern tech stack.</div>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">American Red Cross</div>
+            <div class="provider-parent">Nonprofit | Household name</div>
+            <div class="provider-meta"><span class="badge badge-amber">New Entrant</span></div>
+            <div class="provider-price">Per-course</div>
+            <div class="provider-detail">CAPCE accreditation gained Dec 2024. BLS/PALS/ACLS courses. Massive infrastructure. Watch this space.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: MARKET SEGMENTS -->
+  <div class="section" id="segments">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#x1F4CA;</span>
+      <span class="section-title">Market Segments</span>
+      <span class="section-toggle">&#x25BC;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div class="info-row">
+          <div class="info-card" style="border-left: 3px solid var(--teal);">
+            <div class="info-card-label">Enterprise B2B</div>
+            <div class="info-card-value text-teal">~60-70%</div>
+            <div class="info-card-sub">of total CE revenue</div>
+            <p style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">Lexipol, Vector Solutions. Bundle CE with policy/compliance/scheduling. Deep lock-in. Hard to displace once adopted.</p>
+          </div>
+          <div class="info-card" style="border-left: 3px solid var(--purple);">
+            <div class="info-card-label">Individual B2C</div>
+            <div class="info-card-value text-purple">~25-30%</div>
+            <div class="info-card-sub">of total CE revenue</div>
+            <p style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">FOAMfrat, Recert, CE Solutions, CSUtest. Price-sensitive. Quality varies wildly. This is the entry point for MedEdPrep.</p>
+          </div>
+          <div class="info-card" style="border-left: 3px solid var(--green);">
+            <div class="info-card-label">Free / Sponsored</div>
+            <div class="info-card-value text-green">~5-10%</div>
+            <div class="info-card-sub">of CE hours consumed</div>
+            <p style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">Guardian CME, Bound Tree EDU, state TRAIN programs, device manufacturer CE. Fragmented, quality limited. Not a real competitive threat.</p>
+          </div>
+        </div>
+        <div class="strategic-callout mt-24">
+          <div class="callout-title">Free CE Assessment</div>
+          <div class="callout-text">In most states, a provider can cobble together ~10-20 free CAPCE hours from various sources. That's only 25-50% of requirements. Virginia is the one exception (free Vector Solutions via state contract). Georgia TRAIN exists but is low-quality, limited topic coverage, and poor UX. The real competitive threat is the $35-72/yr "good enough" tier, not free CE.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: MEDEDPREP POSITIONING -->
+  <div class="section open" id="positioning">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#x1F3AF;</span>
+      <span class="section-title">MedEdPrep Competitive Position</span>
+      <span class="section-toggle">&#x25BC;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div class="win-banner">
+          <p>MedEdPrep would be the <span style="color: var(--teal);">only CAPCE-accredited CE provider</span> in the EMS market with adaptive learning, psychometric diagnostics, and interactive item types. <span style="color: var(--teal);">Zero current providers offer this combination.</span></p>
+        </div>
+
+        <h3 style="font-size: 13px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; margin: 28px 0 12px;">What MedEdPrep Brings That Nobody Else Has</h3>
+        <div class="info-row">
+          <div class="info-card" style="border-top: 3px solid var(--teal);">
+            <div class="info-card-label">Adaptive Learning</div>
+            <div class="info-card-value text-teal">IRT + CAT</div>
+            <div class="info-card-sub">CE that adjusts to what you actually know</div>
+          </div>
+          <div class="info-card" style="border-top: 3px solid var(--purple);">
+            <div class="info-card-label">Diagnostic Reports</div>
+            <div class="info-card-value text-purple">Per-Objective</div>
+            <div class="info-card-sub">Know your strengths and gaps, not just a score</div>
+          </div>
+          <div class="info-card" style="border-top: 3px solid var(--amber);">
+            <div class="info-card-label">Item Types</div>
+            <div class="info-card-value text-amber">16 Types</div>
+            <div class="info-card-sub">Beyond MCQ: drag-drop, ordering, build-a-list</div>
+          </div>
+          <div class="info-card" style="border-top: 3px solid var(--blue);">
+            <div class="info-card-label">Data Foundation</div>
+            <div class="info-card-value text-blue">10.6K Items</div>
+            <div class="info-card-sub">1.55M responses, bifactor model, confidence data</div>
+          </div>
+        </div>
+
+        <h3 style="font-size: 13px; font-weight: 700; color: var(--amber); text-transform: uppercase; letter-spacing: 0.08em; margin: 28px 0 12px;">Competitive Comparison at ~$60/year</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>What You Get</th>
+              <th>CSUtest ($35)</th>
+              <th>Recert ($62)</th>
+              <th>HSI ($65)</th>
+              <th style="color: var(--teal);">MedEdPrep</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Standard MCQ CE</td>
+              <td class="feat-yes">&#x2713;</td>
+              <td class="feat-yes">&#x2713;</td>
+              <td class="feat-yes">&#x2713;</td>
+              <td class="feat-yes">&#x2713;</td>
+            </tr>
+            <tr>
+              <td>CAPCE Accredited</td>
+              <td class="feat-yes">&#x2713;</td>
+              <td class="feat-yes">&#x2713;</td>
+              <td class="feat-yes">&#x2713;</td>
+              <td class="feat-yes">&#x2713;</td>
+            </tr>
+            <tr>
+              <td>Adaptive Difficulty</td>
+              <td class="feat-no">&#x2717;</td>
+              <td class="feat-no">&#x2717;</td>
+              <td class="feat-no">&#x2717;</td>
+              <td class="feat-yes" style="font-size: 16px;">&#x2713;</td>
+            </tr>
+            <tr>
+              <td>Diagnostic Reporting</td>
+              <td class="feat-no">&#x2717;</td>
+              <td class="feat-partial">Basic</td>
+              <td class="feat-no">&#x2717;</td>
+              <td class="feat-yes" style="font-size: 16px;">&#x2713;</td>
+            </tr>
+            <tr>
+              <td>Interactive Items</td>
+              <td class="feat-no">&#x2717;</td>
+              <td class="feat-no">&#x2717;</td>
+              <td class="feat-no">&#x2717;</td>
+              <td class="feat-yes" style="font-size: 16px;">&#x2713;</td>
+            </tr>
+            <tr>
+              <td>NREMT Auto-Import</td>
+              <td class="feat-no">&#x2717;</td>
+              <td class="feat-yes">&#x2713;</td>
+              <td class="feat-no">&#x2717;</td>
+              <td class="feat-yes" style="font-size: 16px;">&#x2713;</td>
+            </tr>
+            <tr>
+              <td>Agency Workforce Analytics</td>
+              <td class="feat-no">&#x2717;</td>
+              <td class="feat-partial">Basic</td>
+              <td class="feat-partial">Basic</td>
+              <td class="feat-yes" style="font-size: 16px;">&#x2713;</td>
+            </tr>
+            <tr>
+              <td>Content Quality</td>
+              <td style="color: var(--text-muted);">PowerPoint</td>
+              <td style="color: var(--text-secondary);">Scenario-based</td>
+              <td style="color: var(--text-secondary);">Video + quiz</td>
+              <td style="color: var(--teal); font-weight: 700;">Adaptive + diagnostic</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="font-size: 13px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 0.08em; margin: 28px 0 12px;">Georgia Market Entry</h3>
+        <div class="strategic-callout">
+          <div class="callout-title">Local Opportunity</div>
+          <div class="callout-text">Georgia EMS Academy ($40, NOT CAPCE, 2007-era website) is the primary local CE provider. Georgia TRAIN is free but low-quality with poor UX. MedEdPrep enters as the first Georgia-based, CAPCE-accredited provider with modern technology. Compete on accreditation, quality, and outcomes -- not price.</div>
+        </div>
+
+        <h3 style="font-size: 13px; font-weight: 700; color: var(--red); text-transform: uppercase; letter-spacing: 0.08em; margin: 28px 0 12px;">Key Corrections from Research</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Common Belief</th>
+              <th>Reality</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bound Tree EDU is owned by Henry Schein ($12B)</td>
+              <td>Owned by <strong>Sarnova</strong> ($989M) / Patricia Industries / Investor AB. Henry Schein is a competitor.</td>
+            </tr>
+            <tr>
+              <td>JEMS Training and Ally by EMS World are siblings</td>
+              <td>Different parents: JEMS = <strong>Clarion Events</strong> (Blackstone). Ally = <strong>HMP Global</strong>. They are competitors.</td>
+            </tr>
+            <tr>
+              <td>Bound Tree EDU CE is entirely free</td>
+              <td>Only <strong>5 courses free</strong>, then $159.99/year (same as FOAMfrat direct). It's a freemium funnel.</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleSection(header) {
+  header.closest('.section').classList.toggle('open');
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    const section = el.closest('.section');
+    if (section && !section.classList.contains('open')) {
+      section.classList.add('open');
+    }
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// Animate bars on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.section').forEach(section => {
+  section.style.opacity = '0';
+  section.style.transform = 'translateY(20px)';
+  section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  observer.observe(section);
+});
+</script>
+
+</body>
+</html>

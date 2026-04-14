@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedEdPrep — CE Launch Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0e14;
+    --bg-surface: #111820;
+    --bg-card: #151c25;
+    --bg-card-hover: #1a2331;
+    --bg-elevated: #1e2733;
+    --border: #243040;
+    --border-subtle: #1c2535;
+    --text-primary: #e8edf4;
+    --text-secondary: #8899aa;
+    --text-muted: #5a6a7a;
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+    --teal-glow: rgba(45,212,191,0.06);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.12);
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.12);
+    --orange: #fb923c;
+    --orange-dim: rgba(251,146,60,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.12);
+    --nav-width: 240px;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg-base);
+    background-image: radial-gradient(circle at 1px 1px, rgba(45,212,191,0.02) 1px, transparent 0);
+    background-size: 40px 40px;
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--purple), var(--blue), var(--teal));
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+    z-index: 200;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* -- NAV -- */
+  nav {
+    width: var(--nav-width);
+    min-width: var(--nav-width);
+    background: rgba(17,24,32,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  nav::-webkit-scrollbar { width: 0; }
+
+  .nav-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .nav-brand-name {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--teal), #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-brand-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links { flex: 1; padding: 4px 0; }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+  }
+  nav a:hover {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.04);
+    border-left-color: var(--teal);
+  }
+  nav a.active {
+    color: var(--teal);
+    background: rgba(45,212,191,0.08);
+    border-left-color: var(--teal);
+    font-weight: 600;
+  }
+  nav a .nav-icon {
+    font-size: 15px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .nav-divider {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 12px 24px;
+  }
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    padding: 8px 24px 4px;
+  }
+
+  .nav-footer {
+    padding: 20px 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .nav-footer-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .nav-footer-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  /* -- HERO -- */
+  .hero {
+    margin-left: var(--nav-width);
+    padding: 56px 56px 44px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #080c12 0%, #0d1520 30%, #0a1420 60%, #080e18 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: 8%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(45,212,191,0.06) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 15%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(167,139,250,0.04) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--teal);
+    opacity: 0.4;
+  }
+
+  .hero-headline {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f0f4f8 25%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+
+  .hero-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 800px;
+    margin-top: 8px;
+  }
+
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+    position: relative;
+  }
+  .metric-card {
+    background: rgba(21,28,37,0.7);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    backdrop-filter: blur(10px);
+  }
+  .metric-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .metric-value {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .metric-sub {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* -- MAIN CONTENT -- */
+  .main-inner {
+    margin-left: var(--nav-width);
+    padding: 40px 56px 80px;
+    max-width: 1400px;
+  }
+
+  /* -- SECTIONS -- */
+  .section {
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-card);
+    overflow: hidden;
+  }
+  .section-header {
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+    position: relative;
+  }
+  .section-header:hover { background: rgba(45,212,191,0.03); }
+  .section-header::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--teal), var(--purple));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .section.open .section-header::before { opacity: 1; }
+  .section-icon { font-size: 18px; }
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    flex: 1;
+  }
+  .section-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .section-chevron {
+    font-size: 12px;
+    color: var(--text-muted);
+    transition: transform 0.3s;
+  }
+  .section.open .section-chevron { transform: rotate(180deg); }
+  .section-body {
+    display: none;
+    padding: 0 28px 28px;
+  }
+  .section.open .section-body { display: block; }
+
+  /* -- TIMELINE -- */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--teal), var(--purple), var(--blue), var(--green));
+    border-radius: 2px;
+  }
+  .timeline-phase {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .timeline-phase:last-child { margin-bottom: 0; }
+  .timeline-dot {
+    position: absolute;
+    left: -27px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid;
+    background: var(--bg-card);
+  }
+  .timeline-dot.active {
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(45,212,191,0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(45,212,191,0); }
+  }
+  .timeline-phase-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .timeline-phase-gate {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .timeline-items {
+    list-style: none;
+    padding: 0;
+  }
+  .timeline-items li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 3px 0;
+    padding-left: 18px;
+    position: relative;
+  }
+  .timeline-items li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 10px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--text-muted);
+  }
+
+  /* -- TRACK CARDS -- */
+  .track-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .track-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .track-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .track-card.track-1::before { background: linear-gradient(90deg, var(--teal), var(--blue)); }
+  .track-card.track-2::before { background: linear-gradient(90deg, var(--purple), var(--pink)); }
+  .track-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .track-name {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+  .track-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .track-details {
+    list-style: none;
+  }
+  .track-details li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .track-details li:last-child { border-bottom: none; }
+  .track-details .detail-label { color: var(--text-muted); font-weight: 500; }
+  .track-details .detail-value { font-weight: 600; text-align: right; }
+
+  /* -- TEAM -- */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .team-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+  }
+  .team-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .team-role {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .team-tasks {
+    list-style: none;
+  }
+  .team-tasks li {
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding: 3px 0 3px 16px;
+    position: relative;
+  }
+  .team-tasks li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 10px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+  }
+
+  /* -- RAZOR/BLADE DIAGRAM -- */
+  .funnel-diagram {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 32px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .funnel-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 12px 0;
+  }
+  .funnel-box {
+    padding: 14px 24px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    min-width: 200px;
+    border: 1px solid;
+  }
+  .funnel-arrow {
+    font-size: 20px;
+    color: var(--text-muted);
+  }
+  .funnel-arrow-down {
+    font-size: 20px;
+    color: var(--text-muted);
+    margin: 4px 0;
+  }
+  .funnel-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* -- CONTENT PRIORITY TABLE -- */
+  .priority-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+  }
+  .priority-table th {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .priority-table td {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .priority-table tr:last-child td { border-bottom: none; }
+  .priority-table .tier-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* -- FREE CE PROMO -- */
+  .promo-card {
+    background: linear-gradient(135deg, rgba(45,212,191,0.08) 0%, rgba(167,139,250,0.06) 100%);
+    border: 1px solid rgba(45,212,191,0.2);
+    border-radius: var(--radius);
+    padding: 32px;
+    margin: 20px 0;
+  }
+  .promo-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .promo-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 16px;
+    max-width: 700px;
+  }
+  .promo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .promo-stat {
+    background: rgba(10,14,20,0.5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    padding: 14px 16px;
+  }
+  .promo-stat-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--teal);
+  }
+  .promo-stat-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* -- INFRA LIST -- */
+  .infra-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .infra-item {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    padding: 14px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .infra-check {
+    color: var(--green);
+    font-size: 16px;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+  .infra-text {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .infra-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* -- DECISIONS / GAPS -- */
+  .decision-list {
+    list-style: none;
+  }
+  .decision-item {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    padding: 16px 20px;
+    margin-bottom: 10px;
+  }
+  .decision-item:last-child { margin-bottom: 0; }
+  .decision-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .decision-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .decision-tag {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* -- RESPONSIVE -- */
+  @media (max-width: 1100px) {
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+    .track-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 900px) {
+    nav { display: none; }
+    .hero, .main-inner { margin-left: 0; }
+    .hero { padding: 40px 24px 32px; }
+    .main-inner { padding: 24px 20px 60px; }
+    .hero-metrics { grid-template-columns: 1fr 1fr; }
+    .section-header { padding: 16px 20px; }
+    .section-body { padding: 0 20px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-name">MedEdPrep</div>
+    <div class="nav-brand-sub">CE Launch Plan</div>
+  </div>
+  <div style="padding: 0 16px 12px; display: flex; flex-direction: column; gap: 6px;">
+    <a href="entity-ce-market.html" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--purple-dim); border: 1px solid rgba(167,139,250,0.25); border-radius: var(--radius-xs); color: var(--purple); text-decoration: none; font-size: 12px; font-weight: 600; transition: all 0.2s;">
+      <span style="font-size: 14px;">&#127760;</span> CE Market &amp; Competitors
+    </a>
+    <a href="hub.html" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--teal-dim); border: 1px solid rgba(45,212,191,0.25); border-radius: var(--radius-xs); color: var(--teal); text-decoration: none; font-size: 12px; font-weight: 600; transition: all 0.2s;">
+      <span style="font-size: 14px;">&#9679;</span> Command Center
+    </a>
+  </div>
+  <div class="nav-links">
+    <div class="nav-section-label">Strategy</div>
+    <a href="#strategy" onclick="scrollToSection('strategy')"><span class="nav-icon">&#9670;</span> Two-Track Model</a>
+    <a href="#timeline" onclick="scrollToSection('timeline')"><span class="nav-icon">&#9202;</span> Launch Timeline</a>
+    <a href="#track1" onclick="scrollToSection('track1')"><span class="nav-icon">&#9998;</span> Track 1: Assessments</a>
+    <a href="#track2" onclick="scrollToSection('track2')"><span class="nav-icon">&#9654;</span> Track 2: Video</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">Execution</div>
+    <a href="#team" onclick="scrollToSection('team')"><span class="nav-icon">&#9733;</span> Team Assignments</a>
+    <a href="#content" onclick="scrollToSection('content')"><span class="nav-icon">&#9776;</span> Content Priorities</a>
+    <a href="#freece" onclick="scrollToSection('freece')"><span class="nav-icon">&#10084;</span> Free CE Program</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">Status</div>
+    <a href="#built" onclick="scrollToSection('built')"><span class="nav-icon">&#9989;</span> What's Already Built</a>
+    <a href="#decisions" onclick="scrollToSection('decisions')"><span class="nav-icon">&#10067;</span> Open Decisions</a>
+    <a href="#gaps" onclick="scrollToSection('gaps')"><span class="nav-icon">&#9888;</span> Execution Gaps</a>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-footer-label">Last Updated</div>
+    <div class="nav-footer-date">April 14, 2026</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">CE Initiative</div>
+  <h1 class="hero-headline">Two-Track Launch Plan</h1>
+  <p class="hero-subtitle">
+    We're launching CE in two parallel tracks. <strong>Track 1</strong> (assessment-only CE) goes live the moment our CAPCE organizational accreditation is finalized &mdash; no video required, no per-activity approval queue. <strong>Track 2</strong> (video micro-modules) ramps up alongside it. One product sells the other. With organizational accreditation, we publish CE at our own pace &mdash; no 2-4 week review bottleneck. The real demand spike is December/January when providers scramble for recertification hours. Our job between now and then: build the catalog, warm the relationships, and be ready when the wave hits.
+  </p>
+  <div class="hero-metrics">
+    <div class="metric-card">
+      <div class="metric-label">Item Bank</div>
+      <div class="metric-value" style="color: var(--teal);">10,600+</div>
+      <div class="metric-sub">Validated questions ready for CE</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Adaptive CE Competitors</div>
+      <div class="metric-value" style="color: var(--green);">0</div>
+      <div class="metric-sub">Nobody else is doing this</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">CE Market Size</div>
+      <div class="metric-value" style="color: var(--purple);">$50-150M</div>
+      <div class="metric-sub">~1M EMS professionals need CE</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Demand Spike</div>
+      <div class="metric-value" style="color: var(--amber);">Dec/Jan</div>
+      <div class="metric-sub">Recertification cycle scramble</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-inner">
+
+  <!-- TWO TRACK STRATEGY -->
+  <div class="section open" id="strategy">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">The Two-Track Strategy</span>
+      <span class="section-badge badge-teal" style="background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(45,212,191,0.2);">Core Strategy</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <div class="track-grid">
+        <div class="track-card track-1">
+          <div class="track-label" style="color: var(--teal);">Track 1 &mdash; The Razor</div>
+          <div class="track-name">Assessment-Only CE</div>
+          <div class="track-desc">Providers take a 30-question adaptive assessment, review all rationales, receive a diagnostic report showing their knowledge gaps, and earn CAPCE-accredited CE credit. No video. No lecture. The item bank <em>is</em> the product.</div>
+          <ul class="track-details">
+            <li><span class="detail-label">Price</span><span class="detail-value" style="color: var(--teal);">$5 / 0.5 CEH</span></li>
+            <li><span class="detail-label">Format</span><span class="detail-value">30 adaptive questions + mandatory review</span></li>
+            <li><span class="detail-label">Time to launch</span><span class="detail-value">Days after accreditation finalized</span></li>
+            <li><span class="detail-label">Source</span><span class="detail-value">Existing 10,600+ item bank</span></li>
+            <li><span class="detail-label">Capacity</span><span class="detail-value">~70 distinct topics</span></li>
+            <li><span class="detail-label">Key output</span><span class="detail-value" style="color: var(--amber);">Diagnostic report (the aha moment)</span></li>
+          </ul>
+        </div>
+        <div class="track-card track-2">
+          <div class="track-label" style="color: var(--purple);">Track 2 &mdash; The Blades</div>
+          <div class="track-name">Video Micro-Modules</div>
+          <div class="track-desc">Short, focused video modules (15-30 min) recorded by our SME team. When a provider's diagnostic report says "you're weak in pediatric respiratory" &mdash; there's a video module for that. The assessment sells the module.</div>
+          <ul class="track-details">
+            <li><span class="detail-label">Price</span><span class="detail-value" style="color: var(--purple);">$3.99-12.99 / module</span></li>
+            <li><span class="detail-label">Format</span><span class="detail-value">0.25-0.5 CEH micro-modules</span></li>
+            <li><span class="detail-label">Time to launch</span><span class="detail-value">Ramps month 2-3 as content records</span></li>
+            <li><span class="detail-label">Team</span><span class="detail-value">5-6 SMEs recording + Sydney editing</span></li>
+            <li><span class="detail-label">Studio capacity</span><span class="detail-value">3-5 days/week recording</span></li>
+            <li><span class="detail-label">Publishing</span><span class="detail-value">Self-accredited (org accreditation)</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="funnel-diagram">
+        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 16px;">How They Reinforce Each Other</div>
+        <div class="funnel-row">
+          <div class="funnel-box" style="background: var(--teal-dim); border-color: rgba(45,212,191,0.3); color: var(--teal);">Provider takes $5 assessment</div>
+        </div>
+        <div class="funnel-arrow-down">&#9660;</div>
+        <div class="funnel-row">
+          <div class="funnel-box" style="background: var(--amber-dim); border-color: rgba(251,191,36,0.3); color: var(--amber);">Diagnostic report: "Weak in Pediatric Airway"</div>
+        </div>
+        <div class="funnel-arrow-down">&#9660;</div>
+        <div class="funnel-row">
+          <div class="funnel-box" style="background: var(--purple-dim); border-color: rgba(167,139,250,0.3); color: var(--purple);">Recommends Pediatric Airway video module ($8)</div>
+        </div>
+        <div class="funnel-arrow-down">&#9660;</div>
+        <div class="funnel-row">
+          <div class="funnel-box" style="background: var(--green-dim); border-color: rgba(74,222,128,0.3); color: var(--green);">Retake assessment &mdash; proves improvement</div>
+        </div>
+        <div class="funnel-note">Both tracks feed the same diagnostic data pipeline. Every response makes the system smarter.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="section open" id="timeline">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#9202;</span>
+      <span class="section-title">Launch Timeline &mdash; Gate-Based, Not Calendar-Based</span>
+      <span class="section-badge" style="background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(251,191,36,0.2);">Decision Gates</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 24px;">This plan moves on decisions, not dates. Each phase unlocks when its gate condition is met. Calendar targets are estimates, not deadlines.</p>
+
+      <div class="timeline">
+        <!-- Phase 1 -->
+        <div class="timeline-phase">
+          <div class="timeline-dot active" style="border-color: var(--teal); background: var(--teal-dim);"></div>
+          <div class="timeline-phase-title" style="color: var(--teal);">Phase 1: Before CAPCE Approval</div>
+          <div class="timeline-phase-gate" style="color: var(--text-muted);">Gate: CAPCE accreditation finalized &bull; Target: May 2026</div>
+          <ul class="timeline-items">
+            <li>Build CE assessment wrapper (purchase &rarr; adaptive test &rarr; review &rarr; diagnostic &rarr; certificate)</li>
+            <li>Map first 10-15 topics from existing item bank to CAPCE learning objectives</li>
+            <li>Prepare first CE activities (ready to publish the day accreditation lands)</li>
+            <li>Record first 3 video modules (Pediatric Respiratory, AHA Guidelines, STEMI)</li>
+            <li>ACCREDITCON: launch CoAssist, demo CE platform, collect leads</li>
+            <li>Richard + Jeramey: finalize topic mapping and assessment structure</li>
+          </ul>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="timeline-phase">
+          <div class="timeline-dot" style="border-color: var(--green);"></div>
+          <div class="timeline-phase-title" style="color: var(--green);">Phase 2: Launch &mdash; Assessment-Only CE Goes Live</div>
+          <div class="timeline-phase-gate" style="color: var(--text-muted);">Gate: Organizational accreditation finalized &bull; Target: May-June 2026</div>
+          <ul class="timeline-items">
+            <li>Publish first assessment-only CE modules immediately ($5 each) &mdash; no per-activity approval needed</li>
+            <li>Wire CAPCE activity reporting integration (endpoint available post-accreditation)</li>
+            <li>Launch free rotating CE module (1 hour free/month)</li>
+            <li>First video modules through editing, published as ready</li>
+            <li>Begin Georgia agency outreach &mdash; "Run your team through 5 diagnostic assessments"</li>
+          </ul>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="timeline-phase">
+          <div class="timeline-dot" style="border-color: var(--blue);"></div>
+          <div class="timeline-phase-title" style="color: var(--blue);">Phase 3: Catalog Building</div>
+          <div class="timeline-phase-gate" style="color: var(--text-muted);">Gate: 15+ assessment topics live &bull; Target: Aug-Oct 2026</div>
+          <ul class="timeline-items">
+            <li>25+ assessment topics live &mdash; publishing at our pace, no review queue</li>
+            <li>Video modules publishing as fast as we can record and edit them</li>
+            <li>Agency dashboard MVP: diagnostic data across roster, domain competency heatmaps</li>
+            <li>First agency contracts close (assessment diagnostic data is the sales pitch)</li>
+            <li>Individual subscriptions available</li>
+            <li>IRT data accumulating from CE-specific responses</li>
+          </ul>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="timeline-phase">
+          <div class="timeline-dot" style="border-color: var(--amber);"></div>
+          <div class="timeline-phase-title" style="color: var(--amber);">Phase 4: Ready for the Wave</div>
+          <div class="timeline-phase-gate" style="color: var(--text-muted);">Gate: Agency dashboard demo-ready + 30+ assessment topics &bull; Target: Nov 2026</div>
+          <ul class="timeline-items">
+            <li>Full catalog available: 30+ assessments, 10+ video modules, bundles</li>
+            <li>Agency dashboard live and demo-ready for Q4 budget conversations</li>
+            <li>Georgia agency relationships warm, demos scheduled</li>
+            <li>Pricing validated (individual, subscription, agency per-seat)</li>
+            <li>CAPCE catalog listing points to clean landing page</li>
+            <li>Recertification packages ready (Georgia EMT, Georgia Paramedic)</li>
+          </ul>
+        </div>
+
+        <!-- Phase 5 -->
+        <div class="timeline-phase">
+          <div class="timeline-dot" style="border-color: var(--purple);"></div>
+          <div class="timeline-phase-title" style="color: var(--purple);">Phase 5: Demand Spike</div>
+          <div class="timeline-phase-gate" style="color: var(--text-muted);">Gate: Calendar &mdash; recertification cycle pressure &bull; Dec 2026 - Jan 2027</div>
+          <ul class="timeline-items">
+            <li>Providers scramble for recertification hours &mdash; we're ready</li>
+            <li>Agency contracts close on new-year training budgets</li>
+            <li>Individual subscriber surge</li>
+            <li>Free rotating CE driving word-of-mouth</li>
+            <li>Diagnostic reports generating organic referrals ("my partner showed me this")</li>
+          </ul>
+        </div>
+
+        <!-- Phase 6 -->
+        <div class="timeline-phase">
+          <div class="timeline-dot" style="border-color: var(--pink);"></div>
+          <div class="timeline-phase-title" style="color: var(--pink);">Phase 6: Scale &mdash; Year 1 Finish</div>
+          <div class="timeline-phase-gate" style="color: var(--text-muted);">Gate: Decision-based milestones through April 2027</div>
+          <ul class="timeline-items">
+            <li>When 500+ CE responses accumulated &rarr; trigger IRT recalibration on CE-specific items</li>
+            <li>When 3+ agency contracts close &rarr; prioritize agency dashboard features</li>
+            <li>When video catalog hits 25+ modules &rarr; launch specialty tracks (Critical Care, Pediatric)</li>
+            <li>Full NCCP distributive coverage for EMT + Paramedic</li>
+            <li>State EMS association conversations for statewide licensing</li>
+            <li>"State of EMS Competency" report from aggregated diagnostic data</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRACK 1 DETAIL -->
+  <div class="section" id="track1">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#9998;</span>
+      <span class="section-title">Track 1: Assessment-Only CE &mdash; How It Works</span>
+      <span class="section-badge" style="background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(45,212,191,0.2);">First Mover</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">CAPCE allows CE credit through assessment alone. The educational content is in the rationales. Nobody in EMS is doing this digitally. Pharmacy (ACPE) has the established precedent. We have the item bank, the engine, and the analytics. This launches in weeks, not months.</p>
+
+      <div style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 16px;">Provider Experience</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; text-align: center;">
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 16px;">
+            <div style="font-size: 24px; margin-bottom: 6px;">&#128179;</div>
+            <div style="font-size: 12px; font-weight: 700;">1. Purchase</div>
+            <div style="font-size: 11px; color: var(--text-muted);">$5 &bull; Select topic</div>
+          </div>
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 16px;">
+            <div style="font-size: 24px; margin-bottom: 6px;">&#128196;</div>
+            <div style="font-size: 12px; font-weight: 700;">2. Pre-Info</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Objectives &bull; Instructions</div>
+          </div>
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 16px;">
+            <div style="font-size: 24px; margin-bottom: 6px;">&#129504;</div>
+            <div style="font-size: 12px; font-weight: 700;">3. Assessment</div>
+            <div style="font-size: 11px; color: var(--text-muted);">30 adaptive questions</div>
+          </div>
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 16px;">
+            <div style="font-size: 24px; margin-bottom: 6px;">&#128218;</div>
+            <div style="font-size: 12px; font-weight: 700;">4. Review</div>
+            <div style="font-size: 11px; color: var(--text-muted);">All 30 rationales (mandatory)</div>
+          </div>
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 16px;">
+            <div style="font-size: 24px; margin-bottom: 6px;">&#128202;</div>
+            <div style="font-size: 12px; font-weight: 700;">5. Diagnostic</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Gaps + strengths + recs</div>
+          </div>
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 16px;">
+            <div style="font-size: 24px; margin-bottom: 6px;">&#127942;</div>
+            <div style="font-size: 12px; font-weight: 700;">6. Certificate</div>
+            <div style="font-size: 11px; color: var(--text-muted);">0.5 CEH &bull; Auto-reports</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 18px;">
+          <div style="font-size: 12px; font-weight: 700; color: var(--green); margin-bottom: 8px;">WHY THIS WORKS</div>
+          <ul class="timeline-items" style="padding-left: 0;">
+            <li>CAPCE character count: 30 questions with rationales = ~20,700 chars (2.8x the 7,500 minimum for 0.5 CEH)</li>
+            <li>Item bank must be 30%+ larger than what any individual sees (exposure control for retakes)</li>
+            <li>Randomized questions per attempt &mdash; no memorization</li>
+            <li>Review of rationales IS the educational content</li>
+            <li>Pharmacy profession (ACPE) has formal precedent</li>
+          </ul>
+        </div>
+        <div style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 18px;">
+          <div style="font-size: 12px; font-weight: 700; color: var(--amber); margin-bottom: 8px;">COMPETITIVE ADVANTAGE</div>
+          <ul class="timeline-items" style="padding-left: 0;">
+            <li>Zero EMS CE providers offer digital assessment-only CE</li>
+            <li>CE Solutions has "test out" but it's bypass, not standalone</li>
+            <li>Competitors have 10-15 questions per course &mdash; we have 10,600+</li>
+            <li>Building a calibrated item bank takes years &mdash; we already did it</li>
+            <li>The diagnostic report is something nobody else can generate</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRACK 2 DETAIL -->
+  <div class="section" id="track2">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#9654;</span>
+      <span class="section-title">Track 2: Video Micro-Modules &mdash; Content Pipeline</span>
+      <span class="section-badge" style="background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(167,139,250,0.2);">Parallel Track</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">Micro-modules are the primary catalog format. Short (15-30 min), focused, individually CAPCE-accredited. We can get someone in the studio 3-5 days a week. Recording is not the bottleneck &mdash; keeping CAPCE's review pipeline fed is.</p>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;">
+        <div style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 14px; text-align: center;">
+          <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);">Micro-Module</div>
+          <div style="font-size: 20px; font-weight: 800; color: var(--teal); margin: 4px 0;">0.25 CEH</div>
+          <div style="font-size: 11px; color: var(--text-secondary);">15 min &bull; ~5.5 hrs to produce</div>
+        </div>
+        <div style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 14px; text-align: center;">
+          <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);">Standard Module</div>
+          <div style="font-size: 20px; font-weight: 800; color: var(--purple); margin: 4px 0;">0.5 CEH</div>
+          <div style="font-size: 11px; color: var(--text-secondary);">30 min &bull; ~11 hrs to produce</div>
+        </div>
+        <div style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 14px; text-align: center;">
+          <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);">Deep Dive</div>
+          <div style="font-size: 20px; font-weight: 800; color: var(--amber); margin: 4px 0;">1.0 CEH</div>
+          <div style="font-size: 11px; color: var(--text-secondary);">60 min &bull; ~23 hrs to produce</div>
+        </div>
+      </div>
+
+      <div style="font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">Production Pipeline</div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+        <div style="background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(45,212,191,0.2); padding: 8px 14px; border-radius: var(--radius-xs); font-size: 12px; font-weight: 600;">Script</div>
+        <div style="color: var(--text-muted); padding: 8px 4px;">&#8594;</div>
+        <div style="background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(96,165,250,0.2); padding: 8px 14px; border-radius: var(--radius-xs); font-size: 12px; font-weight: 600;">Clinical Review</div>
+        <div style="color: var(--text-muted); padding: 8px 4px;">&#8594;</div>
+        <div style="background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(167,139,250,0.2); padding: 8px 14px; border-radius: var(--radius-xs); font-size: 12px; font-weight: 600;">Record</div>
+        <div style="color: var(--text-muted); padding: 8px 4px;">&#8594;</div>
+        <div style="background: var(--pink-dim); color: var(--pink); border: 1px solid rgba(244,114,182,0.2); padding: 8px 14px; border-radius: var(--radius-xs); font-size: 12px; font-weight: 600;">Edit (Sydney)</div>
+        <div style="color: var(--text-muted); padding: 8px 4px;">&#8594;</div>
+        <div style="background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(251,191,36,0.2); padding: 8px 14px; border-radius: var(--radius-xs); font-size: 12px; font-weight: 600;">Quiz Items</div>
+        <div style="color: var(--text-muted); padding: 8px 4px;">&#8594;</div>
+        <div style="background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(251,146,60,0.2); padding: 8px 14px; border-radius: var(--radius-xs); font-size: 12px; font-weight: 600;">Internal QA</div>
+        <div style="color: var(--text-muted); padding: 8px 4px;">&#8594;</div>
+        <div style="background: var(--green-dim); color: var(--green); border: 1px solid rgba(74,222,128,0.2); padding: 8px 14px; border-radius: var(--radius-xs); font-size: 12px; font-weight: 600;">Publish (self-accredited)</div>
+      </div>
+      <p style="font-size: 12px; color: var(--text-muted);">With organizational accreditation, we publish CE activities on our own authority &mdash; no per-activity review queue. The bottleneck is our production speed, not CAPCE's approval cycle. Publish as fast as we can record, edit, and build quiz items.</p>
+    </div>
+  </div>
+
+  <!-- TEAM -->
+  <div class="section" id="team">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#9733;</span>
+      <span class="section-title">Team Assignments</span>
+      <span class="section-badge" style="background: var(--green-dim); color: var(--green); border: 1px solid rgba(74,222,128,0.2);">Who Does What</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-name">Richard</div>
+          <div class="team-role" style="color: var(--teal);">CE Content Lead</div>
+          <ul class="team-tasks">
+            <li>Script writing for all video modules</li>
+            <li>Map existing items to CE topics / learning objectives</li>
+            <li>Record video content (primary presenter)</li>
+            <li>CE activity documentation and internal QA</li>
+            <li>Quality oversight on all CE content</li>
+            <li>Warm agency &amp; fire dept relationship outreach</li>
+          </ul>
+        </div>
+        <div class="team-card">
+          <div class="team-name">Gene</div>
+          <div class="team-role" style="color: var(--blue);">CAPCE Program Director &bull; Critical Care / Flight Paramedic</div>
+          <ul class="team-tasks">
+            <li>CAPCE Program Director &mdash; oversees accreditation compliance</li>
+            <li>Record critical care and advanced topics</li>
+            <li>Script simpler refresher modules independently</li>
+            <li>Specialty track content (Critical Care CE Certificate)</li>
+          </ul>
+        </div>
+        <div class="team-card">
+          <div class="team-name">Dr. Tim Thomas</div>
+          <div class="team-role" style="color: var(--purple);">Medical Director (under Gene)</div>
+          <ul class="team-tasks">
+            <li>Clinical review and sign-off on all modules (CAPCE requirement)</li>
+            <li>Record complex clinical topics</li>
+            <li>Georgia agency relationships (active medical director for a GA agency)</li>
+            <li>Medical authority under the CAPCE Program Director</li>
+          </ul>
+        </div>
+        <div class="team-card">
+          <div class="team-name">Samantha</div>
+          <div class="team-role" style="color: var(--pink);">Critical Care Paramedic + Georgia Sales</div>
+          <ul class="team-tasks">
+            <li>Record critical care content</li>
+            <li>Georgia regional agency outreach and demos</li>
+            <li>Leverage agency connections for first contracts</li>
+          </ul>
+        </div>
+        <div class="team-card">
+          <div class="team-name">Heather</div>
+          <div class="team-role" style="color: var(--amber);">National Sales</div>
+          <ul class="team-tasks">
+            <li>National-level agency outreach and demos</li>
+            <li>State EMS association conversations</li>
+            <li>Conference attendance and representation</li>
+            <li>Leverage national-level connections</li>
+          </ul>
+        </div>
+        <div class="team-card">
+          <div class="team-name">Sydney</div>
+          <div class="team-role" style="color: var(--orange);">Video Editor</div>
+          <ul class="team-tasks">
+            <li>Edit all video modules (DaVinci Resolve)</li>
+            <li>Starts day 1 when recording begins</li>
+            <li>15-min module = ~1 hr editing &bull; 30-min = ~2 hrs</li>
+            <li>48-hour turnaround typical</li>
+          </ul>
+        </div>
+        <div class="team-card">
+          <div class="team-name">Jeramey</div>
+          <div class="team-role" style="color: var(--green);">Platform + Everything Else</div>
+          <ul class="team-tasks">
+            <li>Build CE assessment wrapper</li>
+            <li>Agency dashboard development</li>
+            <li>CAPCE reporting integration</li>
+            <li>Item bank mapping (with Richard)</li>
+            <li>Assessment item writing (with Richard)</li>
+            <li>Platform deployment and operations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT PRIORITIES -->
+  <div class="section" id="content">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#9776;</span>
+      <span class="section-title">Content Recording Priorities</span>
+      <span class="section-badge" style="background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(96,165,250,0.2);">What to Record First</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Recording order is driven by: Georgia state requirements (8 hrs pediatric, 4 hrs cardiovascular, 4 hrs trauma), NCCP domain coverage, and competitive differentiation. Pediatric first &mdash; Georgia mandates it and it's underserved.</p>
+
+      <table class="priority-table">
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>Topic</th>
+            <th>CE Hours</th>
+            <th>NCCP Domain</th>
+            <th>Tier</th>
+            <th>Why This Order</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight: 700;">1</td>
+            <td style="color: var(--text-primary); font-weight: 600;">Pediatric Respiratory &amp; Airway</td>
+            <td>2.0</td>
+            <td>Airway (Peds)</td>
+            <td><span class="tier-badge" style="background: var(--red-dim); color: var(--red);">Tier 1</span></td>
+            <td>GA requires 8 hrs peds &bull; NCCP 10% peds rule</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">2</td>
+            <td style="color: var(--text-primary); font-weight: 600;">2025 AHA Guidelines Update</td>
+            <td>2.0</td>
+            <td>Cardiovascular</td>
+            <td><span class="tier-badge" style="background: var(--red-dim); color: var(--red);">Tier 1</span></td>
+            <td>Time-sensitive &bull; Free lead magnet &bull; Universal need</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">3</td>
+            <td style="color: var(--text-primary); font-weight: 600;">STEMI &amp; 12-Lead Interpretation</td>
+            <td>3.0</td>
+            <td>Cardiovascular</td>
+            <td><span class="tier-badge" style="background: var(--red-dim); color: var(--red);">Tier 1</span></td>
+            <td>Largest NCCP bucket &bull; GA cardiovascular mandate</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">4</td>
+            <td style="color: var(--text-primary); font-weight: 600;">Stroke Recognition &amp; Scales</td>
+            <td>2.0</td>
+            <td>Cardiovascular</td>
+            <td><span class="tier-badge" style="background: var(--red-dim); color: var(--red);">Tier 1</span></td>
+            <td>GA cardiovascular mandate &bull; Field gaps documented</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">5</td>
+            <td style="color: var(--text-primary); font-weight: 600;">Prehospital Sepsis</td>
+            <td>2.0</td>
+            <td>Medical</td>
+            <td><span class="tier-badge" style="background: var(--red-dim); color: var(--red);">Tier 1</span></td>
+            <td>Only 10-20% of sepsis ID'd by EMS &bull; Differentiator</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">6</td>
+            <td style="color: var(--text-primary); font-weight: 600;">Trauma Assessment &amp; Hemorrhage</td>
+            <td>2.0</td>
+            <td>Trauma</td>
+            <td><span class="tier-badge" style="background: var(--red-dim); color: var(--red);">Tier 1</span></td>
+            <td>GA requires 4 hrs trauma &bull; Tourniquet evolution</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">7</td>
+            <td style="color: var(--text-primary); font-weight: 600;">Behavioral Emergencies</td>
+            <td>2.0</td>
+            <td>Medical</td>
+            <td><span class="tier-badge" style="background: var(--red-dim); color: var(--red);">Tier 1</span></td>
+            <td>Highest provider demand &bull; Ketamine hot topic</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">8</td>
+            <td style="color: var(--text-primary); font-weight: 600;">Provider Resilience &amp; Burnout</td>
+            <td>2.0</td>
+            <td>Operations</td>
+            <td><span class="tier-badge" style="background: var(--amber-dim); color: var(--amber);">Tier 2</span></td>
+            <td>76% affected &bull; Operations hours &bull; Emotional hook</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">9</td>
+            <td style="color: var(--text-primary); font-weight: 600;">Pediatric Medical Emergencies</td>
+            <td>2.0</td>
+            <td>Medical (Peds)</td>
+            <td><span class="tier-badge" style="background: var(--amber-dim); color: var(--amber);">Tier 2</span></td>
+            <td>GA pediatric mandate coverage</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">10</td>
+            <td style="color: var(--text-primary); font-weight: 600;">OB Emergencies</td>
+            <td>2.0</td>
+            <td>Medical</td>
+            <td><span class="tier-badge" style="background: var(--amber-dim); color: var(--amber);">Tier 2</span></td>
+            <td>82% never had OB training, 39% delivered in field</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 12px;">Full 20-topic list with detailed breakdowns in ce-course-priorities.md. Each topic breaks into 3-5 individually CAPCE-accredited micro-modules. The 20 topics become 76+ catalog items.</p>
+    </div>
+  </div>
+
+  <!-- FREE CE -->
+  <div class="section" id="freece">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#10084;</span>
+      <span class="section-title">Free Rotating CE Program</span>
+      <span class="section-badge" style="background: var(--green-dim); color: var(--green); border: 1px solid rgba(74,222,128,0.2);">Lead Engine</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <div class="promo-card">
+        <div class="promo-title" style="color: var(--text-primary);">1 Free Hour of CE Every Month. Different Topic. Evergreen.</div>
+        <div class="promo-desc">
+          Each month, one assessment-only CE module is free. Providers create an account, take the assessment, see their diagnostic report, and earn real CAPCE credit. Next month it rotates to a new topic &mdash; giving them a reason to come back. We eat the CAPCE cert cost as a marketing expense. Every free assessment generates diagnostic data that says "you're weak in X &mdash; here's a module for that."
+        </div>
+        <div class="promo-grid">
+          <div class="promo-stat">
+            <div class="promo-stat-value">1 hr / month</div>
+            <div class="promo-stat-label">Free CE available</div>
+          </div>
+          <div class="promo-stat">
+            <div class="promo-stat-value">24 topics</div>
+            <div class="promo-stat-label">Over 2 years of rotation</div>
+          </div>
+          <div class="promo-stat">
+            <div class="promo-stat-value">Email capture</div>
+            <div class="promo-stat-label">Account required to claim</div>
+          </div>
+          <div class="promo-stat">
+            <div class="promo-stat-value">Aha moment</div>
+            <div class="promo-stat-label">Diagnostic report drives word-of-mouth</div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.7;">This is the marketing strategy. Not SEO. Not email drip sequences. Not social media content calendars. <strong>Make the product good enough that people tell their partner on the truck about it.</strong> The diagnostic report &mdash; the screen that shows "you're strong here, weak there" &mdash; is what makes someone share it. Give them a free reason to experience it every month.</p>
+    </div>
+  </div>
+
+  <!-- WHAT'S BUILT -->
+  <div class="section" id="built">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#9989;</span>
+      <span class="section-title">What's Already Built</span>
+      <span class="section-badge" style="background: var(--green-dim); color: var(--green); border: 1px solid rgba(74,222,128,0.2);">Not Starting from Zero</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">This is not a startup launching from nothing. We have 5-6 years of built infrastructure, a live adaptive testing platform generating $200K/year, and production systems serving real customers today.</p>
+
+      <div class="infra-grid">
+        <div class="infra-item">
+          <span class="infra-check">&#10003;</span>
+          <div>
+            <div class="infra-text">Adaptive Exam Engine</div>
+            <div class="infra-sub">10,600+ items, domain-based allocation, 6 question types, SurveyJS. Live in production.</div>
+          </div>
+        </div>
+        <div class="infra-item">
+          <span class="infra-check">&#10003;</span>
+          <div>
+            <div class="infra-text">Performance Analytics</div>
+            <div class="infra-sub">Timing, stamina, confidence quadrants, domain breakdown, spider charts. Production.</div>
+          </div>
+        </div>
+        <div class="infra-item">
+          <span class="infra-check">&#10003;</span>
+          <div>
+            <div class="infra-text">CAPCE Certificate Template</div>
+            <div class="infra-sub">PDF generation with all CAPCE fields, QR codes, instructor details, medical director. Built.</div>
+          </div>
+        </div>
+        <div class="infra-item">
+          <span class="infra-check">&#10003;</span>
+          <div>
+            <div class="infra-text">CE Platform (mededprep-ce)</div>
+            <div class="infra-sub">Live, serving Georgia Trauma Commission. Student enrollment, quizzes, certificates, CE hour tracking.</div>
+          </div>
+        </div>
+        <div class="infra-item">
+          <span class="infra-check">&#10003;</span>
+          <div>
+            <div class="infra-text">CAPCE Advisory Board System</div>
+            <div class="infra-sub">Educator credentialing, policy management, compliance dashboard. Deployed.</div>
+          </div>
+        </div>
+        <div class="infra-item">
+          <span class="infra-check">&#10003;</span>
+          <div>
+            <div class="infra-text">Stripe Payments</div>
+            <div class="infra-sub">Per-exam payment, coupons, transaction tracking. Live with customers.</div>
+          </div>
+        </div>
+        <div class="infra-item">
+          <span class="infra-check">&#10003;</span>
+          <div>
+            <div class="infra-text">Question Generation Pipeline</div>
+            <div class="infra-sub">9,334+ additional questions from 16 textbooks, NHTSA-mapped, scope-aware. Ready for import.</div>
+          </div>
+        </div>
+        <div class="infra-item">
+          <span class="infra-check">&#10003;</span>
+          <div>
+            <div class="infra-text">NHTSA Taxonomy Mapping</div>
+            <div class="infra-sub">13 domains, 259+ objectives, certification-level scope configs. Source of truth for item mapping.</div>
+          </div>
+        </div>
+        <div class="infra-item">
+          <span class="infra-check">&#10003;</span>
+          <div>
+            <div class="infra-text">Recording Studio</div>
+            <div class="infra-sub">Pro lighting, audio, backgrounds. 4 Lumix cameras. $20K in film equipment. Ready to go.</div>
+          </div>
+        </div>
+        <div class="infra-item">
+          <span class="infra-check">&#10003;</span>
+          <div>
+            <div class="infra-text">Editing Rig</div>
+            <div class="infra-sub">$6K DaVinci Resolve computer at MedEdPrep office. Sydney has her workspace set up.</div>
+          </div>
+        </div>
+        <div class="infra-item">
+          <span class="infra-check">&#10003;</span>
+          <div>
+            <div class="infra-text">Pulse Interactive Platform</div>
+            <div class="infra-sub">10+ interactive item types, game modes, achievements. Production. Integrates with CE.</div>
+          </div>
+        </div>
+        <div class="infra-item">
+          <span class="infra-check">&#10003;</span>
+          <div>
+            <div class="infra-text">CoAssist (Launching May)</div>
+            <div class="infra-sub">Accreditation management. ACCREDITCON debut. Lead funnel into the MedEdPrep ecosystem.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPEN DECISIONS -->
+  <div class="section" id="decisions">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#10067;</span>
+      <span class="section-title">Open Decisions &mdash; Not Yet Settled</span>
+      <span class="section-badge" style="background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(167,139,250,0.2);">Needs Input</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <ul class="decision-list">
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--amber-dim); color: var(--amber);">Pricing</span>
+            Pricing Model
+          </div>
+          <div class="decision-desc">Multiple options on the table: $5/assessment, $10/month metered, $79.99/year subscription, $149.99 recert packages, $50-70/seat/year for agencies. These need to be consolidated into one coherent pricing page before the December wave. Can experiment during the quieter months.</div>
+        </li>
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--blue-dim); color: var(--blue);">Product</span>
+            Agency Dashboard MVP Scope
+          </div>
+          <div class="decision-desc">What's in the minimum demo-able version? Roster upload, assessment results across team, domain competency heatmap? This is the B2B closer &mdash; the screen that makes a training officer say "I need this."</div>
+        </li>
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--green-dim); color: var(--green);">Marketing</span>
+            MedEdPrep Ecosystem Landing Page
+          </div>
+          <div class="decision-desc">Planned "MedEdPrep Family" or ecosystem page showing how CE, Pulse, CoAssist, and the main testing product connect. When to build this? What's the messaging?</div>
+        </li>
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--purple-dim); color: var(--purple);">Strategy</span>
+            Free CE Rotation &mdash; Which Topics First?
+          </div>
+          <div class="decision-desc">The rotating free hour needs a 12-month topic schedule. Should it align with NCCP domains? Seasonal relevance? Strongest item bank areas? First free module is likely the AHA Guidelines update.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EXECUTION GAPS -->
+  <div class="section" id="gaps">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#9888;</span>
+      <span class="section-title">Execution Gaps &mdash; Strategy Is Sound, Execution Needs Tightening</span>
+      <span class="section-badge" style="background: var(--red-dim); color: var(--red); border: 1px solid rgba(248,113,113,0.2);">Action Needed</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">The strategy is solid. The product is real. The team is capable. These are the "last mile" items that separate a plan from a pipeline.</p>
+
+      <ul class="decision-list">
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--red-dim); color: var(--red);">Sales</span>
+            Agency Demos Need to Be Scheduled
+          </div>
+          <div class="decision-desc">We have warm relationships through Richard, Samantha, the Medical Director, and 100+ EMS program connections. "We know people at agencies" needs to become "we have demos scheduled with agencies." Who owns the outreach? What's the cadence? Target: 5-10 scheduled demos by the time assessments go live.</div>
+        </li>
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--amber-dim); color: var(--amber);">Platform</span>
+            Agency Dashboard Must Be Demo-Ready by October
+          </div>
+          <div class="decision-desc">Training officers make budget decisions in Q4 for the next year. If we want agency contracts closing in December/January, the diagnostic dashboard needs to be in demos by October/November. This is Jeramey's dev work &mdash; needs to be sequenced against CE wrapper and CAPCE integration.</div>
+        </li>
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--amber-dim); color: var(--amber);">Marketing</span>
+            CAPCE Catalog Listing Needs a Landing Page
+          </div>
+          <div class="decision-desc">Once assessment modules are listed in CAPCE's catalog, providers will discover them organically. Where do they land? It needs to be a clean page that explains what adaptive CE is and lets them purchase. This isn't "SEO work" &mdash; it's not having a dead-end when someone clicks through.</div>
+        </li>
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--blue-dim); color: var(--blue);">Process</span>
+            Outreach Cadence &amp; Pipeline Ownership
+          </div>
+          <div class="decision-desc">Between CAPCE approval and December, someone needs to be converting warm relationships into conversations on a regular cadence. Samantha for Georgia, Heather nationally. Define: how many touches per week? Who tracks the pipeline? How do demos get scheduled?</div>
+        </li>
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--green-dim); color: var(--green);">Content</span>
+            Item Bank Mapping to CE Topics
+          </div>
+          <div class="decision-desc">The 10,600+ items are organized for test prep domains, not CAPCE/NCCP categories. Richard + Jeramey need to map items to CE learning objectives for the first 10-15 assessment topics. The NHTSA taxonomy from the question generation pipeline is the Rosetta Stone for this.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- MARKET CONTEXT (compact) -->
+  <div class="section" id="market">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#127760;</span>
+      <span class="section-title">Market Context &mdash; Why We Win</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 18px;">
+          <div style="font-size: 12px; font-weight: 700; color: var(--teal); margin-bottom: 10px;">OUR MOAT</div>
+          <ul class="timeline-items" style="padding-left: 0;">
+            <li>Only adaptive/psychometric CE in the entire EMS market</li>
+            <li>10,600+ validated items (competitors have 10-15 per course)</li>
+            <li>1.55M calibrated responses &mdash; data advantage that takes years to replicate</li>
+            <li>Diagnostic reports nobody else can generate</li>
+            <li>Assessment-only CE &mdash; first mover, no digital competitors</li>
+            <li>Team members work at agencies &mdash; built-in B2B relationships</li>
+          </ul>
+        </div>
+        <div style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-xs); padding: 18px;">
+          <div style="font-size: 12px; font-weight: 700; color: var(--amber); margin-bottom: 10px;">MARKET REALITY</div>
+          <ul class="timeline-items" style="padding-left: 0;">
+            <li>~1M EMS professionals need CE &bull; 557K NREMT-certified</li>
+            <li>Lexipol + Vector own 60-70% through B2B bundles</li>
+            <li>Real threat is the $35-72/yr "good enough" tier &mdash; don't compete on price</li>
+            <li>Georgia is underserved (GA EMS Academy: $40, not CAPCE, 2007 website)</li>
+            <li>NREMT removed online CE limits in 2023 &mdash; structural tailwind</li>
+            <li>One 100-seat agency contract > 500 individual subscribers &mdash; B2B is the engine</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleSection(header) {
+  header.closest('.section').classList.toggle('open');
+}
+
+function scrollToSection(id) {
+  const section = document.getElementById(id);
+  if (section) {
+    if (!section.classList.contains('open')) {
+      section.classList.add('open');
+    }
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Update active nav
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    const navLink = document.querySelector(`nav a[href="#${id}"]`);
+    if (navLink) navLink.classList.add('active');
+  }
+}
+
+// Scroll spy for nav
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('.section[id]');
+  let current = '';
+  sections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= 200) current = section.id;
+  });
+  document.querySelectorAll('nav a').forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
