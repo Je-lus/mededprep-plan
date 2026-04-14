@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Jeramey — Year 1 Focus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e14;
+    --bg-surface: #111820;
+    --bg-card: #151c25;
+    --bg-elevated: #1e2733;
+    --border: #243040;
+    --border-subtle: #1c2535;
+    --text: #e8edf4;
+    --text-secondary: #8899aa;
+    --text-muted: #5a6a7a;
+    --accent: #2dd4bf;
+    --accent-dim: rgba(45,212,191,0.12);
+    --accent-glow: rgba(45,212,191,0.06);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --green: #4ade80;
+    --red: #f87171;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Nav Dots ── */
+  .nav-dots {
+    position: fixed;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .nav-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  .nav-dot:hover::after, .nav-dot.active::after {
+    content: attr(title);
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .nav-dot:hover, .nav-dot.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: scale(1.3);
+    box-shadow: 0 0 12px rgba(45,212,191,0.4);
+  }
+
+  /* ── Scenes ── */
+  .scene {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 2rem;
+    position: relative;
+  }
+  .scene-inner { max-width: 820px; width: 100%; }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(ellipse at 40% 50%, rgba(45,212,191,0.07) 0%, transparent 50%);
+    animation: heroGlow 12s ease-in-out infinite alternate;
+  }
+  @keyframes heroGlow {
+    0% { transform: translate(0,0) scale(1); }
+    100% { transform: translate(-2%,2%) scale(1.05); }
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 .highlight {
+    background: linear-gradient(135deg, #f0f4f8, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .hero-meta {
+    margin-top: 3rem;
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+  }
+  .hero-meta-item {
+    text-align: center;
+  }
+  .hero-meta-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .hero-meta-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 2px;
+  }
+
+  /* ── Reveal ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.2s; }
+  .reveal-d3 { transition-delay: 0.3s; }
+  .reveal-d4 { transition-delay: 0.4s; }
+
+  /* ── Section Labels ── */
+  .s-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .s-title {
+    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .s-desc {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin-bottom: 2rem;
+  }
+
+  /* ── Task List ── */
+  .task-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+  }
+  .task-list li {
+    padding: 10px 0 10px 28px;
+    position: relative;
+    font-size: 14px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+    line-height: 1.6;
+  }
+  .task-list li:last-child { border-bottom: none; }
+  .task-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: var(--bg);
+  }
+  .task-list li strong { color: var(--text); }
+
+  /* ── Milestone Checklist ── */
+  .milestone-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+  }
+  .milestone-list li {
+    padding: 10px 0 10px 36px;
+    position: relative;
+    font-size: 14px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+    cursor: pointer;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .milestone-list li:last-child { border-bottom: none; }
+  .milestone-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 2px solid var(--border);
+    background: var(--bg);
+    transition: all 0.2s;
+  }
+  .milestone-list li.done {
+    color: var(--text-muted);
+    text-decoration: line-through;
+  }
+  .milestone-list li.done::before {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .milestone-list li.done::after {
+    content: '\2713';
+    position: absolute;
+    left: 3px;
+    top: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--bg);
+    line-height: 18px;
+    width: 18px;
+    text-align: center;
+  }
+
+  /* ── Meanwhile Card ── */
+  .meanwhile {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 2rem;
+  }
+  .meanwhile-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .meanwhile-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .mw-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .mw-purple { background: var(--purple); }
+  .mw-blue { background: var(--blue); }
+  .mw-amber { background: var(--amber); }
+
+  /* ── Callout ── */
+  .callout {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    margin: 1.5rem 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .callout strong { color: var(--text); }
+
+  /* ── Back Link ── */
+  .back-link {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 100;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 6px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+  .back-link:hover { color: var(--text); border-color: var(--accent); }
+
+  /* ── MRR Target ── */
+  .mrr-target {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent-dim);
+    border: 1px solid rgba(45,212,191,0.2);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-top: 1rem;
+  }
+  .mrr-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+  }
+  .mrr-value {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .scene { padding: 3rem 1.25rem; }
+    .nav-dots { display: none; }
+    .hero-meta { flex-direction: column; gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<a href="one-year-plan.html" class="back-link">&larr; Full Plan</a>
+
+<nav class="nav-dots">
+  <div class="nav-dot active" data-target="hero" title="Overview"></div>
+  <div class="nav-dot" data-target="q2" title="Q2 2026"></div>
+  <div class="nav-dot" data-target="q3" title="Q3 2026"></div>
+  <div class="nav-dot" data-target="q4" title="Q4 2026"></div>
+  <div class="nav-dot" data-target="q1-27" title="Q1 2027"></div>
+  <div class="nav-dot" data-target="q2-27" title="Q2 2027"></div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow reveal">Founder / Product / Engineering</div>
+    <h1 class="reveal reveal-d1">
+      <span class="highlight">Jeramey</span><br>Year 1 Focus
+    </h1>
+    <p class="hero-sub reveal reveal-d2">
+      Product &amp; platform. Every feature, every deploy, every fire.
+      The bottleneck and the engine.
+    </p>
+    <div class="hero-meta reveal reveal-d3">
+      <div class="hero-meta-item">
+        <div class="hero-meta-value">115-120</div>
+        <div class="hero-meta-label">Dev hours / month</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-value">40%</div>
+        <div class="hero-meta-label">New development</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-value">5 hrs/wk</div>
+        <div class="hero-meta-label">Max sales support</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Q2 2026 ═══ -->
+<section class="scene" id="q2">
+  <div class="scene-inner">
+    <div class="s-label reveal">Q2 2026 &mdash; April to June</div>
+    <h2 class="s-title reveal reveal-d1">Launch Quarter</h2>
+    <p class="s-desc reveal reveal-d2">CoAssist readiness, ACCREDITCON support, CE platform, and the registrations that unlock everything else.</p>
+
+    <ul class="task-list reveal reveal-d2">
+      <li><strong>Apr:</strong> CoAssist ACCREDITCON readiness &mdash; harden onboarding, build demo environment (clean, resettable sandbox), fix CoAEMSP coverage gaps, AI-assisted narrative drafting</li>
+      <li><strong>May:</strong> ACCREDITCON support (on-call for live bugs), onboard first wave, ship first CE courses (payment/progress/certificates)</li>
+      <li><strong>Jun:</strong> Post-launch stabilization &mdash; CoAssist and CE bug fixes, UX improvements from real user feedback</li>
+      <li>SAM.gov registration &mdash; start immediately, blocks all federal grants</li>
+      <li>Cloud credit applications &mdash; Microsoft ($150K), AWS EdStart ($10-25K), Google ($100K)</li>
+      <li>NSF SBIR Project Pitch (with Richard) &mdash; draft May, submit June</li>
+      <li>Georgia ETPL &mdash; begin application in June</li>
+    </ul>
+
+    <div class="callout reveal reveal-d3">
+      <strong>Support load:</strong> 5-10 hrs/wk April, spiking 15-20 May-Jun. May hit 25-30 if ACCREDITCON signups are strong.
+    </div>
+
+    <ul class="milestone-list reveal reveal-d3">
+      <li>CoAssist publicly launched at ACCREDITCON</li>
+      <li>First CE courses live</li>
+      <li>SAM.gov registration submitted</li>
+      <li>Cloud credit applications submitted (all three)</li>
+      <li>NSF SBIR pitch drafted</li>
+    </ul>
+
+    <div class="meanwhile reveal reveal-d4">
+      <div class="meanwhile-title">Meanwhile, the team</div>
+      <div class="meanwhile-item"><div class="mw-dot mw-purple"></div>Heather ramps warm outreach to 25-35 contacts/week, ACCREDITCON hallway selling</div>
+      <div class="meanwhile-item"><div class="mw-dot mw-blue"></div>Samantha reactivates 200+ partially-adopted programs, targets 60+ contacted</div>
+      <div class="meanwhile-item"><div class="mw-dot mw-amber"></div>Richard drafts first CE course content, triages grant calendar, kills PCORI</div>
+    </div>
+
+    <div class="mrr-target reveal reveal-d4">
+      <span class="mrr-label">MRR Target</span>
+      <span class="mrr-value">$5,000+</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Q3 2026 ═══ -->
+<section class="scene" id="q3">
+  <div class="scene-inner">
+    <div class="s-label reveal">Q3 2026 &mdash; July to September</div>
+    <h2 class="s-title reveal reveal-d1">Conversion Quarter</h2>
+    <p class="s-desc reveal reveal-d2">Pulse polish, sales tooling, adaptive engine expansion. The product catches up to the sales motion.</p>
+
+    <ul class="task-list reveal reveal-d2">
+      <li><strong>Jul:</strong> Pulse polish &mdash; analyze usage data, kill unused modes, improve instructor launch flow, add usage data to reports</li>
+      <li><strong>Aug:</strong> Sales tooling sprint &mdash; program director dashboards, bulk CSV upload, pricing/packaging flexibility, outcomes dashboards</li>
+      <li><strong>Sep:</strong> Adaptive engine expansion &mdash; review item quality, grow pool to 3,500+, student diagnostics ("strong in Airway, weak in Cardiology"), program-facing aggregates</li>
+      <li>NAEMSE Symposium (Aug) &mdash; submit abstract on IRT-based adaptive testing, 15-20 warm conversations</li>
+      <li>R&amp;D tax credit &mdash; begin running activity log</li>
+      <li>Track CoAssist-to-testing conversion as key metric</li>
+      <li>Write first case study</li>
+      <li>Begin SEO for "Fisdap alternative," "NREMT practice test," "EMT test prep"</li>
+    </ul>
+
+    <div class="callout reveal reveal-d3">
+      <strong>Support load:</strong> 10-15 hrs/wk, settling from launch spike.
+    </div>
+
+    <ul class="milestone-list reveal reveal-d3">
+      <li>NAEMSE Symposium attended</li>
+      <li>Adaptive pool expanded to 3,500+ items</li>
+      <li>Sales tooling shipped (dashboards, CSV upload, outcomes)</li>
+    </ul>
+
+    <div class="meanwhile reveal reveal-d4">
+      <div class="meanwhile-title">Meanwhile, the team</div>
+      <div class="meanwhile-item"><div class="mw-dot mw-purple"></div>Heather: peak decision season, "replace before Fall" pitch, target 12 new programs</div>
+      <div class="meanwhile-item"><div class="mw-dot mw-blue"></div>Samantha: handling inbound from CoAssist signups, qualifying and routing to Heather</div>
+      <div class="meanwhile-item"><div class="mw-dot mw-amber"></div>Richard: ED/IES SBIR pre-work, Georgia OEMST meeting, FEMA AFG vendor materials</div>
+    </div>
+
+    <div class="mrr-target reveal reveal-d4">
+      <span class="mrr-label">MRR Target</span>
+      <span class="mrr-value">$10,000+</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Q4 2026 ═══ -->
+<section class="scene" id="q4">
+  <div class="scene-inner">
+    <div class="s-label reveal">Q4 2026 &mdash; October to December</div>
+    <h2 class="s-title reveal reveal-d1">Deepening Quarter</h2>
+    <p class="s-desc reveal reveal-d2">Data quality, clinicals, tech debt. Fix the encoding bug, replace JpGraph, form the 501(c)(3).</p>
+
+    <ul class="task-list reveal reveal-d2">
+      <li><strong>Oct:</strong> Adaptive reporting + data quality &mdash; item statistics (p-values, point-biserial, distractor analysis), fix encoding bug, cognitive process tagging interface for SMEs</li>
+      <li><strong>Nov:</strong> Clinicals improvements &mdash; encounter logging UX (mobile), preceptor signature workflow, Appendix G auto-population, CSV import from Platinum Planner/Fisdap</li>
+      <li><strong>Dec:</strong> Clinicals continued + tech debt. Replace JpGraph with Chart.js (licensing risk). Deployment improvements.</li>
+      <li>501(c)(3) formation &mdash; must be done this quarter. Incorporate, EIN, board, bank account.</li>
+      <li>R&amp;D tax credit &mdash; compile year-end documentation</li>
+    </ul>
+
+    <div class="callout reveal reveal-d3">
+      <strong>Support load:</strong> 10 hrs/wk mid-cycle, dropping to 5-10 December.
+    </div>
+
+    <ul class="milestone-list reveal reveal-d3">
+      <li>Encoding bug fixed</li>
+      <li>JpGraph replaced with Chart.js</li>
+      <li>Clinicals improvements shipped (Appendix G auto-population)</li>
+      <li>501(c)(3) formed</li>
+    </ul>
+
+    <div class="meanwhile reveal reveal-d4">
+      <div class="meanwhile-title">Meanwhile, the team</div>
+      <div class="meanwhile-item"><div class="mw-dot mw-purple"></div>Heather: EMS World Expo, Texas EMS Conference, upselling existing programs</div>
+      <div class="meanwhile-item"><div class="mw-dot mw-blue"></div>Samantha: EOPA revenue spike support, CE to ambulance services and fire depts</div>
+      <div class="meanwhile-item"><div class="mw-dot mw-amber"></div>Richard: ED/IES SBIR heavy writing, FEMA AFG push, webinar to state associations</div>
+    </div>
+
+    <div class="mrr-target reveal reveal-d4">
+      <span class="mrr-label">MRR Target</span>
+      <span class="mrr-value">$15,000+</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Q1 2027 ═══ -->
+<section class="scene" id="q1-27">
+  <div class="scene-inner">
+    <div class="s-label reveal">Q1 2027 &mdash; January to March</div>
+    <h2 class="s-title reveal reveal-d1">Scaling Quarter</h2>
+    <p class="s-desc reveal reveal-d2">Self-service signup, platform hardening, load testing. Remove yourself as the bottleneck for onboarding.</p>
+
+    <ul class="task-list reveal reveal-d2">
+      <li><strong>Jan:</strong> CoAssist Round 2 &mdash; top 5 feature gaps from 7+ months of usage. Georgia SOEMS redesignation tooling if warranted.</li>
+      <li><strong>Feb:</strong> Self-service B2B signup &mdash; programs purchase seat blocks via Stripe without Jeramey. Automated trial-to-paid. Bulk onboarding improvements.</li>
+      <li><strong>Mar:</strong> Platform hardening &mdash; load testing (2x, 5x?), database optimization, monitoring/alerting, automated smoke tests.</li>
+      <li>R&amp;D tax credit filing with CPA (federal Section 41 + Georgia state)</li>
+      <li>501(c)(3) Form 1023 filed or in progress</li>
+      <li>ETPL should be approved &mdash; market WIOA eligibility</li>
+    </ul>
+
+    <div class="callout reveal reveal-d3">
+      <strong>Support load:</strong> 10-15 hrs/wk, spiking to 15-20 February (peak sales = peak questions).
+    </div>
+
+    <ul class="milestone-list reveal reveal-d3">
+      <li>Self-service B2B signup live</li>
+      <li>Load testing complete</li>
+      <li>R&amp;D tax credit filed</li>
+      <li>ETPL active and generating WIOA enrollments</li>
+    </ul>
+
+    <div class="meanwhile reveal reveal-d4">
+      <div class="meanwhile-title">Meanwhile, the team</div>
+      <div class="meanwhile-item"><div class="mw-dot mw-purple"></div>Heather: spring cohort close window, 12-20 new programs, state-level pilots</div>
+      <div class="meanwhile-item"><div class="mw-dot mw-blue"></div>Samantha: first annual renewals, referral engine, WIOA-funded student targeting</div>
+      <div class="meanwhile-item"><div class="mw-dot mw-amber"></div>Richard: ED/IES SBIR submitted, NSF full proposal, full-time transition (moderate)</div>
+    </div>
+
+    <div class="mrr-target reveal reveal-d4">
+      <span class="mrr-label">MRR Target</span>
+      <span class="mrr-value">$20,000+</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Q2 2027 ═══ -->
+<section class="scene" id="q2-27">
+  <div class="scene-inner">
+    <div class="s-label reveal">Q2 2027 &mdash; April to May</div>
+    <h2 class="s-title reveal reveal-d1">Close-Out</h2>
+    <p class="s-desc reveal reveal-d2">Strategic buffer, Year 2 planning, psychometric tooling. Assess what worked. Plan what's next.</p>
+
+    <ul class="task-list reveal reveal-d2">
+      <li><strong>Apr:</strong> Strategic buffer &mdash; intentionally unallocated for delayed features, bugs, performance issues under growth</li>
+      <li><strong>May:</strong> Year 2 planning. Evaluate contractor/junior dev. Begin scoping Company C question bank. ACCREDITCON 2027 prep.</li>
+      <li>Psychometric tooling: item tagging interface, classical stats dashboard, response data export pipeline</li>
+      <li>Year 1 retrospective: what worked, what didn't, what changed</li>
+      <li>CoAssist one-year assessment: programs, conversion rate</li>
+      <li>Decision points: entity separation? JTA planning for EMT certification?</li>
+    </ul>
+
+    <ul class="milestone-list reveal reveal-d3">
+      <li>ACCREDITCON 2027 attended with Year 1 proof</li>
+      <li>Year 2 plan drafted</li>
+      <li>Psychometric tooling shipped</li>
+    </ul>
+
+    <div class="meanwhile reveal reveal-d4">
+      <div class="meanwhile-title">Meanwhile, the team</div>
+      <div class="meanwhile-item"><div class="mw-dot mw-purple"></div>Heather: ACCREDITCON 2027 with testimonials and 100+ CoAssist programs</div>
+      <div class="meanwhile-item"><div class="mw-dot mw-blue"></div>Samantha: 6-10 new programs, EOPA spike from spring completions</div>
+      <div class="meanwhile-item"><div class="mw-dot mw-amber"></div>Richard: monitoring grant awards, updating Year 2 calendar, full-time or near</div>
+    </div>
+
+    <div class="mrr-target reveal reveal-d4">
+      <span class="mrr-label">Ending MRR</span>
+      <span class="mrr-value">$25,000</span>
+    </div>
+  </div>
+</section>
+
+<script>
+// ── Reveal ──
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ── Nav dots ──
+const dots = document.querySelectorAll('.nav-dot');
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const t = document.getElementById(dot.dataset.target);
+    if (t) t.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+const dotObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      dots.forEach(d => d.classList.remove('active'));
+      const a = document.querySelector(`.nav-dot[data-target="${entry.target.id}"]`);
+      if (a) a.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('section[id]').forEach(s => dotObs.observe(s));
+
+// ── Interactive milestones (localStorage) ──
+const KEY = 'plan-jeramey-milestones';
+let state = JSON.parse(localStorage.getItem(KEY) || '{}');
+
+document.querySelectorAll('.milestone-list li').forEach((li, i) => {
+  if (state[i]) li.classList.add('done');
+  li.addEventListener('click', () => {
+    li.classList.toggle('done');
+    state[i] = li.classList.contains('done');
+    localStorage.setItem(KEY, JSON.stringify(state));
+  });
+});
+</script>
+</body>
+</html>
