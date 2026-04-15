@@ -328,11 +328,22 @@
   .callout strong { color: var(--text); }
 
   /* ── Back Link ── */
-  .back-link {
+  .top-bar {
     position: fixed;
-    top: 1.5rem;
-    left: 1.5rem;
+    top: 2px;
+    left: 0; right: 0;
     z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 1.5rem;
+    background: rgba(17,24,32,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .back-link {
     font-size: 12px;
     font-weight: 600;
     color: var(--text-muted);
@@ -344,6 +355,15 @@
     transition: all 0.2s;
   }
   .back-link:hover { color: var(--text); border-color: var(--accent); }
+  .top-link {
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid;
+    transition: all 0.2s;
+  }
 
   /* ── MRR Target ── */
   .mrr-target {
@@ -379,7 +399,11 @@
 </head>
 <body>
 
-<a href="one-year-plan.html" class="back-link">&larr; Full Plan</a>
+<div class="top-bar">
+  <a href="one-year-plan.html" class="back-link">&larr; Full Plan</a>
+  <a href="ce-launch-plan.html" class="top-link" style="background: rgba(45,212,191,0.12); border-color: rgba(45,212,191,0.25); color: #2dd4bf;">CE Launch Plan</a>
+  <a href="entity-ce-market.html" class="top-link" style="background: rgba(167,139,250,0.12); border-color: rgba(167,139,250,0.25); color: #a78bfa;">CE Competitors</a>
+</div>
 
 <nav class="nav-dots">
   <div class="nav-dot active" data-target="hero" title="Overview"></div>
