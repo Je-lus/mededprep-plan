@@ -1,0 +1,2084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedEdPrep — Grant Pipeline & Application Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0e14;
+    --bg-surface: #111820;
+    --bg-card: #151c25;
+    --bg-card-hover: #1a2331;
+    --bg-elevated: #1e2733;
+    --border: #243040;
+    --border-subtle: #1c2535;
+    --text-primary: #e8edf4;
+    --text-secondary: #8899aa;
+    --text-muted: #5a6a7a;
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+    --teal-glow: rgba(45,212,191,0.06);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.12);
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.12);
+    --orange: #fb923c;
+    --orange-dim: rgba(251,146,60,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.12);
+    --nav-width: 240px;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg-base);
+    background-image: radial-gradient(circle at 1px 1px, rgba(45,212,191,0.02) 1px, transparent 0);
+    background-size: 40px 40px;
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--purple), var(--blue), var(--teal));
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+    z-index: 200;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    width: var(--nav-width);
+    min-width: var(--nav-width);
+    background: rgba(17,24,32,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  nav::-webkit-scrollbar { width: 0; }
+
+  .nav-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .nav-brand-name {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--teal), #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-brand-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links { flex: 1; padding: 4px 0; }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    position: relative;
+  }
+  nav a:hover {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.04);
+    border-left-color: var(--teal);
+  }
+  nav a.active {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.06);
+    border-left-color: var(--teal);
+  }
+  nav a .nav-icon {
+    font-size: 15px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .nav-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 8px 0;
+  }
+  .nav-section-label {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    padding: 12px 24px 4px;
+  }
+
+  .nav-footer {
+    padding: 20px 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .nav-footer-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .nav-footer-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  /* ── LAYOUT ── */
+  .page-wrap { margin-left: var(--nav-width); }
+
+  .hero {
+    padding: 56px 56px 44px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #080c12 0%, #0d1520 30%, #0a1420 60%, #080e18 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: 10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(45,212,191,0.07) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px; height: 1px;
+    background: var(--teal);
+    vertical-align: middle;
+    margin-left: 12px;
+    opacity: 0.4;
+  }
+  .hero-headline {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f0f4f8 25%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 720px;
+  }
+
+  /* SDVOSB Badge */
+  .sdvosb-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(45,212,191,0.14) 0%, rgba(74,222,128,0.10) 100%);
+    border: 1px solid rgba(45,212,191,0.3);
+    border-radius: var(--radius-sm);
+    padding: 12px 20px;
+    margin-top: 20px;
+    position: relative;
+  }
+  .sdvosb-badge::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--green), var(--teal));
+  }
+  .sdvosb-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .sdvosb-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+  }
+  .sdvosb-sub {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    margin-top: 28px;
+  }
+  @media (max-width: 1200px) { .hero-metrics { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 800px) { .hero-metrics { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .hero-metrics { grid-template-columns: 1fr; } }
+
+  .hero-metric {
+    background: rgba(17,24,32,0.6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    transition: border-color 0.2s;
+  }
+  .hero-metric:hover { border-color: #344050; }
+  .hero-metric-value {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .hero-metric-value.c-teal { color: var(--teal); }
+  .hero-metric-value.c-purple { color: var(--purple); }
+  .hero-metric-value.c-blue { color: var(--blue); }
+  .hero-metric-value.c-green { color: var(--green); }
+  .hero-metric-value.c-amber { color: var(--amber); }
+  .hero-metric-value.c-pink { color: var(--pink); }
+  .hero-metric-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+  .hero-metric-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  /* ── MAIN ── */
+  .main-inner {
+    padding: 40px 56px 80px;
+    max-width: 1320px;
+  }
+
+  .content-section { margin-bottom: 52px; }
+
+  .section-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .section-count {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  /* ── REGISTRATION CHECKLIST ── */
+  .reg-panel {
+    background: linear-gradient(135deg, rgba(96,165,250,0.06) 0%, rgba(96,165,250,0.02) 100%);
+    border: 1px solid rgba(96,165,250,0.18);
+    border-radius: var(--radius);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .reg-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue), rgba(96,165,250,0.3), transparent);
+  }
+  .reg-panel.vet-panel {
+    background: linear-gradient(135deg, rgba(248,113,113,0.08) 0%, rgba(248,113,113,0.03) 100%);
+    border-color: rgba(248,113,113,0.25);
+    margin-top: 20px;
+  }
+  .reg-panel.vet-panel::before {
+    background: linear-gradient(90deg, var(--red), rgba(248,113,113,0.3), transparent);
+  }
+  .reg-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .reg-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .reg-subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .reg-progress {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: var(--blue-dim);
+    color: var(--blue);
+    white-space: nowrap;
+  }
+  .reg-progress.vet-progress {
+    background: var(--red-dim);
+    color: var(--red);
+  }
+
+  .reg-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .reg-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(17,24,32,0.5);
+    border: 1px solid rgba(96,165,250,0.1);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    transition: border-color 0.2s;
+    cursor: pointer;
+    user-select: none;
+  }
+  .reg-item:hover { border-color: rgba(96,165,250,0.25); }
+  .reg-item.completed {
+    border-color: rgba(74,222,128,0.2);
+    background: rgba(74,222,128,0.04);
+  }
+  .reg-item.completed .reg-checkbox {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .reg-item.completed .reg-checkbox::after {
+    content: '\2713';
+    color: #0a0e14;
+    font-size: 12px;
+    font-weight: 900;
+  }
+  .reg-item.completed .reg-label {
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+  .reg-item.auto-complete {
+    border-color: rgba(74,222,128,0.2);
+    background: rgba(74,222,128,0.04);
+    cursor: default;
+  }
+  .reg-item.auto-complete .reg-checkbox {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .reg-item.auto-complete .reg-checkbox::after {
+    content: '\2713';
+    color: #0a0e14;
+    font-size: 12px;
+    font-weight: 900;
+  }
+  .reg-checkbox {
+    width: 20px; height: 20px;
+    border: 2px solid rgba(96,165,250,0.4);
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .reg-content { flex: 1; }
+  .reg-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.35;
+    transition: all 0.2s;
+  }
+  .reg-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .reg-time {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    background: var(--blue-dim);
+    color: var(--blue);
+    letter-spacing: 0.03em;
+  }
+  .reg-time.done { background: var(--green-dim); color: var(--green); }
+  .reg-time.action { background: var(--red-dim); color: var(--red); }
+  .reg-time.likely { background: var(--amber-dim); color: var(--amber); }
+
+  /* UEI/CAGE copy boxes */
+  .id-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .id-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(74,222,128,0.06);
+    border: 1px solid rgba(74,222,128,0.18);
+    border-radius: var(--radius-xs);
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .id-box:hover {
+    background: rgba(74,222,128,0.12);
+    border-color: rgba(74,222,128,0.3);
+  }
+  .id-box-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .id-box-value {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--green);
+    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: 0.04em;
+  }
+  .id-box-copy {
+    font-size: 11px;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+  .id-box:hover .id-box-copy { color: var(--green); }
+
+  /* Vet cert unlock badges */
+  .unlock-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 3px;
+    background: var(--teal-dim);
+    color: var(--teal);
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── GRANT CARDS (new tracker style) ── */
+  .grant-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 1000px) { .grant-grid-2 { grid-template-columns: 1fr; } }
+
+  .grant-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 1000px) { .grant-grid-3 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 700px) { .grant-grid-3 { grid-template-columns: 1fr; } }
+
+  .gt-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .gt-card:hover {
+    border-color: #344050;
+    transform: translateY(-1px);
+  }
+  .gt-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .gt-teal::before { background: linear-gradient(90deg, var(--teal), transparent); }
+  .gt-green::before { background: linear-gradient(90deg, var(--green), transparent); }
+  .gt-purple::before { background: linear-gradient(90deg, var(--purple), transparent); }
+  .gt-amber::before { background: linear-gradient(90deg, var(--amber), transparent); }
+  .gt-blue::before { background: linear-gradient(90deg, var(--blue), transparent); }
+  .gt-pink::before { background: linear-gradient(90deg, var(--pink), transparent); }
+  .gt-red::before { background: linear-gradient(90deg, var(--red), transparent); }
+
+  .gt-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .gt-agency {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .gt-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .gt-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .gt-badge .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .badge-open { background: var(--green-dim); color: var(--green); }
+  .badge-open .dot { background: var(--green); animation: pulse-live 2s ease infinite; }
+  @keyframes pulse-live {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(74,222,128,0); }
+  }
+  .badge-closed { background: var(--red-dim); color: var(--red); }
+  .badge-closed .dot { background: var(--red); }
+  .badge-expected { background: var(--amber-dim); color: var(--amber); }
+  .badge-expected .dot { background: var(--amber); }
+  .badge-urgent { background: var(--red-dim); color: var(--red); animation: urgent-pulse 1.5s ease infinite; }
+  .badge-urgent .dot { background: var(--red); animation: pulse-live 1s ease infinite; }
+  @keyframes urgent-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(248,113,113,0.2); }
+    50% { box-shadow: 0 0 12px 2px rgba(248,113,113,0.15); }
+  }
+  .badge-rolling { background: var(--teal-dim); color: var(--teal); }
+  .badge-rolling .dot { background: var(--teal); }
+
+  .gt-amount {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .gt-amount.c-teal { color: var(--teal); }
+  .gt-amount.c-green { color: var(--green); }
+  .gt-amount.c-purple { color: var(--purple); }
+  .gt-amount.c-amber { color: var(--amber); }
+  .gt-amount.c-blue { color: var(--blue); }
+  .gt-amount.c-red { color: var(--red); }
+
+  .gt-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+
+  .gt-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .gt-meta-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+  }
+  .gt-meta-tag.sdvosb-tag {
+    background: var(--teal-dim);
+    color: var(--teal);
+    font-weight: 700;
+  }
+
+  /* Details/Summary styling */
+  .gt-details {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 12px;
+    margin-top: auto;
+  }
+  .gt-details summary {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 4px 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .gt-details summary::-webkit-details-marker { display: none; }
+  .gt-details summary::before {
+    content: '\25B6';
+    font-size: 8px;
+    transition: transform 0.2s;
+    color: var(--text-muted);
+  }
+  .gt-details[open] summary::before {
+    transform: rotate(90deg);
+  }
+  .gt-details summary:hover { color: var(--text-primary); }
+  .gt-details-content {
+    padding: 10px 0 4px;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .gt-details-content strong {
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+  .gt-details-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 6px 0;
+  }
+  .gt-details-content li {
+    padding: 3px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .gt-details-content li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .gt-angle {
+    background: var(--teal-glow);
+    border: 1px solid rgba(45,212,191,0.1);
+    border-radius: var(--radius-xs);
+    padding: 10px 12px;
+    margin-top: 12px;
+  }
+  .gt-angle-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--teal);
+    margin-bottom: 4px;
+  }
+  .gt-angle-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .gt-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--teal);
+    text-decoration: none;
+    margin-top: 12px;
+    padding: 6px 14px;
+    background: var(--teal-dim);
+    border: 1px solid rgba(45,212,191,0.15);
+    border-radius: var(--radius-xs);
+    transition: all 0.2s;
+  }
+  .gt-link:hover {
+    background: rgba(45,212,191,0.18);
+    border-color: rgba(45,212,191,0.3);
+    gap: 9px;
+  }
+  .gt-link.purple { color: var(--purple); background: var(--purple-dim); border-color: rgba(167,139,250,0.15); }
+  .gt-link.purple:hover { background: rgba(167,139,250,0.18); border-color: rgba(167,139,250,0.3); }
+  .gt-link.green { color: var(--green); background: var(--green-dim); border-color: rgba(74,222,128,0.15); }
+  .gt-link.green:hover { background: rgba(74,222,128,0.18); border-color: rgba(74,222,128,0.3); }
+  .gt-link.amber { color: var(--amber); background: var(--amber-dim); border-color: rgba(251,191,36,0.15); }
+  .gt-link.amber:hover { background: rgba(251,191,36,0.18); border-color: rgba(251,191,36,0.3); }
+  .gt-link.red { color: var(--red); background: var(--red-dim); border-color: rgba(248,113,113,0.15); }
+  .gt-link.red:hover { background: rgba(248,113,113,0.18); border-color: rgba(248,113,113,0.3); }
+
+  /* ── TIME-SENSITIVE BANNER ── */
+  .urgent-banner {
+    background: linear-gradient(135deg, rgba(248,113,113,0.08) 0%, rgba(251,191,36,0.06) 100%);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .urgent-banner-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .urgent-banner-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .urgent-banner-text strong {
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* ── ACTION ITEMS ── */
+  .action-panel {
+    background: linear-gradient(135deg, rgba(45,212,191,0.06) 0%, rgba(45,212,191,0.02) 100%);
+    border: 1px solid rgba(45,212,191,0.18);
+    border-radius: var(--radius);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .action-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), rgba(45,212,191,0.3), transparent);
+  }
+  .action-header {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+  .action-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .action-item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    padding: 8px 12px;
+    background: rgba(17,24,32,0.5);
+    border: 1px solid rgba(45,212,191,0.08);
+    border-radius: var(--radius-xs);
+  }
+  .action-item::before {
+    content: '\25A0';
+    color: var(--teal);
+    font-size: 8px;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .action-item strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .action-item .urgent {
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.16s; }
+  .reveal-delay-3 { transition-delay: 0.24s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { display: none; }
+    .page-wrap { margin-left: 0; }
+    .hero { padding: 32px 20px 28px; }
+    .hero-headline { font-size: 24px; }
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+    .main-inner { padding: 24px 20px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-name">MedEdPrep</div>
+    <div class="nav-brand-sub">Grant Tracker</div>
+  </div>
+  <div class="nav-links">
+    <a href="hub.html"><span class="nav-icon">&#9670;</span> Command Center</a>
+    <a href="grant-tracker.html" class="active"><span class="nav-icon">&#9670;</span> Grant Tracker</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">Sections</div>
+    <a href="#registrations"><span class="nav-icon">&#9672;</span> Registrations</a>
+    <a href="#vet-certs"><span class="nav-icon">&#9672;</span> Veteran Certs</a>
+    <a href="#time-sensitive"><span class="nav-icon">&#9672;</span> Time-Sensitive</a>
+    <a href="#sbir"><span class="nav-icon">&#9672;</span> Federal SBIR/STTR</a>
+    <a href="#state"><span class="nav-icon">&#9672;</span> State &amp; Local</a>
+    <a href="#private"><span class="nav-icon">&#9672;</span> Cloud &amp; Private</a>
+    <a href="#vendor"><span class="nav-icon">&#9672;</span> Vendor Pathways</a>
+    <a href="#actions"><span class="nav-icon">&#9672;</span> Action Items</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">Deep Dives</div>
+    <a href="entity-company-a.html"><span class="nav-icon">&#9671;</span> Company A</a>
+    <a href="entity-company-c.html"><span class="nav-icon">&#9671;</span> Company C</a>
+    <a href="entity-nonprofit.html"><span class="nav-icon">&#9671;</span> Foundation</a>
+    <a href="entity-ip-vault.html"><span class="nav-icon">&#9671;</span> IP &amp; Vault</a>
+    <a href="entity-psychometric.html"><span class="nav-icon">&#9671;</span> Psychometric</a>
+    <a href="entity-timeline.html"><span class="nav-icon">&#9671;</span> Timeline</a>
+    <hr class="nav-divider">
+    <a href="dashboard.html"><span class="nav-icon">&#9671;</span> Full Dashboard</a>
+    <a href="action-center.html"><span class="nav-icon">&#9671;</span> Action Center</a>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-footer-label">Last updated</div>
+    <div class="nav-footer-date">April 13, 2026</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">MedEdPrep, LLC &mdash; Funding Pipeline</div>
+    <h1 class="hero-headline">Grant Pipeline &amp; Application Tracker</h1>
+    <p class="hero-subtitle">Every for-profit-eligible grant, credit program, veteran certification, and vendor pathway &mdash; organized by priority with application details, deadlines, and MedEdPrep-specific framing. Built for Richard Rhodes (former OEMST official, grant writer) to work through systematically on day one.</p>
+
+    <div class="sdvosb-badge">
+      <div class="sdvosb-icon">&#9733;</div>
+      <div>
+        <div class="sdvosb-text">100% Service-Disabled Veteran-Owned Small Business</div>
+        <div class="sdvosb-sub">Unlocks $31B+ in federal set-asides, sole-source contracts up to $5M, and VETS 2 GWAC access</div>
+      </div>
+    </div>
+
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="hero-metric-value c-teal">5</div>
+        <div class="hero-metric-label">Federal SBIR Programs</div>
+        <div class="hero-metric-note">ED/IES, NSF, NIH, DHS, DOD</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-green">5</div>
+        <div class="hero-metric-label">State &amp; Local Programs</div>
+        <div class="hero-metric-note">Georgia ETPL, FAST, R&amp;D credit, SSBCI</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-purple">4</div>
+        <div class="hero-metric-label">Cloud &amp; Private Sector</div>
+        <div class="hero-metric-note">Up to $285K in credits</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-amber">$4.5M+</div>
+        <div class="hero-metric-label">Total Addressable Funding</div>
+        <div class="hero-metric-note">Across all programs</div>
+      </div>
+      <div class="hero-metric" style="border-color: rgba(45,212,191,0.25);">
+        <div class="hero-metric-value c-teal">SDVOSB</div>
+        <div class="hero-metric-label">Veteran Advantage</div>
+        <div class="hero-metric-note">5% federal goal, sole-source authority</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-inner">
+
+    <!-- REGISTRATION CHECKLIST -->
+    <div class="content-section reveal" id="registrations">
+      <div class="section-title-row">
+        <div class="section-title">Mandatory Registrations</div>
+        <div class="section-count">Complete these before any federal application</div>
+      </div>
+
+      <div class="reg-panel">
+        <div class="reg-header">
+          <div>
+            <div class="reg-title">The Golden Thread &mdash; Federal Registration Sequence</div>
+            <div class="reg-subtitle">All registrations are FREE. Do not pay a third party to "expedite" your UEI. Complete in order.</div>
+          </div>
+          <div class="reg-progress" id="reg-progress">0 / 6</div>
+        </div>
+        <div class="reg-list" id="reg-list">
+
+          <!-- Login.gov — likely complete -->
+          <div class="reg-item" data-reg="login-gov" onclick="toggleReg(this)">
+            <div class="reg-checkbox"></div>
+            <div class="reg-content">
+              <div class="reg-label">Login.gov &mdash; Single sign-on for federal systems (MFA)</div>
+              <div class="reg-note">Likely already complete &mdash; Login.gov is required for SAM.gov registration, which is done. Verify you can still access your Login.gov account.</div>
+            </div>
+            <div class="reg-time likely">Likely Done</div>
+          </div>
+
+          <!-- SAM.gov — COMPLETE -->
+          <div class="reg-item auto-complete" data-reg="sam-gov">
+            <div class="reg-checkbox"></div>
+            <div class="reg-content">
+              <div class="reg-label" style="text-decoration: none; opacity: 1;">SAM.gov &mdash; COMPLETE &amp; ACTIVE</div>
+              <div class="reg-note" style="color: var(--green);">Registration active through January 2027. All federal grant applications can proceed.</div>
+              <div class="id-row">
+                <div class="id-box" onclick="copyToClipboard('G73RY28NE1H4', this)" title="Click to copy UEI">
+                  <div class="id-box-label">UEI</div>
+                  <div class="id-box-value">G73RY28NE1H4</div>
+                  <div class="id-box-copy">&#128203; Copy</div>
+                </div>
+                <div class="id-box" onclick="copyToClipboard('18GM6', this)" title="Click to copy CAGE code">
+                  <div class="id-box-label">CAGE</div>
+                  <div class="id-box-value">18GM6</div>
+                  <div class="id-box-copy">&#128203; Copy</div>
+                </div>
+              </div>
+            </div>
+            <div class="reg-time done">Complete</div>
+          </div>
+
+          <!-- SBIR.gov — COMPLETE -->
+          <div class="reg-item checked" data-reg="sbir-gov" onclick="toggleReg(this)">
+            <div class="reg-checkbox"></div>
+            <div class="reg-content">
+              <div class="reg-label" style="text-decoration: none; opacity: 1;">SBIR.gov &mdash; COMPLETE</div>
+              <div class="reg-note">Registered April 13, 2026. SBC Control ID on dashboard. UEI <strong style="color: var(--green);">G73RY28NE1H4</strong> linked.</div>
+            </div>
+            <div class="reg-time done">Complete</div>
+          </div>
+
+          <!-- Grants.gov — COMPLETE -->
+          <div class="reg-item checked" data-reg="grants-gov" onclick="toggleReg(this)">
+            <div class="reg-checkbox"></div>
+            <div class="reg-content">
+              <div class="reg-label" style="text-decoration: none; opacity: 1;">Grants.gov &mdash; COMPLETE</div>
+              <div class="reg-note">Registered April 13, 2026. Applicant Center active. UEI linked. Ready to submit federal applications.</div>
+            </div>
+            <div class="reg-time done">Complete</div>
+          </div>
+
+          <!-- Research.gov (NSF) — COMPLETE -->
+          <div class="reg-item checked" data-reg="research-gov" onclick="toggleReg(this)">
+            <div class="reg-checkbox"></div>
+            <div class="reg-content">
+              <div class="reg-label" style="text-decoration: none; opacity: 1;">Research.gov (NSF) &mdash; COMPLETE</div>
+              <div class="reg-note">Registered April 13, 2026. NSF ID: <strong style="color: var(--green);">0000A8N3F</strong>. Password setup pending (NSF login page loading issue &mdash; retry off-peak). Ready to submit NSF SBIR pitch once password is set.</div>
+            </div>
+            <div class="reg-time done">Complete</div>
+          </div>
+
+          <!-- eRA Commons (NIH) — ACTION NEEDED -->
+          <div class="reg-item" data-reg="era-commons" onclick="toggleReg(this)">
+            <div class="reg-checkbox"></div>
+            <div class="reg-content">
+              <div class="reg-label">eRA Commons (NIH) &mdash; Required for NIH SBIR Applications</div>
+              <div class="reg-note">NIH uses eRA Commons for all grant submissions and management. Register the organization AND create PI account. Can take 1-2 weeks &mdash; start early.</div>
+            </div>
+            <div class="reg-time action">Action Needed</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- VETERAN CERTIFICATIONS -->
+    <div class="content-section reveal" id="vet-certs">
+      <div class="section-title-row">
+        <div class="section-title">Veteran Certifications &amp; Programs</div>
+        <div class="section-count">High-priority &mdash; these unlock procurement advantages worth $31B+</div>
+      </div>
+
+      <div class="reg-panel vet-panel">
+        <div class="reg-header">
+          <div>
+            <div class="reg-title" style="color: var(--red);">&#9888; Veteran Certifications &mdash; Do These Now</div>
+            <div class="reg-subtitle">These are separate from federal grant registrations. Most are free and fast. They unlock procurement advantages, tax benefits, and contracting set-asides that compound over time.</div>
+          </div>
+          <div class="reg-progress vet-progress" id="vet-progress">0 / 5</div>
+        </div>
+        <div class="reg-list" id="vet-list">
+
+          <!-- SBA SDVOSB -->
+          <div class="reg-item" data-vet="sba-sdvosb" onclick="toggleVet(this)" style="border-color: rgba(248,113,113,0.15);">
+            <div class="reg-checkbox" style="border-color: rgba(248,113,113,0.4);"></div>
+            <div class="reg-content">
+              <div class="reg-label">SBA SDVOSB Certification &mdash; Service-Disabled Veteran-Owned Small Business</div>
+              <div class="reg-note"><strong style="color: var(--green);">FREE.</strong> Apply through <a href="https://mysba.certify.sba.gov/" target="_blank" style="color: var(--teal);">MySBA Certifications</a>. Average processing time ~12 days. Already flagged as SDVOSB in SAM.gov, but formal SBA certification is a separate process. Valid for 3 years.</div>
+              <div class="unlock-tag">Unlocks: Sole-source contracts up to $5M | 5% federal contracting goal ($31B+/yr) | VETS 2 GWAC eligibility</div>
+            </div>
+            <div class="reg-time action">~12 Days</div>
+          </div>
+
+          <!-- Georgia DOAS -->
+          <div class="reg-item" data-vet="ga-doas" onclick="toggleVet(this)" style="border-color: rgba(248,113,113,0.15);">
+            <div class="reg-checkbox" style="border-color: rgba(248,113,113,0.4);"></div>
+            <div class="reg-content">
+              <div class="reg-label">Georgia DOAS Veteran-Owned Business Certification</div>
+              <div class="reg-note">HB 128 (2024). Apply through <a href="https://doas.ga.gov/state-purchasing/georgia-business-certification-program" target="_blank" style="color: var(--teal);">Team Georgia Marketplace</a> after obtaining SBA VOSB/SDVOSB or NaVOBA certification. State procurement visibility for Georgia contracts.</div>
+              <div class="unlock-tag">Unlocks: State contract preferences | Primes get 10% GA tax deduction for subcontracting with you (up to $100K/yr)</div>
+            </div>
+            <div class="reg-time action">After SBA Cert</div>
+          </div>
+
+          <!-- GA Business Certificate of Exemption -->
+          <div class="reg-item" data-vet="ga-exemption" onclick="toggleVet(this)" style="border-color: rgba(248,113,113,0.15);">
+            <div class="reg-checkbox" style="border-color: rgba(248,113,113,0.4);"></div>
+            <div class="reg-content">
+              <div class="reg-label">Georgia Business Certificate of Exemption</div>
+              <div class="reg-note">10-year exemption from local occupation taxes, admin fees, and regulatory fees. Requires 10%+ service-connected disability rating (25% for peacetime). Complete VS Form 40-025, bring DD-214 and VA Summary of Benefits to County Probate Court.</div>
+              <div class="unlock-tag">Unlocks: 10 years exemption from local business taxes and regulatory fees</div>
+            </div>
+            <div class="reg-time action">County Visit</div>
+          </div>
+
+          <!-- VA Vets First -->
+          <div class="reg-item" data-vet="va-vets-first" onclick="toggleVet(this)" style="border-color: rgba(248,113,113,0.15);">
+            <div class="reg-checkbox" style="border-color: rgba(248,113,113,0.4);"></div>
+            <div class="reg-content">
+              <div class="reg-label">VA Vets First Registration</div>
+              <div class="reg-note">The VA must set aside at least 7% of contracts for VOSBs/SDVOSBs. Under Vets First, VA contracting officers check SDVOSB/VOSB availability BEFORE other set-aside categories. Registration happens through the SBA SDVOSB certification process.</div>
+              <div class="unlock-tag">Unlocks: 7% VA contract set-asides | Priority over 8(a), HUBZone, general small business</div>
+            </div>
+            <div class="reg-time action">Via SBA Cert</div>
+          </div>
+
+          <!-- VETS 2 GWAC -->
+          <div class="reg-item" data-vet="vets2-gwac" onclick="toggleVet(this)" style="border-color: rgba(248,113,113,0.15);">
+            <div class="reg-checkbox" style="border-color: rgba(248,113,113,0.4);"></div>
+            <div class="reg-content">
+              <div class="reg-label">VETS 2 GWAC &mdash; $6.1B IT Services Vehicle (Research &amp; Plan)</div>
+              <div class="reg-note">GSA's $6.1 billion IDIQ contract vehicle exclusively for SDVOSBs, covering IT services and solutions. An ed-tech SaaS platform likely qualifies. Requires SDVOSB certification first. Longer-term goal &mdash; research the application process and requirements.</div>
+              <div class="unlock-tag">Unlocks: Access to $6.1B in SDVOSB-exclusive IT services contracts across all federal agencies</div>
+            </div>
+            <div class="reg-time" style="background: var(--amber-dim); color: var(--amber);">Research</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- TIME-SENSITIVE -->
+    <div class="content-section reveal" id="time-sensitive">
+      <div class="section-title-row">
+        <div class="section-title">Time-Sensitive Opportunities</div>
+        <div class="section-count">Act now</div>
+      </div>
+
+      <div class="urgent-banner">
+        <div class="urgent-banner-icon">&#9888;</div>
+        <div class="urgent-banner-text">
+          <strong>NSF SBIR pitches are open now</strong> &mdash; rolling submissions resumed April 2026. Submit a 1,500-word pitch and get a response within 3-6 weeks. This is the fastest path to SBIR funding.
+        </div>
+      </div>
+
+      <div class="grant-grid-2">
+
+        <!-- NSF SBIR Pitch -->
+        <div class="gt-card gt-amber reveal reveal-delay-1">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">National Science Foundation</div>
+              <div class="gt-name">NSF SBIR Project Pitch</div>
+            </div>
+            <div class="gt-badge badge-open"><span class="dot"></span> Open Now</div>
+          </div>
+          <div class="gt-amount c-amber">$275K&ndash;$305K (Phase I)</div>
+          <div class="gt-desc">Rolling pitch system resumed April 2026 post-reauthorization. Submit a 1,500-word pitch across 4 prompts. NSF reviews within 3-6 weeks and invites full proposal. No topic-specific solicitations &mdash; you pitch your innovation.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">SBIR Phase I</span>
+            <span class="gt-meta-tag">Rolling Submission</span>
+            <span class="gt-meta-tag">Deep Tech</span>
+          </div>
+          <details class="gt-details">
+            <summary>Application Process &amp; Requirements</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li><strong>Step 1 &mdash; Project Pitch:</strong> ~1,500 words across 4 prompts (Technology Innovation, Technical Objectives/Challenges, Market Opportunity, Company/Team)</li>
+                <li><strong>Step 2 &mdash; Invitation:</strong> Wait 3-6 weeks for official invitation to submit a full proposal</li>
+                <li><strong>Step 3 &mdash; Full Proposal:</strong> Submit through Research.gov within 1 year of invitation</li>
+              </ul>
+              <p style="margin-top:8px"><strong>Review Criteria:</strong> Technical Risk (NSF hates funding "straightforward engineering"), Intellectual Merit, Broader Impacts</p>
+              <p><strong>Phase II:</strong> Up to $1,000,000&ndash;$1,250,000</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">Focus on "Learning and Cognitive Technologies" or "Artificial Intelligence" topics. Use the 1.55M student responses to propose a "Novel IRT-based Predictive Model for Student Success" that represents a technical leap, not just a product update. Emphasize bifactor/CAT psychometric innovation.</div>
+          </div>
+          <a href="https://seedfund.nsf.gov/project-pitch/" target="_blank" class="gt-link amber">Submit Pitch at NSF &rarr;</a>
+        </div>
+
+        <!-- DHS SBIR -->
+        <div class="gt-card gt-amber reveal reveal-delay-2">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">DHS Science &amp; Technology</div>
+              <div class="gt-name">DHS SBIR 26.1</div>
+            </div>
+            <div class="gt-badge badge-expected"><span class="dot"></span> May/Jun 2026</div>
+          </div>
+          <div class="gt-amount c-amber">$225K (Phase I) / $1.275M (Phase II)</div>
+          <div class="gt-desc">First responder technology, training tools, communications, disaster response. Solicitation expected May/June 2026. Focus on "First Responder Group" topics.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">~20-page technical proposal</span>
+            <span class="gt-meta-tag">Phase I: 6 months</span>
+            <span class="gt-meta-tag sdvosb-tag">SDVOSB: Phase III sole-source</span>
+          </div>
+          <details class="gt-details">
+            <summary>Application Process &amp; Requirements</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li><strong>Review topics</strong> in the Solicitation (released on SAM.gov)</li>
+                <li><strong>Submit via DHS SBIR portal</strong></li>
+                <li><strong>Participate in "Phase 0" webinars</strong> if available</li>
+              </ul>
+              <p style="margin-top:8px"><strong>What's Needed:</strong> Technical Proposal (~20 pages), Cost Proposal, Company Commercialization Report</p>
+              <p><strong>Review Criteria:</strong> Technical Merit, Commercial Potential, Mission Fit (Impact on Homeland Security)</p>
+              <p><strong>Timeline:</strong> Release May &rarr; Due July &rarr; Awards Oct/Nov</p>
+              <p style="margin-top:8px; color: var(--teal);"><strong>SDVOSB Note:</strong> SBIR evaluation gives zero veteran preference. However, Phase III commercialization (post-SBIR procurement) can leverage SDVOSB sole-source authority &mdash; DHS can sole-source a Phase III production contract to an SDVOSB up to $5M without competition.</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">Target "First Responder Group" topics. MedEdPrep's IRT engine and CoAssist platform fit with topics like "Credentialing for Incident Management" or "Next-Gen 911/EMS Training Interoperability."</div>
+          </div>
+          <a href="https://www.dhs.gov/science-and-technology/sbir" target="_blank" class="gt-link amber">DHS SBIR &rarr;</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FEDERAL SBIR/STTR -->
+    <div class="content-section reveal" id="sbir">
+      <div class="section-title-row">
+        <div class="section-title">Federal SBIR/STTR Programs</div>
+        <div class="section-count">Reauthorized March 17, 2026 &mdash; through Sept 30, 2031</div>
+      </div>
+
+      <div class="grant-grid-2">
+
+        <!-- ED/IES SBIR -->
+        <div class="gt-card gt-teal reveal reveal-delay-1">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">U.S. Dept of Education / IES</div>
+              <div class="gt-name">ED/IES SBIR &mdash; Phase IB</div>
+            </div>
+            <div class="gt-badge badge-expected"><span class="dot"></span> Expected Nov 2026</div>
+          </div>
+          <div class="gt-amount c-teal">$250K (Phase I) / $1M (Phase II)</div>
+          <div class="gt-desc">The #1 grant target. IES SBIR was built for companies like MedEdPrep. Phase IB (New Components for Existing Products) is the best fit given the existing platform. Funds assessments, adaptive tutors, AI-powered learning, gamified learning.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">Phase I: 8 months</span>
+            <span class="gt-meta-tag">Phase II: 2 years</span>
+            <span class="gt-meta-tag">15-page narrative</span>
+          </div>
+          <details class="gt-details">
+            <summary>Application Process &amp; Requirements</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li><strong>Monitor SAM.gov</strong> for the RFP (usually released November)</li>
+                <li><strong>Download</strong> the IES SBIR application package</li>
+                <li><strong>Submit 15-page Project Narrative</strong> + Budget &amp; Justification</li>
+                <li><strong>Appendices:</strong> Resumes (1 pg each), letters of support, commercialization plan</li>
+                <li><strong>Video Demo:</strong> 3-5 minute demonstration of the prototype</li>
+              </ul>
+              <p style="margin-top:8px"><strong>What's Needed:</strong> SAM.gov + SBIR.gov registrations, IRB plan for human subjects, research partner (university) for evaluation component</p>
+              <p><strong>Review Criteria:</strong> Technical Merit &amp; Innovation, Research Design &amp; Methodology, Commercialization Potential, Project Team &amp; Resources</p>
+              <p><strong>Eligibility:</strong> For-profit &lt;500 employees, PI 51%+ time with business, 66.7% of Phase I work by business</p>
+              <p><strong>Timeline:</strong> Submission Jan 2027; Awards Apr/May 2027</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">EXCELLENT fit. The 1.55M response dataset and existing adaptive platform give a massive head start on "evidence-based" criteria. Phase IB track for adding AI-driven adaptive features to the testing engine or expanding CoAssist. The bifactor/CAT psychometric work is a strong differentiator.</div>
+          </div>
+          <a href="https://ies.ed.gov/funding/research/programs/small-business-innovation-research-sbir" target="_blank" class="gt-link">Apply at IES &rarr;</a>
+        </div>
+
+        <!-- NSF SBIR (full card) -->
+        <div class="gt-card gt-teal reveal reveal-delay-2">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">National Science Foundation</div>
+              <div class="gt-name">NSF SBIR &mdash; America's Seed Fund</div>
+            </div>
+            <div class="gt-badge badge-open"><span class="dot"></span> Pitches Open</div>
+          </div>
+          <div class="gt-amount c-teal">$275K&ndash;$305K (Phase I)</div>
+          <div class="gt-desc">Rolling submission via Project Pitch. Resumed April 2026 post-reauthorization. Phase II up to $1M&ndash;$1.25M. No topic-specific solicitations &mdash; you pitch your deep-tech innovation.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">Rolling Pitches</span>
+            <span class="gt-meta-tag">3-6 week review</span>
+            <span class="gt-meta-tag">1,500-word pitch</span>
+          </div>
+          <details class="gt-details">
+            <summary>Application Process &amp; Requirements</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li><strong>Project Pitch (Step 1):</strong> ~1,500 words across 4 prompts</li>
+                <li><strong>Invitation (Step 2):</strong> 3-6 weeks for response</li>
+                <li><strong>Full Proposal (Step 3):</strong> Via Research.gov within 1 year</li>
+              </ul>
+              <p style="margin-top:8px"><strong>Pitch Prompts:</strong> Technology Innovation, Technical Objectives/Challenges, Market Opportunity, Company/Team</p>
+              <p><strong>Key Criterion:</strong> Technical Risk &mdash; NSF wants high-risk, high-reward R&amp;D, not straightforward engineering</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">Target "Learning and Cognitive Technologies" or "AI" topics. Propose a novel IRT-based predictive model. Emphasize bifactor psychometric modeling, CAT engine architecture, and Pulse gamification as technical innovations.</div>
+          </div>
+          <a href="https://seedfund.nsf.gov/" target="_blank" class="gt-link">NSF Seed Fund &rarr;</a>
+        </div>
+
+        <!-- NIH SBIR -->
+        <div class="gt-card gt-teal reveal reveal-delay-1">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">National Institutes of Health</div>
+              <div class="gt-name">NIH SBIR Omnibus</div>
+            </div>
+            <div class="gt-badge badge-expected"><span class="dot"></span> Sept 5, 2026</div>
+          </div>
+          <div class="gt-amount c-teal">$314K (Phase I) / $2M (Phase II)</div>
+          <div class="gt-desc">Researcher-initiated topics via Omnibus solicitation. Standard cap ~$314K for Phase I; waiver topics allow up to $600K. Target NIEHS Worker Training Program or NIDA for overdose response training tech.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">Omnibus (open topic)</span>
+            <span class="gt-meta-tag">6-page Research Strategy</span>
+            <span class="gt-meta-tag">Via Grants.gov</span>
+          </div>
+          <details class="gt-details">
+            <summary>Application Process &amp; Requirements</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li><strong>Select target institute</strong> (e.g., NIEHS, NIDA, NIBIB)</li>
+                <li><strong>Draft Specific Aims</strong> &mdash; 1-page document outlining the goal</li>
+                <li><strong>Full Application:</strong> 6-page Research Strategy (Phase I)</li>
+                <li><strong>Submit via Grants.gov</strong></li>
+              </ul>
+              <p style="margin-top:8px"><strong>What's Needed:</strong> Specific Aims (1 pg), Research Strategy (6 pgs), Human Subjects section, Budget, eRA Commons registration</p>
+              <p><strong>Review Criteria:</strong> Significance, Innovation, Approach, Investigators, Environment</p>
+              <p><strong>Timeline:</strong> Submit Sept 5 &rarr; Peer review Jan/Feb &rarr; Award Apr/May</p>
+              <p><strong>Receipt Dates:</strong> Sept 5, 2026 | Jan 5, 2027 | Apr 5, 2027</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">Frame adaptive assessment as a workforce competency tool that improves patient outcomes by ensuring EMS providers meet evidence-based competency thresholds. The NREMT redesign context strengthens the case. Target NIEHS for EMS first responder e-learning.</div>
+          </div>
+          <a href="https://sbir.nih.gov" target="_blank" class="gt-link">NIH SBIR &rarr;</a>
+        </div>
+
+        <!-- DHS SBIR (full card) -->
+        <div class="gt-card gt-teal reveal reveal-delay-2">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">DHS Science &amp; Technology</div>
+              <div class="gt-name">DHS SBIR 26.1</div>
+            </div>
+            <div class="gt-badge badge-expected"><span class="dot"></span> May/Jun 2026</div>
+          </div>
+          <div class="gt-amount c-teal">$225K (Phase I) / $1.275M (Phase II)</div>
+          <div class="gt-desc">First responder technology, training tools, communications, disaster response. Focus on "First Responder Group" topics. Phase I is 6 months, Phase II is 24 months.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">~20-page technical proposal</span>
+            <span class="gt-meta-tag">Phase I: 6 months</span>
+            <span class="gt-meta-tag sdvosb-tag">SDVOSB: Phase III sole-source</span>
+          </div>
+          <details class="gt-details">
+            <summary>Application Process &amp; Requirements</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li><strong>Review topics</strong> in the Solicitation (released on SAM.gov)</li>
+                <li><strong>Submit via DHS SBIR portal</strong></li>
+                <li><strong>Participate in "Phase 0" webinars</strong> if available</li>
+              </ul>
+              <p style="margin-top:8px"><strong>What's Needed:</strong> Technical Proposal (~20 pages), Cost Proposal, Company Commercialization Report</p>
+              <p><strong>Review Criteria:</strong> Technical Merit, Commercial Potential, Mission Fit (Impact on Homeland Security)</p>
+              <p><strong>Timeline:</strong> Release May &rarr; Due July &rarr; Awards Oct/Nov</p>
+              <p style="margin-top:8px; color: var(--teal);"><strong>SDVOSB Note:</strong> SBIR evaluation gives zero veteran preference. However, Phase III commercialization can leverage SDVOSB sole-source authority up to $5M without competition.</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">Target "First Responder Group" topics. MedEdPrep's IRT engine and CoAssist platform fit with topics like "Credentialing for Incident Management" or "Next-Gen 911/EMS Training Interoperability."</div>
+          </div>
+          <a href="https://www.dhs.gov/science-and-technology/sbir" target="_blank" class="gt-link">DHS SBIR &rarr;</a>
+        </div>
+
+        <!-- DOD AFWERX -->
+        <div class="gt-card gt-teal reveal reveal-delay-1">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">Department of Defense</div>
+              <div class="gt-name">DOD AFWERX Open Topic</div>
+            </div>
+            <div class="gt-badge badge-expected"><span class="dot"></span> Cycle 26.3 Sept 2026</div>
+          </div>
+          <div class="gt-amount c-teal">$150K&ndash;$250K (Phase I)</div>
+          <div class="gt-desc">AFWERX "Open Topic" is the best DOD fit. Look for "Human Performance" or "Software Modernization" topics. Phase II up to ~$1.25M. Cycle 26.2 closed April 6, 2026; next cycle 26.3 expected September 2026.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">Open Topic</span>
+            <span class="gt-meta-tag">Human Performance</span>
+            <span class="gt-meta-tag sdvosb-tag">SDVOSB: Phase III sole-source</span>
+          </div>
+          <details class="gt-details">
+            <summary>Application Process &amp; Requirements</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li>Submit via <strong>DSIP Portal</strong> (Defense SBIR/STTR Innovation Portal)</li>
+                <li>Watch for topic announcements in Cycle 26.3</li>
+                <li>AFWERX Open Topic allows broad innovation pitches</li>
+              </ul>
+              <p style="margin-top:8px"><strong>Best Topics:</strong> "Human Performance," "Software Modernization," training tech</p>
+              <p><strong>Timeline:</strong> Cycle 26.3 expected Sept 2026</p>
+              <p style="margin-top:8px; color: var(--teal);"><strong>SDVOSB Note:</strong> SBIR evaluation gives zero veteran preference. However, DOD Phase III contracts can leverage SDVOSB sole-source authority &mdash; DOD can sole-source a Phase III production contract to an SDVOSB up to $5M without competition. DOD is the largest federal contracting agency.</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">Position the adaptive testing engine as a "Human Performance" assessment tool. Military EMS/medic training uses similar competency frameworks. Cross-over potential if framed as generalizable competency assessment technology.</div>
+          </div>
+          <a href="https://www.afwerx.com/sbir-sttr" target="_blank" class="gt-link">AFWERX SBIR &rarr;</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- STATE & LOCAL -->
+    <div class="content-section reveal" id="state">
+      <div class="section-title-row">
+        <div class="section-title">State &amp; Local Programs</div>
+        <div class="section-count">Georgia-specific opportunities</div>
+      </div>
+
+      <div class="grant-grid-3">
+
+        <!-- Georgia ETPL -->
+        <div class="gt-card gt-green reveal reveal-delay-1">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">Technical College System of Georgia</div>
+              <div class="gt-name">Georgia ETPL Listing</div>
+            </div>
+            <div class="gt-badge badge-open"><span class="dot"></span> Open (Rolling)</div>
+          </div>
+          <div class="gt-amount c-green">Revenue Stream</div>
+          <div class="gt-desc">Not a grant &mdash; but getting on the Eligible Training Provider List means WIOA-funded students can use Individual Training Accounts (up to $5,000+ per student) to pay for MedEdPrep courses. High value, low effort.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">WIOA Vouchers</span>
+            <span class="gt-meta-tag">60-90 day approval</span>
+            <span class="gt-meta-tag">Rolling</span>
+          </div>
+          <details class="gt-details">
+            <summary>Application Process &amp; Requirements</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li><strong>Contact Local LWDA</strong> (e.g., WorkSource Atlanta)</li>
+                <li><strong>Submit State Application Packet</strong> + local supplements</li>
+                <li><strong>Provide:</strong> OEMS designation (DPH), Articles of Incorporation, financial audit/tax standing, performance data (5-10 completions), program syllabus</li>
+              </ul>
+              <p style="margin-top:8px"><strong>Review Criteria:</strong> Performance (completion/placement rates), economic demand, physical facility safety</p>
+              <p><strong>Key Requirement:</strong> Must be in business for at least 6 months with OEMS designation</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">EMT/Paramedic certification prep and CAPCE-accredited CE directly align. EMS certifications via NREMT satisfy the "recognized credential" requirement. This is the easiest high-value action item on the list.</div>
+          </div>
+          <a href="https://www.worksourcegaportal.com" target="_blank" class="gt-link green">WorkSource Georgia &rarr;</a>
+        </div>
+
+        <!-- Georgia R&D Tax Credit -->
+        <div class="gt-card gt-green reveal reveal-delay-2">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">Georgia Dept of Economic Development</div>
+              <div class="gt-name">Georgia R&amp;D Tax Credit</div>
+            </div>
+            <div class="gt-badge badge-rolling"><span class="dot"></span> Ongoing</div>
+          </div>
+          <div class="gt-amount c-green">10% of Qualified R&amp;D</div>
+          <div class="gt-desc">10% state tax credit on qualified research expenses exceeding the base amount, plus federal Section 41 R&amp;D credit. MedEdPrep's psychometric R&amp;D, adaptive algorithm development, and IRT modeling likely qualify. Claim on Georgia income tax return.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">Tax Credit</span>
+            <span class="gt-meta-tag">No Separate Application</span>
+            <span class="gt-meta-tag">State + Federal</span>
+          </div>
+          <details class="gt-details">
+            <summary>Requirements &amp; Details</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li>Claim on Georgia income tax return with supporting documentation</li>
+                <li>Consult a CPA familiar with state R&amp;D credits</li>
+                <li>Qualifying activities: psychometric R&amp;D, adaptive algorithm development, IRT modeling, CAT engine work</li>
+                <li>Federal Section 41 credit is in addition to the Georgia credit</li>
+              </ul>
+              <p style="margin-top:8px"><strong>Also available:</strong> Retraining Tax Credit ($500/employee/year for retraining programs), Job Tax Credit (up to $4,000/job in less-developed counties)</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">Document all R&amp;D hours and expenses now. Bifactor modeling, CAT development, Pulse gamification architecture &mdash; all likely qualify. This is free money on work already being done.</div>
+          </div>
+        </div>
+
+        <!-- Georgia FAST Grant -->
+        <div class="gt-card gt-green reveal reveal-delay-3">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">UGA Innovation Gateway</div>
+              <div class="gt-name">Georgia FAST Grant</div>
+            </div>
+            <div class="gt-badge badge-expected"><span class="dot"></span> Expected Q3 2026</div>
+          </div>
+          <div class="gt-amount c-green">Up to $2,450</div>
+          <div class="gt-desc">Covers the cost of hiring a professional grant writing consultant for SBIR/STTR applications. Small dollars but directly supports the bigger SBIR applications.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">Grant Writer Funding</span>
+            <span class="gt-meta-tag">2-4 week approval</span>
+            <span class="gt-meta-tag">Georgia Startups</span>
+          </div>
+          <details class="gt-details">
+            <summary>Application Process &amp; Requirements</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li><strong>Submit application</strong> via UGA Innovation Gateway</li>
+                <li><strong>Provide:</strong> Quote from a professional grant writing consultant, Proof of Concept documentation, resume of consultant</li>
+              </ul>
+              <p style="margin-top:8px"><strong>Eligibility:</strong> For-profit Georgia startup, developing novel technology, Proof of Concept (GRA, KickStart, or I-Corps)</p>
+              <p><strong>Review Criteria:</strong> Commercialization potential and likelihood of winning a federal SBIR</p>
+              <p><strong>Contact:</strong> monicaw@uga.edu (UGA Coordinator)</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">Use this to fund a consultant for the ED/IES SBIR or NSF Phase I submission. Apply as soon as the next cycle opens.</div>
+          </div>
+          <a href="https://research.uga.edu/gateway/startups/uga-fast-grant/" target="_blank" class="gt-link green">UGA FAST Grant &rarr;</a>
+        </div>
+
+        <!-- Team Georgia Marketplace -->
+        <div class="gt-card gt-green reveal reveal-delay-1">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">Georgia DOAS</div>
+              <div class="gt-name">Team Georgia Marketplace</div>
+            </div>
+            <div class="gt-badge badge-open"><span class="dot"></span> Open</div>
+          </div>
+          <div class="gt-amount c-green">Vendor Registration</div>
+          <div class="gt-desc">State procurement portal. Register as a vendor to sell to Georgia state agencies including the Georgia Office of EMS (DPH) and Technical College System. Opens the state sales channel.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">Procurement Access</span>
+            <span class="gt-meta-tag">Free Registration</span>
+            <span class="gt-meta-tag">RFP Alerts</span>
+          </div>
+          <details class="gt-details">
+            <summary>How to Register</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li>Register at <strong>doas.georgia.gov/state-purchasing</strong></li>
+                <li>Set up alerts for EMS-related RFPs</li>
+                <li>Contact the Georgia Office of EMS directly to understand their technology procurement cycle</li>
+              </ul>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">Position MedEdPrep as a vendor to state EMS training programs. Georgia's 22 technical colleges operate EMS programs &mdash; getting on the marketplace is the first step to state institutional sales.</div>
+          </div>
+          <a href="https://doas.georgia.gov/state-purchasing" target="_blank" class="gt-link green">Team Georgia &rarr;</a>
+        </div>
+
+        <!-- Georgia SSBCI -->
+        <div class="gt-card gt-green reveal reveal-delay-2">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">Georgia DCA / U.S. Treasury</div>
+              <div class="gt-name">Georgia SSBCI</div>
+            </div>
+            <div class="gt-badge badge-open"><span class="dot"></span> Active</div>
+          </div>
+          <div class="gt-amount c-green">Credit Enhancement</div>
+          <div class="gt-desc">State Small Business Credit Initiative &mdash; $199.6M allocated to Georgia from ARPA. Not a direct grant. Reduces cost of capital through loan participation, guarantees, and venture capital programs. Active through 2030.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">Loan Guarantee</span>
+            <span class="gt-meta-tag">20-50% Participation</span>
+            <span class="gt-meta-tag">Through Lenders</span>
+          </div>
+          <details class="gt-details">
+            <summary>How to Access</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li>Work with a <strong>participating lender</strong> (bank or credit union enrolled in SSBCI)</li>
+                <li>The lender applies to DCA for the loan participation/guarantee on your behalf</li>
+                <li>Ask your bank if they participate in Georgia SSBCI</li>
+              </ul>
+              <p style="margin-top:8px"><strong>Programs:</strong> Loan Participation Program, Venture Capital Program, Loan Guarantee Program</p>
+              <p><strong>Contact:</strong> Georgia DCA at 404-679-4940</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">Useful if MedEdPrep needs a business loan for expansion, hiring, or product development. SSBCI guarantee reduces lender risk and can improve interest rate and terms significantly.</div>
+          </div>
+          <a href="https://dca.georgia.gov/financing-tools/small-business/state-small-business-credit-initiative-ssbci" target="_blank" class="gt-link green">Georgia SSBCI &rarr;</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PRIVATE SECTOR & CLOUD CREDITS -->
+    <div class="content-section reveal" id="private">
+      <div class="section-title-row">
+        <div class="section-title">Private Sector &amp; Cloud Credits</div>
+        <div class="section-count">Quick wins &mdash; apply this week</div>
+      </div>
+
+      <div class="grant-grid-2">
+
+        <!-- Microsoft for Startups -->
+        <div class="gt-card gt-purple reveal reveal-delay-1">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">Microsoft</div>
+              <div class="gt-name">Microsoft for Startups Founders Hub</div>
+            </div>
+            <div class="gt-badge badge-open"><span class="dot"></span> Open Now</div>
+          </div>
+          <div class="gt-amount c-purple">Up to $150K Azure Credits</div>
+          <div class="gt-desc">Also includes free GitHub Enterprise, Visual Studio Enterprise, Microsoft 365, LinkedIn tools, and OpenAI API credits. Mentorship and technical support included. No equity, no external funding required.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">~15 min application</span>
+            <span class="gt-meta-tag">Days to approval</span>
+            <span class="gt-meta-tag">Multi-stage credits</span>
+          </div>
+          <details class="gt-details">
+            <summary>Application Details</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li>Apply at microsoft.com/en-us/startups</li>
+                <li>Application is quick (~15 minutes)</li>
+                <li>Approval typically within days</li>
+                <li>Stage 1: ~$1,000 Azure credits immediately</li>
+                <li>Additional credits unlock as you progress</li>
+              </ul>
+              <p style="margin-top:8px"><strong>Eligibility:</strong> Startup (&lt;7 years old, exceptions exist), viable product or prototype, no external funding required</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">Even if not on Azure primarily, the OpenAI API credits are valuable for AI-powered features. Development tools (GitHub Enterprise, VS Code) have standalone value. Quick win &mdash; apply immediately.</div>
+          </div>
+          <a href="https://www.microsoft.com/en-us/startups" target="_blank" class="gt-link purple">Apply Now &rarr;</a>
+        </div>
+
+        <!-- AWS EdStart -->
+        <div class="gt-card gt-purple reveal reveal-delay-2">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">Amazon Web Services</div>
+              <div class="gt-name">AWS EdStart</div>
+            </div>
+            <div class="gt-badge badge-open"><span class="dot"></span> Open (Rolling)</div>
+          </div>
+          <div class="gt-amount c-purple">$10K&ndash;$25K AWS Credits</div>
+          <div class="gt-desc">Startup accelerator for ed-tech companies. Includes go-to-market support, technical training, community access, and co-marketing opportunities. Innovators tier ($10K) and Scale tier ($25K+).</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">Ed-Tech Focus</span>
+            <span class="gt-meta-tag">Rolling Applications</span>
+            <span class="gt-meta-tag">Go-to-Market Support</span>
+          </div>
+          <details class="gt-details">
+            <summary>Application Details</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li>Apply at aws.amazon.com/edstart/</li>
+                <li>Application asks for: company overview, product description, customer traction, AWS usage plans</li>
+                <li>Must be education-focused technology company with live product</li>
+                <li>Must use (or be willing to migrate to) AWS</li>
+              </ul>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">STRONG fit. If MedEdPrep uses AWS, this is straightforward. The EdStart community provides networking with other ed-tech companies and potential buyer connections. Credits cover compute, storage, ML services.</div>
+          </div>
+          <a href="https://aws.amazon.com/edstart/" target="_blank" class="gt-link purple">AWS EdStart &rarr;</a>
+        </div>
+
+        <!-- Google Cloud -->
+        <div class="gt-card gt-purple reveal reveal-delay-1">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">Google</div>
+              <div class="gt-name">Google for Startups Cloud Program</div>
+            </div>
+            <div class="gt-badge badge-open"><span class="dot"></span> Open</div>
+          </div>
+          <div class="gt-amount c-purple">Up to $100K GCP Credits</div>
+          <div class="gt-desc">Up to $100K in Google Cloud credits over 2 years for startups. Also look at Google for Startups Accelerator: AI First (equity-free, 10-week program with mentorship and additional credits).</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">2-Year Credits</span>
+            <span class="gt-meta-tag">AI Accelerator Available</span>
+            <span class="gt-meta-tag">No Equity</span>
+          </div>
+          <details class="gt-details">
+            <summary>Application Details</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li>Apply at cloud.google.com/startup</li>
+                <li>Must have a website and functional product</li>
+                <li>AI First Accelerator is cohort-based &mdash; watch for applications</li>
+                <li>Google for Education Partner Program available for integration/distribution</li>
+              </ul>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">Cloud credits valuable if using GCP. AI-focused accelerator is a strong fit if MedEdPrep frames adaptive testing as AI-driven (IRT + ML). Education Partner Program could open Google Classroom integration channels.</div>
+          </div>
+          <a href="https://cloud.google.com/startup" target="_blank" class="gt-link purple">Google Cloud Startup &rarr;</a>
+        </div>
+
+        <!-- ATDC -->
+        <div class="gt-card gt-purple reveal reveal-delay-2">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">Georgia Tech</div>
+              <div class="gt-name">ATDC at Georgia Tech</div>
+            </div>
+            <div class="gt-badge badge-open"><span class="dot"></span> Open (Rolling)</div>
+          </div>
+          <div class="gt-amount c-purple">Free Incubation</div>
+          <div class="gt-desc">Advanced Technology Development Center &mdash; free startup incubation with coaching, mentorship, investor connections, office space access, and workshops. No equity taken. Operating since 1980. One of the longest-running incubators in the U.S.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">No Equity</span>
+            <span class="gt-meta-tag">Free</span>
+            <span class="gt-meta-tag">Georgia Tech Network</span>
+          </div>
+          <details class="gt-details">
+            <summary>Application Details</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li>Apply at atdc.org/apply/</li>
+                <li><strong>ATDC Startup:</strong> For companies with product/market fit that are scaling</li>
+                <li><strong>ATDC Accelerate:</strong> For earlier-stage companies</li>
+                <li><strong>ATDC Signature:</strong> For growth-stage companies raising Series A+</li>
+                <li>Rolling admissions with periodic cohort starts</li>
+              </ul>
+              <p style="margin-top:8px"><strong>What You Get:</strong> Free coaching from experienced entrepreneurs, connections to Georgia Tech research, community of 100+ startups, alumni network of 200+ companies</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">Highest-value, lowest-cost resource for a Georgia tech startup. The Georgia Tech research connection is particularly valuable for developing SBIR proposals &mdash; could facilitate the university research partner needed for ED/IES SBIR.</div>
+          </div>
+          <a href="https://atdc.org/apply/" target="_blank" class="gt-link purple">Apply to ATDC &rarr;</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- VENDOR / SUBCONTRACTOR -->
+    <div class="content-section reveal" id="vendor">
+      <div class="section-title-row">
+        <div class="section-title">Vendor &amp; Subcontractor Opportunities</div>
+        <div class="section-count">Position MedEdPrep as a vendor to grant recipients</div>
+      </div>
+
+      <div class="grant-grid-3">
+
+        <!-- FEMA AFG -->
+        <div class="gt-card gt-blue reveal reveal-delay-1">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">FEMA</div>
+              <div class="gt-name">AFG Vendor Strategy</div>
+            </div>
+            <div class="gt-badge badge-expected"><span class="dot"></span> FY25 Nov/Dec</div>
+          </div>
+          <div class="gt-amount c-blue">$50K&ndash;$1M+</div>
+          <div class="gt-desc">For-profit companies cannot apply directly for AFG. But fire departments and EMS agencies that receive AFG funding for training can purchase MedEdPrep products. Position MedEdPrep as a training resource agencies include in their AFG applications.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">Vendor/Subcontractor</span>
+            <span class="gt-meta-tag">Build Relationships</span>
+            <span class="gt-meta-tag">2 C.F.R. Part 200</span>
+          </div>
+          <details class="gt-details">
+            <summary>Strategy &amp; Requirements</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li>Identify "High Priority" training in the AFG NOFO</li>
+                <li>Provide "Justification Language" and quotes to fire departments</li>
+                <li>Departments include MedEdPrep's solution in their application</li>
+                <li>Need: Detailed quotes, technical spec sheets, 2 C.F.R. Part 200 compliance</li>
+              </ul>
+              <p style="margin-top:8px"><strong>Review Criteria (for departments):</strong> Financial Need, Benefit vs. Cost, Population Served</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">Position "Pulse" as a solution for "High Priority" regional training compliance. Build relationships with EMS agencies that apply for AFG. Create a one-page "AFG Justification" document agencies can include in their applications.</div>
+          </div>
+          <a href="https://www.fema.gov/grants/preparedness/firefighters" target="_blank" class="gt-link">FEMA AFG &rarr;</a>
+        </div>
+
+        <!-- Perkins V -->
+        <div class="gt-card gt-blue reveal reveal-delay-2">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">TCSG / Georgia DOE</div>
+              <div class="gt-name">Perkins V Vendor Pathway</div>
+            </div>
+            <div class="gt-badge badge-rolling"><span class="dot"></span> Ongoing</div>
+          </div>
+          <div class="gt-amount c-blue">Sales Channel</div>
+          <div class="gt-desc">For-profit companies cannot apply for Perkins V directly. But Georgia's 22 technical colleges can use Perkins V funds to purchase curriculum, assessment tools, and technology from vendors &mdash; including MedEdPrep.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">22 Technical Colleges</span>
+            <span class="gt-meta-tag">Performance-Aligned</span>
+            <span class="gt-meta-tag">EMS Programs</span>
+          </div>
+          <details class="gt-details">
+            <summary>Strategy &amp; Positioning</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li>Identify which Georgia technical colleges have EMS/paramedicine programs</li>
+                <li>Contact CTE directors and demonstrate alignment with Perkins V performance indicators</li>
+                <li><strong>Key indicators:</strong> 1P1 (retention/placement), 2P1 (credential attainment), 3P1 (nontraditional participation)</li>
+                <li>Build a one-page "Perkins V Alignment" sell sheet</li>
+              </ul>
+              <p style="margin-top:8px"><strong>Action:</strong> Show how MedEdPrep improves credential attainment rates (2P1) through adaptive test preparation. This directly addresses Perkins V "program quality" and "student outcomes" emphasis.</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">MedEdPrep's data-driven approach directly addresses Perkins V performance metrics. Position as a tool that helps technical colleges improve their credential attainment rates for EMS programs. This is a procurement/sales play, not a grant.</div>
+          </div>
+          <a href="https://www.tcsg.edu/" target="_blank" class="gt-link">TCSG &rarr;</a>
+        </div>
+
+        <!-- WIOA / Workforce Boards -->
+        <div class="gt-card gt-blue reveal reveal-delay-3">
+          <div class="gt-top">
+            <div>
+              <div class="gt-agency">WorkSource Georgia</div>
+              <div class="gt-name">WIOA / Workforce Boards</div>
+            </div>
+            <div class="gt-badge badge-rolling"><span class="dot"></span> Ongoing</div>
+          </div>
+          <div class="gt-amount c-blue">Multiple Pathways</div>
+          <div class="gt-desc">20 Local Workforce Development Areas across Georgia. Beyond ETPL listing, MedEdPrep can access On-the-Job Training, Incumbent Worker Training, and market to EMS agencies that use WIOA funds to purchase training technology.</div>
+          <div class="gt-meta">
+            <span class="gt-meta-tag">20 Georgia LWDAs</span>
+            <span class="gt-meta-tag">Incumbent Worker Training</span>
+            <span class="gt-meta-tag">Quick Start</span>
+          </div>
+          <details class="gt-details">
+            <summary>Pathways Available</summary>
+            <div class="gt-details-content">
+              <ul>
+                <li><strong>ETPL Provider:</strong> Students use ITAs to pay for MedEdPrep (covered in State section)</li>
+                <li><strong>Employer-Side:</strong> Georgia Quick Start (free customized workforce training), Incumbent Worker Training grants (reimburse employers for training)</li>
+                <li><strong>B2B:</strong> Market to EMS agencies using WIOA Incumbent Worker Training funds to purchase training tech for staff</li>
+              </ul>
+              <p style="margin-top:8px"><strong>Georgia SBDC:</strong> Free consulting from UGA SBDC (18 offices statewide). They help with grant writing, business plans, and funding source identification. Schedule at georgiasbdc.org</p>
+            </div>
+          </details>
+          <div class="gt-angle">
+            <div class="gt-angle-label">MedEdPrep Angle</div>
+            <div class="gt-angle-text">Triple play: (1) get on ETPL for student-funded revenue, (2) use Quick Start if hiring, (3) sell to EMS agencies that use WIOA Incumbent Worker Training funds. The SBDC consultation is free and should be scheduled immediately.</div>
+          </div>
+          <a href="https://www.worksourcegaonline.com/" target="_blank" class="gt-link">WorkSource GA &rarr;</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ACTION ITEMS -->
+    <div class="content-section reveal" id="actions">
+      <div class="section-title-row">
+        <div class="section-title">Quick Action Items</div>
+        <div class="section-count">Richard Rhodes's day-one checklist</div>
+      </div>
+
+      <div class="action-panel" style="border-color: rgba(248,113,113,0.25); background: linear-gradient(135deg, rgba(248,113,113,0.06) 0%, rgba(248,113,113,0.02) 100%);">
+        <div class="action-header" style="color: var(--red);">This Week &mdash; Do These First</div>
+        <ul class="action-list">
+          <li class="action-item" style="text-decoration: line-through; opacity: 0.5;"><strong>Register on SBIR.gov</strong> &mdash; DONE April 13, 2026</li>
+          <li class="action-item" style="text-decoration: line-through; opacity: 0.5;"><strong>Register on Grants.gov</strong> &mdash; DONE April 13, 2026</li>
+          <li class="action-item" style="text-decoration: line-through; opacity: 0.5;"><strong>Register on Research.gov (NSF)</strong> &mdash; DONE April 13, 2026. NSF ID: 0000A8N3F. Password setup pending.</li>
+          <li class="action-item"><strong>Set Research.gov password</strong> &mdash; NSF login page had loading issues. Retry off-peak hours. 2-minute task once it loads.</li>
+          <li class="action-item"><strong class="urgent">Apply for SBA SDVOSB Certification</strong> &mdash; FREE, ~12 days. Apply at <a href="https://mysba.certify.sba.gov/" target="_blank" style="color: var(--teal);">mysba.certify.sba.gov</a>. Unlocks $31B+ in federal set-asides.</li>
+          <li class="action-item"><strong>Apply for Georgia DOAS Veteran Certification</strong> &mdash; state procurement visibility + 10% tax deduction incentive for primes. Apply after SBA cert or via NaVOBA.</li>
+          <li class="action-item"><strong>Apply to Microsoft for Startups</strong> &mdash; 15-minute application, up to $150K in Azure + OpenAI credits</li>
+          <li class="action-item"><strong>Apply to AWS EdStart</strong> &mdash; 30-minute application, $10-25K in AWS credits + go-to-market support</li>
+          <li class="action-item"><strong>Apply to Google Cloud Startup Credits</strong> &mdash; up to $100K in GCP credits</li>
+        </ul>
+      </div>
+
+      <div class="action-panel" style="margin-top: 16px; border-color: rgba(167,139,250,0.18); background: linear-gradient(135deg, rgba(167,139,250,0.06) 0%, rgba(167,139,250,0.02) 100%);">
+        <div class="action-header">Next 30-60 Days</div>
+        <ul class="action-list">
+          <li class="action-item"><strong>Draft NSF SBIR Project Pitch</strong> &mdash; pitches are open now and reviewed within 3-6 weeks. Fastest path to SBIR funding.</li>
+          <li class="action-item"><strong>Register on eRA Commons</strong> &mdash; needed for NIH SBIR. Takes 1-2 weeks, so start early.</li>
+          <li class="action-item"><strong>Apply to Georgia ETPL</strong> through Technical College System of Georgia &mdash; unlocks WIOA-funded students. Low effort, high revenue impact.</li>
+          <li class="action-item"><strong>Apply to ATDC at Georgia Tech</strong> &mdash; free incubation, no equity, Georgia Tech research network access for SBIR proposals</li>
+          <li class="action-item"><strong>Georgia Business Certificate of Exemption</strong> &mdash; visit County Probate Court with DD-214 and VA Summary of Benefits. 10-year local tax exemption.</li>
+          <li class="action-item"><strong>Register on Team Georgia Marketplace</strong> &mdash; opens the state vendor/procurement sales channel</li>
+          <li class="action-item"><strong>Schedule Georgia SBDC consultation</strong> at georgiasbdc.org &mdash; free grant writing assistance and funding source identification</li>
+        </ul>
+      </div>
+
+      <div class="action-panel" style="margin-top: 16px; border-color: rgba(251,191,36,0.18); background: linear-gradient(135deg, rgba(251,191,36,0.06) 0%, rgba(251,191,36,0.02) 100%);">
+        <div class="action-header">Summer-Fall 2026 &mdash; High-Value Submissions</div>
+        <ul class="action-list">
+          <li class="action-item"><strong>ED/IES SBIR Phase IB proposal</strong> &mdash; #1 target. Expected November 2026 solicitation. Prepare: document R&amp;D, compile evidence from 1.55M response dataset, identify university research partner, apply for Georgia FAST grant for consultant.</li>
+          <li class="action-item"><strong>NIH SBIR Omnibus</strong> &mdash; target September 5, 2026 receipt date. Frame around health workforce competency and patient safety outcomes.</li>
+          <li class="action-item"><strong>Monitor DHS SBIR topics</strong> &mdash; watch for first-responder training technology topics when FY2026 solicitation publishes (May-June 2026). SDVOSB status enhances Phase III path.</li>
+          <li class="action-item"><strong>Watch Georgia FAST Grant reopening</strong> &mdash; apply to cover SBIR proposal consultant costs</li>
+          <li class="action-item"><strong>DOD AFWERX Cycle 26.3</strong> &mdash; expected September 2026. Target "Human Performance" or "Software Modernization" topics. SDVOSB status enhances Phase III path.</li>
+          <li class="action-item"><strong>Research VETS 2 GWAC</strong> &mdash; $6.1B SDVOSB-exclusive IT services vehicle. Understand requirements and timeline for application once SDVOSB cert is in hand.</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div><!-- main-inner -->
+</div><!-- page-wrap -->
+
+<script>
+  // ── Registration checklist with localStorage ──
+  function loadRegState() {
+    const saved = JSON.parse(localStorage.getItem('mep-reg-state') || '{}');
+    document.querySelectorAll('#reg-list .reg-item[data-reg]').forEach(item => {
+      const key = item.dataset.reg;
+      // These are permanently complete — force them
+      if (['sam-gov', 'sbir-gov', 'grants-gov', 'research-gov'].includes(key)) {
+        item.classList.add('auto-complete');
+        return;
+      }
+      if (key === 'login-gov') {
+        // Login.gov is likely complete — auto-check it but allow toggle
+        if (saved[key] === undefined) {
+          saved[key] = true;
+          item.classList.add('completed');
+        } else if (saved[key]) {
+          item.classList.add('completed');
+        }
+      } else if (saved[key]) {
+        item.classList.add('completed');
+      }
+    });
+    localStorage.setItem('mep-reg-state', JSON.stringify(saved));
+    updateRegProgress();
+  }
+
+  function toggleReg(el) {
+    if (el.classList.contains('auto-complete')) return;
+    el.classList.toggle('completed');
+    const state = JSON.parse(localStorage.getItem('mep-reg-state') || '{}');
+    const key = el.dataset.reg;
+    if (key) {
+      state[key] = el.classList.contains('completed');
+      localStorage.setItem('mep-reg-state', JSON.stringify(state));
+    }
+    updateRegProgress();
+  }
+
+  function updateRegProgress() {
+    const items = document.querySelectorAll('#reg-list .reg-item[data-reg]');
+    const total = items.length;
+    let done = 0;
+    items.forEach(item => {
+      if (item.classList.contains('completed') || item.classList.contains('auto-complete')) done++;
+    });
+    const el = document.getElementById('reg-progress');
+    if (el) el.textContent = done + ' / ' + total;
+    if (done === total && total > 0) {
+      el.style.background = 'rgba(74,222,128,0.12)';
+      el.style.color = '#4ade80';
+    } else {
+      el.style.background = '';
+      el.style.color = '';
+    }
+  }
+
+  // ── Veteran certifications checklist with localStorage ──
+  function loadVetState() {
+    const saved = JSON.parse(localStorage.getItem('mep-vet-state') || '{}');
+    document.querySelectorAll('#vet-list .reg-item[data-vet]').forEach(item => {
+      const key = item.dataset.vet;
+      if (saved[key]) {
+        item.classList.add('completed');
+      }
+    });
+    updateVetProgress();
+  }
+
+  function toggleVet(el) {
+    el.classList.toggle('completed');
+    const state = {};
+    document.querySelectorAll('#vet-list .reg-item[data-vet]').forEach(item => {
+      state[item.dataset.vet] = item.classList.contains('completed');
+    });
+    localStorage.setItem('mep-vet-state', JSON.stringify(state));
+    updateVetProgress();
+  }
+
+  function updateVetProgress() {
+    const total = document.querySelectorAll('#vet-list .reg-item[data-vet]').length;
+    const done = document.querySelectorAll('#vet-list .reg-item.completed').length;
+    const el = document.getElementById('vet-progress');
+    if (el) el.textContent = done + ' / ' + total;
+    if (done === total && total > 0) {
+      el.style.background = 'rgba(74,222,128,0.12)';
+      el.style.color = '#4ade80';
+    } else {
+      el.style.background = '';
+      el.style.color = '';
+    }
+  }
+
+  // ── Copy to clipboard ──
+  function copyToClipboard(text, el) {
+    navigator.clipboard.writeText(text).then(() => {
+      const copyEl = el.querySelector('.id-box-copy');
+      if (copyEl) {
+        const original = copyEl.textContent;
+        copyEl.textContent = 'Copied!';
+        copyEl.style.color = 'var(--green)';
+        setTimeout(() => {
+          copyEl.textContent = original;
+          copyEl.style.color = '';
+        }, 1500);
+      }
+    });
+    // Prevent bubbling to parent reg-item click
+    event.stopPropagation();
+  }
+
+  loadRegState();
+  loadVetState();
+
+  // ── Scroll reveal ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── Active nav on scroll ──
+  const sections = document.querySelectorAll('.content-section[id]');
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 200) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
