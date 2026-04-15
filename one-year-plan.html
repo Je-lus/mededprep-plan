@@ -968,15 +968,38 @@
   .data-table .col-moderate { color: var(--teal); }
   .data-table .col-optimistic { color: var(--purple); }
 
+  /* ── MOBILE HEADER ── */
+  .mobile-top-bar {
+    display: none;
+    position: fixed;
+    top: 2px;
+    left: 0; right: 0;
+    z-index: 180;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(17,24,32,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .mobile-top-link {
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid;
+    transition: all 0.2s;
+  }
+
   /* ── MOBILE HAMBURGER ── */
   .mobile-menu-btn {
     display: none;
-    position: fixed;
-    top: 12px;
-    left: 12px;
     z-index: 200;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 8px;
     background: var(--bg-surface);
     border: 1px solid var(--border);
@@ -985,6 +1008,7 @@
     justify-content: center;
     flex-direction: column;
     gap: 4px;
+    flex-shrink: 0;
   }
   .mobile-menu-btn span {
     display: block;
@@ -1009,7 +1033,8 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
-    .mobile-menu-btn { display: flex; }
+    .mobile-top-bar { display: flex; }
+    .mobile-menu-btn { display: flex; position: static; }
 
     nav {
       transform: translateX(-100%);
@@ -1020,7 +1045,7 @@
 
     .hero {
       margin-left: 0;
-      padding: 48px 20px 32px;
+      padding: 60px 20px 32px;
     }
     .hero-content {
       grid-template-columns: 1fr;
@@ -1078,10 +1103,14 @@
   <div class="nav-dot" data-target="team-views" title="Team Views"></div>
 </div>
 
-<!-- ── MOBILE MENU ── -->
-<button class="mobile-menu-btn" aria-label="Menu" onclick="document.querySelector('nav').classList.toggle('open');this.classList.toggle('open');document.querySelector('.nav-overlay').classList.toggle('open');">
-  <span></span><span></span><span></span>
-</button>
+<!-- ── MOBILE HEADER ── -->
+<div class="mobile-top-bar">
+  <button class="mobile-menu-btn" aria-label="Menu" onclick="document.querySelector('nav').classList.toggle('open');this.classList.toggle('open');document.querySelector('.nav-overlay').classList.toggle('open');">
+    <span></span><span></span><span></span>
+  </button>
+  <a href="ce-launch-plan.html" class="mobile-top-link" style="background: rgba(45,212,191,0.12); border-color: rgba(45,212,191,0.25); color: #2dd4bf;">CE Launch Plan</a>
+  <a href="entity-ce-market.html" class="mobile-top-link" style="background: rgba(167,139,250,0.12); border-color: rgba(167,139,250,0.25); color: #a78bfa;">CE Competitors</a>
+</div>
 <div class="nav-overlay" onclick="document.querySelector('nav').classList.remove('open');document.querySelector('.mobile-menu-btn').classList.remove('open');this.classList.remove('open');"></div>
 
 <!-- ── NAV ── -->
