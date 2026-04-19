@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedEdPrep — Richard's CE Vision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0e14;
+    --bg-surface: #111820;
+    --bg-card: #151c25;
+    --bg-card-hover: #1a2331;
+    --bg-elevated: #1e2733;
+    --border: #243040;
+    --border-subtle: #1c2535;
+    --text-primary: #e8edf4;
+    --text-secondary: #8899aa;
+    --text-muted: #5a6a7a;
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+    --teal-glow: rgba(45,212,191,0.06);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.12);
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.12);
+    --orange: #fb923c;
+    --orange-dim: rgba(251,146,60,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.12);
+    --nav-width: 260px;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg-base);
+    background-image: radial-gradient(circle at 1px 1px, rgba(45,212,191,0.02) 1px, transparent 0);
+    background-size: 40px 40px;
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--purple), var(--amber), var(--teal));
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+    z-index: 200;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* -- NAV -- */
+  nav {
+    width: var(--nav-width);
+    min-width: var(--nav-width);
+    background: rgba(17,24,32,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  nav::-webkit-scrollbar { width: 0; }
+
+  .nav-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .nav-brand-name {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--teal), #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-brand-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links { flex: 1; padding: 4px 0; }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+  }
+  nav a:hover {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.04);
+    border-left-color: var(--teal);
+  }
+  nav a.active {
+    color: var(--teal);
+    background: rgba(45,212,191,0.08);
+    border-left-color: var(--teal);
+    font-weight: 600;
+  }
+  nav a .nav-icon {
+    font-size: 15px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .nav-divider {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 12px 24px;
+  }
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    padding: 8px 24px 4px;
+  }
+  .nav-footer {
+    padding: 20px 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .nav-footer-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .nav-footer-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  /* -- HERO -- */
+  .hero {
+    margin-left: var(--nav-width);
+    padding: 56px 56px 44px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #080c12 0%, #0d1520 30%, #0a1420 60%, #080e18 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: 8%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(251,191,36,0.06) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 15%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(45,212,191,0.04) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--amber);
+    opacity: 0.4;
+  }
+  .hero-headline {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f0f4f8 25%, var(--amber) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+  .hero-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 800px;
+    margin-top: 8px;
+  }
+  .hero-subtitle strong { color: var(--text-primary); }
+  .hero-quote {
+    margin-top: 24px;
+    padding: 20px 24px;
+    background: rgba(251,191,36,0.06);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--text-primary);
+    line-height: 1.7;
+    max-width: 700px;
+  }
+  .hero-quote-attr {
+    font-size: 12px;
+    font-style: normal;
+    color: var(--text-muted);
+    margin-top: 8px;
+    font-weight: 600;
+  }
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+    position: relative;
+  }
+  .metric-card {
+    background: rgba(21,28,37,0.7);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    backdrop-filter: blur(10px);
+  }
+  .metric-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .metric-value {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .metric-sub {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* -- MAIN CONTENT -- */
+  .main-inner {
+    margin-left: var(--nav-width);
+    padding: 40px 56px 80px;
+    max-width: 1400px;
+  }
+
+  /* -- SECTIONS -- */
+  .section {
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-card);
+    overflow: hidden;
+  }
+  .section-header {
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+    position: relative;
+  }
+  .section-header:hover { background: rgba(45,212,191,0.03); }
+  .section-header::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--teal), var(--purple));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .section.open .section-header::before { opacity: 1; }
+  .section-icon { font-size: 18px; }
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    flex: 1;
+  }
+  .section-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .section-chevron {
+    font-size: 12px;
+    color: var(--text-muted);
+    transition: transform 0.3s;
+  }
+  .section.open .section-chevron { transform: rotate(180deg); }
+  .section-body {
+    display: none;
+    padding: 0 28px 28px;
+  }
+  .section.open .section-body { display: block; }
+
+  /* -- PATHWAY CARDS -- */
+  .pathway-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .pathway-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pathway-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .pathway-card.pw-1::before { background: linear-gradient(90deg, var(--teal), var(--blue)); }
+  .pathway-card.pw-2::before { background: linear-gradient(90deg, var(--purple), var(--pink)); }
+  .pathway-card.pw-3::before { background: linear-gradient(90deg, var(--amber), var(--orange)); }
+
+  .pathway-number {
+    font-size: 40px;
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0.12;
+    position: absolute;
+    top: 12px;
+    right: 16px;
+  }
+  .pathway-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .pathway-name {
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .pathway-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .pathway-details {
+    list-style: none;
+  }
+  .pathway-details li {
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .pathway-details li:last-child { border-bottom: none; }
+  .pathway-details .dl { color: var(--text-muted); font-weight: 500; }
+  .pathway-details .dv { font-weight: 600; text-align: right; }
+
+  /* -- FLOW DIAGRAMS -- */
+  .flow-container {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 32px;
+    margin: 20px 0;
+  }
+  .flow-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .flow-steps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .flow-step {
+    padding: 14px 28px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    min-width: 340px;
+    text-align: center;
+    border: 1px solid;
+    position: relative;
+  }
+  .flow-step-sub {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .flow-arrow {
+    font-size: 18px;
+    color: var(--text-muted);
+    line-height: 1;
+  }
+  .flow-branch {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 4px 0;
+  }
+  .flow-branch-arm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    max-width: 280px;
+  }
+  .flow-branch-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 4px 14px;
+    border-radius: 20px;
+  }
+  .flow-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 16px;
+    font-style: italic;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* -- COMPARISON TABLES -- */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+  }
+  .compare-table th {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .compare-table td {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: top;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table .badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  /* -- STANDARD MAPPING -- */
+  .standards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .standard-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    padding: 16px;
+    text-align: center;
+  }
+  .standard-icon { font-size: 24px; margin-bottom: 8px; }
+  .standard-name {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .standard-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* -- FORMAT CARDS -- */
+  .format-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 16px 0;
+  }
+  .format-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .format-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .format-card.fmt-quick::before { background: linear-gradient(90deg, var(--teal), var(--green)); }
+  .format-card.fmt-full::before { background: linear-gradient(90deg, var(--purple), var(--blue)); }
+  .format-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .format-name {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  .format-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .format-details {
+    list-style: none;
+  }
+  .format-details li {
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .format-details li:last-child { border-bottom: none; }
+  .format-details .fl { color: var(--text-muted); font-weight: 500; }
+  .format-details .fv { font-weight: 600; text-align: right; }
+
+  /* -- DECISION LIST -- */
+  .decision-list { list-style: none; }
+  .decision-item {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    padding: 16px 20px;
+    margin-bottom: 10px;
+  }
+  .decision-item:last-child { margin-bottom: 0; }
+  .decision-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .decision-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .decision-tag {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* -- RESEARCH STATUS -- */
+  .research-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  .research-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    position: relative;
+  }
+  .research-status {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    animation: pulse-research 2s ease-in-out infinite;
+  }
+  @keyframes pulse-research {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(251,191,36,0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(251,191,36,0); }
+  }
+  .research-topic {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    padding-right: 20px;
+  }
+  .research-question {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .research-agents {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  /* -- REMEDIATION MECHANIC -- */
+  .mechanic-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .mechanic-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mechanic-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .mechanic-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-radius: var(--radius-xs);
+    font-size: 13px;
+  }
+  .mechanic-step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .mechanic-connector {
+    width: 2px;
+    height: 12px;
+    margin-left: 29px;
+    border-radius: 1px;
+  }
+
+  /* -- POSITIONING -- */
+  .positioning-card {
+    background: linear-gradient(135deg, rgba(251,191,36,0.06) 0%, rgba(45,212,191,0.04) 100%);
+    border: 1px solid rgba(251,191,36,0.2);
+    border-radius: var(--radius);
+    padding: 32px;
+    margin: 16px 0;
+  }
+  .positioning-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .positioning-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    max-width: 700px;
+  }
+  .positioning-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .positioning-item {
+    background: rgba(10,14,20,0.5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    padding: 16px;
+  }
+  .positioning-item-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .positioning-item-text {
+    font-size: 13px;
+    color: var(--text-primary);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  /* -- MOBILE -- */
+  .mobile-header {
+    display: none;
+    position: sticky;
+    top: 2px;
+    z-index: 150;
+    background: rgba(17,24,32,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+  }
+  .mobile-brand {
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--teal), #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+  .mobile-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .mobile-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: var(--radius-xs);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid;
+    transition: all 0.2s;
+  }
+
+  @media (max-width: 1100px) {
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+    .pathway-grid { grid-template-columns: 1fr; }
+    .format-grid { grid-template-columns: 1fr; }
+    .research-grid { grid-template-columns: 1fr; }
+    .standards-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 900px) {
+    nav { display: none; }
+    .mobile-header { display: block; }
+    .hero, .main-inner { margin-left: 0; }
+    .hero { padding: 40px 24px 32px; }
+    .main-inner { padding: 24px 20px 60px; }
+    .hero-metrics { grid-template-columns: 1fr 1fr; }
+    .pathway-grid { grid-template-columns: 1fr; }
+    .flow-branch { flex-direction: column; align-items: center; }
+    .flow-step { min-width: auto; width: 100%; }
+    .section-header { padding: 16px 20px; }
+    .section-body { padding: 0 20px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MOBILE HEADER -->
+<div class="mobile-header">
+  <div class="mobile-brand">Richard's CE Vision</div>
+  <div class="mobile-links">
+    <a href="ce-launch-plan.html" class="mobile-link" style="background: var(--teal-dim); border-color: rgba(45,212,191,0.25); color: var(--teal);">CE Launch Plan</a>
+    <a href="entity-ce-market.html" class="mobile-link" style="background: var(--purple-dim); border-color: rgba(167,139,250,0.25); color: var(--purple);">CE Market</a>
+    <a href="hub.html" class="mobile-link" style="background: var(--blue-dim); border-color: rgba(96,165,250,0.25); color: var(--blue);">Command Center</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-name">MedEdPrep</div>
+    <div class="nav-brand-sub">Richard's CE Vision</div>
+  </div>
+  <div style="padding: 0 16px 12px; display: flex; flex-direction: column; gap: 6px;">
+    <a href="ce-launch-plan.html" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--teal-dim); border: 1px solid rgba(45,212,191,0.25); border-radius: var(--radius-xs); color: var(--teal); text-decoration: none; font-size: 12px; font-weight: 600; transition: all 0.2s;">
+      <span style="font-size: 14px;">&#9998;</span> CE Launch Plan
+    </a>
+    <a href="entity-ce-market.html" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--purple-dim); border: 1px solid rgba(167,139,250,0.25); border-radius: var(--radius-xs); color: var(--purple); text-decoration: none; font-size: 12px; font-weight: 600; transition: all 0.2s;">
+      <span style="font-size: 14px;">&#127760;</span> CE Market &amp; Competitors
+    </a>
+    <a href="hub.html" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--blue-dim); border: 1px solid rgba(96,165,250,0.25); border-radius: var(--radius-xs); color: var(--blue); text-decoration: none; font-size: 12px; font-weight: 600; transition: all 0.2s;">
+      <span style="font-size: 14px;">&#9679;</span> Command Center
+    </a>
+  </div>
+  <div class="nav-links">
+    <div class="nav-section-label">Richard's Vision</div>
+    <a href="#pathways" onclick="scrollToSection('pathways')"><span class="nav-icon">&#9670;</span> Three Pathways</a>
+    <a href="#exam-flow" onclick="scrollToSection('exam-flow')"><span class="nav-icon">&#9998;</span> Exam Flow &amp; Remediation</a>
+    <a href="#content-flow" onclick="scrollToSection('content-flow')"><span class="nav-icon">&#9654;</span> Content Resources Flow</a>
+    <a href="#combined" onclick="scrollToSection('combined')"><span class="nav-icon">&#9733;</span> Combined Pathway</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">Product Design</div>
+    <a href="#formats" onclick="scrollToSection('formats')"><span class="nav-icon">&#9776;</span> Dual Format: 0.5 &amp; 1.0 CEH</a>
+    <a href="#standards" onclick="scrollToSection('standards')"><span class="nav-icon">&#128218;</span> 4-Standard Mapping</a>
+    <a href="#remediation" onclick="scrollToSection('remediation')"><span class="nav-icon">&#128260;</span> Adaptive Remediation Loop</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">Alignment</div>
+    <a href="#positioning" onclick="scrollToSection('positioning')"><span class="nav-icon">&#9883;</span> Continued Competency</a>
+    <a href="#decisions" onclick="scrollToSection('decisions')"><span class="nav-icon">&#10003;</span> Confirmed Decisions</a>
+    <a href="#research" onclick="scrollToSection('research')"><span class="nav-icon">&#128269;</span> Research Findings</a>
+    <a href="#alignment" onclick="scrollToSection('alignment')"><span class="nav-icon">&#9871;</span> Research Alignment Map</a>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-footer-label">Source</div>
+    <div class="nav-footer-date">Richard Rhodes, MBA, NRP</div>
+    <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">April 19, 2026</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Richard Rhodes &mdash; CE Vision</div>
+  <h1 class="hero-headline">From CE Credit to Continued Competency</h1>
+  <p class="hero-subtitle">
+    Richard's vision for the MedEdPrep CE program establishes <strong>three distinct pathways</strong> that work individually or together. The core insight: we're not building a CE platform &mdash; we're building a <strong>continued competency platform</strong> that happens to award CE credit. This positions MedEdPrep as the only platform in EMS that truly validates and develops clinical competency, not just checks the box.
+  </p>
+
+  <div class="hero-quote">
+    "The salient point is that we want to establish that we are the only CE platform that truly does continued competency."
+    <div class="hero-quote-attr">&mdash; Richard Rhodes, MBA, NRP</div>
+  </div>
+
+  <div class="hero-metrics">
+    <div class="metric-card">
+      <div class="metric-label">Pathways</div>
+      <div class="metric-value" style="color: var(--amber);">3</div>
+      <div class="metric-sub">Exam / Content / Both</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Format Options</div>
+      <div class="metric-value" style="color: var(--teal);">2</div>
+      <div class="metric-sub">Quick 0.5 CEH &amp; Full 1.0 CEH</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Standards Mapped</div>
+      <div class="metric-value" style="color: var(--purple);">4</div>
+      <div class="metric-sub">NES, NSOP, NMG, NCCP</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Passing Score</div>
+      <div class="metric-value" style="color: var(--green);">70%</div>
+      <div class="metric-sub">Industry standard, CAPCE-compliant</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-inner">
+
+  <!-- THREE PATHWAYS -->
+  <div class="section open" id="pathways">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">The Three Pathways</span>
+      <span class="section-badge" style="background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(251,191,36,0.2);">Core Model</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">
+        Providers choose how they want to earn CE credit. Each pathway is independently valid and CAPCE-accredited. Together, they create a competency development system that no competitor can match.
+      </p>
+
+      <div class="pathway-grid">
+        <!-- Pathway 1 -->
+        <div class="pathway-card pw-1">
+          <div class="pathway-number" style="color: var(--teal);">1</div>
+          <div class="pathway-label" style="color: var(--teal);">Pathway 1</div>
+          <div class="pathway-name">Adaptive Competency Exam</div>
+          <div class="pathway-desc">A focused adaptive exam over a specific clinical topic. Between the questions and mandatory rationale review, the provider earns CE credit by demonstrating &mdash; and building &mdash; competency.</div>
+          <ul class="pathway-details">
+            <li><span class="dl">Questions</span><span class="dv" style="color: var(--teal);">15-45 (format-dependent)</span></li>
+            <li><span class="dl">Time per question</span><span class="dv">~1 minute + rationale</span></li>
+            <li><span class="dl">Passing score</span><span class="dv" style="color: var(--green);">70%</span></li>
+            <li><span class="dl">Wrong answers</span><span class="dv">Forced rationale reading</span></li>
+            <li><span class="dl">Remediation</span><span class="dv" style="color: var(--amber);">Similar follow-up question</span></li>
+            <li><span class="dl">Total fail (&lt;70%)</span><span class="dv" style="color: var(--red);">Must take resources first</span></li>
+            <li><span class="dl">CE award</span><span class="dv">0.5-1.0 CEH</span></li>
+          </ul>
+        </div>
+
+        <!-- Pathway 2 -->
+        <div class="pathway-card pw-2">
+          <div class="pathway-number" style="color: var(--purple);">2</div>
+          <div class="pathway-label" style="color: var(--purple);">Pathway 2</div>
+          <div class="pathway-name">CE Content Resources</div>
+          <div class="pathway-desc">Video presentations or reading material that build knowledge from the ground up, followed by a post-test to confirm learning. The educational content that supports the exam pathway.</div>
+          <ul class="pathway-details">
+            <li><span class="dl">Video length</span><span class="dv" style="color: var(--purple);">15-45 minutes</span></li>
+            <li><span class="dl">Post-test</span><span class="dv">15 questions</span></li>
+            <li><span class="dl">Passing score</span><span class="dv" style="color: var(--green);">70%</span></li>
+            <li><span class="dl">Retakes</span><span class="dv">Unlimited</span></li>
+            <li><span class="dl">CE calculation</span><span class="dv">CAPCE words-per-minute</span></li>
+            <li><span class="dl">Maps to</span><span class="dv" style="color: var(--teal);">Exam topics above</span></li>
+            <li><span class="dl">CE award</span><span class="dv">0.5-1.0 CEH</span></li>
+          </ul>
+        </div>
+
+        <!-- Pathway 3 -->
+        <div class="pathway-card pw-3">
+          <div class="pathway-number" style="color: var(--amber);">3</div>
+          <div class="pathway-label" style="color: var(--amber);">Pathway 3</div>
+          <div class="pathway-name">Combined &mdash; Both Pathways</div>
+          <div class="pathway-desc">Take both the exam and the content resources, in any order. This is the full competency development experience: identify gaps, learn, and prove improvement.</div>
+          <ul class="pathway-details">
+            <li><span class="dl">Order</span><span class="dv" style="color: var(--amber);">Any order (learner chooses)</span></li>
+            <li><span class="dl">Exam first</span><span class="dv">ID deficiencies &rarr; targeted learning</span></li>
+            <li><span class="dl">Content first</span><span class="dv">Learn &rarr; prove competency</span></li>
+            <li><span class="dl">Both always</span><span class="dv">Even if exam is passed</span></li>
+            <li><span class="dl">CE award</span><span class="dv" style="color: var(--green);">Credit for each completed</span></li>
+            <li><span class="dl">Total potential</span><span class="dv">1.0-2.0 CEH per topic</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flow-container">
+        <div class="flow-title">How the Pathways Connect</div>
+        <div class="flow-steps">
+          <div class="flow-step" style="background: var(--bg-elevated); border-color: var(--border); color: var(--text-primary);">
+            Provider selects a clinical topic
+            <div class="flow-step-sub">e.g., Pediatric Trauma, Cardiac Pharmacology, Airway Management</div>
+          </div>
+          <div class="flow-arrow">&#9660;</div>
+          <div class="flow-branch">
+            <div class="flow-branch-arm">
+              <div class="flow-branch-label" style="background: var(--teal-dim); color: var(--teal);">Pathway 1</div>
+              <div class="flow-step" style="background: var(--teal-dim); border-color: rgba(45,212,191,0.3); color: var(--teal); min-width: auto; width: 100%;">
+                Take the adaptive exam
+                <div class="flow-step-sub">15-45 questions mapped to objectives</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; color: var(--text-muted); font-size: 12px; font-weight: 700; padding-top: 28px;">OR</div>
+            <div class="flow-branch-arm">
+              <div class="flow-branch-label" style="background: var(--purple-dim); color: var(--purple);">Pathway 2</div>
+              <div class="flow-step" style="background: var(--purple-dim); border-color: rgba(167,139,250,0.3); color: var(--purple); min-width: auto; width: 100%;">
+                Take the content resources
+                <div class="flow-step-sub">Video + reading + 15-question post-test</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; color: var(--text-muted); font-size: 12px; font-weight: 700; padding-top: 28px;">OR</div>
+            <div class="flow-branch-arm">
+              <div class="flow-branch-label" style="background: var(--amber-dim); color: var(--amber);">Pathway 3</div>
+              <div class="flow-step" style="background: var(--amber-dim); border-color: rgba(251,191,36,0.3); color: var(--amber); min-width: auto; width: 100%;">
+                Take both (any order)
+                <div class="flow-step-sub">Maximum learning + maximum CE credit</div>
+              </div>
+            </div>
+          </div>
+          <div class="flow-arrow">&#9660;</div>
+          <div class="flow-step" style="background: var(--green-dim); border-color: rgba(74,222,128,0.3); color: var(--green);">
+            Diagnostic report + CAPCE certificate + NREMT credit
+            <div class="flow-step-sub">Mapped to NCCP domains, auto-reported via CAPCE integration</div>
+          </div>
+        </div>
+        <div class="flow-note">"One product sells the other." &mdash; Failing the exam surfaces gaps and recommends specific content resources. Taking content first builds confidence to prove competency on the exam.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXAM FLOW -->
+  <div class="section open" id="exam-flow">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#9998;</span>
+      <span class="section-title">Pathway 1: Adaptive Competency Exam &mdash; Detailed Flow</span>
+      <span class="section-badge" style="background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(45,212,191,0.2);">Exam Track</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">
+        The exam is not a gatekeeper &mdash; it's a learning tool. Questions the provider gets wrong trigger forced rationale reading and a follow-up question to verify understanding. This "adaptive remediation loop" is the novel mechanic that makes this more than a test.
+      </p>
+
+      <div class="flow-container">
+        <div class="flow-title">Exam Experience Flow</div>
+        <div class="flow-steps">
+          <div class="flow-step" style="background: var(--bg-elevated); border-color: var(--border); color: var(--text-primary);">
+            Provider starts adaptive exam on a specific topic
+            <div class="flow-step-sub">e.g., "Pediatric Trauma" &mdash; 15-45 questions mapped to NES, NSOP, NMG, NCCP</div>
+          </div>
+          <div class="flow-arrow">&#9660;</div>
+          <div class="flow-step" style="background: var(--teal-dim); border-color: rgba(45,212,191,0.3); color: var(--teal);">
+            Question presented &mdash; provider answers
+            <div class="flow-step-sub">~1 minute per question, adaptive difficulty</div>
+          </div>
+          <div class="flow-arrow">&#9660;</div>
+          <div class="flow-branch">
+            <div class="flow-branch-arm">
+              <div class="flow-branch-label" style="background: var(--green-dim); color: var(--green);">Correct</div>
+              <div class="flow-step" style="background: var(--green-dim); border-color: rgba(74,222,128,0.3); color: var(--green); min-width: auto; width: 100%;">
+                Next question
+                <div class="flow-step-sub">Difficulty may increase</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; color: var(--text-muted); font-size: 12px; font-weight: 700; padding-top: 28px;">&nbsp;</div>
+            <div class="flow-branch-arm">
+              <div class="flow-branch-label" style="background: var(--red-dim); color: var(--red);">Incorrect</div>
+              <div class="flow-step" style="background: var(--red-dim); border-color: rgba(248,113,113,0.3); color: var(--red); min-width: auto; width: 100%;">
+                Forced rationale reading
+                <div class="flow-step-sub">Must read full explanation before continuing</div>
+              </div>
+              <div class="flow-arrow">&#9660;</div>
+              <div class="flow-step" style="background: var(--amber-dim); border-color: rgba(251,191,36,0.3); color: var(--amber); min-width: auto; width: 100%;">
+                Follow-up similar question
+                <div class="flow-step-sub">Verifies the rationale was actually learned</div>
+              </div>
+            </div>
+          </div>
+          <div class="flow-arrow">&#9660;</div>
+          <div class="flow-step" style="background: var(--bg-elevated); border-color: var(--border); color: var(--text-primary);">
+            Exam complete &mdash; score calculated
+          </div>
+          <div class="flow-arrow">&#9660;</div>
+          <div class="flow-branch">
+            <div class="flow-branch-arm">
+              <div class="flow-branch-label" style="background: var(--green-dim); color: var(--green);">Pass (70%+)</div>
+              <div class="flow-step" style="background: var(--green-dim); border-color: rgba(74,222,128,0.3); color: var(--green); min-width: auto; width: 100%;">
+                CE credit awarded
+                <div class="flow-step-sub">Diagnostic report + certificate + CAPCE reporting</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; color: var(--text-muted); font-size: 12px; font-weight: 700; padding-top: 28px;">&nbsp;</div>
+            <div class="flow-branch-arm">
+              <div class="flow-branch-label" style="background: var(--red-dim); color: var(--red);">Fail (&lt;70%)</div>
+              <div class="flow-step" style="background: var(--red-dim); border-color: rgba(248,113,113,0.3); color: var(--red); min-width: auto; width: 100%;">
+                No CE credit from exam alone
+                <div class="flow-step-sub">Must complete Pathway 2 resources first</div>
+              </div>
+              <div class="flow-arrow">&#9660;</div>
+              <div class="flow-step" style="background: var(--purple-dim); border-color: rgba(167,139,250,0.3); color: var(--purple); min-width: auto; width: 100%;">
+                Take supporting education
+                <div class="flow-step-sub">Video, research paper, or reading material</div>
+              </div>
+              <div class="flow-arrow">&#9660;</div>
+              <div class="flow-step" style="background: var(--teal-dim); border-color: rgba(45,212,191,0.3); color: var(--teal); min-width: auto; width: 100%;">
+                Retake exam (different questions)
+                <div class="flow-step-sub">Unlimited retakes after completing resources</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flow-note">Between the questions (~1 min each), the forced rationale reading on wrong answers, and the follow-up verification questions, a 45-question exam produces approximately 60 minutes of educational engagement &mdash; qualifying for 1.0 CEH under CAPCE standards.</div>
+      </div>
+
+      <!-- Remediation Loop Detail -->
+      <div class="mechanic-box" id="remediation">
+        <div class="mechanic-title">
+          <span style="color: var(--amber);">&#128260;</span>
+          The Adaptive Remediation Loop &mdash; Richard's Novel Mechanic
+        </div>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+          When a provider answers incorrectly, the system doesn't just show the answer &mdash; it creates a mini-learning moment. This is educationally grounded in retrieval practice and immediate corrective feedback research.
+        </p>
+        <div class="mechanic-steps">
+          <div class="mechanic-step" style="background: var(--teal-dim);">
+            <div class="mechanic-step-num" style="background: var(--teal); color: var(--bg-base);">1</div>
+            <div>
+              <div style="font-weight: 700; color: var(--teal);">Question presented</div>
+              <div style="font-size: 12px; color: var(--text-secondary);">Adaptive difficulty based on running performance</div>
+            </div>
+          </div>
+          <div class="mechanic-connector" style="background: var(--border);"></div>
+          <div class="mechanic-step" style="background: var(--red-dim);">
+            <div class="mechanic-step-num" style="background: var(--red); color: var(--bg-base);">2</div>
+            <div>
+              <div style="font-weight: 700; color: var(--red);">Incorrect answer detected</div>
+              <div style="font-size: 12px; color: var(--text-secondary);">Provider's wrong answer is highlighted, correct answer shown</div>
+            </div>
+          </div>
+          <div class="mechanic-connector" style="background: var(--border);"></div>
+          <div class="mechanic-step" style="background: var(--amber-dim);">
+            <div class="mechanic-step-num" style="background: var(--amber); color: var(--bg-base);">3</div>
+            <div>
+              <div style="font-weight: 700; color: var(--amber);">Forced rationale reading</div>
+              <div style="font-size: 12px; color: var(--text-secondary);">Full explanation: why correct answer is right, why each distractor is wrong, clinical relevance</div>
+            </div>
+          </div>
+          <div class="mechanic-connector" style="background: var(--border);"></div>
+          <div class="mechanic-step" style="background: var(--purple-dim);">
+            <div class="mechanic-step-num" style="background: var(--purple); color: var(--bg-base);">4</div>
+            <div>
+              <div style="font-weight: 700; color: var(--purple);">Follow-up verification question</div>
+              <div style="font-size: 12px; color: var(--text-secondary);">A similar (not identical) question on the same concept. Tests whether the rationale was actually learned, not just read.</div>
+            </div>
+          </div>
+          <div class="mechanic-connector" style="background: var(--border);"></div>
+          <div class="mechanic-step" style="background: var(--green-dim);">
+            <div class="mechanic-step-num" style="background: var(--green); color: var(--bg-base);">5</div>
+            <div>
+              <div style="font-weight: 700; color: var(--green);">Continue exam</div>
+              <div style="font-size: 12px; color: var(--text-secondary);">Whether or not they get the follow-up correct, the exam continues. The data is captured for the diagnostic report.</div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size: 12px; color: var(--text-muted); margin-top: 16px; font-style: italic;">
+          This mechanic is supported by educational research on the testing effect: immediate corrective feedback + retrieval practice produces significantly better long-term retention than passive content review alone. This is part of the "educational content" of the CE activity, not just the assessment.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT RESOURCES FLOW -->
+  <div class="section" id="content-flow">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#9654;</span>
+      <span class="section-title">Pathway 2: CE Content Resources &mdash; Detailed Flow</span>
+      <span class="section-badge" style="background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(167,139,250,0.2);">Content Track</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">
+        Video presentations and reading material that build clinical knowledge, followed by a post-test to confirm learning. These resources are specifically mapped to exam topics &mdash; if a provider fails the exam, these are the resources that develop the competency needed to pass.
+      </p>
+
+      <div class="flow-container">
+        <div class="flow-title">Content Resource Experience</div>
+        <div class="flow-steps">
+          <div class="flow-step" style="background: var(--purple-dim); border-color: rgba(167,139,250,0.3); color: var(--purple);">
+            Provider starts content module
+            <div class="flow-step-sub">Video presentation (15-45 min) or reading material, CAPCE words-per-minute standard</div>
+          </div>
+          <div class="flow-arrow">&#9660;</div>
+          <div class="flow-step" style="background: var(--bg-elevated); border-color: var(--border); color: var(--text-primary);">
+            Engage with educational content
+            <div class="flow-step-sub">Cannot skip or fast-forward &mdash; CAPCE timer enforcement required</div>
+          </div>
+          <div class="flow-arrow">&#9660;</div>
+          <div class="flow-step" style="background: var(--blue-dim); border-color: rgba(96,165,250,0.3); color: var(--blue);">
+            15-question post-test
+            <div class="flow-step-sub">Must pass at 70% accuracy &mdash; mapped to content learning objectives</div>
+          </div>
+          <div class="flow-arrow">&#9660;</div>
+          <div class="flow-branch">
+            <div class="flow-branch-arm">
+              <div class="flow-branch-label" style="background: var(--green-dim); color: var(--green);">Pass (70%+)</div>
+              <div class="flow-step" style="background: var(--green-dim); border-color: rgba(74,222,128,0.3); color: var(--green); min-width: auto; width: 100%;">
+                CE credit awarded
+                <div class="flow-step-sub">Certificate + CAPCE auto-reporting</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; color: var(--text-muted); font-size: 12px; font-weight: 700; padding-top: 28px;">&nbsp;</div>
+            <div class="flow-branch-arm">
+              <div class="flow-branch-label" style="background: var(--amber-dim); color: var(--amber);">Fail</div>
+              <div class="flow-step" style="background: var(--amber-dim); border-color: rgba(251,191,36,0.3); color: var(--amber); min-width: auto; width: 100%;">
+                Retake post-test
+                <div class="flow-step-sub">Unlimited retakes with different questions from the bank</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flow-note">Content resources map directly to exam topics. The video that teaches "Pediatric Trauma" is the supporting education for the "Pediatric Trauma" adaptive exam. One product reinforces the other.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMBINED PATHWAY -->
+  <div class="section" id="combined">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#9733;</span>
+      <span class="section-title">Pathway 3: Combined &mdash; The Full Competency Experience</span>
+      <span class="section-badge" style="background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(251,191,36,0.2);">Both Tracks</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">
+        The provider does both &mdash; in whichever order they choose. Each order has distinct advantages:
+      </p>
+
+      <div class="format-grid">
+        <div class="format-card fmt-quick">
+          <div class="format-label" style="color: var(--teal);">Option A: Exam First</div>
+          <div class="format-name">Assess &rarr; Learn &rarr; Verify</div>
+          <div class="format-desc">
+            Start with the adaptive exam to surface knowledge gaps. The diagnostic report shows exactly where to focus. Then take the content resources with heightened attention to weak areas. Providers who pass the exam can still choose to take the resources for additional CE credit and deeper understanding.
+          </div>
+          <ul class="format-details">
+            <li><span class="fl">Advantage</span><span class="fv" style="color: var(--teal);">Targeted learning</span></li>
+            <li><span class="fl">If exam passed</span><span class="fv">Resources are optional (extra CE)</span></li>
+            <li><span class="fl">If exam failed</span><span class="fv" style="color: var(--red);">Resources are required before retake</span></li>
+            <li><span class="fl">Best for</span><span class="fv">Experienced providers</span></li>
+          </ul>
+        </div>
+        <div class="format-card fmt-full">
+          <div class="format-label" style="color: var(--purple);">Option B: Content First</div>
+          <div class="format-name">Learn &rarr; Prove &rarr; Grow</div>
+          <div class="format-desc">
+            Start with the educational content to build a knowledge foundation. Then take the adaptive exam to prove competency. The exam validates that the learning was effective and produces a diagnostic report for any remaining gaps.
+          </div>
+          <ul class="format-details">
+            <li><span class="fl">Advantage</span><span class="fv" style="color: var(--purple);">Confidence building</span></li>
+            <li><span class="fl">Content CE</span><span class="fv">Awarded on post-test pass</span></li>
+            <li><span class="fl">Exam CE</span><span class="fv">Awarded on exam pass</span></li>
+            <li><span class="fl">Best for</span><span class="fv">Providers wanting to learn first</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DUAL FORMAT -->
+  <div class="section open" id="formats">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#9776;</span>
+      <span class="section-title">Dual Format: Quick (0.5 CEH) &amp; Full (1.0 CEH)</span>
+      <span class="section-badge" style="background: var(--green-dim); color: var(--green); border: 1px solid rgba(74,222,128,0.2);">Confirmed</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">
+        Richard identified that a 60-minute exam might be too much for a medic on shift. The solution: offer both a focused quick format and a comprehensive full format. Different providers have different needs and time windows.
+      </p>
+
+      <div class="format-grid">
+        <div class="format-card fmt-quick">
+          <div class="format-label" style="color: var(--teal);">Quick Format</div>
+          <div class="format-name">0.5 CEH Micro-Session</div>
+          <div class="format-desc">
+            Narrow objectives (e.g., "pediatric chest trauma" rather than "pediatric trauma"). Designed to fit between calls or during downtime on a 24-hour shift. Still adaptive, still diagnostic, still meaningful.
+          </div>
+          <ul class="format-details">
+            <li><span class="fl">Exam questions</span><span class="fv" style="color: var(--teal);">15-20 questions</span></li>
+            <li><span class="fl">Content video</span><span class="fv">15-20 minutes</span></li>
+            <li><span class="fl">Combined total</span><span class="fv">~30 minutes = 0.5 CEH</span></li>
+            <li><span class="fl">Topic scope</span><span class="fv">Narrow &amp; focused</span></li>
+            <li><span class="fl">Learning objectives</span><span class="fv">2-3 per module</span></li>
+            <li><span class="fl">Best for</span><span class="fv">On-shift, quick sessions</span></li>
+          </ul>
+        </div>
+        <div class="format-card fmt-full">
+          <div class="format-label" style="color: var(--purple);">Full Format</div>
+          <div class="format-name">1.0 CEH Comprehensive</div>
+          <div class="format-desc">
+            Broader objectives (e.g., "pediatric trauma" covering assessment, hemorrhage control, head injury, NAT). A complete deep-dive into a clinical domain. The flagship product for motivated learners and agency assignments.
+          </div>
+          <ul class="format-details">
+            <li><span class="fl">Exam questions</span><span class="fv" style="color: var(--purple);">45 questions</span></li>
+            <li><span class="fl">Content video</span><span class="fv">45 minutes</span></li>
+            <li><span class="fl">Combined total</span><span class="fv">~120 minutes = 2.0 CEH</span></li>
+            <li><span class="fl">Topic scope</span><span class="fv">Comprehensive domain</span></li>
+            <li><span class="fl">Learning objectives</span><span class="fv">4-6 per module</span></li>
+            <li><span class="fl">Best for</span><span class="fv">Dedicated learning time</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="background: rgba(45,212,191,0.06); border: 1px solid rgba(45,212,191,0.15); border-radius: var(--radius-sm); padding: 20px; margin-top: 16px;">
+        <div style="font-size: 13px; font-weight: 700; color: var(--teal); margin-bottom: 8px;">Richard's 30/30 Concept</div>
+        <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+          The 30/30 split &mdash; 30 minutes of exam (15-20 questions + rationales) and 30 minutes of content &mdash; is the sweet spot for micro-sessions. Narrow enough to be manageable, broad enough to be meaningful. Example: "Pediatric Chest Trauma" or "Blunt Trauma Assessment" rather than trying to cover all of trauma in one sitting. "There are a lot of ways to slice it up" &mdash; and that flexibility is itself a competitive advantage.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4-STANDARD MAPPING -->
+  <div class="section" id="standards">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#128218;</span>
+      <span class="section-title">Four-Standard Mapping</span>
+      <span class="section-badge" style="background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(96,165,250,0.2);">Richard's Addition</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;">
+        Richard envisions mapping every exam to <strong>four national standards</strong>, not just NCCP. This dramatically strengthens the "continued competency" positioning and makes the diagnostic reports more valuable to medical directors and agencies.
+      </p>
+      <div class="standards-grid">
+        <div class="standard-card">
+          <div class="standard-icon" style="color: var(--teal);">&#128214;</div>
+          <div class="standard-name" style="color: var(--teal);">National Education Standards</div>
+          <div class="standard-desc">What EMS providers should know at each certification level. The foundational knowledge framework.</div>
+        </div>
+        <div class="standard-card">
+          <div class="standard-icon" style="color: var(--purple);">&#128203;</div>
+          <div class="standard-name" style="color: var(--purple);">National Scope of Practice</div>
+          <div class="standard-desc">What EMS providers are authorized to do. Defines the legal and clinical boundaries.</div>
+        </div>
+        <div class="standard-card">
+          <div class="standard-icon" style="color: var(--amber);">&#128220;</div>
+          <div class="standard-name" style="color: var(--amber);">National Model Guidelines</div>
+          <div class="standard-desc">Evidence-based clinical guidelines for EMS care. The "how" of clinical practice.</div>
+        </div>
+        <div class="standard-card">
+          <div class="standard-icon" style="color: var(--green);">&#127919;</div>
+          <div class="standard-name" style="color: var(--green);">NCCP Requirements</div>
+          <div class="standard-desc">National Continued Competency Program. Domain-specific CE hour requirements for recertification.</div>
+        </div>
+      </div>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 12px; font-style: italic;">
+        No competitor maps to all four standards. Most only reference NCCP domains. The four-standard mapping makes MedEdPrep's diagnostic reports the most comprehensive competency assessment available in EMS continuing education.
+      </p>
+    </div>
+  </div>
+
+  <!-- POSITIONING -->
+  <div class="section open" id="positioning">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#9883;</span>
+      <span class="section-title">"Continued Competency" &mdash; The Brand Position</span>
+      <span class="section-badge" style="background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(251,191,36,0.2);">Differentiator</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <div class="positioning-card">
+        <div class="positioning-title" style="color: var(--amber);">We're not selling CE hours. We're selling competency.</div>
+        <div class="positioning-subtitle">
+          Every competitor sells "get your hours done." MedEdPrep sells "prove you're competent, identify where you're not, and get better." This is what the industry is shifting toward &mdash; and MedEdPrep is the first platform that actually delivers it.
+        </div>
+        <div class="positioning-grid">
+          <div class="positioning-item">
+            <div class="positioning-item-label" style="color: var(--red);">What competitors say</div>
+            <div class="positioning-item-text">"Get your CE hours fast"</div>
+          </div>
+          <div class="positioning-item">
+            <div class="positioning-item-label" style="color: var(--green);">What MedEdPrep says</div>
+            <div class="positioning-item-text">"Prove your competency. Build where you're weak."</div>
+          </div>
+          <div class="positioning-item">
+            <div class="positioning-item-label" style="color: var(--red);">What competitors deliver</div>
+            <div class="positioning-item-text">Watch video. Pass quiz. Get certificate.</div>
+          </div>
+          <div class="positioning-item">
+            <div class="positioning-item-label" style="color: var(--green);">What MedEdPrep delivers</div>
+            <div class="positioning-item-text">Adaptive assessment. Targeted learning. Diagnostic proof of competency.</div>
+          </div>
+          <div class="positioning-item">
+            <div class="positioning-item-label" style="color: var(--teal);">Industry shift</div>
+            <div class="positioning-item-text">NREMT moving toward competency-based recertification. MedEdPrep is already there.</div>
+          </div>
+          <div class="positioning-item">
+            <div class="positioning-item-label" style="color: var(--amber);">Moat</div>
+            <div class="positioning-item-text">10,600+ calibrated items. 1.55M responses. Adaptive engine in production. Years to replicate.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRMED DECISIONS -->
+  <div class="section open" id="decisions">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#10003;</span>
+      <span class="section-title">Confirmed Decisions</span>
+      <span class="section-badge" style="background: var(--green-dim); color: var(--green); border: 1px solid rgba(74,222,128,0.2);">Aligned</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">These decisions are confirmed between Jeramey and Richard as of April 19, 2026:</p>
+      <ul class="decision-list">
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--green-dim); color: var(--green);">Confirmed</span>
+            70% Passing Score (Not 100%)
+          </div>
+          <div class="decision-desc">CAPCE standard is "satisfactory completion" &mdash; 70% is the industry norm. 100% with unlimited retakes is functionally "keep trying until you get it right" which devalues the assessment signal. 70% with adaptive remediation is a stronger competency model.</div>
+        </li>
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--green-dim); color: var(--green);">Confirmed</span>
+            Three Distinct Pathways (Exam / Content / Both)
+          </div>
+          <div class="decision-desc">Providers choose their own path. Each pathway independently awards CAPCE-accredited CE credit. Combined pathway awards credit for each completed component.</div>
+        </li>
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--green-dim); color: var(--green);">Confirmed</span>
+            Dual Format (0.5 CEH Quick + 1.0 CEH Full)
+          </div>
+          <div class="decision-desc">Quick micro-sessions (30 min) for shift-friendly learning. Full sessions (60 min exam / 120 min combined) for dedicated study time. Flexible enough to meet providers where they are.</div>
+        </li>
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--green-dim); color: var(--green);">Confirmed</span>
+            Forced Rationale Reading on Wrong Answers
+          </div>
+          <div class="decision-desc">When a provider gets a question wrong, they must read the full rationale before proceeding. This is more granular than reviewing all questions at the end &mdash; the learning happens at the moment of the mistake.</div>
+        </li>
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--green-dim); color: var(--green);">Confirmed</span>
+            Exam Failure = Must Take Resources Before Retake
+          </div>
+          <div class="decision-desc">If a provider scores below 70% on the exam, they cannot simply retake immediately. They must complete the supporting educational resources first. This is a harder competency gate than most competitors and reinforces the "continued competency" model.</div>
+        </li>
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--green-dim); color: var(--green);">Confirmed</span>
+            Four-Standard Mapping (NES, NSOP, NMG, NCCP)
+          </div>
+          <div class="decision-desc">Every exam maps to National Education Standards, National Scope of Practice, National Model Guidelines, and NCCP requirements. Richard is uniquely qualified to do this mapping given his expertise.</div>
+        </li>
+        <li class="decision-item">
+          <div class="decision-title">
+            <span class="decision-tag" style="background: var(--green-dim); color: var(--green);">Confirmed</span>
+            "Continued Competency" Brand Positioning
+          </div>
+          <div class="decision-desc">MedEdPrep is not another CE provider. It's the only platform that proves and develops clinical competency through adaptive assessment and targeted education. This is what the industry is shifting toward.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- RESEARCH COMPLETED -->
+  <div class="section open" id="research">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#128269;</span>
+      <span class="section-title">Research Findings</span>
+      <span class="section-badge" style="background: var(--green-dim); color: var(--green); border: 1px solid rgba(74,222,128,0.2);">6/6 Complete</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+        Three research questions investigated by 6 parallel agents (2 per topic: Codex + Gemini). All agents returned consistent findings. Every decision Richard and Jeramey aligned on is validated by the evidence.
+      </p>
+      <div class="research-grid">
+        <div class="research-card">
+          <div class="research-status" style="background: var(--green); animation: none;"></div>
+          <div class="research-topic" style="color: var(--green);">Adaptive Remediation Loop</div>
+          <div class="research-question" style="margin-bottom: 8px;">
+            <strong style="color: var(--text-primary);">Verdict: CAPCE-viable.</strong> Frame as "educational content" not "assessment." CAPCE only regulates the summative post-test &mdash; formative/instructional items are unrestricted. Each remediation cycle adds ~1,380 characters (~0.09 CEH). Cross-profession precedent exists in pharmacy (ACPE), nursing (ANCC), and medicine (ACCME/ABEM). Educational research calls this combination "one of the most effective learning interventions in cognitive science."
+          </div>
+          <div class="research-question" style="margin-bottom: 8px; color: var(--text-muted);"><strong>Zero EMS CE providers have implemented this.</strong> MedEdPrep would be first mover.</div>
+          <div class="research-agents">Files: ce-remediation-loop-research.md, ce-remediation-loop-research-gemini.md</div>
+        </div>
+        <div class="research-card">
+          <div class="research-status" style="background: var(--green); animation: none;"></div>
+          <div class="research-topic" style="color: var(--green);">Passing Score: 70% Confirmed</div>
+          <div class="research-question" style="margin-bottom: 8px;">
+            <strong style="color: var(--text-primary);">Verdict: 70% is universal.</strong> CAPCE does not mandate a specific score &mdash; says "satisfactory" and delegates to providers. Every CAPCE-accredited provider surveyed uses 70% (CE Solutions, FOAMfrat, Recert, CSUtest, DistanceCME, American CME, Guardian CME, EMS1 Academy, Bound Tree EDU, ProTrainings). Cross-profession (ACPE, ANCC, ACCME) all default to 70%.
+          </div>
+          <div class="research-question" style="margin-bottom: 8px; color: var(--text-muted);"><strong>100% with unlimited retakes is psychometrically meaningless</strong> &mdash; collapses score variance to zero, destroys diagnostic data, and only appears in compliance training (OSHA, HIPAA).</div>
+          <div class="research-agents">Files: ce-passing-score-research.md, ce-passing-score-research-gemini.md</div>
+        </div>
+        <div class="research-card">
+          <div class="research-status" style="background: var(--green); animation: none;"></div>
+          <div class="research-topic" style="color: var(--green);">Retake Policy: Richard's Gate Is Strongest</div>
+          <div class="research-question" style="margin-bottom: 8px;">
+            <strong style="color: var(--text-primary);">Verdict: Unlimited retakes are standard; Richard's forced-remediation gate is compliant and pedagogically superior.</strong> CAPCE requires different questions on retake (randomized from a larger pool) but sets no retake limit. Industry norm is fail-and-immediately-retry with zero remediation. Richard's proposal (fail &lt;70% &rarr; must complete supporting education &rarr; then retake) is confirmed CAPCE-compliant.
+          </div>
+          <div class="research-question" style="margin-bottom: 8px; color: var(--text-muted);"><strong>Research is unambiguous:</strong> forced remediation before retake produces 15-25% better retention than immediate retake. CE Solutions is the only competitor with any gate (1-hour wait) &mdash; MedEdPrep's model would be far stronger.</div>
+          <div class="research-agents">Files: ce-retake-policy-research.md, ce-retake-policy-research-gemini.md</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; padding: 16px 20px; background: rgba(74,222,128,0.06); border: 1px solid rgba(74,222,128,0.15); border-radius: var(--radius-sm);">
+        <div style="font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 6px;">All Research Complete &mdash; All Decisions Validated</div>
+        <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+          Six independent research agents (3 Codex, 3 Gemini) investigated the three open questions. Findings are consistent across all agents and cross-validated against CAPCE standards, competitor practices, cross-profession precedent (pharmacy, nursing, medicine), and educational research literature. Full research documents are in <code>04-product-vision/</code>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALIGNMENT MAP -->
+  <div class="section" id="alignment">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">&#9871;</span>
+      <span class="section-title">How Richard's Vision Maps to Existing Research</span>
+      <span class="section-badge" style="background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(45,212,191,0.2);">Cross-Reference</span>
+      <span class="section-chevron">&#9660;</span>
+    </div>
+    <div class="section-body">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Richard's Element</th>
+            <th>Existing Research</th>
+            <th>Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight: 600; color: var(--text-primary);">Adaptive exam over content areas</td>
+            <td>Assessment-Only CE Model (Track 1)</td>
+            <td><span class="badge" style="background: var(--green-dim); color: var(--green);">Aligned</span></td>
+            <td>Richard says 45 questions, our spec says 30. Dual format (15-20 or 45) bridges this.</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 600; color: var(--text-primary);">Video/reading resources</td>
+            <td>Video Micro-Modules (Track 2)</td>
+            <td><span class="badge" style="background: var(--green-dim); color: var(--green);">Aligned</span></td>
+            <td>65 modules already designed across 20 topics in micro-module architecture doc.</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 600; color: var(--text-primary);">Combined pathway (any order)</td>
+            <td>Adaptive CE Product Design (Flow 3)</td>
+            <td><span class="badge" style="background: var(--green-dim); color: var(--green);">Aligned</span></td>
+            <td>Existing spec has pre-assessment &rarr; content &rarr; post-test. Richard adds explicit "any order" flexibility.</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 600; color: var(--text-primary);">Forced rationale on wrong answers</td>
+            <td>Mandatory full review (all 30 questions)</td>
+            <td><span class="badge" style="background: var(--amber-dim); color: var(--amber);">Enhanced</span></td>
+            <td>Richard's is more granular &mdash; force reading at the moment of the mistake, not all at the end.</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 600; color: var(--text-primary);">Follow-up verification question</td>
+            <td>Not in existing specs</td>
+            <td><span class="badge" style="background: var(--purple-dim); color: var(--purple);">New</span></td>
+            <td>Novel mechanic. Grounded in retrieval practice research. Being researched for CAPCE compliance.</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 600; color: var(--text-primary);">Fail = must take resources</td>
+            <td>Spec allows retake with different questions</td>
+            <td><span class="badge" style="background: var(--amber-dim); color: var(--amber);">Enhanced</span></td>
+            <td>Richard's is a harder competency gate. Pushes failed providers to educational content before retake.</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 600; color: var(--text-primary);">Micro-sessions (30/30)</td>
+            <td>0.5 CEH micro-modules</td>
+            <td><span class="badge" style="background: var(--green-dim); color: var(--green);">Aligned</span></td>
+            <td>Our architecture already has 58 modules at 0.5 CEH. Richard's 30/30 is the same concept.</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 600; color: var(--text-primary);">4-standard mapping</td>
+            <td>NCCP only in current specs</td>
+            <td><span class="badge" style="background: var(--purple-dim); color: var(--purple);">New</span></td>
+            <td>Adding NES, NSOP, NMG mapping. Content work Richard is uniquely qualified for.</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 600; color: var(--text-primary);">"Continued competency" positioning</td>
+            <td>"CE that actually teaches you something"</td>
+            <td><span class="badge" style="background: var(--green-dim); color: var(--green);">Aligned</span></td>
+            <td>Same strategic insight, different words. Richard's framing is the industry-facing language.</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 600; color: var(--text-primary);">Unlimited retakes</td>
+            <td>Spec says 3 max</td>
+            <td><span class="badge" style="background: var(--amber-dim); color: var(--amber);">Updated</span></td>
+            <td>Being researched. Unlimited with different questions + forced remediation may be better pedagogy.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top: 20px; padding: 16px 20px; background: rgba(74,222,128,0.06); border: 1px solid rgba(74,222,128,0.15); border-radius: var(--radius-sm);">
+        <div style="font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 6px;">Bottom Line</div>
+        <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+          Richard's vision is <strong style="color: var(--text-primary);">remarkably aligned</strong> with the research and design work already completed. The differences are enhancements, not conflicts &mdash; Richard pushes the model to be <em>stricter</em> on competency (harder failure gates, forced remediation, 4-standard mapping), which is exactly the right direction for the brand position. The three genuinely new elements (adaptive remediation loop, 4-standard mapping, hard gate on total failure) all strengthen rather than contradict the existing architecture.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleSection(header) {
+  header.closest('.section').classList.toggle('open');
+}
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const section = el.closest('.section') || el;
+  if (!section.classList.contains('open')) section.classList.add('open');
+  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+
+</body>
+</html>
