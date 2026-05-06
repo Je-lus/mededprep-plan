@@ -1,0 +1,2218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedEdPrep — Psychometrics Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0e14;
+    --bg-surface: #111820;
+    --bg-card: #151c25;
+    --bg-card-hover: #1a2331;
+    --bg-elevated: #1e2733;
+    --border: #243040;
+    --border-subtle: #1c2535;
+    --text-primary: #e8edf4;
+    --text-secondary: #8899aa;
+    --text-muted: #5a6a7a;
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+    --teal-glow: rgba(45,212,191,0.06);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.12);
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.12);
+    --orange: #fb923c;
+    --orange-dim: rgba(251,146,60,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.12);
+    --nav-width: 240px;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg-base);
+    background-image: radial-gradient(circle at 1px 1px, rgba(167,139,250,0.02) 1px, transparent 0);
+    background-size: 40px 40px;
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--purple), var(--blue), var(--teal), var(--purple));
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+    z-index: 200;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    width: var(--nav-width);
+    min-width: var(--nav-width);
+    background: rgba(17,24,32,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  nav::-webkit-scrollbar { width: 0; }
+
+  .nav-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .nav-brand-name {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--purple), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-brand-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links { flex: 1; padding: 4px 0; }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    position: relative;
+  }
+  nav a:hover {
+    color: var(--text-primary);
+    background: rgba(167,139,250,0.04);
+    border-left-color: var(--purple);
+  }
+  nav a.active {
+    color: var(--text-primary);
+    background: rgba(167,139,250,0.06);
+    border-left-color: var(--purple);
+  }
+  nav a .nav-icon {
+    font-size: 15px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .nav-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 8px 0;
+  }
+  .nav-section-label {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    padding: 12px 24px 4px;
+  }
+
+  .nav-footer {
+    padding: 20px 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .nav-footer-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .nav-footer-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  /* ── LAYOUT ── */
+  .page-wrap { margin-left: var(--nav-width); }
+
+  .hero {
+    padding: 56px 56px 44px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #080c12 0%, #0d1220 30%, #0e0d1a 60%, #080e18 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: 10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(167,139,250,0.07) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -150px; left: 20%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(96,165,250,0.05) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px; height: 1px;
+    background: var(--purple);
+    vertical-align: middle;
+    margin-left: 12px;
+    opacity: 0.4;
+  }
+  .hero-headline {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f0f4f8 25%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    font-weight: 400;
+    line-height: 1.7;
+    max-width: 700px;
+  }
+
+  .quick-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .quick-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .quick-link:hover {
+    color: var(--text-primary);
+    border-color: var(--purple);
+    background: var(--purple-dim);
+  }
+
+  /* ── MAIN ── */
+  .main-inner {
+    padding: 40px 56px 80px;
+    max-width: 1260px;
+  }
+
+  .content-section { margin-bottom: 52px; }
+
+  .section-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .section-count {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  /* ── HERO METRICS ── */
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 32px;
+  }
+  @media (max-width: 1100px) { .hero-metrics { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .hero-metrics { grid-template-columns: 1fr; } }
+
+  .hero-metric {
+    background: rgba(17,24,32,0.6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    transition: border-color 0.2s;
+  }
+  .hero-metric:hover { border-color: #344050; }
+  .hero-metric-value {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .hero-metric-value.c-teal { color: var(--teal); }
+  .hero-metric-value.c-purple { color: var(--purple); }
+  .hero-metric-value.c-blue { color: var(--blue); }
+  .hero-metric-value.c-green { color: var(--green); }
+  .hero-metric-value.c-amber { color: var(--amber); }
+  .hero-metric-value.c-pink { color: var(--pink); }
+  .hero-metric-value.c-orange { color: var(--orange); }
+  .hero-metric-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+  .hero-metric-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  /* ── PRIORITY / INFO CARDS ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .card-grid-4 { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 1100px) { .card-grid-4 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 900px) {
+    .card-grid, .card-grid-2 { grid-template-columns: 1fr; }
+  }
+
+  .info-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .info-card:hover {
+    border-color: #344050;
+    transform: translateY(-1px);
+  }
+  .info-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .ic-purple::before { background: linear-gradient(90deg, var(--purple), transparent); }
+  .ic-blue::before { background: linear-gradient(90deg, var(--blue), transparent); }
+  .ic-teal::before { background: linear-gradient(90deg, var(--teal), transparent); }
+  .ic-green::before { background: linear-gradient(90deg, var(--green), transparent); }
+  .ic-amber::before { background: linear-gradient(90deg, var(--amber), transparent); }
+  .ic-pink::before { background: linear-gradient(90deg, var(--pink), transparent); }
+  .ic-orange::before { background: linear-gradient(90deg, var(--orange), transparent); }
+
+  .info-card-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .info-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .info-card-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+  .info-card-detail {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .info-card-detail strong { color: var(--text-secondary); font-weight: 600; }
+
+  /* ── STATUS BADGES ── */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .status-badge .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+  }
+  .sb-live { background: var(--green-dim); color: var(--green); }
+  .sb-live .dot { background: var(--green); animation: pulse-live 2s ease infinite; }
+  @keyframes pulse-live {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(74,222,128,0); }
+  }
+  .sb-building { background: var(--amber-dim); color: var(--amber); }
+  .sb-building .dot { background: var(--amber); }
+  .sb-planned { background: var(--purple-dim); color: var(--purple); }
+  .sb-planned .dot { background: var(--purple); }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 24px;
+  }
+  .callout p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .callout-purple {
+    background: linear-gradient(135deg, rgba(167,139,250,0.08) 0%, rgba(167,139,250,0.02) 100%);
+    border: 1px solid rgba(167,139,250,0.2);
+  }
+  .callout-purple strong { color: var(--purple); font-weight: 700; }
+  .callout-teal {
+    background: linear-gradient(135deg, rgba(45,212,191,0.08) 0%, rgba(45,212,191,0.02) 100%);
+    border: 1px solid rgba(45,212,191,0.2);
+  }
+  .callout-teal strong { color: var(--teal); font-weight: 700; }
+  .callout-blue {
+    background: linear-gradient(135deg, rgba(96,165,250,0.08) 0%, rgba(96,165,250,0.02) 100%);
+    border: 1px solid rgba(96,165,250,0.2);
+  }
+  .callout-blue strong { color: var(--blue); font-weight: 700; }
+  .callout-amber {
+    background: linear-gradient(135deg, rgba(251,191,36,0.08) 0%, rgba(251,191,36,0.02) 100%);
+    border: 1px solid rgba(251,191,36,0.2);
+  }
+  .callout-amber strong { color: var(--amber); font-weight: 700; }
+
+  /* ── FLOWCHART ── */
+  .flow-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    overflow-x: auto;
+  }
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .flow-row:last-child { margin-bottom: 0; }
+  .flow-node {
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid;
+    min-width: 140px;
+  }
+  .flow-arrow {
+    color: var(--text-muted);
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .flow-arrow-down {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 18px;
+    padding: 4px 0;
+  }
+  .flow-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  /* ── TEAM CARDS ── */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 900px) { .team-grid { grid-template-columns: 1fr; } }
+
+  .team-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+  .team-card:hover { border-color: #344050; }
+
+  .team-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+  .team-role {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .team-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 12px;
+  }
+  .team-details {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .team-details li {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    line-height: 1.45;
+  }
+  .team-details li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  /* ── TABLE ── */
+  .data-table-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow-x: auto;
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .data-table th {
+    text-align: left;
+    padding: 14px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    background: rgba(17,24,32,0.5);
+    white-space: nowrap;
+  }
+  .data-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(167,139,250,0.02); }
+
+  /* ── TRACK CARDS ── */
+  .track-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .track-card:hover { border-color: #344050; }
+  .track-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+  }
+  .tc-purple::before { background: var(--purple); }
+  .tc-blue::before { background: var(--blue); }
+  .tc-teal::before { background: var(--teal); }
+  .tc-green::before { background: var(--green); }
+
+  .track-number {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .track-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .track-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .track-checkpoints {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .track-checkpoints li {
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    line-height: 1.45;
+  }
+  .checkpoint-marker {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+
+  .tracks-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* ── INTERACTIVE DEMO AREA ── */
+  .demo-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .demo-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .demo-tab {
+    padding: 12px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: inherit;
+  }
+  .demo-tab:hover { color: var(--text-secondary); background: rgba(167,139,250,0.04); }
+  .demo-tab.active {
+    color: var(--purple);
+    border-bottom-color: var(--purple);
+    background: rgba(167,139,250,0.06);
+  }
+  .demo-panel {
+    padding: 32px;
+    display: none;
+  }
+  .demo-panel.active { display: block; }
+
+  /* ── PULSE MOCKUP IN DEMO PANEL ── */
+  .demo-panel-layout {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+  }
+  .demo-panel-main { flex: 1; min-width: 0; }
+  .demo-panel-mockup {
+    width: 160px;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .demo-panel-mockup:hover {
+    transform: scale(1.03);
+    border-color: var(--orange);
+    box-shadow: 0 8px 30px rgba(251,146,60,0.15);
+  }
+  .demo-panel-mockup img {
+    width: 100%;
+    display: block;
+  }
+  .demo-panel-mockup-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-align: center;
+    padding: 6px;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  /* Screenshot overlay */
+  .screenshot-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 300;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+  }
+  .screenshot-overlay.active { display: flex; }
+  .screenshot-overlay img {
+    max-width: 80vw;
+    max-height: 85vh;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  }
+  .screenshot-overlay-label {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: var(--bg-card);
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.16s; }
+  .reveal-delay-3 { transition-delay: 0.24s; }
+</style>
+</head>
+<body>
+
+<!-- Screenshot overlay -->
+<div class="screenshot-overlay" id="screenshotOverlay" onclick="this.classList.remove('active')">
+  <img id="screenshotImg" src="" alt="">
+  <div class="screenshot-overlay-label" id="screenshotLabel"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-name">MedEdPrep</div>
+    <div class="nav-brand-sub">Psychometrics @ MedEdPrep</div>
+  </div>
+  <div class="nav-links">
+    <a href="#welcome" class="active"><span class="nav-icon">&#9670;</span> Welcome</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">The Landscape</div>
+    <a href="#numbers"><span class="nav-icon">&#9672;</span> By the Numbers</a>
+    <a href="#adaptive-engine"><span class="nav-icon">&#9672;</span> Adaptive Engine &amp; IRT Path</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">Platforms</div>
+    <a href="#pulse"><span class="nav-icon">&#9671;</span> Pulse &amp; Question Types</a>
+    <a href="#ai-pipeline"><span class="nav-icon">&#9671;</span> AI Question Pipeline</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">Your Summer</div>
+    <a href="#team"><span class="nav-icon">&#9671;</span> The Team</a>
+    <a href="#tracks"><span class="nav-icon">&#9671;</span> Project Tracks</a>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-footer-label">Prepared for</div>
+    <div class="nav-footer-date">Brad Yang</div>
+    <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Summer 2026</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">Summer 2026 Internship</div>
+    <h1 class="hero-headline">Psychometrics at MedEdPrep</h1>
+    <p class="hero-subtitle">You asked what algorithms we use, what IRT models we've built, and where the CAT project stands. This page answers all of that &mdash; and shows you the full landscape of where your work fits in. We built this for you.</p>
+    <div class="quick-links">
+      <a href="#numbers" class="quick-link">&#9670; The Data</a>
+      <a href="#adaptive-engine" class="quick-link">&#9670; Algorithm &amp; IRT Path</a>
+      <a href="#pulse" class="quick-link">&#9670; Pulse Platform</a>
+      <a href="#tracks" class="quick-link">&#9670; Summer Tracks</a>
+    </div>
+  </div>
+
+  <div class="main-inner">
+
+    <!-- BY THE NUMBERS -->
+    <div class="content-section reveal" id="numbers">
+      <div class="section-title-row">
+        <h2 class="section-title">By the Numbers</h2>
+        <span class="section-count">As of May 5, 2026</span>
+      </div>
+
+      <div class="callout callout-purple" style="margin-bottom: 28px;">
+        <p>MedEdPrep is an EMS education platform serving EMT, AEMT, and Paramedic students across 30+ states. Everything below is <strong>real production data</strong>, not projections. This is the dataset you will be working with.</p>
+      </div>
+
+      <div class="hero-metrics" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="hero-metric">
+          <div class="hero-metric-value c-purple">4,222</div>
+          <div class="hero-metric-label">Students on platform</div>
+          <div class="hero-metric-note">Across 239 programs in 30+ states.</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value c-blue">~1.6M</div>
+          <div class="hero-metric-label">Response-level records</div>
+          <div class="hero-metric-note">Every answer, timestamp, and confidence rating captured.</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value c-teal">10,600+</div>
+          <div class="hero-metric-label">Published items</div>
+          <div class="hero-metric-note">SME-reviewed. EMT / AEMT / Paramedic levels.</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value c-amber">~10,000</div>
+          <div class="hero-metric-label">AI-generated items</div>
+          <div class="hero-metric-note">Awaiting SME review before entering production.</div>
+        </div>
+      </div>
+
+      <div class="hero-metrics" style="grid-template-columns: repeat(4, 1fr); margin-top: 14px;">
+        <div class="hero-metric">
+          <div class="hero-metric-value c-green">223</div>
+          <div class="hero-metric-label">NREMT-linked outcomes</div>
+          <div class="hero-metric-note">Pass/fail data matched to platform performance.</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value c-orange">273K</div>
+          <div class="hero-metric-label">Targeted Quiz responses</div>
+          <div class="hero-metric-note">18.8% of dataset. Voluntary self-testing signal.</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value c-pink">6</div>
+          <div class="hero-metric-label">Question types (current)</div>
+          <div class="hero-metric-note">MCQ, MSQ, Matrix, Ranking, YesNo, Dropdown.</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value" style="color: var(--red);">10+</div>
+          <div class="hero-metric-label">Question types (Pulse)</div>
+          <div class="hero-metric-note">Hotspot, Slider, Ordering, Drug Calc, Triage, and more.</div>
+        </div>
+      </div>
+
+      <!-- Item bank breakdown -->
+      <div style="margin-top: 32px;">
+        <h3 style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px;">Item Bank Structure</h3>
+        <div class="card-grid card-grid-2">
+
+          <div class="info-card ic-purple" style="padding: 28px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+              <span class="status-badge sb-live"><span class="dot"></span> Production</span>
+              <span style="font-size: 24px; font-weight: 800; color: var(--purple);">10,600+</span>
+              <span style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">published items</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-primary); line-height: 1.65; margin-bottom: 16px;">
+              Every question is tagged with up to <span style="color: var(--teal); font-weight: 700;">4 subcategories</span> and <span style="color: var(--teal); font-weight: 700;">10 learning objectives</span>, mapped to NHTSA domains. Each item carries response history from thousands of students.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px;">
+              <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--purple-dim); color: var(--purple); text-transform: uppercase; letter-spacing: 0.04em;">NHTSA Domain</span>
+              <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--blue-dim); color: var(--blue); text-transform: uppercase; letter-spacing: 0.04em;">Subcategories</span>
+              <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--teal-dim); color: var(--teal); text-transform: uppercase; letter-spacing: 0.04em;">Objectives</span>
+              <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--green-dim); color: var(--green); text-transform: uppercase; letter-spacing: 0.04em;">Bloom's Level</span>
+              <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--amber-dim); color: var(--amber); text-transform: uppercase; letter-spacing: 0.04em;">Difficulty Index</span>
+              <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--pink-dim); color: var(--pink); text-transform: uppercase; letter-spacing: 0.04em;">Exam Level</span>
+            </div>
+            <div class="callout callout-purple" style="margin: 0; padding: 14px 18px;">
+              <p style="font-size: 12px; margin: 0;"><strong>Where you come in:</strong> The raw data to compute IRT parameters, discrimination indices, and point-biserial correlations already exists across 1.6M responses. Item-level response breakdowns, distractor selection frequencies, and difficulty indices are all accessible. What has not been done yet is the formal psychometric analysis layer on top of it. That is your work.</p>
+            </div>
+          </div>
+
+          <div class="info-card ic-amber" style="padding: 28px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+              <span class="status-badge sb-building"><span class="dot"></span> Awaiting Review</span>
+              <span style="font-size: 24px; font-weight: 800; color: var(--amber);">~10,000</span>
+              <span style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">AI-generated items</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-primary); line-height: 1.65; margin-bottom: 16px;">
+              We have a question generator that is trained on current EMS textbooks and other reputable medical sources. These items are NHTSA-mapped at the objective level and awaiting SME review before entering the production bank.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px;">
+              <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--amber-dim); color: var(--amber); text-transform: uppercase; letter-spacing: 0.04em;">Pre-tagged</span>
+              <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--purple-dim); color: var(--purple); text-transform: uppercase; letter-spacing: 0.04em;">NHTSA-Mapped</span>
+              <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--blue-dim); color: var(--blue); text-transform: uppercase; letter-spacing: 0.04em;">Multi-Level</span>
+            </div>
+            <div class="callout callout-amber" style="margin: 0; padding: 14px 18px;">
+              <p style="font-size: 12px; margin: 0;"><strong>Where you fit:</strong> Item analysis, distractor quality review, and defining the psychometric criteria for what "good enough" looks like before an item enters production. Your expertise shapes both what enters the bank and how the AI generates better items over time.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Response data schema (simplified) -->
+      <div style="margin-top: 32px;">
+        <h3 style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px;">Response Data</h3>
+        <div class="callout callout-blue" style="margin-bottom: 0;">
+          <p>You already know this data from the anonymized dataset, but here is the full picture. Every response record captures <strong>correctness</strong>, <strong>time spent</strong>, <strong>confidence rating</strong>, <strong>full answer selection</strong> (for distractor analysis), <strong>domain</strong>, <strong>quiz type</strong>, <strong>exam level</strong>, and <strong>position in sequence</strong>. The confidence field has the strongest coverage on Targeted Quizzes (59.1%) and adaptive exams.</p>
+        </div>
+      </div>
+
+      <!-- Question banks -->
+      <div style="margin-top: 32px;">
+        <h3 style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px;">Question Banks that Feed the Data</h3>
+
+        <div class="card-grid card-grid-2" style="margin-bottom: 16px;">
+          <!-- Student Initiated -->
+          <div class="info-card ic-purple" style="padding: 28px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+              <span style="font-size: 20px; font-weight: 800; color: var(--purple);">Student Initiated</span>
+              <span class="status-badge sb-live"><span class="dot"></span> Live</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div>
+                <div style="font-size: 14px; font-weight: 700; color: var(--teal); margin-bottom: 8px;">Adaptive Exam</div>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 6px;">
+                  <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.45;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 6px;"></span>Domain-based proficiency assessment</li>
+                  <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.45;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 6px;"></span>Variable length based on exam level and performance</li>
+                  <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.45;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 6px;"></span>Includes scenario-based clinical chapters</li>
+                </ul>
+              </div>
+              <div>
+                <div style="font-size: 14px; font-weight: 700; color: var(--blue); margin-bottom: 8px;">TQZ / Simulator</div>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 6px;">
+                  <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.45;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--blue); flex-shrink: 0; margin-top: 6px;"></span>Targeted Quizzes and simulated exams</li>
+                  <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.45;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--blue); flex-shrink: 0; margin-top: 6px;"></span>Voluntary, self-directed practice</li>
+                  <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.45;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--blue); flex-shrink: 0; margin-top: 6px;"></span>Key metacognitive control signal (273K responses)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Instructor Initiated -->
+          <div class="info-card ic-green" style="padding: 28px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+              <span style="font-size: 20px; font-weight: 800; color: var(--green);">Instructor Initiated</span>
+              <span class="status-badge sb-live"><span class="dot"></span> Live</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div>
+                <div style="font-size: 14px; font-weight: 700; color: var(--amber); margin-bottom: 8px;">Exit Exams</div>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 6px;">
+                  <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.45;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--amber); flex-shrink: 0; margin-top: 6px;"></span>Final readiness check before NREMT</li>
+                  <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.45;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--amber); flex-shrink: 0; margin-top: 6px;"></span>Multiple versions available per exam level</li>
+                  <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.45;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--amber); flex-shrink: 0; margin-top: 6px;"></span>Instructor-gated, scored, and tracked</li>
+                </ul>
+              </div>
+              <div>
+                <div style="font-size: 14px; font-weight: 700; color: var(--orange); margin-bottom: 8px;">Unit Exams</div>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 6px;">
+                  <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.45;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--orange); flex-shrink: 0; margin-top: 6px;"></span>Topic-specific classroom assessments</li>
+                  <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.45;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--orange); flex-shrink: 0; margin-top: 6px;"></span>Instructor-built or assigned from bank</li>
+                  <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.45;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--orange); flex-shrink: 0; margin-top: 6px;"></span>Formative assessment throughout the course</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pulse -->
+        <div class="info-card ic-orange" style="padding: 20px; max-width: calc(50% - 8px);">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 20px; font-weight: 800; color: var(--orange);">Pulse</span>
+            <span class="status-badge sb-building"><span class="dot"></span> New Platform</span>
+            <span style="font-size: 12px; color: var(--text-secondary); margin-left: 4px;">Gamified, real-time multiplayer, 10+ question types, separate item bank</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURRENT ADAPTIVE ENGINE -->
+    <div class="content-section reveal" id="adaptive-engine">
+      <div class="section-title-row">
+        <h2 class="section-title">The Current Adaptive Engine</h2>
+        <span class="section-count">You asked what algorithms we use. Here is the honest answer.</span>
+      </div>
+
+      <div class="callout callout-purple" style="margin-bottom: 28px;">
+        <p>The adaptive exam is <strong>not IRT-based</strong>. It is a domain-mastery proficiency system with random item selection from pools. There is no theta estimation, no item information function, no maximum-information selection. That is not a limitation we are ignoring. It is the reason you are here.</p>
+      </div>
+
+      <!-- Current algorithm - vertical steps -->
+      <div style="margin-bottom: 28px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+          <h3 style="font-size: 15px; font-weight: 700; color: var(--text-primary);">How the Algorithm Currently Works</h3>
+          <span class="status-badge sb-building"><span class="dot"></span> Changing Soon</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0;">
+          <!-- Step 1 -->
+          <div style="display: flex; gap: 20px; align-items: stretch;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 40px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--purple-dim); border: 2px solid var(--purple); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--purple);">1</div>
+              <div style="width: 2px; flex: 1; background: linear-gradient(to bottom, var(--purple), var(--blue));"></div>
+            </div>
+            <div style="padding-bottom: 24px; flex: 1;">
+              <div style="font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 4px;">Domain Percentage Allocation</div>
+              <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6;">Each exam has a configurable distribution of questions across domains (e.g., Airway 18%, Medical 22%, Trauma 20%). The initial pool of questions is drawn proportionally from these domain allocations.</p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div style="display: flex; gap: 20px; align-items: stretch;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 40px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--blue-dim); border: 2px solid var(--blue); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--blue);">2</div>
+              <div style="width: 2px; flex: 1; background: linear-gradient(to bottom, var(--blue), var(--teal));"></div>
+            </div>
+            <div style="padding-bottom: 24px; flex: 1;">
+              <div style="font-size: 14px; font-weight: 700; color: var(--blue); margin-bottom: 4px;">Random Selection from Initial Pool</div>
+              <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6;">Questions are selected randomly from domain-specific pools. No difficulty targeting, no ability estimation. Every student sees questions drawn at random from the same pool at their exam level.</p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div style="display: flex; gap: 20px; align-items: stretch;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 40px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--teal-dim); border: 2px solid var(--teal); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--teal);">3</div>
+              <div style="width: 2px; flex: 1; background: linear-gradient(to bottom, var(--teal), var(--amber));"></div>
+            </div>
+            <div style="padding-bottom: 24px; flex: 1;">
+              <div style="font-size: 14px; font-weight: 700; color: var(--teal); margin-bottom: 4px;">Adaptive Domain Targeting</div>
+              <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6;">After the initial questions, the system calculates domain-level percentages. If any domain is below 70%, it randomly selects a failing domain and pulls the next available question from that domain. The "adaptive" part is domain-focused remediation, not difficulty-based.</p>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div style="display: flex; gap: 20px; align-items: stretch;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 40px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--amber-dim); border: 2px solid var(--amber); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--amber);">4</div>
+              <div style="width: 2px; flex: 1; background: linear-gradient(to bottom, var(--amber), var(--green));"></div>
+            </div>
+            <div style="flex: 1; padding-bottom: 24px;">
+              <div style="font-size: 14px; font-weight: 700; color: var(--amber); margin-bottom: 4px;">Termination</div>
+              <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6;">The exam ends when one of three conditions is met:</p>
+              <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                <span style="font-size: 11px; font-weight: 700; padding: 6px 14px; border-radius: 6px; background: var(--green-dim); color: var(--green);">PASS: All domains &ge;70%</span>
+                <span style="font-size: 11px; font-weight: 700; padding: 6px 14px; border-radius: 6px; background: var(--red-dim); color: var(--red);">FAIL: Any domain drops below threshold</span>
+                <span style="font-size: 11px; font-weight: 700; padding: 6px 14px; border-radius: 6px; background: var(--amber-dim); color: var(--amber);">MAX: Question limit reached, scored as-is</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div style="display: flex; gap: 20px; align-items: stretch;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 40px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--green-dim); border: 2px solid var(--green); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--green);">5</div>
+            </div>
+            <div style="flex: 1;">
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                <span style="font-size: 14px; font-weight: 700; color: var(--green);">Where This Is Going</span>
+                <span class="status-badge sb-building"><span class="dot"></span> Active Dev</span>
+              </div>
+              <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6; margin-bottom: 14px;">
+                We are actively rebuilding the adaptive logic right now. The dev team is implementing difficulty-based item selection, minimum domain exposure guarantees, and adding point-biserial and discrimination indices to the question KPIs. Here is the phased approach:
+              </p>
+
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <!-- Active changes -->
+                <div style="padding: 16px 20px; background: rgba(74,222,128,0.04); border: 1px solid rgba(74,222,128,0.15); border-radius: var(--radius-sm); border-left: 3px solid var(--green);">
+                  <div style="font-size: 12px; font-weight: 700; color: var(--green); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em;">Being Built Now</div>
+                  <ul style="list-style: none; display: flex; flex-direction: column; gap: 6px;">
+                    <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.5;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: 6px;"></span>Minimum of 3 questions per domain in an initial "feeler" phase before adaptive routing kicks in</li>
+                    <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.5;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: 6px;"></span>Difficulty-based item selection: after the initial phase, if a student is struggling, give them easier questions. If they are succeeding, give them harder ones. Routed by the difficulty index.</li>
+                    <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.5;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: 6px;"></span>Minimum of 8 question exposure per domain before a student can be failed out of a category</li>
+                    <li style="font-size: 12px; color: var(--text-primary); display: flex; align-items: baseline; gap: 8px; line-height: 1.5;"><span style="width: 4px; height: 4px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: 6px;"></span>Adding point-biserial correlation and discrimination index to the question KPI dashboard</li>
+                  </ul>
+                </div>
+
+                <!-- 1PL -->
+                <div style="padding: 16px 20px; background: rgba(96,165,250,0.04); border: 1px solid rgba(96,165,250,0.15); border-radius: var(--radius-sm); border-left: 3px solid var(--blue);">
+                  <div style="font-size: 12px; font-weight: 700; color: var(--blue); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em;">Next: 1PL</div>
+                  <p style="font-size: 12px; color: var(--text-primary); line-height: 1.55;">
+                    Replace raw correct percentage with calibrated difficulty parameters. We have the response volume to do this across the full production bank. The point-biserial and discrimination indices being added to the KPIs will give us the item-level diagnostics to identify which items are working and which need attention before calibration.
+                  </p>
+                </div>
+
+                <!-- 2PL / 3PL -->
+                <div style="padding: 16px 20px; background: rgba(167,139,250,0.04); border: 1px solid rgba(167,139,250,0.15); border-radius: var(--radius-sm); border-left: 3px solid var(--purple);">
+                  <div style="font-size: 12px; font-weight: 700; color: var(--purple); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em;">Then: 2PL and 3PL</div>
+                  <p style="font-size: 12px; color: var(--text-primary); line-height: 1.55;">
+                    Layer in discrimination and guessing. We already capture full distractor selection data, response timing, and option-level frequencies, so the data is there. The timing data in particular should help flag items with aberrant response patterns. Once we have all three parameters, the adaptive engine becomes a true CAT.
+                  </p>
+                </div>
+              </div>
+
+              <div class="callout callout-blue" style="margin-top: 16px; margin-bottom: 0; padding: 14px 18px;">
+                <p style="font-size: 12px; margin: 0;"><strong>This is where you fit in directly.</strong> The dev team is building the infrastructure for difficulty-based routing. You bring the psychometric rigor that turns correct percentages into calibrated IRT parameters, and turns "give them an easier question" into formal maximum-information item selection.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key details -->
+      <div class="card-grid card-grid-2" style="margin-bottom: 28px;">
+        <div class="info-card ic-blue" style="padding: 28px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+            <span style="font-size: 24px; font-weight: 800; color: var(--blue);">Item Selection</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-primary); line-height: 1.65; margin-bottom: 14px;">
+            Initial questions are drawn <span style="color: var(--blue); font-weight: 700;">randomly</span> from domain-specific pools, proportional to a configurable domain percentage distribution. During the adaptive phase, the system picks a random failing domain and pulls the next available question. No difficulty targeting.
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--blue-dim); color: var(--blue); text-transform: uppercase; letter-spacing: 0.04em;">Random Order</span>
+            <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--blue-dim); color: var(--blue); text-transform: uppercase; letter-spacing: 0.04em;">Domain-Proportional</span>
+            <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--blue-dim); color: var(--blue); text-transform: uppercase; letter-spacing: 0.04em;">No Difficulty Routing</span>
+          </div>
+        </div>
+        <div class="info-card ic-teal" style="padding: 28px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+            <span style="font-size: 24px; font-weight: 800; color: var(--teal);">Pass / Fail Logic</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-primary); line-height: 1.65; margin-bottom: 14px;">
+            Pass requires <span style="color: var(--green); font-weight: 700;">&ge;70% in every domain</span>. Dropping below the fail threshold in any single domain triggers an immediate fail. Exam length varies by exam level and configuration.
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--green-dim); color: var(--green); text-transform: uppercase; letter-spacing: 0.04em;">Pass: &ge;70% All Domains</span>
+            <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--red-dim); color: var(--red); text-transform: uppercase; letter-spacing: 0.04em;">Fail: Below Threshold</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chapter / Scenario structure with tabs -->
+      <div class="demo-container" style="margin-bottom: 28px;">
+        <div style="padding: 20px 28px 0; display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 18px; font-weight: 800; color: var(--green);">Scenario-Based Questions</span>
+          <span class="status-badge sb-live"><span class="dot"></span> Live</span>
+        </div>
+        <p style="padding: 8px 28px 0; font-size: 13px; color: var(--text-secondary); line-height: 1.6; max-width: 700px;">
+          Each adaptive exam includes 3 to 5 clinical scenario chapters. A chapter is a patient case that unfolds across three phases. This mirrors how NREMT structures its exam and how real EMS calls unfold.
+        </p>
+        <div class="demo-tabs" style="margin-top: 16px;">
+          <button class="demo-tab active" data-target="#scenario-enroute">En Route</button>
+          <button class="demo-tab" data-target="#scenario-scene">On Scene</button>
+          <button class="demo-tab" data-target="#scenario-post">Post Scene</button>
+        </div>
+        <div class="demo-panel active" id="scenario-enroute">
+          <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <div style="width: 48px; height: 48px; border-radius: 10px; background: var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;">&#128666;</div>
+            <div>
+              <div style="font-size: 16px; font-weight: 700; color: var(--teal); margin-bottom: 6px;">En Route Phase</div>
+              <p style="font-size: 13px; color: var(--text-primary); line-height: 1.65; margin-bottom: 10px;">
+                Dispatch information, response decisions, and pre-arrival preparation. The student knows where they are going but has not arrived yet. Questions focus on anticipation, resource planning, and scene safety considerations.
+              </p>
+              <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5; font-style: italic;">
+                "You are dispatched to a 67-year-old male experiencing chest pain at a residential address. Response time is approximately 8 minutes. What information would you request from dispatch?"
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="demo-panel" id="scenario-scene">
+          <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <div style="width: 48px; height: 48px; border-radius: 10px; background: var(--blue-dim); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;">&#127973;</div>
+            <div>
+              <div style="font-size: 16px; font-weight: 700; color: var(--blue); margin-bottom: 6px;">On Scene Phase</div>
+              <p style="font-size: 13px; color: var(--text-primary); line-height: 1.65; margin-bottom: 10px;">
+                Patient assessment, clinical decision-making, and intervention. The student is face-to-face with the patient. Questions build on the dispatch info from En Route and test the ability to assess, prioritize, and treat.
+              </p>
+              <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5; font-style: italic;">
+                "On arrival, you find the patient sitting upright, diaphoretic, and clutching his chest. Vitals: BP 158/94, HR 102, SpO2 94%. What is your first intervention?"
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="demo-panel" id="scenario-post">
+          <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <div style="width: 48px; height: 48px; border-radius: 10px; background: var(--purple-dim); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;">&#127963;</div>
+            <div>
+              <div style="font-size: 16px; font-weight: 700; color: var(--purple); margin-bottom: 6px;">Post Scene Phase</div>
+              <p style="font-size: 13px; color: var(--text-primary); line-height: 1.65; margin-bottom: 10px;">
+                Transport decisions, ongoing care, hospital handoff, and documentation. The patient is in the ambulance or being transferred. Questions test continuity of care, reassessment, and communication.
+              </p>
+              <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5; font-style: italic;">
+                "During transport, the patient's chest pain resolves after nitroglycerin administration, but he becomes hypotensive at 88/56. What is your next action?"
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance analytics - tabbed -->
+      <div class="demo-container">
+        <div style="padding: 20px 28px 0; display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 18px; font-weight: 800; color: var(--purple);">Performance Analytics Already Built</span>
+        </div>
+        <p style="padding: 8px 28px 0; font-size: 13px; color: var(--text-secondary); line-height: 1.6; max-width: 700px;">
+          These are behavioral signals computed for every exam attempt, at both the individual and class level. Not psychometric measures, but useful foundations.
+        </p>
+        <div class="demo-tabs" style="margin-top: 16px;">
+          <button class="demo-tab active" data-target="#analytics-individual">Individual Analytics</button>
+          <button class="demo-tab" data-target="#analytics-class">Class Analytics</button>
+        </div>
+        <div class="demo-panel active" id="analytics-individual">
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+            <div style="padding: 18px; background: rgba(167,139,250,0.04); border: 1px solid rgba(167,139,250,0.12); border-radius: var(--radius-sm);">
+              <div style="font-size: 13px; font-weight: 700; color: var(--purple); margin-bottom: 6px;">Timing Analysis</div>
+              <p style="font-size: 12px; color: var(--text-primary); line-height: 1.55;">Average time per question, time on correct vs. incorrect. Detects <span style="color: var(--amber); font-weight: 600;">overthinking</span>, <span style="color: var(--red); font-weight: 600;">rushing</span>, or <span style="color: var(--green); font-weight: 600;">balanced</span> patterns.</p>
+            </div>
+            <div style="padding: 18px; background: rgba(96,165,250,0.04); border: 1px solid rgba(96,165,250,0.12); border-radius: var(--radius-sm);">
+              <div style="font-size: 13px; font-weight: 700; color: var(--blue); margin-bottom: 6px;">Stamina Patterns</div>
+              <p style="font-size: 12px; color: var(--text-primary); line-height: 1.55;">First-half vs. second-half accuracy. Flags <span style="color: var(--red); font-weight: 600;">fatigue</span> (&ge;8% drop), <span style="color: var(--green); font-weight: 600;">warmup</span> (&ge;8% gain), or <span style="color: var(--teal); font-weight: 600;">consistent</span> performance.</p>
+            </div>
+            <div style="padding: 18px; background: rgba(45,212,191,0.04); border: 1px solid rgba(45,212,191,0.12); border-radius: var(--radius-sm);">
+              <div style="font-size: 13px; font-weight: 700; color: var(--teal); margin-bottom: 6px;">Confidence Quadrants</div>
+              <p style="font-size: 12px; color: var(--text-primary); line-height: 1.55;">Speed x correctness matrix. <span style="color: var(--green); font-weight: 600;">Fast + Correct</span> = confident knowledge. <span style="color: var(--red); font-weight: 600;">Fast + Wrong</span> = overconfident. <span style="color: var(--amber); font-weight: 600;">Slow + Wrong</span> = struggling.</p>
+            </div>
+            <div style="padding: 18px; background: rgba(74,222,128,0.04); border: 1px solid rgba(74,222,128,0.12); border-radius: var(--radius-sm);">
+              <div style="font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 6px;">Streak Analysis</div>
+              <p style="font-size: 12px; color: var(--text-primary); line-height: 1.55;">Longest correct and incorrect runs, end-of-exam streak, consistency via standard deviation. Insight text generated per attempt.</p>
+            </div>
+          </div>
+        </div>
+        <div class="demo-panel" id="analytics-class">
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+            <div style="padding: 18px; background: rgba(251,191,36,0.04); border: 1px solid rgba(251,191,36,0.12); border-radius: var(--radius-sm);">
+              <div style="font-size: 13px; font-weight: 700; color: var(--amber); margin-bottom: 6px;">Domain Performance</div>
+              <p style="font-size: 12px; color: var(--text-primary); line-height: 1.55;">Per-domain average scores and pass rates across the whole class. Domains flagged as <span style="color: var(--red); font-weight: 600;">critical</span> (&lt;40%), <span style="color: var(--amber); font-weight: 600;">concern</span> (40-60%), or <span style="color: var(--green); font-weight: 600;">on track</span> (&gt;60%).</p>
+            </div>
+            <div style="padding: 18px; background: rgba(251,146,60,0.04); border: 1px solid rgba(251,146,60,0.12); border-radius: var(--radius-sm);">
+              <div style="font-size: 13px; font-weight: 700; color: var(--orange); margin-bottom: 6px;">Student Categorization</div>
+              <p style="font-size: 12px; color: var(--text-primary); line-height: 1.55;">Automatic bucketing: <span style="color: var(--red); font-weight: 600;">critical</span> (needs immediate support), <span style="color: var(--amber); font-weight: 600;">almost there</span> (close to passing), and <span style="color: var(--green); font-weight: 600;">passed</span>. Sorted by accuracy.</p>
+            </div>
+            <div style="padding: 18px; background: rgba(244,114,182,0.04); border: 1px solid rgba(244,114,182,0.12); border-radius: var(--radius-sm);">
+              <div style="font-size: 13px; font-weight: 700; color: var(--pink); margin-bottom: 6px;">Gap-to-Pass Analysis</div>
+              <p style="font-size: 12px; color: var(--text-primary); line-height: 1.55;">For each failing student, shows which domains failed and exactly how far from 70% they are. Sorted closest-to-passing first, so instructors prioritize effectively.</p>
+            </div>
+            <div style="padding: 18px; background: rgba(167,139,250,0.04); border: 1px solid rgba(167,139,250,0.12); border-radius: var(--radius-sm);">
+              <div style="font-size: 13px; font-weight: 700; color: var(--purple); margin-bottom: 6px;">Instructor Recommendations</div>
+              <p style="font-size: 12px; color: var(--text-primary); line-height: 1.55;">Auto-generated action items in three categories: immediate focus areas, test strategy patterns to address, and individual students needing intervention.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sections merged into Step 5 above -->
+
+    <!-- PULSE & QUESTION TYPES -->
+    <div class="content-section reveal" id="pulse">
+      <div class="section-title-row">
+        <h2 class="section-title">Pulse &amp; Question Types</h2>
+        <span class="section-count">The next-generation platform</span>
+      </div>
+
+      <div class="callout callout-teal" style="margin-bottom: 28px;">
+        <p>Pulse is a separate platform from the main test prep product. It is <strong>gamified, real-time, multiplayer</strong>, and built around engagement first. It has its own item bank, its own question types, and its own scoring model. Think of it as Kahoot built specifically for EMS education, with psychometric infrastructure designed in from the start.</p>
+      </div>
+
+      <!-- What makes Pulse different -->
+      <div class="card-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 28px;">
+        <div class="info-card ic-orange" style="padding: 24px;">
+          <div style="font-size: 14px; font-weight: 700; color: var(--orange); margin-bottom: 8px;">Game-First Scoring</div>
+          <p style="font-size: 12px; color: var(--text-primary); line-height: 1.55; margin-bottom: 10px;">
+            Power-curve time decay, streak multipliers (up to 1.5x), and speed bonuses. Scoring optimizes for engagement, not measurement precision.
+          </p>
+          <div class="callout callout-amber" style="margin: 0; padding: 10px 14px;">
+            <p style="font-size: 11px; margin: 0;"><strong>But:</strong> Every response still has a binary correct/incorrect signal underneath the game layer. That data is psychometrically usable.</p>
+          </div>
+        </div>
+        <div class="info-card ic-teal" style="padding: 24px;">
+          <div style="font-size: 14px; font-weight: 700; color: var(--teal); margin-bottom: 8px;">NHTSA Objective Mapping</div>
+          <p style="font-size: 12px; color: var(--text-primary); line-height: 1.55; margin-bottom: 10px;">
+            Every Pulse question maps to a primary domain, up to 4 subtopics, and up to 10 learning objectives. Same depth as the main platform.
+          </p>
+          <div class="callout callout-teal" style="margin: 0; padding: 10px 14px;">
+            <p style="font-size: 11px; margin: 0;"><strong>This enables:</strong> Mastery tracking at the objective level, gap analysis across question types, and curriculum coverage reporting.</p>
+          </div>
+        </div>
+        <div class="info-card ic-green" style="padding: 24px;">
+          <div style="font-size: 14px; font-weight: 700; color: var(--green); margin-bottom: 8px;">Knowledge Decay Model</div>
+          <p style="font-size: 12px; color: var(--text-primary); line-height: 1.55; margin-bottom: 10px;">
+            A half-life decay formula is already coded and ready to be wired into recommendations. Tracks how mastery fades over time and can suggest when to revisit a topic.
+          </p>
+          <div class="callout callout-blue" style="margin: 0; padding: 10px 14px;">
+            <p style="font-size: 11px; margin: 0;"><strong>Status:</strong> Formula is production-ready. Waiting on enough game data to start driving recommendations.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Partial credit callout -->
+      <div class="callout callout-purple" style="margin-bottom: 28px;">
+        <p>Several of the question types below support <strong>partial credit scoring</strong>. Select All uses hit/miss ratios with a penalty for incorrect selections. Hotspot uses distance-based tiers. Slider and Drug Calc use proximity scoring. Ordering scores per-position accuracy. This gives richer signal than binary MCQ for both game scoring and psychometric analysis.</p>
+      </div>
+
+      <!-- Interactive question type demos -->
+      <div style="margin-bottom: 0;">
+        <h3 style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px;">Question Types</h3>
+
+        <div class="demo-container">
+          <div class="demo-tabs">
+            <button class="demo-tab active" data-target="#qt-mcq">Multiple Choice</button>
+            <button class="demo-tab" data-target="#qt-tf">True / False</button>
+            <button class="demo-tab" data-target="#qt-sata">Select All</button>
+            <button class="demo-tab" data-target="#qt-ordering">Ordering</button>
+            <button class="demo-tab" data-target="#qt-hotspot">Hotspot</button>
+            <button class="demo-tab" data-target="#qt-slider">Slider</button>
+            <button class="demo-tab" data-target="#qt-drugcalc">Drug Calc</button>
+            <button class="demo-tab" data-target="#qt-image">Image ID</button>
+            <button class="demo-tab" data-target="#qt-triage">Triage Sort</button>
+          </div>
+
+          <!-- MCQ -->
+          <div class="demo-panel active" id="qt-mcq">
+            <div class="demo-panel-layout">
+            <div class="demo-panel-main">
+              <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;">Multiple Choice &middot; Binary Scoring</div>
+              <div style="font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.5; margin-bottom: 16px;">
+                A 45-year-old male presents with sudden onset of severe chest pain radiating to his left arm. His skin is cool, pale, and diaphoretic. What is the most likely cause?
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;" id="mcq-options">
+                <label class="qt-option" data-correct="false" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; font-size: 13px; color: var(--text-primary);">
+                  <span style="width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s;" class="qt-radio"></span>
+                  Pulmonary embolism
+                </label>
+                <label class="qt-option" data-correct="true" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; font-size: 13px; color: var(--text-primary);">
+                  <span style="width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s;" class="qt-radio"></span>
+                  Acute myocardial infarction
+                </label>
+                <label class="qt-option" data-correct="false" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; font-size: 13px; color: var(--text-primary);">
+                  <span style="width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s;" class="qt-radio"></span>
+                  Tension pneumothorax
+                </label>
+                <label class="qt-option" data-correct="false" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; font-size: 13px; color: var(--text-primary);">
+                  <span style="width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s;" class="qt-radio"></span>
+                  Aortic dissection
+                </label>
+              </div>
+              <div id="mcq-feedback" style="margin-top: 12px; font-size: 12px; color: var(--text-muted); min-height: 20px;"></div>
+            </div>
+            <div class="demo-panel-mockup" onclick="showScreenshot('img/pulse-mcq.png', 'Pulse - Multiple Choice')">
+              <img src="img/pulse-mcq.png" alt="Pulse MCQ mockup">
+              <div class="demo-panel-mockup-label">Pulse Mockup</div>
+            </div>
+            </div>
+          </div>
+
+          <!-- True/False -->
+          <div class="demo-panel" id="qt-tf">
+            <div class="demo-panel-layout">
+            <div class="demo-panel-main">
+              <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;">True / False &middot; Binary Scoring &middot; Lightning Mode</div>
+              <div style="font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.5; margin-bottom: 16px;">
+                Naloxone (Narcan) can be administered via the intranasal route.
+              </div>
+              <div style="display: flex; gap: 12px;" id="tf-options">
+                <button class="qt-btn" data-correct="true" style="flex: 1; padding: 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; font-size: 16px; font-weight: 700; color: var(--text-primary); font-family: inherit; transition: all 0.15s;">True</button>
+                <button class="qt-btn" data-correct="false" style="flex: 1; padding: 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; font-size: 16px; font-weight: 700; color: var(--text-primary); font-family: inherit; transition: all 0.15s;">False</button>
+              </div>
+              <div id="tf-feedback" style="margin-top: 12px; font-size: 12px; color: var(--text-muted); min-height: 20px;"></div>
+            </div>
+            <div class="demo-panel-mockup" onclick="showScreenshot('img/pulse-tf.png', 'Pulse - True / False')">
+              <img src="img/pulse-tf.png" alt="Pulse - True / False">
+              <div class="demo-panel-mockup-label">Pulse Mockup</div>
+            </div>
+            </div>
+          </div>
+
+          <!-- Select All -->
+          <div class="demo-panel" id="qt-sata">
+            <div class="demo-panel-layout">
+            <div class="demo-panel-main">
+              <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;">Select All That Apply &middot; Partial Credit</div>
+              <div style="font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.5; margin-bottom: 16px;">
+                Which of the following are signs of inadequate breathing in an adult patient? (Select all that apply)
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;" id="sata-options">
+                <label class="qt-check-option" data-correct="true" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; font-size: 13px; color: var(--text-primary);">
+                  <span style="width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px; flex-shrink: 0; transition: all 0.15s;" class="qt-checkbox"></span>
+                  Respiratory rate of 8 breaths per minute
+                </label>
+                <label class="qt-check-option" data-correct="false" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; font-size: 13px; color: var(--text-primary);">
+                  <span style="width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px; flex-shrink: 0; transition: all 0.15s;" class="qt-checkbox"></span>
+                  Respiratory rate of 16 breaths per minute
+                </label>
+                <label class="qt-check-option" data-correct="true" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; font-size: 13px; color: var(--text-primary);">
+                  <span style="width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px; flex-shrink: 0; transition: all 0.15s;" class="qt-checkbox"></span>
+                  Use of accessory muscles
+                </label>
+                <label class="qt-check-option" data-correct="true" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; font-size: 13px; color: var(--text-primary);">
+                  <span style="width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px; flex-shrink: 0; transition: all 0.15s;" class="qt-checkbox"></span>
+                  Cyanosis around the lips
+                </label>
+                <label class="qt-check-option" data-correct="false" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; font-size: 13px; color: var(--text-primary);">
+                  <span style="width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px; flex-shrink: 0; transition: all 0.15s;" class="qt-checkbox"></span>
+                  Bilateral and equal chest rise
+                </label>
+              </div>
+              <button id="sata-submit" style="margin-top: 12px; padding: 10px 24px; background: var(--purple); border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 700; color: #0a0e14; cursor: pointer; font-family: inherit; transition: opacity 0.15s;">Check Answer</button>
+              <div id="sata-feedback" style="margin-top: 12px; font-size: 12px; color: var(--text-muted); min-height: 20px;"></div>
+            </div>
+            <div class="demo-panel-mockup" onclick="showScreenshot('img/pulse-sata.png', 'Pulse - Select All')">
+              <img src="img/pulse-sata.png" alt="Pulse - Select All">
+              <div class="demo-panel-mockup-label">Pulse Mockup</div>
+            </div>
+            </div>
+          </div>
+
+          <!-- Ordering -->
+          <div class="demo-panel" id="qt-ordering">
+            <div class="demo-panel-layout">
+            <div class="demo-panel-main">
+              <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;">Ordering / Sequence &middot; Partial Credit (per-position)</div>
+              <div style="font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.5; margin-bottom: 16px;">
+                Place the following steps of the primary assessment in the correct order.
+              </div>
+              <div id="ordering-list" style="display: flex; flex-direction: column; gap: 6px;">
+                <div class="ordering-item" draggable="true" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: grab; font-size: 13px; color: var(--text-primary); transition: all 0.15s; user-select: none;" data-order="3">
+                  <span class="order-num" style="width: 24px; height: 24px; border-radius: 50%; background: var(--purple-dim); border: 1px solid var(--purple); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: var(--purple); flex-shrink: 0;">1</span> <span class="order-text">Assess circulation</span>
+                </div>
+                <div class="ordering-item" draggable="true" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: grab; font-size: 13px; color: var(--text-primary); transition: all 0.15s; user-select: none;" data-order="1">
+                  <span class="order-num" style="width: 24px; height: 24px; border-radius: 50%; background: var(--purple-dim); border: 1px solid var(--purple); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: var(--purple); flex-shrink: 0;">2</span> <span class="order-text">Form a general impression</span>
+                </div>
+                <div class="ordering-item" draggable="true" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: grab; font-size: 13px; color: var(--text-primary); transition: all 0.15s; user-select: none;" data-order="5">
+                  <span class="order-num" style="width: 24px; height: 24px; border-radius: 50%; background: var(--purple-dim); border: 1px solid var(--purple); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: var(--purple); flex-shrink: 0;">3</span> <span class="order-text">Determine priority of care</span>
+                </div>
+                <div class="ordering-item" draggable="true" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: grab; font-size: 13px; color: var(--text-primary); transition: all 0.15s; user-select: none;" data-order="2">
+                  <span class="order-num" style="width: 24px; height: 24px; border-radius: 50%; background: var(--purple-dim); border: 1px solid var(--purple); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: var(--purple); flex-shrink: 0;">4</span> <span class="order-text">Assess airway and breathing</span>
+                </div>
+                <div class="ordering-item" draggable="true" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: grab; font-size: 13px; color: var(--text-primary); transition: all 0.15s; user-select: none;" data-order="4">
+                  <span class="order-num" style="width: 24px; height: 24px; border-radius: 50%; background: var(--purple-dim); border: 1px solid var(--purple); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: var(--purple); flex-shrink: 0;">5</span> <span class="order-text">Assess disability (neuro status)</span>
+                </div>
+              </div>
+              <button id="ordering-submit" style="margin-top: 12px; padding: 10px 24px; background: var(--purple); border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 700; color: #0a0e14; cursor: pointer; font-family: inherit;">Check Order</button>
+              <div id="ordering-feedback" style="margin-top: 12px; font-size: 12px; color: var(--text-muted); min-height: 20px;"></div>
+            </div>
+            <div class="demo-panel-mockup" onclick="showScreenshot('img/pulse-ordering.png', 'Pulse - Ordering')">
+              <img src="img/pulse-ordering.png" alt="Pulse - Ordering">
+              <div class="demo-panel-mockup-label">Pulse Mockup</div>
+            </div>
+            </div>
+          </div>
+
+          <!-- Hotspot -->
+          <div class="demo-panel" id="qt-hotspot">
+            <div class="demo-panel-layout">
+            <div class="demo-panel-main">
+              <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;">Hotspot / Tap &middot; Partial Credit (distance-based tiers)</div>
+              <div style="font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.5; margin-bottom: 16px;">
+                Tap where you would auscultate for the right middle lobe of the lung.
+              </div>
+              <div id="hotspot-area" style="width: 320px; height: 420px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); position: relative; cursor: crosshair; overflow: hidden;">
+                <svg viewBox="0 0 320 420" style="width: 100%; height: 100%; pointer-events: none;">
+                  <!-- Torso outline -->
+                  <path d="M160 40 Q120 40 100 60 Q80 80 70 120 L60 200 Q55 260 60 320 L80 380 H240 L260 320 Q265 260 260 200 L250 120 Q240 80 220 60 Q200 40 160 40Z" fill="none" stroke="rgba(136,153,170,0.3)" stroke-width="1.5"/>
+                  <!-- Neck -->
+                  <path d="M140 40 Q140 20 160 15 Q180 20 180 40" fill="none" stroke="rgba(136,153,170,0.3)" stroke-width="1.5"/>
+                  <!-- Shoulders -->
+                  <path d="M100 60 Q60 65 30 90" fill="none" stroke="rgba(136,153,170,0.2)" stroke-width="1"/>
+                  <path d="M220 60 Q260 65 290 90" fill="none" stroke="rgba(136,153,170,0.2)" stroke-width="1"/>
+                  <!-- Clavicles -->
+                  <path d="M100 70 L160 78 L220 70" fill="none" stroke="rgba(136,153,170,0.25)" stroke-width="1"/>
+                  <!-- Sternum -->
+                  <line x1="160" y1="78" x2="160" y2="240" stroke="rgba(136,153,170,0.2)" stroke-width="1"/>
+                  <!-- Ribs (simplified) -->
+                  <path d="M100 100 Q130 108 160 105 Q190 108 220 100" fill="none" stroke="rgba(136,153,170,0.15)" stroke-width="1"/>
+                  <path d="M95 130 Q130 140 160 137 Q190 140 225 130" fill="none" stroke="rgba(136,153,170,0.15)" stroke-width="1"/>
+                  <path d="M90 160 Q130 172 160 168 Q190 172 230 160" fill="none" stroke="rgba(136,153,170,0.15)" stroke-width="1"/>
+                  <path d="M88 190 Q130 204 160 200 Q190 204 232 190" fill="none" stroke="rgba(136,153,170,0.15)" stroke-width="1"/>
+                  <path d="M86 220 Q130 235 160 230 Q190 235 234 220" fill="none" stroke="rgba(136,153,170,0.15)" stroke-width="1"/>
+                  <!-- Right lung region (patient's right = viewer's left) -->
+                  <path d="M80 80 Q75 90 72 120 Q70 180 75 230 Q100 240 130 235 Q150 230 155 225 L155 85 Q130 78 80 80Z" fill="rgba(96,165,250,0.06)" stroke="rgba(96,165,250,0.15)" stroke-width="1"/>
+                  <!-- Left lung region -->
+                  <path d="M240 80 Q245 90 248 120 Q250 180 245 230 Q220 240 190 235 Q170 230 165 225 L165 85 Q190 78 240 80Z" fill="rgba(96,165,250,0.06)" stroke="rgba(96,165,250,0.15)" stroke-width="1"/>
+                  <!-- Labels -->
+                  <text x="115" y="115" fill="rgba(96,165,250,0.4)" font-size="8" font-family="Inter" text-anchor="middle" font-weight="600">RUL</text>
+                  <text x="115" y="175" fill="rgba(96,165,250,0.4)" font-size="8" font-family="Inter" text-anchor="middle" font-weight="600">RML</text>
+                  <text x="115" y="225" fill="rgba(96,165,250,0.4)" font-size="8" font-family="Inter" text-anchor="middle" font-weight="600">RLL</text>
+                  <text x="205" y="115" fill="rgba(96,165,250,0.4)" font-size="8" font-family="Inter" text-anchor="middle" font-weight="600">LUL</text>
+                  <text x="205" y="225" fill="rgba(96,165,250,0.4)" font-size="8" font-family="Inter" text-anchor="middle" font-weight="600">LLL</text>
+                  <!-- Tap instruction -->
+                  <text x="160" y="370" fill="rgba(136,153,170,0.5)" font-size="11" font-family="Inter" text-anchor="middle" font-weight="500">Tap to place your answer</text>
+                </svg>
+              </div>
+              <div id="hotspot-feedback" style="margin-top: 12px; font-size: 12px; color: var(--text-muted); min-height: 20px;"></div>
+            </div>
+            <div class="demo-panel-mockup" onclick="showScreenshot('img/pulse-hotspot.png', 'Pulse - Hotspot')">
+              <img src="img/pulse-hotspot.png" alt="Pulse - Hotspot">
+              <div class="demo-panel-mockup-label">Pulse Mockup</div>
+            </div>
+            </div>
+          </div>
+
+          <!-- Slider -->
+          <div class="demo-panel" id="qt-slider">
+            <div class="demo-panel-layout">
+            <div class="demo-panel-main">
+              <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;">Slider / Estimation &middot; Partial Credit (proximity)</div>
+              <div style="font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.5; margin-bottom: 16px;">
+                What is the normal resting respiratory rate range for an adult patient? Estimate the upper limit of normal (breaths per minute).
+              </div>
+              <div style="padding: 20px 0;">
+                <input type="range" id="slider-input" min="8" max="40" value="24" style="width: 100%; accent-color: var(--purple);">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+                  <span>8 bpm</span>
+                  <span id="slider-value" style="font-size: 20px; font-weight: 800; color: var(--purple);">24</span>
+                  <span>40 bpm</span>
+                </div>
+              </div>
+              <button id="slider-submit" style="padding: 10px 24px; background: var(--purple); border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 700; color: #0a0e14; cursor: pointer; font-family: inherit;">Submit</button>
+              <div id="slider-feedback" style="margin-top: 12px; font-size: 12px; color: var(--text-muted); min-height: 20px;"></div>
+            </div>
+            <div class="demo-panel-mockup" onclick="showScreenshot('img/pulse-slider.png', 'Pulse - Slider')">
+              <img src="img/pulse-slider.png" alt="Pulse - Slider">
+              <div class="demo-panel-mockup-label">Pulse Mockup</div>
+            </div>
+            </div>
+          </div>
+
+          <!-- Drug Calc -->
+          <div class="demo-panel" id="qt-drugcalc">
+            <div class="demo-panel-layout">
+            <div class="demo-panel-main">
+              <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;">Drug Calculation &middot; Partial Credit (tolerance tiers)</div>
+              <div style="font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.5; margin-bottom: 16px;">
+                You have a 78 kg patient in cardiac arrest. You need to administer epinephrine 1:10,000 (0.1 mg/mL). The standard dose is 1 mg. How many mL will you administer?
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <input type="number" id="drugcalc-input" placeholder="Enter mL" style="width: 140px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 16px; font-weight: 700; color: var(--text-primary); font-family: inherit; outline: none; transition: border-color 0.15s;" onfocus="this.style.borderColor='var(--purple)'" onblur="this.style.borderColor='var(--border)'">
+                <span style="font-size: 14px; color: var(--text-secondary); font-weight: 600;">mL</span>
+              </div>
+              <button id="drugcalc-submit" style="margin-top: 12px; padding: 10px 24px; background: var(--purple); border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 700; color: #0a0e14; cursor: pointer; font-family: inherit;">Check Answer</button>
+              <div id="drugcalc-feedback" style="margin-top: 12px; font-size: 12px; color: var(--text-muted); min-height: 20px;"></div>
+            </div>
+            <div class="demo-panel-mockup" onclick="showScreenshot('img/pulse-typeanswer.png', 'Pulse - Type Answer / Drug Calc')">
+              <img src="img/pulse-typeanswer.png" alt="Pulse - Type Answer / Drug Calc">
+              <div class="demo-panel-mockup-label">Pulse Mockup</div>
+            </div>
+            </div>
+          </div>
+
+          <!-- Image ID -->
+          <div class="demo-panel" id="qt-image">
+            <div class="demo-panel-layout">
+            <div class="demo-panel-main">
+              <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;">Image Identification &middot; Binary Scoring</div>
+              <div style="font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.5; margin-bottom: 16px;">
+                Identify the cardiac rhythm shown below.
+              </div>
+              <div style="width: 100%; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 16px;">
+                <img src="img/afib.jpg" alt="ECG rhythm strip" style="width: 100%; display: block;">
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;" id="image-options">
+                <label class="qt-option" data-correct="false" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; font-size: 13px; color: var(--text-primary);">
+                  <span style="width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 50%; flex-shrink: 0; transition: all 0.15s;" class="qt-radio"></span>
+                  Normal Sinus Rhythm
+                </label>
+                <label class="qt-option" data-correct="true" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; font-size: 13px; color: var(--text-primary);">
+                  <span style="width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 50%; flex-shrink: 0; transition: all 0.15s;" class="qt-radio"></span>
+                  Atrial Fibrillation
+                </label>
+                <label class="qt-option" data-correct="false" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; font-size: 13px; color: var(--text-primary);">
+                  <span style="width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 50%; flex-shrink: 0; transition: all 0.15s;" class="qt-radio"></span>
+                  Ventricular Tachycardia
+                </label>
+                <label class="qt-option" data-correct="false" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; font-size: 13px; color: var(--text-primary);">
+                  <span style="width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 50%; flex-shrink: 0; transition: all 0.15s;" class="qt-radio"></span>
+                  Second-Degree AV Block Type II
+                </label>
+              </div>
+              <div id="image-feedback" style="margin-top: 12px; font-size: 12px; color: var(--text-muted); min-height: 20px;"></div>
+            </div>
+            <div class="demo-panel-mockup" onclick="showScreenshot('img/pulse-image.png', 'Pulse - Image ID')">
+              <img src="img/pulse-image.png" alt="Pulse - Image ID">
+              <div class="demo-panel-mockup-label">Pulse Mockup</div>
+            </div>
+            </div>
+          </div>
+
+          <!-- Triage Sort -->
+          <div class="demo-panel" id="qt-triage">
+            <div class="demo-panel-layout">
+            <div class="demo-panel-main">
+              <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;">Triage Sort &middot; Partial Credit (weighted per-category)</div>
+              <div style="font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.5; margin-bottom: 16px;">
+                You arrive at an MCI with the following patients. Assign each to the correct triage category.
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 10px;" id="triage-patients">
+                <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+                  <span style="font-size: 13px; color: var(--text-primary); flex: 1;">38 y/o, unresponsive, agonal respirations, weak carotid pulse</span>
+                  <select style="padding: 6px 10px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; color: var(--text-primary); font-size: 12px; font-family: inherit;" data-correct="red">
+                    <option value="">Select</option>
+                    <option value="red">Red (Immediate)</option>
+                    <option value="yellow">Yellow (Delayed)</option>
+                    <option value="green">Green (Minor)</option>
+                    <option value="black">Black (Expectant)</option>
+                  </select>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+                  <span style="font-size: 13px; color: var(--text-primary); flex: 1;">22 y/o, walking, laceration on forearm, alert and oriented</span>
+                  <select style="padding: 6px 10px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; color: var(--text-primary); font-size: 12px; font-family: inherit;" data-correct="green">
+                    <option value="">Select</option>
+                    <option value="red">Red (Immediate)</option>
+                    <option value="yellow">Yellow (Delayed)</option>
+                    <option value="green">Green (Minor)</option>
+                    <option value="black">Black (Expectant)</option>
+                  </select>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+                  <span style="font-size: 13px; color: var(--text-primary); flex: 1;">55 y/o, femur fracture, respirations 22, radial pulse present</span>
+                  <select style="padding: 6px 10px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; color: var(--text-primary); font-size: 12px; font-family: inherit;" data-correct="yellow">
+                    <option value="">Select</option>
+                    <option value="red">Red (Immediate)</option>
+                    <option value="yellow">Yellow (Delayed)</option>
+                    <option value="green">Green (Minor)</option>
+                    <option value="black">Black (Expectant)</option>
+                  </select>
+                </div>
+              </div>
+              <button id="triage-submit" style="margin-top: 12px; padding: 10px 24px; background: var(--purple); border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 700; color: #0a0e14; cursor: pointer; font-family: inherit;">Check Triage</button>
+              <div id="triage-feedback" style="margin-top: 12px; font-size: 12px; color: var(--text-muted); min-height: 20px;"></div>
+            </div>
+            <div class="demo-panel-mockup" onclick="showScreenshot('img/pulse-triage.png', 'Pulse - Triage Sort')">
+              <img src="img/pulse-triage.png" alt="Pulse - Triage Sort">
+              <div class="demo-panel-mockup-label">Pulse Mockup</div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI QUESTION PIPELINE -->
+    <div class="content-section reveal" id="ai-pipeline">
+      <div class="section-title-row">
+        <h2 class="section-title">The AI-Assisted Question Pipeline</h2>
+        <span class="section-count">Students help build the bank while they study</span>
+      </div>
+
+      <div class="callout callout-purple" style="margin-bottom: 28px;">
+        <p>We have an AI question generator trained on current EMS textbooks and reputable medical sources. Right now it is used internally to produce items for SME review. The next step is <strong>putting it in the hands of students</strong>, so that every study session generates new questions, and the students themselves become part of the quality pipeline.</p>
+      </div>
+
+      <!-- The loop -->
+      <div style="margin-bottom: 28px;">
+        <h3 style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px;">The Feedback Loop</h3>
+
+        <div style="display: flex; flex-direction: column; gap: 0;">
+          <!-- Step 1 -->
+          <div style="display: flex; gap: 20px; align-items: stretch;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 40px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--teal-dim); border: 2px solid var(--teal); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--teal);">1</div>
+              <div style="width: 2px; flex: 1; background: linear-gradient(to bottom, var(--teal), var(--blue));"></div>
+            </div>
+            <div style="padding-bottom: 24px; flex: 1;">
+              <div style="font-size: 14px; font-weight: 700; color: var(--teal); margin-bottom: 4px;">Student Finishes a Topic</div>
+              <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6;">After completing a quiz, exam, or study session, the student can engage with a chatbot that has full context of EMS curriculum. The AI sees what the student just studied, how they performed, and where they struggled.</p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div style="display: flex; gap: 20px; align-items: stretch;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 40px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--blue-dim); border: 2px solid var(--blue); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--blue);">2</div>
+              <div style="width: 2px; flex: 1; background: linear-gradient(to bottom, var(--blue), var(--purple));"></div>
+            </div>
+            <div style="padding-bottom: 24px; flex: 1;">
+              <div style="font-size: 14px; font-weight: 700; color: var(--blue); margin-bottom: 4px;">AI Generates Tailored Questions</div>
+              <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6;">The chatbot generates 5 novel questions on the spot, calibrated to the student's level. It can adjust difficulty, question length, answer complexity, and question type. These questions are not from the existing bank. They are new.</p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div style="display: flex; gap: 20px; align-items: stretch;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 40px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--purple-dim); border: 2px solid var(--purple); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--purple);">3</div>
+              <div style="width: 2px; flex: 1; background: linear-gradient(to bottom, var(--purple), var(--green));"></div>
+            </div>
+            <div style="padding-bottom: 24px; flex: 1;">
+              <div style="font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 4px;">Student Answers, Data Captured</div>
+              <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6;">The student answers the AI-generated questions. Every response is captured: correctness, timing, confidence. The student is practicing and learning. Meanwhile, we are collecting response data on brand new items without anyone doing extra work.</p>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div style="display: flex; gap: 20px; align-items: stretch;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 40px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--green-dim); border: 2px solid var(--green); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--green);">4</div>
+              <div style="width: 2px; flex: 1; background: linear-gradient(to bottom, var(--green), var(--amber));"></div>
+            </div>
+            <div style="padding-bottom: 24px; flex: 1;">
+              <div style="font-size: 14px; font-weight: 700; color: var(--green); margin-bottom: 4px;">Psychometric Validation</div>
+              <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6;">As AI-generated items accumulate responses from multiple students, they can be evaluated psychometrically. Items that perform well (good discrimination, appropriate difficulty, effective distractors) get flagged for SME review. Items that do not perform well get retired or revised.</p>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div style="display: flex; gap: 20px; align-items: stretch;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 40px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--amber-dim); border: 2px solid var(--amber); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--amber);">5</div>
+            </div>
+            <div style="flex: 1;">
+              <div style="font-size: 14px; font-weight: 700; color: var(--amber); margin-bottom: 4px;">Promotion to Production Bank</div>
+              <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6;">Items that pass both psychometric validation and SME review enter the production bank with calibrated parameters from day one. The AI generation rules are refined based on what worked and what did not, so future items are better from the start.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Where Brad fits -->
+      <div class="card-grid card-grid-2">
+        <div class="info-card ic-purple" style="padding: 28px;">
+          <div style="font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 8px;">Your Role: Item Quality Standards</div>
+          <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6; margin-bottom: 14px;">
+            You define what "good enough" looks like before an AI-generated item enters production. Distractor quality. Stem clarity. Cognitive level targeting. Option homogeneity. These rules feed directly into the AI's generation prompts, so the system learns from your standards.
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--purple-dim); color: var(--purple); text-transform: uppercase; letter-spacing: 0.04em;">Distractor Analysis</span>
+            <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--purple-dim); color: var(--purple); text-transform: uppercase; letter-spacing: 0.04em;">Item Crafting Rules</span>
+            <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--purple-dim); color: var(--purple); text-transform: uppercase; letter-spacing: 0.04em;">Gating Criteria</span>
+          </div>
+        </div>
+        <div class="info-card ic-teal" style="padding: 28px;">
+          <div style="font-size: 14px; font-weight: 700; color: var(--teal); margin-bottom: 8px;">The Metacognition Connection</div>
+          <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6; margin-bottom: 14px;">
+            This loop is voluntary self-testing. A student who engages with the chatbot after a quiz is demonstrating the same metacognitive control behavior you are studying. The AI tailors questions based on the student's performance, which is adaptive self-regulated learning in action. This is a natural extension of your TQZ research.
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--teal-dim); color: var(--teal); text-transform: uppercase; letter-spacing: 0.04em;">Self-Regulated Study</span>
+            <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--teal-dim); color: var(--teal); text-transform: uppercase; letter-spacing: 0.04em;">Adaptive Difficulty</span>
+            <span style="font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: var(--teal-dim); color: var(--teal); text-transform: uppercase; letter-spacing: 0.04em;">TQZ Extension</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE TEAM -->
+    <div class="content-section reveal" id="team">
+      <div class="section-title-row">
+        <h2 class="section-title">The Team</h2>
+        <span class="section-count">Who you will work with</span>
+      </div>
+
+      <div class="team-grid">
+        <div class="team-card" style="border-top: 2px solid var(--purple);">
+          <div class="team-name">Jeramey Ricks</div>
+          <div class="team-role" style="color: var(--purple);">Founder / CEO</div>
+          <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6; margin-bottom: 12px;">Paramedic (NRP, CCP-C, FP-C) and EMS educator. Built every platform in the portfolio. Your primary point of contact for scope, direction, and psychometric questions.</p>
+          <ul class="team-details">
+            <li style="color: var(--text-primary);">Designed the adaptive exam architecture and item bank structure</li>
+            <li style="color: var(--text-primary);">Runs the dev team and product roadmap</li>
+            <li style="color: var(--text-primary);">Will be your direct collaborator on IRT implementation decisions</li>
+          </ul>
+        </div>
+
+        <div class="team-card" style="border-top: 2px solid var(--green);">
+          <div class="team-name">Heather</div>
+          <div class="team-role" style="color: var(--green);">Sales / Partnerships</div>
+          <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6; margin-bottom: 12px;">Paramedic and experienced EMS educator. Full-time as of late April. Nationwide relationships at the state and program level.</p>
+          <ul class="team-details">
+            <li style="color: var(--text-primary);">Your connection to what instructors and programs actually need</li>
+            <li style="color: var(--text-primary);">Can surface real-world feedback on how assessments are used in the field</li>
+            <li style="color: var(--text-primary);">Works closely with you and Sam on CE content</li>
+          </ul>
+        </div>
+
+        <div class="team-card" style="border-top: 2px solid var(--blue);">
+          <div class="team-name">Samantha</div>
+          <div class="team-role" style="color: var(--blue);">Operations / Content</div>
+          <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6; margin-bottom: 12px;">Paramedic and EMS educator. Operations, content coordination, and CE production support. Keeps the day-to-day running while the team scales.</p>
+          <ul class="team-details">
+            <li style="color: var(--text-primary);">Your go-to for logistics, scheduling, and content pipeline coordination</li>
+            <li style="color: var(--text-primary);">Manages the SME review workflow for new items</li>
+            <li style="color: var(--text-primary);">Tagged on your onboarding email alongside Heather</li>
+          </ul>
+        </div>
+
+        <div class="team-card" style="border-top: 2px solid var(--amber);">
+          <div class="team-name">Dev Team</div>
+          <div class="team-role" style="color: var(--amber);">Engineering</div>
+          <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6; margin-bottom: 12px;">The development team building the platform infrastructure. Currently implementing the difficulty-based adaptive routing and KPI additions you read about in the algorithm section.</p>
+          <ul class="team-details">
+            <li style="color: var(--text-primary);">They build the engineering layer; you provide the psychometric layer</li>
+            <li style="color: var(--text-primary);">Weekly meetings where you can join to discuss IRT implementation specifics</li>
+            <li style="color: var(--text-primary);">Laravel/PHP (mededprep-c), Express/React/TypeScript (Pulse)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUMMER PROJECT TRACKS -->
+    <div class="content-section reveal" id="tracks">
+      <div class="section-title-row">
+        <h2 class="section-title">Summer Project Tracks</h2>
+        <span class="section-count">June 15 to August 21, 2026</span>
+      </div>
+
+      <div class="callout callout-purple" style="margin-bottom: 28px;">
+        <p>You said you prefer <strong>a clear direction with agreed-upon checkpoints</strong>. Here are four tracks with defined milestones. We will align on priorities during your first week and adjust based on your interests and what the data tells us. These are not sequential. They can run in parallel or shift as the summer unfolds.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+        <!-- Track 1 -->
+        <div class="info-card ic-purple" style="padding: 28px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+            <span style="width: 36px; height: 36px; border-radius: 8px; background: var(--purple-dim); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; color: var(--purple); flex-shrink: 0;">1</span>
+            <div>
+              <div style="font-size: 16px; font-weight: 700; color: var(--text-primary);">IRT Parameter Estimation</div>
+              <div style="font-size: 11px; font-weight: 600; color: var(--purple);">THE FOUNDATION</div>
+            </div>
+          </div>
+          <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6; margin-bottom: 16px;">
+            Calibrate the production item bank on a formal IRT model. Replace raw correct percentages with proper difficulty parameters. Build the foundation that everything else depends on.
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 14px; border-top: 1px solid var(--border-subtle);">
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(167,139,250,0.4); border-radius: 3px; flex-shrink: 0;"></span>Extract and clean response data for IRT calibration</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(167,139,250,0.4); border-radius: 3px; flex-shrink: 0;"></span>Fit 1PL model across the full production bank</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(167,139,250,0.4); border-radius: 3px; flex-shrink: 0;"></span>Identify items with poor fit, flag for review or retirement</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(167,139,250,0.4); border-radius: 3px; flex-shrink: 0;"></span>Evaluate feasibility of 2PL/3PL with current response volumes</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(167,139,250,0.4); border-radius: 3px; flex-shrink: 0;"></span>Deliver calibrated parameters to the dev team for adaptive routing</div>
+          </div>
+        </div>
+
+        <!-- Track 2 -->
+        <div class="info-card ic-blue" style="padding: 28px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+            <span style="width: 36px; height: 36px; border-radius: 8px; background: var(--blue-dim); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; color: var(--blue); flex-shrink: 0;">2</span>
+            <div>
+              <div style="font-size: 16px; font-weight: 700; color: var(--text-primary);">Item Quality and Crafting</div>
+              <div style="font-size: 11px; font-weight: 600; color: var(--blue);">THE STANDARDS</div>
+            </div>
+          </div>
+          <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6; margin-bottom: 16px;">
+            Analyze the existing bank for distractor effectiveness, stem quality, and cognitive level distribution. Define psychometric standards for the AI question generator. Review and qualify items from the ~10,000 unreviewed bank.
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 14px; border-top: 1px solid var(--border-subtle);">
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(96,165,250,0.4); border-radius: 3px; flex-shrink: 0;"></span>Run distractor analysis on high-response items</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(96,165,250,0.4); border-radius: 3px; flex-shrink: 0;"></span>Define item quality rubric: what gets promoted, flagged, or retired</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(96,165,250,0.4); border-radius: 3px; flex-shrink: 0;"></span>Review a sample of AI-generated items against the rubric</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(96,165,250,0.4); border-radius: 3px; flex-shrink: 0;"></span>Write psychometric guidelines that feed into the AI generation prompts</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(96,165,250,0.4); border-radius: 3px; flex-shrink: 0;"></span>Identify patterns that predict item performance</div>
+          </div>
+        </div>
+
+        <!-- Track 3 -->
+        <div class="info-card ic-teal" style="padding: 28px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+            <span style="width: 36px; height: 36px; border-radius: 8px; background: var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; color: var(--teal); flex-shrink: 0;">3</span>
+            <div>
+              <div style="font-size: 16px; font-weight: 700; color: var(--text-primary);">CAT Formalization</div>
+              <div style="font-size: 11px; font-weight: 600; color: var(--teal);">THE ALGORITHM</div>
+            </div>
+          </div>
+          <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6; margin-bottom: 16px;">
+            Take the difficulty-based routing the dev team is building and layer in proper ability estimation and information-based item selection. Extend the approach to CE mini-adaptive assessments.
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 14px; border-top: 1px solid var(--border-subtle);">
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(45,212,191,0.4); border-radius: 3px; flex-shrink: 0;"></span>Review the dev team's difficulty routing once deployed</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(45,212,191,0.4); border-radius: 3px; flex-shrink: 0;"></span>Design theta estimation approach (EAP vs. MLE, priors)</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(45,212,191,0.4); border-radius: 3px; flex-shrink: 0;"></span>Prototype item selection algorithm with content balancing</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(45,212,191,0.4); border-radius: 3px; flex-shrink: 0;"></span>Simulate CAT performance using historical response data</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(45,212,191,0.4); border-radius: 3px; flex-shrink: 0;"></span>Define stopping rules for EMS certification context</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(45,212,191,0.4); border-radius: 3px; flex-shrink: 0;"></span>Extend to CE mini-adaptive assessments (CAPCE-accredited continuing education, launching soon)</div>
+          </div>
+        </div>
+
+        <!-- Track 4 -->
+        <div class="info-card ic-green" style="padding: 28px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+            <span style="width: 36px; height: 36px; border-radius: 8px; background: var(--green-dim); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; color: var(--green); flex-shrink: 0;">4</span>
+            <div>
+              <div style="font-size: 16px; font-weight: 700; color: var(--text-primary);">Adaptive Learning Loop</div>
+              <div style="font-size: 11px; font-weight: 600; color: var(--green);">THE FUTURE</div>
+            </div>
+          </div>
+          <p style="font-size: 13px; color: var(--text-primary); line-height: 1.6; margin-bottom: 16px;">
+            Design the psychometric layer for the AI chatbot question pipeline. Define how AI-generated items get validated, when they are ready for production, and how student study behavior connects back to your metacognition research.
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 14px; border-top: 1px solid var(--border-subtle);">
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(74,222,128,0.4); border-radius: 3px; flex-shrink: 0;"></span>Define minimum response threshold for AI item evaluation</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(74,222,128,0.4); border-radius: 3px; flex-shrink: 0;"></span>Design psychometric gating criteria for production promotion</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(74,222,128,0.4); border-radius: 3px; flex-shrink: 0;"></span>Analyze chatbot practice data vs. assigned assessment patterns</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(74,222,128,0.4); border-radius: 3px; flex-shrink: 0;"></span>Connect voluntary chatbot engagement to the TQZ signal</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--text-primary);"><span style="width: 16px; height: 16px; border: 2px solid rgba(74,222,128,0.4); border-radius: 3px; flex-shrink: 0;"></span>Propose how Pulse game data feeds back into item calibration</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Closing -->
+      <div class="callout callout-blue" style="margin-top: 28px;">
+        <p>This page was built for you. We want you to walk in on June 15 with a clear picture of what exists, what is being built, and where your expertise fits. We are genuinely excited to have someone with real IRT skills on the team. If you have questions about anything here, send them over and we will get you answers before your start date.</p>
+      </div>
+    </div>
+
+  </div><!-- main-inner -->
+</div><!-- page-wrap -->
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Active nav on scroll
+  const sections = document.querySelectorAll('.content-section[id]');
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 200) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+
+  // Demo tabs
+  document.addEventListener('click', (e) => {
+    const tab = e.target.closest('.demo-tab');
+    if (!tab) return;
+    const container = tab.closest('.demo-container');
+    container.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
+    container.querySelectorAll('.demo-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    const target = container.querySelector(tab.dataset.target);
+    if (target) target.classList.add('active');
+  });
+
+  // MCQ / Image ID - single select
+  function setupMCQ(containerId, feedbackId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.querySelectorAll('.qt-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        if (container.dataset.answered) return;
+        container.dataset.answered = 'true';
+        const isCorrect = opt.dataset.correct === 'true';
+        container.querySelectorAll('.qt-option').forEach(o => {
+          const correct = o.dataset.correct === 'true';
+          o.style.borderColor = correct ? 'var(--green)' : (o === opt && !isCorrect ? 'var(--red)' : 'var(--border)');
+          o.style.background = correct ? 'var(--green-dim)' : (o === opt && !isCorrect ? 'var(--red-dim)' : 'var(--bg-elevated)');
+          o.querySelector('.qt-radio').style.borderColor = correct ? 'var(--green)' : (o === opt && !isCorrect ? 'var(--red)' : 'var(--border)');
+          if (correct) o.querySelector('.qt-radio').style.background = 'var(--green)';
+          if (o === opt && !isCorrect) o.querySelector('.qt-radio').style.background = 'var(--red)';
+        });
+        const fb = document.getElementById(feedbackId);
+        fb.style.color = isCorrect ? 'var(--green)' : 'var(--red)';
+        fb.textContent = isCorrect ? 'Correct!' : 'Incorrect. The correct answer is highlighted.';
+      });
+    });
+  }
+  setupMCQ('mcq-options', 'mcq-feedback');
+  setupMCQ('image-options', 'image-feedback');
+
+  // True/False
+  const tfContainer = document.getElementById('tf-options');
+  if (tfContainer) {
+    tfContainer.querySelectorAll('.qt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (tfContainer.dataset.answered) return;
+        tfContainer.dataset.answered = 'true';
+        const isCorrect = btn.dataset.correct === 'true';
+        tfContainer.querySelectorAll('.qt-btn').forEach(b => {
+          const correct = b.dataset.correct === 'true';
+          b.style.borderColor = correct ? 'var(--green)' : (b === btn && !isCorrect ? 'var(--red)' : 'var(--border)');
+          b.style.background = correct ? 'var(--green-dim)' : (b === btn && !isCorrect ? 'var(--red-dim)' : 'var(--bg-elevated)');
+          b.style.color = correct ? 'var(--green)' : (b === btn && !isCorrect ? 'var(--red)' : 'var(--text-primary)');
+        });
+        const fb = document.getElementById('tf-feedback');
+        fb.style.color = isCorrect ? 'var(--green)' : 'var(--red)';
+        fb.textContent = isCorrect ? 'Correct!' : 'Incorrect.';
+      });
+    });
+  }
+
+  // Select All That Apply
+  const sataOptions = document.getElementById('sata-options');
+  if (sataOptions) {
+    const selected = new Set();
+    sataOptions.querySelectorAll('.qt-check-option').forEach((opt, i) => {
+      opt.addEventListener('click', () => {
+        if (sataOptions.dataset.answered) return;
+        const cb = opt.querySelector('.qt-checkbox');
+        if (selected.has(i)) {
+          selected.delete(i);
+          cb.style.background = 'transparent';
+          cb.style.borderColor = 'var(--border)';
+          opt.style.borderColor = 'var(--border)';
+        } else {
+          selected.add(i);
+          cb.style.background = 'var(--purple)';
+          cb.style.borderColor = 'var(--purple)';
+          opt.style.borderColor = 'var(--purple)';
+        }
+      });
+    });
+    document.getElementById('sata-submit').addEventListener('click', () => {
+      if (sataOptions.dataset.answered) return;
+      sataOptions.dataset.answered = 'true';
+      let correct = 0, total = 0;
+      sataOptions.querySelectorAll('.qt-check-option').forEach((opt, i) => {
+        const isCorrect = opt.dataset.correct === 'true';
+        const wasSelected = selected.has(i);
+        if (isCorrect) total++;
+        const cb = opt.querySelector('.qt-checkbox');
+        if (isCorrect && wasSelected) { correct++; opt.style.borderColor = 'var(--green)'; opt.style.background = 'var(--green-dim)'; cb.style.background = 'var(--green)'; cb.style.borderColor = 'var(--green)'; }
+        else if (isCorrect && !wasSelected) { opt.style.borderColor = 'var(--amber)'; opt.style.background = 'var(--amber-dim)'; cb.style.borderColor = 'var(--amber)'; cb.style.background = 'transparent'; }
+        else if (!isCorrect && wasSelected) { opt.style.borderColor = 'var(--red)'; opt.style.background = 'var(--red-dim)'; cb.style.background = 'var(--red)'; cb.style.borderColor = 'var(--red)'; }
+        else { opt.style.borderColor = 'var(--border)'; cb.style.background = 'transparent'; cb.style.borderColor = 'var(--border)'; }
+      });
+      const fb = document.getElementById('sata-feedback');
+      const pct = Math.round((correct / total) * 100);
+      fb.style.color = pct === 100 ? 'var(--green)' : pct > 0 ? 'var(--amber)' : 'var(--red)';
+      fb.textContent = pct === 100 ? 'Perfect! All correct.' : `Partial credit: ${correct}/${total} correct selections. Missed items highlighted in amber.`;
+    });
+  }
+
+  // Slider
+  const sliderInput = document.getElementById('slider-input');
+  const sliderValue = document.getElementById('slider-value');
+  if (sliderInput) {
+    sliderInput.addEventListener('input', () => { sliderValue.textContent = sliderInput.value; });
+    document.getElementById('slider-submit').addEventListener('click', () => {
+      const answer = parseInt(sliderInput.value);
+      const correct = 20;
+      const diff = Math.abs(answer - correct);
+      const fb = document.getElementById('slider-feedback');
+      if (diff === 0) { fb.style.color = 'var(--green)'; fb.textContent = 'Exact! 20 breaths/min is the upper limit of normal.'; }
+      else if (diff <= 2) { fb.style.color = 'var(--green)'; fb.textContent = `Close! You said ${answer}. The accepted answer is 20 bpm. Partial credit awarded.`; }
+      else if (diff <= 4) { fb.style.color = 'var(--amber)'; fb.textContent = `You said ${answer}. The accepted answer is 20 bpm. Some partial credit.`; }
+      else { fb.style.color = 'var(--red)'; fb.textContent = `You said ${answer}. The accepted answer is 20 bpm.`; }
+    });
+  }
+
+  // Drug Calc
+  document.getElementById('drugcalc-submit')?.addEventListener('click', () => {
+    const answer = parseFloat(document.getElementById('drugcalc-input').value);
+    const correct = 10;
+    const fb = document.getElementById('drugcalc-feedback');
+    if (isNaN(answer)) { fb.style.color = 'var(--text-muted)'; fb.textContent = 'Enter a number.'; return; }
+    const pctOff = Math.abs(answer - correct) / correct * 100;
+    if (pctOff === 0) { fb.style.color = 'var(--green)'; fb.textContent = 'Correct! 1 mg / 0.1 mg/mL = 10 mL.'; }
+    else if (pctOff <= 5) { fb.style.color = 'var(--green)'; fb.textContent = `Close! You said ${answer} mL. The correct answer is 10 mL. Within clinical tolerance.`; }
+    else if (pctOff <= 20) { fb.style.color = 'var(--amber)'; fb.textContent = `You said ${answer} mL. The correct answer is 10 mL. Partial credit.`; }
+    else { fb.style.color = 'var(--red)'; fb.textContent = `Incorrect. You said ${answer} mL. The correct answer is 10 mL (1 mg / 0.1 mg/mL).`; }
+  });
+
+  // Screenshot popup
+  function showScreenshot(src, label) {
+    const overlay = document.getElementById('screenshotOverlay');
+    document.getElementById('screenshotImg').src = src;
+    document.getElementById('screenshotLabel').textContent = label;
+    overlay.classList.add('active');
+  }
+
+  // Ordering with position numbers
+  function renumberOrdering() {
+    const items = document.querySelectorAll('#ordering-list .ordering-item');
+    items.forEach((item, i) => {
+      item.querySelector('.order-num').textContent = i + 1;
+    });
+  }
+
+  const orderingList = document.getElementById('ordering-list');
+  if (orderingList) {
+    let dragEl = null;
+    orderingList.querySelectorAll('.ordering-item').forEach(item => {
+      item.addEventListener('dragstart', (e) => { dragEl = item; item.style.opacity = '0.4'; });
+      item.addEventListener('dragend', () => { item.style.opacity = '1'; renumberOrdering(); });
+      item.addEventListener('dragover', (e) => { e.preventDefault(); item.style.borderColor = 'var(--purple)'; });
+      item.addEventListener('dragleave', () => { item.style.borderColor = 'var(--border)'; });
+      item.addEventListener('drop', (e) => {
+        e.preventDefault();
+        item.style.borderColor = 'var(--border)';
+        if (dragEl && dragEl !== item) {
+          const parent = orderingList;
+          const items = [...parent.children];
+          const dragIdx = items.indexOf(dragEl);
+          const dropIdx = items.indexOf(item);
+          if (dragIdx < dropIdx) parent.insertBefore(dragEl, item.nextSibling);
+          else parent.insertBefore(dragEl, item);
+          renumberOrdering();
+        }
+      });
+    });
+    document.getElementById('ordering-submit').addEventListener('click', () => {
+      const items = [...orderingList.querySelectorAll('.ordering-item')];
+      let correct = 0;
+      items.forEach((item, i) => {
+        const expected = i + 1;
+        const actual = parseInt(item.dataset.order);
+        if (actual === expected) {
+          correct++;
+          item.style.borderColor = 'var(--green)';
+          item.style.background = 'var(--green-dim)';
+        } else {
+          item.style.borderColor = 'var(--red)';
+          item.style.background = 'var(--red-dim)';
+        }
+      });
+      const fb = document.getElementById('ordering-feedback');
+      fb.style.color = correct === 5 ? 'var(--green)' : correct > 0 ? 'var(--amber)' : 'var(--red)';
+      fb.textContent = correct === 5 ? 'Perfect order!' : `${correct}/5 positions correct. Partial credit: ${Math.round(correct/5*100)}%`;
+    });
+  }
+
+  // Hotspot
+  const hotspotArea = document.getElementById('hotspot-area');
+  if (hotspotArea) {
+    hotspotArea.addEventListener('click', (e) => {
+      if (hotspotArea.dataset.answered) return;
+      hotspotArea.dataset.answered = 'true';
+      const rect = hotspotArea.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const marker = document.createElement('div');
+      marker.style.cssText = `position:absolute;width:12px;height:12px;border-radius:50%;background:var(--purple);border:2px solid white;transform:translate(-50%,-50%);left:${x}px;top:${y}px;`;
+      hotspotArea.appendChild(marker);
+      // Target: right anterior chest, roughly 60% from left, 45% from top
+      const targetX = 180, targetY = 180;
+      const dist = Math.sqrt(Math.pow(x - targetX, 2) + Math.pow(y - targetY, 2));
+      const fb = document.getElementById('hotspot-feedback');
+      if (dist <= 30) { fb.style.color = 'var(--green)'; fb.textContent = 'Bullseye! Right middle lobe auscultation point.'; }
+      else if (dist <= 60) { fb.style.color = 'var(--amber)'; fb.textContent = 'Close! Partial credit. Within the general region.'; }
+      else { fb.style.color = 'var(--red)'; fb.textContent = 'Not quite. The right middle lobe is auscultated on the right anterior chest.'; }
+    });
+  }
+
+  // Triage
+  document.getElementById('triage-submit')?.addEventListener('click', () => {
+    const selects = document.querySelectorAll('#triage-patients select');
+    let correct = 0;
+    selects.forEach(sel => {
+      const parent = sel.closest('div');
+      if (sel.value === sel.dataset.correct) {
+        correct++;
+        parent.style.borderColor = 'var(--green)';
+        parent.style.background = 'var(--green-dim)';
+      } else if (sel.value) {
+        parent.style.borderColor = 'var(--red)';
+        parent.style.background = 'var(--red-dim)';
+      } else {
+        parent.style.borderColor = 'var(--amber)';
+      }
+    });
+    const fb = document.getElementById('triage-feedback');
+    fb.style.color = correct === 3 ? 'var(--green)' : correct > 0 ? 'var(--amber)' : 'var(--red)';
+    fb.textContent = correct === 3 ? 'All patients correctly triaged!' : `${correct}/3 correct. Partial credit: ${Math.round(correct/3*100)}%`;
+  });
+</script>
+</body>
+</html>
