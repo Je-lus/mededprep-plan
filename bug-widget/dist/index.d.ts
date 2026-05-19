@@ -19,6 +19,8 @@ export interface BugWidgetConfig {
     exclude?: string[];
     /** Headers to strip from error context (in addition to defaults) */
     sanitizeHeaders?: string[];
+    /** Headless mode — capture + auto-report without the visible button/modal */
+    headless?: boolean;
 }
 export interface BugWidgetInstance {
     destroy: () => void;

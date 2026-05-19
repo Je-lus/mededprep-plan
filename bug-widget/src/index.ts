@@ -26,6 +26,8 @@ export interface BugWidgetConfig {
   exclude?: string[];
   /** Headers to strip from error context (in addition to defaults) */
   sanitizeHeaders?: string[];
+  /** Headless mode — capture + auto-report without the visible button/modal */
+  headless?: boolean;
 }
 
 export interface BugWidgetInstance {
@@ -60,6 +62,7 @@ export function initBugWidget(config: BugWidgetConfig): BugWidgetInstance {
     zIndex = 99999,
     exclude = [],
     sanitizeHeaders = [],
+    headless = false,
   } = config;
 
   if (!project || !apiUrl) {
@@ -74,9 +77,6 @@ export function initBugWidget(config: BugWidgetConfig): BugWidgetInstance {
     }
   }
 
-  // Inject scoped styles
-  injectStyles(position, zIndex);
-
   // Install error/network interceptors
   installInterceptors();
 
@@ -87,8 +87,12 @@ export function initBugWidget(config: BugWidgetConfig): BugWidgetInstance {
     sessionTracker.start();
   }
 
-  // Create the UI
-  const widgetCleanup = createWidget(project, apiUrl, sessionTracker, position, zIndex);
+  // Create the UI (skip in headless mode)
+  let widgetCleanup: (() => void) | null = null;
+  if (!headless) {
+    injectStyles(position, zIndex);
+    widgetCleanup = createWidget(project, apiUrl, sessionTracker, position, zIndex);
+  }
 
   // Set up auto-reporting
   let autoReporter: AutoReporter | null = null;
@@ -122,13 +126,15 @@ export function initBugWidget(config: BugWidgetConfig): BugWidgetInstance {
       if (widgetCleanup) {
         widgetCleanup();
       }
-      // Remove widget DOM elements
-      const btn = document.querySelector('.bw__btn');
-      const overlay = document.querySelector('.bw__overlay');
-      const styles = document.getElementById('bw__styles');
-      btn?.remove();
-      overlay?.remove();
-      styles?.remove();
+      if (!headless) {
+        // Remove widget DOM elements
+        const btn = document.querySelector('.bw__btn');
+        const overlay = document.querySelector('.bw__overlay');
+        const styles = document.getElementById('bw__styles');
+        btn?.remove();
+        overlay?.remove();
+        styles?.remove();
+      }
     },
   };
 }
