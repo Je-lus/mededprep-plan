@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Competency Education - Strategic Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0e1117;
+  --bg-card: #161b22;
+  --bg-card-alt: #1c2230;
+  --border: rgba(255,255,255,0.06);
+  --border-accent: rgba(99,140,255,0.18);
+  --text: #c9d1d9;
+  --text-muted: #8b949e;
+  --text-bright: #e6edf3;
+  --accent: #638cff;
+  --accent-dim: rgba(99,140,255,0.10);
+  --amber: #c9a227;
+  --amber-dim: rgba(201,162,39,0.10);
+  --amber-border: rgba(201,162,39,0.25);
+  --green: #3fb950;
+  --green-dim: rgba(63,185,80,0.10);
+  --green-border: rgba(63,185,80,0.30);
+  --red: #e55353;
+  --red-dim: rgba(229,83,83,0.10);
+  --red-border: rgba(229,83,83,0.30);
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: radial-gradient(circle at 50% 0%, rgba(99,140,255,0.045), transparent 34rem), var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.nav-dots {
+  position: fixed; right: 1.25rem; top: 50%;
+  transform: translateY(-50%); z-index: 100;
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.nav-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.2);
+  cursor: pointer; transition: all 0.3s ease; position: relative;
+}
+.nav-dot:hover::after, .nav-dot.active::after {
+  content: attr(title); position: absolute; right: 18px; top: 50%;
+  transform: translateY(-50%); font-size: 10px; font-weight: 600;
+  white-space: nowrap; pointer-events: none; padding: 2px 8px;
+  border-radius: 4px; background: var(--bg-card); color: var(--text-bright);
+  border: 1px solid var(--border);
+}
+.nav-dot:hover, .nav-dot.active { transform: scale(1.3); }
+.nav-dot.active { background: var(--accent); border-color: var(--accent); }
+
+.hero, .section {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.hero.visible, .section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section {
+  padding: 5rem 2rem;
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.section + .section::before,
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 40px;
+  height: 1px;
+  background: rgba(99,140,255,0.30);
+  transform: translateX(-50%);
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: auto auto 44% 50%;
+  width: min(720px, 86vw);
+  height: min(720px, 86vw);
+  background: radial-gradient(circle, rgba(99,140,255,0.06), transparent 68%);
+  transform: translate(-50%, 50%);
+  pointer-events: none;
+}
+.hero > * { position: relative; z-index: 1; }
+.hero-label {
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase; color: rgba(99,140,255,0.82); margin-bottom: 1.5rem;
+}
+.hero h1 {
+  font-size: clamp(2.3rem, 7vw, 4.9rem); font-weight: 800; color: var(--text-bright);
+  line-height: 1.02; letter-spacing: 0; margin-bottom: 1rem;
+  max-width: 760px;
+}
+.hero-sub {
+  font-size: 1.02rem; color: var(--text-muted); max-width: 620px;
+  line-height: 1.7; font-weight: 400;
+}
+.hero-scroll {
+  position: absolute; bottom: 2.5rem; left: 50%;
+  transform: translateX(-50%); display: flex; flex-direction: column;
+  align-items: center; gap: 0.5rem; color: var(--text-muted);
+  font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+  font-weight: 500; animation: pulse-fade 2.5s ease-in-out infinite;
+}
+.hero-scroll svg { width: 16px; height: 16px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+@keyframes pulse-fade { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+
+.section-label {
+  font-size: 0.6rem; font-weight: 600; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem;
+}
+.section-title {
+  font-size: clamp(1.45rem, 3vw, 2.1rem); font-weight: 750; color: var(--text-bright);
+  letter-spacing: 0; margin-bottom: 1rem; line-height: 1.2;
+}
+.section-intro {
+  font-size: 0.94rem; color: var(--text); margin-bottom: 1.5rem; line-height: 1.75;
+}
+.source-note {
+  font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;
+}
+.bridge-line {
+  font-size: 0.84rem;
+  color: rgba(201,209,217,0.68);
+  font-style: italic;
+  margin-top: 2rem;
+}
+
+.stat-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem; margin-bottom: 1.5rem;
+}
+.stat-box {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent), var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.95rem 0.85rem; text-align: center;
+}
+.stat-num {
+  font-size: 1.45rem; font-weight: 800; color: var(--text-bright);
+  letter-spacing: 0;
+}
+.stat-label {
+  font-size: 0.58rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text-muted); margin-top: 0.2rem;
+}
+.stat-context {
+  color: rgba(201,209,217,0.58);
+  font-size: 0.62rem;
+  line-height: 1.35;
+  margin-top: 0.35rem;
+}
+
+.card,
+.step-card,
+.model-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.018), transparent), var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.25rem 1.4rem; margin-bottom: 0.85rem;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.card:hover,
+.step-card:hover,
+.model-card:hover { border-color: var(--border-accent); }
+.card-title {
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; margin-bottom: 0.65rem; color: var(--text-bright);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.card p, .card li, .model-card li { font-size: 0.85rem; color: var(--text); line-height: 1.65; }
+.card ul, .model-card ul { list-style: none; padding: 0; }
+.card ul li, .model-card ul li {
+  position: relative; padding-left: 0.9rem; margin-bottom: 0.4rem;
+}
+.card ul li::before, .model-card ul li::before {
+  content: ''; position: absolute; left: 0; top: 0.55em;
+  width: 3px; height: 3px; border-radius: 50%; background: var(--text-muted);
+}
+.card-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;
+  margin-bottom: 0.85rem;
+}
+.gap-card {
+  background: linear-gradient(180deg, var(--amber-dim), rgba(255,255,255,0.01)), var(--bg-card);
+  border-left: 3px solid var(--amber-border);
+}
+.gap-reframe {
+  margin-top: 1rem;
+  font-size: 0.83rem;
+  color: rgba(201,209,217,0.72);
+  font-style: italic;
+}
+
+.step-label {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem;
+  display: inline-block; background: var(--accent-dim);
+  padding: 2px 8px; border-radius: 3px;
+}
+.step-title {
+  font-size: 0.95rem; font-weight: 700; color: var(--text-bright);
+  margin-bottom: 0.5rem;
+}
+.step-text {
+  font-size: 0.85rem; color: var(--text); line-height: 1.65;
+}
+.step-text a { font-size: 0.8rem; }
+.validation-callout {
+  margin-top: 1rem;
+  background: rgba(99,140,255,0.075);
+  border: 1px solid rgba(99,140,255,0.18);
+  border-left: 3px solid rgba(99,140,255,0.45);
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+}
+.validation-callout p {
+  font-size: 0.86rem;
+  color: var(--text);
+  line-height: 1.62;
+  margin-bottom: 0.35rem;
+}
+.validation-callout p:last-child { margin-bottom: 0; }
+
+.provider-card {
+  display: grid;
+  grid-template-columns: minmax(130px, 160px) 1fr;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 1rem 1.1rem;
+}
+.donut-wrap {
+  display: flex;
+  justify-content: center;
+}
+.donut {
+  width: 140px;
+  height: 140px;
+  overflow: visible;
+}
+.donut-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.06);
+  stroke-width: 16;
+}
+.donut-segment {
+  fill: none;
+  stroke-width: 16;
+  stroke-linecap: butt;
+}
+.donut-total {
+  fill: var(--text-bright);
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-anchor: middle;
+}
+.donut-caption {
+  fill: var(--text-muted);
+  font-size: 0.34rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-anchor: middle;
+  text-transform: uppercase;
+}
+.legend-list {
+  display: grid;
+  gap: 0.55rem;
+}
+.legend-item {
+  display: grid;
+  grid-template-columns: 10px 1fr auto;
+  gap: 0.55rem;
+  align-items: center;
+  font-size: 0.82rem;
+  color: var(--text);
+}
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.legend-label {
+  color: var(--text-bright);
+  font-weight: 650;
+}
+.legend-meta {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  text-align: right;
+}
+
+.timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 2rem 0 1.2rem;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: calc(16.666% + 8px);
+  right: calc(16.666% + 8px);
+  height: 2px;
+  background: linear-gradient(90deg, rgba(99,140,255,0.25), rgba(201,162,39,0.32));
+}
+.timeline-point {
+  position: relative;
+  padding-top: 3.2rem;
+}
+.timeline-marker {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid rgba(99,140,255,0.65);
+  box-shadow: 0 0 0 8px rgba(99,140,255,0.06);
+  z-index: 1;
+}
+.timeline-point.gap .timeline-marker {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 8px var(--amber-dim);
+}
+.timeline-year {
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 0.55rem;
+}
+.timeline-point.gap .timeline-year { color: var(--amber); }
+.timeline-text {
+  font-size: 0.82rem;
+  color: var(--text);
+  line-height: 1.58;
+  text-align: center;
+}
+.timeline-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 1.6rem;
+}
+.model-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  margin-bottom: 0.85rem;
+}
+.model-title {
+  font-size: 0.9rem;
+  color: var(--text-bright);
+  font-weight: 750;
+  margin-bottom: 0.65rem;
+}
+.context-card {
+  margin-bottom: 1.2rem;
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+}
+.context-card:hover { border-color: transparent; }
+.context-card-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.62rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--text-muted);
+  margin: 0.2rem 0 0.65rem;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.context-row {
+  display: flex; gap: 0.75rem; align-items: baseline;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--border-accent);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.45rem;
+  transition: border-color 0.2s ease;
+}
+.context-row:hover { border-color: var(--border-accent); }
+.context-row:last-child { margin-bottom: 0; }
+.context-tag {
+  font-size: 0.6rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--text-bright); white-space: nowrap;
+  background: rgba(255,255,255,0.06);
+  padding: 2px 8px;
+  border-radius: 3px;
+  min-width: auto; flex-shrink: 0;
+}
+.context-text {
+  font-size: 0.83rem; color: var(--text); line-height: 1.55;
+}
+
+.placeholder-wrap {
+  background: linear-gradient(180deg, rgba(99,140,255,0.05), rgba(255,255,255,0.01)), var(--bg-card);
+  border: 1.5px dashed rgba(99,140,255,0.22);
+  border-radius: 12px; padding: 2.5rem 2rem; text-align: center;
+}
+.placeholder-icon {
+  width: 44px; height: 44px; margin: 0 auto 1rem; border-radius: 10px;
+  background: var(--accent-dim); display: flex; align-items: center; justify-content: center;
+}
+.placeholder-icon svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+.placeholder-title { font-size: 0.95rem; font-weight: 700; color: var(--text-bright); margin-bottom: 0.5rem; }
+.placeholder-text { font-size: 0.83rem; color: var(--text-muted); max-width: 560px; margin: 0 auto; line-height: 1.6; }
+.placeholder-tag {
+  display: inline-block; margin-top: 1rem; font-size: 0.55rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+  background: var(--accent-dim); padding: 3px 8px; border-radius: 3px;
+}
+
+.phase-block {
+  margin-bottom: 1.25rem;
+}
+.phase-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0.2rem 0 0.65rem;
+}
+.step-list { list-style: none; padding: 0; }
+.step-item {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-left: 3px solid var(--border-accent);
+  border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 0.55rem;
+  transition: border-color 0.2s ease;
+}
+.step-item:hover { border-color: var(--border-accent); }
+.phase-ready .step-item { border-left-color: var(--green-border); background: linear-gradient(90deg, var(--green-dim), transparent 42%), var(--bg-card); }
+.phase-design .step-item { border-left-color: rgba(99,140,255,0.45); background: linear-gradient(90deg, rgba(99,140,255,0.075), transparent 42%), var(--bg-card); }
+.phase-proof .step-item { border-left-color: rgba(74,111,212,0.50); background: linear-gradient(90deg, rgba(74,111,212,0.08), transparent 42%), var(--bg-card); }
+.step-item-title {
+  font-size: 0.86rem; font-weight: 650; color: var(--text-bright); margin-bottom: 0.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  background: rgba(255,255,255,0.06);
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+.step-item-why {
+  font-size: 0.79rem; color: var(--text); line-height: 1.58;
+}
+
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(99,140,255,0.15); transition: border-color 0.2s; }
+a:hover { border-color: var(--accent); }
+
+.footer {
+  text-align: center; padding: 2.5rem 2rem;
+  position: relative;
+}
+.footer-argument {
+  font-size: 0.86rem;
+  color: var(--text);
+  margin-bottom: 0.55rem;
+}
+.footer-text { font-size: 0.65rem; color: var(--text-muted); font-weight: 500; letter-spacing: 0.06em; }
+
+@media (max-width: 760px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .card-grid, .model-grid { grid-template-columns: 1fr; }
+  .provider-card { grid-template-columns: 1fr; }
+  .timeline {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+    margin-top: 1.4rem;
+  }
+  .timeline::before {
+    top: 0;
+    bottom: 0;
+    left: 11px;
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+  .timeline-point {
+    padding-top: 0;
+    padding-left: 2.4rem;
+  }
+  .timeline-marker {
+    top: 2px;
+    left: 11px;
+    transform: none;
+  }
+  .timeline-year,
+  .timeline-text {
+    text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero h1 { font-size: 2.35rem; }
+  .section-title { font-size: 1.35rem; }
+  .section { padding: 3rem 1.25rem; }
+  .nav-dots { right: 0.5rem; }
+  .context-row { flex-direction: column; gap: 0.25rem; }
+  .context-tag { min-width: auto; align-self: flex-start; }
+  .legend-item { grid-template-columns: 10px 1fr; }
+  .legend-meta { grid-column: 2; text-align: left; margin-top: -0.35rem; }
+}
+
+/* Product section visuals */
+.compare-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.85rem; margin-bottom: 1rem;
+}
+.compare-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.018), transparent), var(--bg-card);
+  border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.4rem;
+}
+.compare-before {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  border-style: dashed;
+}
+.compare-after { border-color: var(--border-accent); }
+.compare-label {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;
+}
+.compare-after .compare-label { color: var(--accent); }
+.compare-big {
+  font-size: 2.6rem; font-weight: 800; color: var(--text-bright);
+  line-height: 1.1; margin-bottom: 0.25rem;
+}
+.compare-sub { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
+
+.profile-grid { display: flex; flex-direction: column; gap: 0.32rem; }
+.profile-row {
+  display: grid; grid-template-columns: 76px 1fr 68px;
+  align-items: center; gap: 0.45rem;
+}
+.profile-domain {
+  font-size: 0.68rem; font-weight: 650; color: var(--text-bright); text-align: right;
+}
+.profile-bar-track {
+  height: 6px; border-radius: 3px; background: rgba(255,255,255,0.04); overflow: hidden;
+}
+.profile-bar {
+  height: 6px; border-radius: 3px; width: 0;
+  transition: width 0.8s cubic-bezier(0.33,1,0.68,1);
+}
+.bar-strong { background: var(--green); }
+.bar-developing { background: var(--amber); }
+.bar-gap { background: var(--red); }
+.profile-status {
+  font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+}
+.status-strong { color: var(--green); }
+.status-developing { color: var(--amber); }
+.status-gap { color: var(--red); }
+
+.flow-stages {
+  display: flex; align-items: stretch; margin: 0.85rem 0;
+}
+.flow-stage {
+  flex: 1; background: linear-gradient(180deg, rgba(255,255,255,0.018), transparent), var(--bg-card);
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 1rem 0.85rem; text-align: center;
+}
+.flow-sweep { border-top: 3px solid var(--accent); }
+.flow-drill { border-top: 3px solid var(--amber); }
+.flow-classify { border-top: 3px solid var(--green); }
+.flow-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.5rem; height: 1.5rem; border-radius: 50%;
+  font-size: 0.7rem; font-weight: 800; margin-bottom: 0.45rem;
+}
+.flow-num-sweep { color: var(--accent); background: var(--accent-dim); }
+.flow-num-drill { color: var(--amber); background: var(--amber-dim); }
+.flow-num-classify { color: var(--green); background: var(--green-dim); }
+.flow-title {
+  font-size: 0.82rem; font-weight: 750; color: var(--text-bright); margin-bottom: 0.2rem;
+}
+.flow-desc { font-size: 0.7rem; color: var(--text-muted); line-height: 1.45; }
+.flow-connector { width: 24px; height: 2px; flex-shrink: 0; align-self: center; }
+.flow-conn-1 { background: linear-gradient(90deg, rgba(99,140,255,0.4), rgba(201,162,39,0.4)); }
+.flow-conn-2 { background: linear-gradient(90deg, rgba(201,162,39,0.4), rgba(63,185,80,0.4)); }
+
+.matrix-header, .matrix-row-wrap {
+  display: grid; grid-template-columns: 64px 1fr 1fr; gap: 0.4rem; margin-bottom: 0.4rem;
+}
+.matrix-col-label {
+  font-size: 0.52rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text-muted); text-align: center; padding-bottom: 0.15rem;
+}
+.matrix-row-label {
+  font-size: 0.52rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text-muted);
+  display: flex; align-items: center; justify-content: flex-end; padding-right: 0.25rem;
+}
+.matrix-cell {
+  background: var(--bg-card-alt); border: 1px solid var(--border);
+  border-left: 3px solid var(--border); border-radius: 8px; padding: 0.6rem 0.75rem;
+}
+.matrix-mastery {
+  border-left-color: var(--green-border);
+  background: linear-gradient(90deg, var(--green-dim), transparent 42%), var(--bg-card);
+}
+.matrix-misconception {
+  border-left-color: var(--amber-border);
+  background: linear-gradient(90deg, var(--amber-dim), transparent 42%), var(--bg-card);
+}
+.matrix-cell-title {
+  font-size: 0.76rem; font-weight: 700; color: var(--text-bright); margin-bottom: 0.15rem;
+}
+.matrix-cell-desc { font-size: 0.68rem; color: var(--text); line-height: 1.4; }
+
+.domain-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin: 0.65rem 0;
+}
+.domain-tile {
+  background: linear-gradient(180deg, rgba(255,255,255,0.018), transparent), var(--bg-card);
+  border: 1px solid var(--border); border-top: 3px solid var(--border-accent);
+  border-radius: 8px; padding: 0.7rem 0.8rem; transition: border-color 0.2s ease;
+}
+.domain-tile:hover { border-color: var(--border-accent); }
+.risk-high { border-top-color: var(--accent); }
+.risk-standard { border-top-color: #4a6fd4; }
+.risk-operational { border-top-color: #3554a8; }
+.domain-name { font-size: 0.74rem; font-weight: 700; color: var(--text-bright); margin-bottom: 0.15rem; }
+.domain-meta { font-size: 0.6rem; color: var(--text-muted); }
+
+.sprt-chart, .decay-chart { width: 100%; height: auto; }
+.sprt-trail {
+  stroke-dasharray: 1200; stroke-dashoffset: 1200; transition: stroke-dashoffset 1.8s ease;
+}
+.visible .sprt-trail { stroke-dashoffset: 0; }
+.decay-layout {
+  display: grid; grid-template-columns: minmax(180px, 260px) 1fr; gap: 1rem; align-items: center;
+}
+
+/* ── Domain Tracker ── */
+.tracker-wrap { width: 100%; }
+.tracker-controls {
+  display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem;
+}
+.tracker-controls .btn {
+  appearance: none; border: 1px solid rgba(99,140,255,0.32);
+  background: linear-gradient(180deg, rgba(99,140,255,0.2), rgba(99,140,255,0.08));
+  color: var(--text-bright); border-radius: 7px; padding: 0.5rem 0.9rem;
+  font-size: 0.72rem; font-weight: 750; letter-spacing: 0.02em;
+  cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease; font-family: inherit;
+}
+.tracker-controls .btn:hover { transform: translateY(-1px); border-color: rgba(99,140,255,0.55); background: linear-gradient(180deg, rgba(99,140,255,0.28), rgba(99,140,255,0.11)); }
+.tracker-controls .btn:active { transform: translateY(0); }
+.tracker-controls .btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+.tracker-controls .btn.secondary { background: rgba(255,255,255,0.025); border-color: var(--border); color: var(--text); }
+.tracker-controls .btn.secondary:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); }
+.tracker-step-label { font-size: 0.68rem; font-weight: 600; color: var(--text-muted); margin-left: auto; font-variant-numeric: tabular-nums; }
+
+.current-item-panel {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg-card-alt); border: 1px solid var(--border); border-radius: 8px;
+  padding: 0.6rem 1rem; margin-bottom: 1rem;
+  opacity: 0; transform: translateY(-5px); transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.current-item-panel.visible { opacity: 1; transform: translateY(0); }
+.item-meta-group { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.item-label { font-size: 0.65rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.item-value { font-size: 0.75rem; font-weight: 700; color: var(--text-bright); margin-left: 0.3rem; }
+.item-why { font-size: 0.6rem; font-weight: 600; color: var(--accent); opacity: 0.75; font-style: italic; white-space: nowrap; }
+.item-why::before { content: '\2190  '; opacity: 0.6; }
+.item-result-badge { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.25rem 0.6rem; border-radius: 4px; background: rgba(255,255,255,0.05); color: var(--text-muted); }
+.badge-correct { color: var(--green); background: var(--green-dim); }
+.badge-incorrect { color: var(--red); background: var(--red-dim); }
+
+@keyframes flash-correct { 0% { background-color: rgba(63,185,80,0.3); border-color: rgba(63,185,80,0.8); box-shadow: 0 0 15px rgba(63,185,80,0.2); } 100% { background-color: var(--bg-card-alt); border-color: var(--border); box-shadow: none; } }
+@keyframes flash-incorrect { 0% { background-color: rgba(229,83,83,0.3); border-color: rgba(229,83,83,0.8); box-shadow: 0 0 15px rgba(229,83,83,0.2); } 100% { background-color: var(--bg-card-alt); border-color: var(--border); box-shadow: none; } }
+.panel-flash-correct { animation: flash-correct 1s ease-out; }
+.panel-flash-incorrect { animation: flash-incorrect 1s ease-out; }
+
+.tracker-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.018), transparent), var(--bg-card);
+  border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem 1.25rem 0.9rem;
+}
+.tracker-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem; padding-bottom: 0.65rem; border-bottom: 1px solid var(--border); }
+.tracker-title { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+.tracker-phase-pill { font-size: 0.54rem; font-weight: 750; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 4px; transition: all 0.4s ease; }
+.phase-sweep { color: var(--accent); background: var(--accent-dim); }
+.phase-drill { color: var(--amber); background: var(--amber-dim); }
+.phase-complete { color: var(--green); background: var(--green-dim); }
+
+.tracker-wrap .domain-rows { display: flex; flex-direction: column; gap: 0.1rem; }
+.tracker-wrap .domain-row {
+  display: grid; grid-template-columns: 98px 1fr auto auto; align-items: center; gap: 0.65rem;
+  padding: 0.45rem 0; border-radius: 6px; transition: opacity 0.5s ease, background-color 0.3s ease; position: relative;
+}
+.tracker-wrap .domain-row.settled { opacity: 0.55; }
+.tracker-wrap .domain-row.settled:hover { opacity: 0.8; }
+.domain-name-group { display: flex; align-items: center; gap: 0.45rem; }
+.domain-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; transition: box-shadow 0.4s ease; }
+.tracker-wrap .domain-row.active-domain .domain-dot { box-shadow: 0 0 0 3px rgba(255,255,255,0.04), 0 0 8px currentColor; }
+.tracker-wrap .domain-name { font-size: 0.74rem; font-weight: 650; color: var(--text-bright); white-space: nowrap; margin-bottom: 0; }
+
+.ci-track-wrap { position: relative; height: 22px; min-width: 0; }
+.ci-track-bg { position: absolute; inset: 0; border-radius: 11px; background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.03); overflow: hidden; }
+.ci-track-bg::before { content: ''; position: absolute; left: calc(50% - 0.5px); top: 2px; bottom: 2px; width: 1px; background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.18) 0px, rgba(255,255,255,0.18) 2px, transparent 2px, transparent 5px); z-index: 1; }
+.ci-band { position: absolute; top: 3px; bottom: 3px; border-radius: 8px; transition: left 0.6s cubic-bezier(0.33,1,0.68,1), width 0.6s cubic-bezier(0.33,1,0.68,1), background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease; }
+.ci-band.pending { border: 1px solid rgba(255,255,255,0.08); box-shadow: none; }
+.ci-band.flagged { border: 1.5px dashed rgba(201,162,39,0.55); box-shadow: 0 0 12px rgba(201,162,39,0.08); animation: flagged-pulse 2.8s ease-in-out infinite; }
+@keyframes flagged-pulse { 0%, 100% { border-color: rgba(201,162,39,0.4); box-shadow: 0 0 8px rgba(201,162,39,0.06); } 50% { border-color: rgba(201,162,39,0.7); box-shadow: 0 0 14px rgba(201,162,39,0.12); } }
+.ci-band.classified-strong { border: 1px solid var(--green-border); box-shadow: 0 0 10px rgba(63,185,80,0.08); }
+.ci-band.classified-developing { border: 1px solid var(--amber-border); box-shadow: 0 0 10px rgba(201,162,39,0.08); }
+.ci-band.classified-gap { border: 1px solid var(--red-border); box-shadow: 0 0 10px rgba(229,83,83,0.08); }
+
+.class-pill { font-size: 0.58rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.18rem 0.5rem; border-radius: 4px; white-space: nowrap; min-width: 70px; text-align: center; transition: all 0.4s ease; }
+.class-pending { color: var(--text-muted); background: transparent; }
+.class-flagged { color: var(--amber); background: var(--amber-dim); }
+.class-strong { color: var(--green); background: var(--green-dim); }
+.class-developing { color: var(--amber); background: var(--amber-dim); }
+.class-gap { color: var(--red); background: var(--red-dim); }
+
+.item-count { font-size: 0.62rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; min-width: 42px; text-align: right; font-variant-numeric: tabular-nums; transition: color 0.3s ease; }
+.tracker-wrap .domain-row.active-domain .item-count { color: var(--text); }
+
+.ci-marker { position: absolute; top: 50%; width: 8px; height: 8px; border-radius: 50%; background: var(--text-bright); border: 2px solid rgba(255,255,255,0.6); transform: translate(-50%, -50%); z-index: 2; box-shadow: 0 0 6px rgba(255,255,255,0.2); transition: left 0.6s cubic-bezier(0.33,1,0.68,1), background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease; }
+.classified-strong ~ .ci-marker { background: var(--green); border-color: var(--green); box-shadow: 0 0 8px rgba(63,185,80,0.4); }
+.classified-developing ~ .ci-marker { background: var(--amber); border-color: var(--amber); box-shadow: 0 0 8px rgba(201,162,39,0.4); }
+.classified-gap ~ .ci-marker { background: var(--red); border-color: var(--red); box-shadow: 0 0 8px rgba(229,83,83,0.4); }
+
+.tracker-descriptor { margin-top: 0.85rem; padding: 0.75rem 1rem; background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent), var(--bg-card-alt); border: 1px solid var(--border); border-left: 3px solid var(--border-accent); border-radius: 8px; font-size: 0.78rem; color: var(--text); line-height: 1.6; min-height: 3.2rem; transition: border-left-color 0.4s ease; }
+.tracker-descriptor.phase-sweep-desc { border-left-color: rgba(99,140,255,0.45); }
+.tracker-descriptor.phase-drill-desc { border-left-color: rgba(201,162,39,0.45); }
+.tracker-descriptor.phase-complete-desc { border-left-color: rgba(63,185,80,0.45); }
+
+.ci-scale-axis { display: grid; grid-template-columns: 98px 1fr auto auto; align-items: center; gap: 0.65rem; padding-top: 0.55rem; margin-top: 0.5rem; border-top: 1px solid var(--border); }
+.ci-scale-track { position: relative; height: 14px; }
+.ci-scale-track .axis-label { position: absolute; top: 0; font-size: 0.55rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
+.ci-scale-track .axis-label.left { left: 0; }
+.ci-scale-track .axis-label.center { left: 50%; transform: translateX(-50%); color: var(--text); }
+.ci-scale-track .axis-label.right { right: 0; }
+.axis-pill-spacer { font-size: 0.58rem; padding: 0.18rem 0.5rem; min-width: 70px; visibility: hidden; }
+.axis-count-spacer { font-size: 0.62rem; min-width: 42px; visibility: hidden; }
+
+.summary-panel { margin-top: 1rem; background: linear-gradient(180deg, rgba(99,140,255,0.04), transparent), var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 0 1.25rem; opacity: 0; transform: translateY(8px); max-height: 0; overflow: hidden; transition: opacity 0.5s ease, transform 0.5s ease, max-height 0.7s ease, padding 0.4s ease; pointer-events: none; }
+.summary-panel.visible { opacity: 1; transform: translateY(0); max-height: 500px; padding: 1.1rem 1.25rem; pointer-events: auto; }
+.summary-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem; padding-bottom: 0.65rem; border-bottom: 1px solid var(--border); }
+.summary-title { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+.summary-meta { font-size: 0.54rem; font-weight: 750; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 4px; color: var(--green); background: var(--green-dim); }
+.summary-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-bottom: 0.9rem; }
+.stat-block { display: flex; flex-direction: column; align-items: center; padding: 0.7rem 0.4rem; border-radius: 8px; background: var(--bg-card-alt); border: 1px solid var(--border); }
+.stat-block.strong { border-color: var(--green-border); background: linear-gradient(180deg, rgba(63,185,80,0.07), transparent), var(--bg-card-alt); }
+.stat-block.developing { border-color: var(--amber-border); background: linear-gradient(180deg, rgba(201,162,39,0.07), transparent), var(--bg-card-alt); }
+.stat-block.gap { border-color: var(--red-border); background: linear-gradient(180deg, rgba(229,83,83,0.07), transparent), var(--bg-card-alt); }
+.stat-block.flagged { border-color: var(--amber-border); background: var(--bg-card-alt); }
+.stat-count { font-size: 1.6rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; color: var(--text-bright); }
+.stat-block.strong .stat-count { color: var(--green); }
+.stat-block.developing .stat-count { color: var(--amber); }
+.stat-block.gap .stat-count { color: var(--red); }
+.stat-block.flagged .stat-count { color: var(--amber); opacity: 0.7; }
+.stat-label { font-size: 0.55rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-top: 0.35rem; }
+.summary-recommendation { padding: 0.75rem 0.9rem; background: var(--bg-card-alt); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; }
+.rec-label { font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.45rem; }
+.rec-domains { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.rec-domains .rec-empty { font-size: 0.74rem; color: var(--text-muted); font-style: italic; }
+.rec-domain-chip { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.25rem 0.55rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; }
+.rec-domain-chip .chip-priority { font-size: 0.5rem; font-weight: 800; letter-spacing: 0.06em; padding: 0.1rem 0.3rem; border-radius: 3px; background: rgba(0,0,0,0.25); }
+.rec-domain-chip.gap { background: var(--red-dim); color: var(--red); border: 1px solid var(--red-border); }
+.rec-domain-chip.developing { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber-border); }
+
+@keyframes row-flash { 0% { background-color: rgba(255,255,255,0.04); } 100% { background-color: transparent; } }
+.tracker-wrap .domain-row.just-updated { animation: row-flash 0.8s ease-out; }
+
+@media (max-width: 760px) {
+  .compare-grid { grid-template-columns: 1fr; }
+  .domain-grid { grid-template-columns: repeat(2, 1fr); }
+  .decay-layout { grid-template-columns: 1fr; }
+  .summary-stats { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+  .tracker-wrap .domain-row { grid-template-columns: 78px 1fr auto auto; gap: 0.4rem; }
+  .tracker-wrap .domain-name { font-size: 0.68rem; }
+  .class-pill { font-size: 0.52rem; min-width: 60px; padding: 0.15rem 0.35rem; }
+  .item-count { font-size: 0.56rem; min-width: 36px; }
+  .current-item-panel { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .ci-scale-axis { grid-template-columns: 78px 1fr auto auto; gap: 0.4rem; }
+}
+@media (max-width: 640px) {
+  .profile-row { grid-template-columns: 60px 1fr 55px; }
+  .matrix-header, .matrix-row-wrap { grid-template-columns: 1fr 1fr; }
+  .matrix-row-label, .matrix-header > span:first-child { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav-dots">
+  <div class="nav-dot active" title="Overview" data-target="hero"></div>
+  <div class="nav-dot" title="Opportunity" data-target="opportunity"></div>
+  <div class="nav-dot" title="How It Works" data-target="how"></div>
+  <div class="nav-dot" title="Kansas" data-target="kansas"></div>
+  <div class="nav-dot" title="National Context" data-target="national"></div>
+  <div class="nav-dot" title="The Product" data-target="product"></div>
+  <div class="nav-dot" title="Next Steps" data-target="nextsteps"></div>
+</nav>
+
+<section class="hero visible" id="hero">
+  <div class="hero-label">Strategic Brief - Kansas EMS - 2026</div>
+  <h1>Hours Prove Attendance. Not Competence.</h1>
+  <p class="hero-sub">Kansas already has the regulation to replace hours with demonstrated competency. No one has built the assessment technology to activate it.</p>
+  <div class="hero-scroll">
+    Scroll
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+  </div>
+</section>
+
+<section class="section" id="opportunity">
+  <div class="section-label">The Opportunity</div>
+  <h2 class="section-title">EMS continuing education is still measured by seat time</h2>
+
+  <p class="section-intro">
+    Every two years, EMS providers renew by logging hours, not by proving they can still perform. Research across healthcare professions shows <a href="https://www.mdpi.com/2226-4787/7/2/72" target="_blank" rel="noopener">seat time does not predict competence</a>.
+  </p>
+  <p class="section-intro">
+    MedEdPrep builds adaptive competency assessments for EMS. A provider takes an assessment that adapts in real time to what they know. The result is a <strong>measured competency profile</strong>, not a certificate of attendance.
+  </p>
+  <p class="section-intro">
+    The <a href="https://www.ksbems.org" target="_blank" rel="noopener">Kansas Board of EMS</a> has opened a formal review of continuing education through <a href="http://ksbems.org/html%20pages/board%20packet.pdf" target="_blank" rel="noopener">Board Task 2024AS0001</a>. Kansas also has <a href="https://www.law.cornell.edu/regulations/kansas/K-A-R-109-5-1b" target="_blank" rel="noopener">a regulation on the books</a> allowing renewal through a cognitive assessment paired with medical director validation, instead of logging CE hours.
+  </p>
+
+  <div class="stat-grid">
+    <div class="stat-box">
+      <div class="stat-num counter" data-count="9660">0</div>
+      <div class="stat-label">Licensed Providers</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num counter" data-count="366">0</div>
+      <div class="stat-label">EMS Agencies</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num counter" data-count="5000" data-prefix="~">0</div>
+      <div class="stat-label">Renewals / Year</div>
+    </div>
+  </div>
+
+  <p class="source-note">
+    Kansas data: <a href="https://ambulance.org/wp-content/uploads/2025/01/KS-State-Leave-Behinds-2024.pdf" target="_blank" rel="noopener">AAA 2024</a> and <a href="https://www.ksbems.org/html%20pages/pdf/KEMSISAnnualReport.pdf" target="_blank" rel="noopener">KBEMS KEMSIS Report</a>.
+  </p>
+
+  <p class="bridge-line">The regulation is already written. Two pathways make it operational.</p>
+</section>
+
+<section class="section" id="how">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-title">Two pathways, both built on what Kansas already accepts</h2>
+
+  <p class="section-intro">
+    This does not require new legislation. The immediate path is continuing education credit. The larger path is board approval for competency-based renewal.
+  </p>
+
+  <div class="step-card">
+    <div class="step-label">Available Today</div>
+    <div class="step-title">CAPCE-accredited adaptive assessment</div>
+    <div class="step-text">
+      Kansas <a href="https://www.law.cornell.edu/regulations/kansas/K-A-R-109-5-1" target="_blank" rel="noopener">automatically accepts</a> CAPCE-accredited programs for CE credit. CAPCE already has a designation for adaptive learning courses through <a href="https://newsroom.heart.org/news/new-designation-in-ems-continuing-education-accreditation-achieved" target="_blank" rel="noopener">F4 accreditation</a>, and <a href="https://www.vdh.virginia.gov/emergency-medical-services/education-certification/educator-resources/continuing-education-program-guidance/a-continuing-education-ce-explainer/" target="_blank" rel="noopener">Virginia classifies adaptive learning</a> as classroom instruction for CE credit. A CAPCE-accredited adaptive competency assessment can count toward CE hours in Kansas and every other state that accepts CAPCE.
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-label">With Proof of Concept</div>
+    <div class="step-title">Board-approved cognitive assessment for recertification</div>
+    <div class="step-text">
+      Kansas regulation allows providers to renew by passing a <a href="https://www.law.cornell.edu/regulations/kansas/K-A-R-109-5-1b" target="_blank" rel="noopener">board-approved cognitive assessment</a> combined with medical director validation of psychomotor skills, instead of completing CE hours. This renewal pathway is separate from the <a href="https://www.law.cornell.edu/regulations/kansas/K-A-R-109-8-1" target="_blank" rel="noopener">initial certification exam regulation</a>.
+    </div>
+    <div class="validation-callout">
+      <p><strong>The medical director validation solves the hardest infrastructure problem.</strong></p>
+      <p>No one needs to stand up skills testing stations.</p>
+      <p>The provider demonstrates cognitive competency through an adaptive assessment.</p>
+      <p>Their medical director attests to clinical skills.</p>
+    </div>
+  </div>
+
+  <p class="bridge-line">Both pathways work because of what Kansas already has in place, and both solve problems Kansas cannot currently address.</p>
+</section>
+
+<section class="section" id="kansas">
+  <div class="section-label">Kansas</div>
+  <h2 class="section-title">Kansas has scale, infrastructure, and clear gaps</h2>
+
+  <div class="card-grid">
+    <div class="card provider-card">
+      <div class="donut-wrap">
+        <svg class="donut" viewBox="0 0 120 120" role="img" aria-label="Kansas provider level breakdown">
+          <circle class="donut-bg" cx="60" cy="60" r="42" pathLength="100"></circle>
+          <circle class="donut-segment" cx="60" cy="60" r="42" pathLength="100" stroke="var(--accent)" stroke-dasharray="61.2 38.8" stroke-dashoffset="0" transform="rotate(-90 60 60)"></circle>
+          <circle class="donut-segment" cx="60" cy="60" r="42" pathLength="100" stroke="#4a6fd4" stroke-dasharray="26.2 73.8" stroke-dashoffset="-61.2" transform="rotate(-90 60 60)"></circle>
+          <circle class="donut-segment" cx="60" cy="60" r="42" pathLength="100" stroke="#3554a8" stroke-dasharray="8.7 91.3" stroke-dashoffset="-87.4" transform="rotate(-90 60 60)"></circle>
+          <circle class="donut-segment" cx="60" cy="60" r="42" pathLength="100" stroke="#253d7d" stroke-dasharray="3.9 96.1" stroke-dashoffset="-96.1" transform="rotate(-90 60 60)"></circle>
+          <text class="donut-total" x="60" y="58">~10.1K</text>
+          <text class="donut-caption" x="60" y="69">Providers</text>
+        </svg>
+      </div>
+      <div>
+        <div class="card-title">Provider Breakdown</div>
+        <div class="legend-list">
+          <div class="legend-item">
+            <span class="legend-dot" style="background: var(--accent);"></span>
+            <span class="legend-label">EMT</span>
+            <span class="legend-meta">~6,150, 63%</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: #4a6fd4;"></span>
+            <span class="legend-label">Paramedic</span>
+            <span class="legend-meta">~2,650, 27%</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: #3554a8;"></span>
+            <span class="legend-label">AEMT</span>
+            <span class="legend-meta">~870, 9%</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: #253d7d;"></span>
+            <span class="legend-label">EMR</span>
+            <span class="legend-meta">~430, 4%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Education Infrastructure</div>
+      <ul>
+        <li><strong>7</strong> accredited paramedic programs</li>
+        <li><strong>154</strong> program providers</li>
+        <li><strong>442</strong> sponsoring organizations</li>
+        <li><strong>6</strong> regional EMS councils</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card gap-card">
+    <div class="card-title">What Kansas does not have</div>
+    <ul>
+      <li>No state-level protocol exam at any certification level</li>
+      <li>No recurrent skills verification for recertification</li>
+      <li>No standardized protocol set, each county or agency develops its own</li>
+      <li>No systematic way to verify that providers know their local protocols</li>
+    </ul>
+    <p class="gap-reframe">Every gap in this list is a problem that adaptive competency assessment directly addresses.</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">Program Accountability</div>
+      <ul>
+        <li><a href="https://www.law.cornell.edu/regulations/kansas/K-A-R-109-17-3" target="_blank" rel="noopener">70% first-time pass rate</a> requirement</li>
+        <li>Programs below threshold must submit improvement plans by March 1</li>
+        <li>Five programs were below threshold in 2025</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Governance</div>
+      <ul>
+        <li><a href="https://www.ksbems.org" target="_blank" rel="noopener">KBEMS</a> is both regulator and grant funder, with $375K EIG in FY2026</li>
+        <li>15-member board, EETC committee reviews education proposals</li>
+        <li><a href="https://www.emscompact.gov/" target="_blank" rel="noopener">EMS Compact</a> member, with interstate implications</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="bridge-line">These gaps are not unique to Kansas. The professions that have closed them share one thing: they replaced hours with measured competency.</p>
+</section>
+
+<section class="section" id="national">
+  <div class="section-label">National Context</div>
+  <h2 class="section-title">The market is moving toward competency, but EMS still lacks the assessment layer</h2>
+
+  <p class="section-intro">
+    The direction is not speculative. EMS leaders have been asking for continued competency assurance for decades. Other safety-critical professions have already moved from hours to demonstrated proficiency.
+  </p>
+
+  <div class="timeline">
+    <div class="timeline-point">
+      <span class="timeline-marker"></span>
+      <div class="timeline-year">2000</div>
+      <p class="timeline-text"><a href="https://www.ems.gov/assets/EMS_Education_Agenda.pdf" target="_blank" rel="noopener">The EMS Education Agenda</a> called for a systems approach to continued competency assurance.</p>
+    </div>
+    <div class="timeline-point">
+      <span class="timeline-marker"></span>
+      <div class="timeline-year">2019</div>
+      <p class="timeline-text"><a href="https://nremt.org/Document/Continued-Competency-Initiative" target="_blank" rel="noopener">NREMT initiated a Continued Competency Initiative</a> with 18+ organizations.</p>
+    </div>
+    <div class="timeline-point gap">
+      <span class="timeline-marker"></span>
+      <div class="timeline-year">2026</div>
+      <p class="timeline-text">Seven years later, <strong>no operational outcomes</strong>. The <a href="https://www.nremt.org/Document/nccp" target="_blank" rel="noopener">NCCP</a> already allows recertification by examination. The policy pathway exists. The assessment technology to make it useful has not been built.</p>
+    </div>
+  </div>
+
+  <div class="model-grid">
+    <div class="model-card">
+      <div class="model-title">Physicians: Longitudinal Knowledge Assessment</div>
+      <ul>
+        <li>30 questions per quarter, replacing the traditional 10-year recertification exam</li>
+        <li><strong>80% voluntary adoption</strong></li>
+        <li>Published study linking higher LKA scores to <strong>lower patient mortality</strong></li>
+        <li>This is the strongest evidence that ongoing adaptive assessment improves real outcomes</li>
+      </ul>
+      <p class="source-note"><a href="https://www.abim.org/maintenance-of-certification/assessment-options/longitudinal-knowledge-assessment/" target="_blank" rel="noopener">ABIM LKA</a></p>
+    </div>
+    <div class="model-card">
+      <div class="model-title">Aviation: Advanced Qualification Program</div>
+      <ul>
+        <li><strong>90% of airline pilots</strong> train under proficiency-based standards instead of prescriptive hours</li>
+        <li>Running for <strong>35 years</strong>, since 1991</li>
+        <li>Replaced hour-based training requirements with demonstrated proficiency</li>
+        <li>If it works for keeping planes in the air, the model is proven</li>
+      </ul>
+      <p class="source-note"><a href="https://www.faa.gov/training_testing/training/aqp" target="_blank" rel="noopener">FAA AQP</a></p>
+    </div>
+  </div>
+
+  <div class="context-card">
+    <div class="context-card-title">Other Professions</div>
+    <div class="context-row">
+      <span class="context-tag">ABA</span>
+      <span class="context-text">Replaced the 10-year recertification exam with quarterly micro-assessments. <a href="https://www.theaba.org/continue-certification/moca-minute/" target="_blank" rel="noopener">MOCA Minute</a></span>
+    </div>
+    <div class="context-row">
+      <span class="context-tag">Pharmacy</span>
+      <span class="context-text">CE engagement does not reliably predict clinical competence. <a href="https://www.mdpi.com/2226-4787/7/2/72" target="_blank" rel="noopener">Ireland Pharmacy Study</a></span>
+    </div>
+  </div>
+
+  <div class="context-card">
+    <div class="context-card-title">States Already Moving</div>
+    <div class="context-row">
+      <span class="context-tag">Ohio</span>
+      <span class="context-text">First state with competency-based recertification, no required CE hours. <a href="https://codes.ohio.gov/ohio-administrative-code/rule-4765-17-02" target="_blank" rel="noopener">Ohio rule</a></span>
+    </div>
+    <div class="context-row">
+      <span class="context-tag">Virginia</span>
+      <span class="context-text">Adaptive learning equals classroom instruction for CE credit. <a href="https://www.vdh.virginia.gov/emergency-medical-services/education-certification/educator-resources/continuing-education-program-guidance/a-continuing-education-ce-explainer/" target="_blank" rel="noopener">Virginia guidance</a></span>
+    </div>
+    <div class="context-row">
+      <span class="context-tag">N. Carolina</span>
+      <span class="context-text">Independent state credentialing exams since 1974. <a href="https://oems.nc.gov/nc-testing-program/" target="_blank" rel="noopener">NC Testing Program</a></span>
+    </div>
+    <div class="context-row">
+      <span class="context-tag">Connecticut</span>
+      <span class="context-text">Modular scope expansion with 80% written assessment gates. <a href="https://portal.ct.gov/dph/emergency-medical-services/ems/about-the-office-of-ems" target="_blank" rel="noopener">CT OEMS</a></span>
+    </div>
+  </div>
+
+  <p class="bridge-line">Every model above replaced seat time with adaptive assessment. In EMS, that technology has not been built. Until now.</p>
+</section>
+
+<section class="section" id="product">
+  <div class="section-label">The Product</div>
+  <h2 class="section-title">Adaptive competency assessment</h2>
+
+  <p class="section-intro">
+    The assessment is a <strong>diagnostic gap-finder</strong>, not a pass/fail exam. It classifies providers across clinical domains into three levels and routes them to targeted continuing education based on where their evidence is weakest.
+  </p>
+
+  <!-- Before/After Comparison -->
+  <div class="compare-grid">
+    <div class="compare-card compare-before">
+      <div class="compare-label">What renewal tells you today</div>
+      <div class="compare-big">40 hours</div>
+      <div class="compare-sub">Status: Renewed</div>
+    </div>
+    <div class="compare-card compare-after">
+      <div class="compare-label">What competency assessment tells you</div>
+      <div class="profile-grid">
+        <div class="profile-row">
+          <span class="profile-domain">Airway</span>
+          <div class="profile-bar-track"><div class="profile-bar bar-strong" data-width="92"></div></div>
+          <span class="profile-status status-strong">Strong</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-domain">Cardiology</span>
+          <div class="profile-bar-track"><div class="profile-bar bar-strong" data-width="85"></div></div>
+          <span class="profile-status status-strong">Strong</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-domain">Trauma</span>
+          <div class="profile-bar-track"><div class="profile-bar bar-developing" data-width="58"></div></div>
+          <span class="profile-status status-developing">Developing</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-domain">Medical</span>
+          <div class="profile-bar-track"><div class="profile-bar bar-gap" data-width="28"></div></div>
+          <span class="profile-status status-gap">Gap</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-domain">OB/Peds</span>
+          <div class="profile-bar-track"><div class="profile-bar bar-strong" data-width="88"></div></div>
+          <span class="profile-status status-strong">Strong</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-domain">Behavioral</span>
+          <div class="profile-bar-track"><div class="profile-bar bar-developing" data-width="52"></div></div>
+          <span class="profile-status status-developing">Developing</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-domain">Operations</span>
+          <div class="profile-bar-track"><div class="profile-bar bar-strong" data-width="90"></div></div>
+          <span class="profile-status status-strong">Strong</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Domain Classification Tracker -->
+  <div class="tracker-wrap" style="margin-top: 1.5rem;">
+    <div class="tracker-controls">
+      <button class="btn" id="btnStep" type="button">Step</button>
+      <button class="btn secondary" id="btnAuto" type="button">Auto Run</button>
+      <button class="btn secondary" id="btnReset" type="button">Reset</button>
+      <span class="tracker-step-label" id="stepLabel">Q0 / 20</span>
+    </div>
+
+    <div class="current-item-panel" id="currentItemPanel">
+      <div class="item-meta-group">
+        <span class="item-label">Current Item: <span class="item-value" id="curDomain">--</span></span>
+        <span class="item-label">Difficulty: <span class="item-value" id="curDiff">--</span></span>
+        <span class="item-why" id="curWhy"></span>
+      </div>
+      <div class="item-result-badge" id="curResult">Pending</div>
+    </div>
+
+    <div class="tracker-card" id="trackerCard">
+      <div class="tracker-header">
+        <span class="tracker-title">Domain Classification</span>
+        <span class="tracker-phase-pill phase-sweep" id="phasePill">Breadth Sweep</span>
+      </div>
+      <div class="domain-rows" id="domainRows"></div>
+      <div class="ci-scale-axis">
+        <div></div>
+        <div class="ci-scale-track">
+          <span class="axis-label left">Gap</span>
+          <span class="axis-label center">Mastery Threshold</span>
+          <span class="axis-label right">Strong</span>
+        </div>
+        <span class="axis-pill-spacer"></span>
+        <span class="axis-count-spacer"></span>
+      </div>
+    </div>
+
+    <div class="tracker-descriptor phase-sweep-desc" id="trackerDesc">Press <strong>Step</strong> or <strong>Auto Run</strong> to begin the assessment simulation. The engine will classify 7 clinical domains independently, stopping each one as soon as it has enough evidence.</div>
+
+    <div class="summary-panel" id="summaryPanel">
+      <div class="summary-header">
+        <span class="summary-title">Assessment Result</span>
+        <span class="summary-meta">20 Items · Adaptive</span>
+      </div>
+      <div class="summary-stats">
+        <div class="stat-block strong"><span class="stat-count" id="statStrong">0</span><span class="stat-label">Strong</span></div>
+        <div class="stat-block developing"><span class="stat-count" id="statDeveloping">0</span><span class="stat-label">Developing</span></div>
+        <div class="stat-block gap"><span class="stat-count" id="statGap">0</span><span class="stat-label">Gap</span></div>
+        <div class="stat-block flagged"><span class="stat-count" id="statFlagged">0</span><span class="stat-label">Indeterminate</span></div>
+      </div>
+      <div class="summary-recommendation">
+        <div class="rec-label">Recommended Continuing Education Focus</div>
+        <div class="rec-domains" id="recDomains"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decay Visual + Text -->
+  <div class="card" style="margin-top: 0.85rem;">
+    <div class="decay-layout">
+      <svg class="decay-chart" viewBox="0 0 280 130" role="img" aria-label="Evidence decay curve over time">
+        <title>Evidence decay: a Strong classification fades to partial credit at 6 months and near-zero at 18 months</title>
+        <line x1="38" y1="10" x2="38" y2="110" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+        <line x1="38" y1="110" x2="270" y2="110" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+        <path d="M 38,18 C 80,20 110,45 145,65 S 220,98 270,106" fill="none" stroke="var(--accent)" stroke-width="2" />
+        <path d="M 38,18 C 80,20 110,45 145,65 S 220,98 270,106 L 270,110 L 38,110 Z" fill="url(#decay-grad)" opacity="0.25" />
+        <line x1="115" y1="48" x2="115" y2="110" stroke="var(--accent)" stroke-width="1" stroke-dasharray="3 3" opacity="0.5" />
+        <text x="115" y="123" text-anchor="middle" fill="var(--text-muted)" font-size="8" font-family="Inter, sans-serif">6 mo</text>
+        <line x1="235" y1="100" x2="235" y2="110" stroke="var(--amber)" stroke-width="1" stroke-dasharray="3 3" opacity="0.5" />
+        <text x="235" y="123" text-anchor="middle" fill="var(--amber)" font-size="8" font-family="Inter, sans-serif">18 mo</text>
+        <text x="34" y="22" text-anchor="end" fill="var(--text-muted)" font-size="7" font-family="Inter, sans-serif">100%</text>
+        <text x="34" y="113" text-anchor="end" fill="var(--text-muted)" font-size="7" font-family="Inter, sans-serif">0%</text>
+        <defs>
+          <linearGradient id="decay-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--accent)" />
+            <stop offset="100%" stop-color="transparent" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <div>
+        <div class="context-tag" style="margin-bottom: 0.4rem;">Longitudinal Decay</div>
+        <p class="context-text"><strong>Prior evidence fades over time.</strong> A Strong classification from six months ago starts the next session with partial credit. After eighteen months, the prior has decayed enough that a fresh assessment is warranted. This follows established <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4492928/" target="_blank" rel="noopener">spaced repetition research</a> and mirrors the decay assumptions in <a href="https://www.abim.org/maintenance-of-certification/assessment-options/longitudinal-knowledge-assessment/" target="_blank" rel="noopener">ABIM's longitudinal model</a>.</p>
+        <p class="context-text" style="margin-top: 0.4rem;"><strong>What this means operationally:</strong> decayed domains are prioritized in the next assessment. Recently changed protocols trigger immediate reassessment regardless of prior status. State directors can surface providers whose Strong classifications are older than 12 months for targeted re-evaluation before renewal.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="bridge-line">The technology is the foundation. These are the moves that put it in front of Kansas.</p>
+</section>
+
+<section class="section" id="nextsteps">
+  <div class="section-label">Next Steps</div>
+  <h2 class="section-title">The work breaks into three phases</h2>
+
+  <div class="phase-block phase-ready">
+    <div class="phase-title">Phase 1: Ready Now</div>
+    <ol class="step-list">
+      <li class="step-item">
+        <div class="step-item-title"><span class="step-number">1</span> Georgia integration outcomes</div>
+        <div class="step-item-why">The proof of concept is already collecting data. MedEdPrep is the required testing platform for Georgia's grant-funded EMS programs through the <a href="https://trauma.georgia.gov/ems-grants/gtc-ems-education-initiatives" target="_blank" rel="noopener">Georgia Trauma Commission</a>. That outcome data is the evidence package for Kansas.</div>
+      </li>
+      <li class="step-item">
+        <div class="step-item-title"><span class="step-number">2</span> CAPCE F4 accreditation requirements</div>
+        <div class="step-item-why">The <a href="https://newsroom.heart.org/news/new-designation-in-ems-continuing-education-accreditation-achieved" target="_blank" rel="noopener">F4 adaptive learning designation</a> makes this product automatically accepted in Kansas and every state that accepts CAPCE. Only one provider currently holds it.</div>
+      </li>
+      <li class="step-item">
+        <div class="step-item-title"><span class="step-number">3</span> Ohio competency recertification toolkit</div>
+        <div class="step-item-why">Ohio is the only state that has operationalized competency-based recertification. Their <a href="https://codes.ohio.gov/ohio-administrative-code/rule-4765-17-02" target="_blank" rel="noopener">Option 4 pathway</a> allows medical directors to verify competency across six domains with zero CE hours required. The <a href="https://dam.assets.ohio.gov/image/upload/ems.ohio.gov/links/ems-emfts_minutes1025.pdf" target="_blank" rel="noopener">EMFTS Board approved the toolkit</a> in October 2025. Understanding what they built informs the assessment design. Contact: Joseph A. Kirk, Ohio Division of EMS, <a href="mailto:jakirk@dps.ohio.gov">jakirk@dps.ohio.gov</a>, 614-466-5605.</div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="phase-block phase-design">
+    <div class="phase-title">Phase 2: With Product Design</div>
+    <ol class="step-list" start="4">
+      <li class="step-item">
+        <div class="step-item-title"><span class="step-number">4</span> Competency assessment domain structure</div>
+        <div class="step-item-why">The assessment needs a domain hierarchy covering full scope of practice for each EMS level, going deeper than NREMT content domains. Kansas EMTs have expanded scope, including supraglottic airways, CPAP, capnometry, and 12-lead EKG acquisition, that a Kansas-specific assessment should cover.</div>
+      </li>
+      <li class="step-item">
+        <div class="step-item-title"><span class="step-number">5</span> Kansas-specific question generation</div>
+        <div class="step-item-why">The existing 10,600-item bank already has domain and sub-topic tagging in place. New questions for Kansas expanded scope can be generated from the existing competency model, covering areas like supraglottic airways and 12-lead EKG acquisition that go beyond standard NREMT content.</div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="phase-block phase-proof">
+    <div class="phase-title">Phase 3: With Proof of Concept</div>
+    <ul class="step-list">
+      <li class="step-item">
+        <div class="step-item-title">Kansas Rethinking CE engagement</div>
+        <div class="step-item-why"><a href="http://ksbems.org/html%20pages/board%20packet.pdf" target="_blank" rel="noopener">Board Task 2024AS0001</a> is an open, active review with public input invited. It was <a href="https://ksbems.org/ems/pdfs/December%202024%20Board%20Minutes.pdf" target="_blank" rel="noopener">introduced in December 2024</a>, assigned to the EETC committee, and remains on the <a href="https://ksbems.org/html%20pages/committees%20assignments.pdf?ver=25.06" target="_blank" rel="noopener">active committee assignments</a>. This is the venue for presenting a competency-based approach backed by Georgia data and national precedent. Public input: <a href="mailto:joseph.house@ks.gov">joseph.house@ks.gov</a>, reference item 2024AS0001.</div>
+      </li>
+      <li class="step-item">
+        <div class="step-item-title">NASEMSO annual meeting alignment</div>
+        <div class="step-item-why">A Kansas proof of concept positions the model for national visibility where state EMS directors evaluate education innovations.</div>
+      </li>
+    </ul>
+  </div>
+
+
+</section>
+
+<footer class="footer">
+  <div class="footer-argument">The regulation exists. The national precedent exists. The data exists. What remains is execution.</div>
+  <div class="footer-text">MedEdPrep &middot; May 2026</div>
+</footer>
+
+<script>
+(function() {
+  var dots = document.querySelectorAll('.nav-dot');
+  dots.forEach(function(dot) {
+    dot.addEventListener('click', function() {
+      var target = document.getElementById(this.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  var sections = document.querySelectorAll('.hero, .section');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        dots.forEach(function(d) { d.classList.remove('active'); });
+        var active = document.querySelector('.nav-dot[data-target="' + id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -60% 0px' });
+
+  sections.forEach(function(s) { observer.observe(s); });
+
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.section').forEach(function(section) {
+    revealObserver.observe(section);
+  });
+
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function formatNumber(value, element) {
+    var prefix = element.dataset.prefix || '';
+    var suffix = element.dataset.suffix || '';
+    if (element.dataset.compact === 'million') {
+      var millions = value / 1000000;
+      var shown = millions >= 1 ? Math.round(millions) : millions.toFixed(1);
+      return prefix + shown + 'M' + suffix;
+    }
+    return prefix + Math.round(value).toLocaleString('en-US') + suffix;
+  }
+
+  function animateCounter(element) {
+    var target = Number(element.dataset.count || 0);
+    var duration = 1200;
+    var start = performance.now();
+
+    function tick(now) {
+      var progress = Math.min((now - start) / duration, 1);
+      var eased = easeOutCubic(progress);
+      element.textContent = formatNumber(target * eased, element);
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        element.textContent = formatNumber(target, element);
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  var counterObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !entry.target.dataset.animated) {
+        entry.target.dataset.animated = 'true';
+        animateCounter(entry.target);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.45 });
+
+  document.querySelectorAll('.counter').forEach(function(counter) {
+    counterObserver.observe(counter);
+  });
+
+  var barObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !entry.target.dataset.animated) {
+        entry.target.dataset.animated = 'true';
+        var bars = entry.target.querySelectorAll('.profile-bar');
+        bars.forEach(function(bar, i) {
+          setTimeout(function() {
+            bar.style.width = bar.dataset.width + '%';
+          }, i * 80);
+        });
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  var profileGrid = document.querySelector('.profile-grid');
+  if (profileGrid) barObserver.observe(profileGrid);
+
+  // ── Domain Classification Tracker ──
+  var TRK_DOMAINS = [
+    { key: 'airway',     name: 'Airway',     color: '#638cff' },
+    { key: 'cardiology', name: 'Cardiology', color: '#4a6fd4' },
+    { key: 'trauma',     name: 'Trauma',     color: '#c9a227' },
+    { key: 'medical',    name: 'Medical',    color: '#2dd4bf' },
+    { key: 'obpeds',     name: 'OB/Peds',    color: '#ec4899' },
+    { key: 'behavioral', name: 'Behavioral', color: '#8b5cf6' },
+    { key: 'operations', name: 'Operations', color: '#3554a8' }
+  ];
+
+  var TRK_STEPS = [
+    { q:1, domain:'airway',     diff:'Medium', res:'Correct',   ciLeft:8,  ciWidth:72, estimate:52, classification:'Pending', items:1, why:'Initial sweep' },
+    { q:2, domain:'cardiology', diff:'Medium', res:'Correct',   ciLeft:10, ciWidth:70, estimate:55, classification:'Pending', items:1, why:'Initial sweep' },
+    { q:3, domain:'trauma',     diff:'Hard',   res:'Incorrect', ciLeft:12, ciWidth:68, estimate:42, classification:'Pending', items:1, why:'Initial sweep' },
+    { q:4, domain:'medical',    diff:'Medium', res:'Incorrect', ciLeft:10, ciWidth:72, estimate:38, classification:'Pending', items:1, why:'Initial sweep' },
+    { q:5, domain:'obpeds',     diff:'Easy',   res:'Correct',   ciLeft:9,  ciWidth:70, estimate:48, classification:'Pending', items:1, why:'Initial sweep' },
+    { q:6, domain:'behavioral', diff:'Medium', res:'Correct',   ciLeft:11, ciWidth:68, estimate:50, classification:'Pending', items:1, why:'Initial sweep' },
+    { q:7, domain:'operations', diff:'Hard',   res:'Correct',   ciLeft:10, ciWidth:70, estimate:58, classification:'Pending', items:1, why:'Initial sweep' },
+    { q:8, domain:'airway',     diff:'Hard',   res:'Correct',   ciLeft:55, ciWidth:28, estimate:69, classification:'Strong',  items:2, why:'Highest uncertainty' },
+    { q:9, domain:'cardiology', diff:'Medium', res:'Correct',   ciLeft:52, ciWidth:30, estimate:67, classification:'Strong',  items:2, why:'Highest uncertainty' },
+    { q:10, domain:'trauma',    diff:'Medium', res:'Correct',   ciLeft:18, ciWidth:52, estimate:46, classification:'Flagged', items:2, why:'Below threshold' },
+    { q:11, domain:'medical',   diff:'Easy',   res:'Incorrect', ciLeft:14, ciWidth:36, estimate:22, classification:'Flagged', items:2, why:'Below threshold' },
+    { q:12, domain:'obpeds',    diff:'Medium', res:'Correct',   ciLeft:54, ciWidth:26, estimate:67, classification:'Strong',  items:2, why:'Near threshold' },
+    { q:13, domain:'operations',diff:'Medium', res:'Correct',   ciLeft:56, ciWidth:24, estimate:68, classification:'Strong',  items:2, why:'Near threshold' },
+    { q:14, domain:'behavioral',diff:'Hard',   res:'Correct',   ciLeft:11, ciWidth:80, estimate:75, classification:'Flagged', items:2, why:'Widest band' },
+    { q:15, domain:'trauma',    diff:'Hard',   res:'Incorrect', ciLeft:22, ciWidth:40, estimate:40, classification:'Flagged', items:3, why:'Flagged domain' },
+    { q:16, domain:'medical',   diff:'Easy',   res:'Incorrect', ciLeft:8,  ciWidth:22, estimate:16, classification:'Gap',    items:3, why:'Confirming gap' },
+    { q:17, domain:'trauma',    diff:'Easy',   res:'Correct',   ciLeft:26, ciWidth:28, estimate:42, classification:'Developing', items:4, why:'Resolving flag' },
+    { q:18, domain:'behavioral',diff:'Medium', res:'Incorrect', ciLeft:24, ciWidth:35, estimate:58, classification:'Flagged', items:3, why:'Resolving flag' },
+    { q:19, domain:'behavioral',diff:'Easy',   res:'Correct',   ciLeft:30, ciWidth:26, estimate:60, classification:'Developing', items:4, why:'Resolving flag' },
+    { q:20, domain:'trauma',    diff:'Medium', res:'Incorrect', ciLeft:28, ciWidth:24, estimate:40, classification:'Developing', items:5, why:'Final classification' }
+  ];
+
+  var TRK_DESC = [
+    { from:0, to:6, cls:'phase-sweep-desc', text:'<strong>Breadth sweep.</strong> One item per domain to establish an initial ability estimate. The dot shifts up or down based on the response; the band shows the range of plausible ability.' },
+    { from:7, to:9, cls:'phase-drill-desc', text:'<strong>Locking in.</strong> Consistently correct answers on medium and hard items shrink the confidence band quickly, classifying Airway and Cardiology as <span style="color:var(--green)">Strong</span>.' },
+    { from:10, to:10, cls:'phase-drill-desc', text:'<strong>Watch Medical (Q11).</strong> The next item demonstrates a "big jump." If a learner misses an Easy question, the algorithm dramatically lowers the estimate &mdash; easy misses carry enormous information.' },
+    { from:11, to:12, cls:'phase-drill-desc', text:'<strong>Big Jump Down.</strong> Medical\'s estimate plummeted after an Easy miss. In IRT, the probability of getting an easy item wrong when ability is high is extremely low &mdash; so a miss here is very informative.' },
+    { from:13, to:13, cls:'phase-drill-desc', text:'<strong>Watch Behavioral (Q14).</strong> The next item demonstrates "band widening." When a response contradicts the model\'s current estimate, uncertainty <em>increases</em> rather than decreasing.' },
+    { from:14, to:16, cls:'phase-drill-desc', text:'<strong>Band Widening.</strong> Behavioral\'s band grew <em>wider</em> despite a correct answer. A hard question answered correctly when estimated ability was low creates contradictory evidence &mdash; the algorithm needs more data before it can classify.' },
+    { from:17, to:19, cls:'phase-complete-desc', text:'<strong>Assessment complete.</strong> 20 items adapted to the learner\'s performance. Each domain was classified independently based on where the confidence band settled relative to the mastery threshold.' }
+  ];
+
+  var trkStep = -1, trkAutoTimer = null, trkAutoRunning = false, trkDomainState = {};
+  TRK_DOMAINS.forEach(function(d) { trkDomainState[d.key] = { items:0, classification:'Pending', ciLeft:5, ciWidth:80, estimate:45 }; });
+
+  var trkRowsEl = document.getElementById('domainRows');
+  var trkDescEl = document.getElementById('trackerDesc');
+  var trkPhasePill = document.getElementById('phasePill');
+  var trkStepLabel = document.getElementById('stepLabel');
+  var trkBtnStep = document.getElementById('btnStep');
+  var trkBtnAuto = document.getElementById('btnAuto');
+  var trkBtnReset = document.getElementById('btnReset');
+  var trkItemPanel = document.getElementById('currentItemPanel');
+  var trkCurDomain = document.getElementById('curDomain');
+  var trkCurDiff = document.getElementById('curDiff');
+  var trkCurResult = document.getElementById('curResult');
+  var trkCurWhy = document.getElementById('curWhy');
+  var trkSummary = document.getElementById('summaryPanel');
+
+  function trkHexToRgba(hex, a) { var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return 'rgba('+r+','+g+','+b+','+a+')'; }
+
+  function trkBandBg(color, cls) {
+    if (cls==='Strong') return 'linear-gradient(90deg, rgba(63,185,80,0.08), rgba(63,185,80,0.3), rgba(63,185,80,0.08))';
+    if (cls==='Gap') return 'linear-gradient(90deg, rgba(229,83,83,0.08), rgba(229,83,83,0.3), rgba(229,83,83,0.08))';
+    if (cls==='Developing') return 'linear-gradient(90deg, rgba(201,162,39,0.08), rgba(201,162,39,0.3), rgba(201,162,39,0.08))';
+    if (cls==='Flagged') return 'linear-gradient(90deg, rgba(201,162,39,0.06), rgba(201,162,39,0.22), rgba(201,162,39,0.06))';
+    return 'linear-gradient(90deg, '+trkHexToRgba(color,0.06)+', '+trkHexToRgba(color,0.18)+', '+trkHexToRgba(color,0.06)+')';
+  }
+  function trkBandCls(c) { return c==='Strong'?'classified-strong':c==='Developing'?'classified-developing':c==='Gap'?'classified-gap':c==='Flagged'?'flagged':'pending'; }
+
+  if (trkRowsEl) {
+    TRK_DOMAINS.forEach(function(d) {
+      var row = document.createElement('div'); row.className = 'domain-row'; row.id = 'row-'+d.key;
+      var e = trkHexToRgba(d.color,0.06), m = trkHexToRgba(d.color,0.18);
+      row.innerHTML = '<div class="domain-name-group"><span class="domain-dot" style="color:'+d.color+';background:'+d.color+';"></span><span class="domain-name">'+d.name+'</span></div><div class="ci-track-wrap"><div class="ci-track-bg"></div><div class="ci-band pending" id="band-'+d.key+'" style="left:5%;width:80%;background:linear-gradient(90deg,'+e+','+m+','+e+');"></div><div class="ci-marker" id="marker-'+d.key+'" style="left:45%;opacity:0;"></div></div><span class="class-pill class-pending" id="pill-'+d.key+'">Pending</span><span class="item-count" id="count-'+d.key+'">0 items</span>';
+      trkRowsEl.appendChild(row);
+    });
+
+    function trkRender() {
+      var allFinal = true;
+      TRK_DOMAINS.forEach(function(d) {
+        var s = trkDomainState[d.key];
+        var band = document.getElementById('band-'+d.key), pill = document.getElementById('pill-'+d.key), marker = document.getElementById('marker-'+d.key), count = document.getElementById('count-'+d.key), row = document.getElementById('row-'+d.key);
+        if (!band) return;
+        band.style.left = s.ciLeft+'%'; band.style.width = s.ciWidth+'%';
+        band.style.background = trkBandBg(d.color, s.classification);
+        band.className = 'ci-band '+trkBandCls(s.classification);
+        pill.textContent = s.classification; pill.className = 'class-pill class-'+s.classification.toLowerCase();
+        marker.style.left = s.estimate+'%'; marker.style.opacity = s.items>0?'1':'0';
+        count.textContent = s.items+(s.items===1?' item':' items');
+        var fin = ['Strong','Developing','Gap'].indexOf(s.classification)>-1;
+        if (!fin) allFinal = false;
+        row.classList.toggle('settled', fin);
+      });
+      if (trkStep<0) { trkPhasePill.textContent='Ready'; trkPhasePill.className='tracker-phase-pill phase-sweep'; }
+      else if (allFinal) { trkPhasePill.textContent='Complete'; trkPhasePill.className='tracker-phase-pill phase-complete'; }
+      else if (TRK_STEPS[trkStep].q<=7) { trkPhasePill.textContent='Breadth Sweep'; trkPhasePill.className='tracker-phase-pill phase-sweep'; }
+      else { trkPhasePill.textContent='Drill-Down'; trkPhasePill.className='tracker-phase-pill phase-drill'; }
+    }
+
+    function trkStepTo(n) {
+      if (n<0||n>=TRK_STEPS.length) return;
+      var s = TRK_STEPS[n], st = trkDomainState[s.domain];
+      st.items=s.items; st.classification=s.classification; st.ciLeft=s.ciLeft; st.ciWidth=s.ciWidth; st.estimate=s.estimate;
+      for (var i=TRK_DESC.length-1;i>=0;i--) { if (n>=TRK_DESC[i].from) { trkDescEl.innerHTML=TRK_DESC[i].text; trkDescEl.className='tracker-descriptor '+TRK_DESC[i].cls; break; } }
+      trkStep=n; trkStepLabel.textContent='Q'+s.q+' / 20';
+      trkItemPanel.classList.add('visible');
+      var dObj = TRK_DOMAINS.find(function(d){return d.key===s.domain;});
+      trkCurDomain.textContent=dObj.name; trkCurDomain.style.color=dObj.color;
+      trkCurDiff.textContent=s.diff; trkCurResult.textContent=s.res; trkCurWhy.textContent=s.why||'';
+      var isC = s.res==='Correct';
+      trkCurResult.className='item-result-badge '+(isC?'badge-correct':'badge-incorrect');
+      trkItemPanel.classList.remove('panel-flash-correct','panel-flash-incorrect');
+      void trkItemPanel.offsetWidth;
+      trkItemPanel.classList.add(isC?'panel-flash-correct':'panel-flash-incorrect');
+      trkRender();
+      if (n>=TRK_STEPS.length-1) { trkBtnStep.disabled=true; trkBtnStep.textContent='Done'; trkStopAuto(); setTimeout(trkShowSummary,700); }
+    }
+
+    function trkShowSummary() {
+      var counts={Strong:0,Developing:0,Gap:0,Flagged:0,Pending:0}, ce=[];
+      TRK_DOMAINS.forEach(function(d) { var c=trkDomainState[d.key].classification; counts[c]=(counts[c]||0)+1; if(c==='Gap')ce.push({name:d.name,level:'gap',p:0}); else if(c==='Developing')ce.push({name:d.name,level:'developing',p:1}); });
+      ce.sort(function(a,b){return a.p-b.p;});
+      document.getElementById('statStrong').textContent=counts.Strong||0;
+      document.getElementById('statDeveloping').textContent=counts.Developing||0;
+      document.getElementById('statGap').textContent=counts.Gap||0;
+      document.getElementById('statFlagged').textContent=counts.Flagged||0;
+      var rd=document.getElementById('recDomains');
+      if(ce.length===0){rd.innerHTML='<span class="rec-empty">All domains Strong.</span>';}
+      else{rd.innerHTML=ce.map(function(d){return '<span class="rec-domain-chip '+d.level+'"><span class="chip-priority">'+(d.level==='gap'?'Priority':'Reinforce')+'</span>'+d.name+'</span>';}).join('');}
+      trkSummary.classList.add('visible');
+    }
+
+    function trkStepFwd() { if(trkStep<TRK_STEPS.length-1)trkStepTo(trkStep+1); }
+    function trkStartAuto() { if(trkAutoRunning)return; trkAutoRunning=true; trkBtnAuto.textContent='Pause'; trkAutoTimer=setInterval(function(){if(trkStep>=TRK_STEPS.length-1)trkStopAuto();else trkStepFwd();},2000); }
+    function trkStopAuto() { trkAutoRunning=false; if(trkAutoTimer){clearInterval(trkAutoTimer);trkAutoTimer=null;} trkBtnAuto.textContent='Auto Run'; }
+    function trkReset() {
+      trkStopAuto(); trkStep=-1;
+      TRK_DOMAINS.forEach(function(d){trkDomainState[d.key]={items:0,classification:'Pending',ciLeft:5,ciWidth:80,estimate:45};});
+      trkStepLabel.textContent='Q0 / 20';
+      trkDescEl.innerHTML='Press <strong>Step</strong> or <strong>Auto Run</strong> to begin the assessment simulation.';
+      trkDescEl.className='tracker-descriptor phase-sweep-desc';
+      trkBtnStep.disabled=false; trkBtnStep.textContent='Step';
+      trkItemPanel.classList.remove('visible'); trkSummary.classList.remove('visible');
+      trkRender();
+    }
+
+    trkBtnStep.addEventListener('click', function(){trkStopAuto();trkStepFwd();});
+    trkBtnAuto.addEventListener('click', function(){trkAutoRunning?trkStopAuto():trkStartAuto();});
+    trkBtnReset.addEventListener('click', trkReset);
+    trkRender();
+  }
+})();
+</script>
+
+</body>
+</html>
