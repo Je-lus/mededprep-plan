@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMT Exit Exam — Question Review</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #232733;
+    --border: #2e3345;
+    --text: #e2e4ea;
+    --text-dim: #9da1b5;
+    --accent-sam: #f59e0b;
+    --accent-sam-bg: rgba(245,158,11,0.12);
+    --accent-v1: #3b82f6;
+    --accent-v1-bg: rgba(59,130,246,0.12);
+    --correct: #22c55e;
+    --correct-bg: rgba(34,197,94,0.12);
+    --wrong: #ef4444;
+    --wrong-bg: rgba(239,68,68,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px 20px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+  }
+  .header .context-line {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+  .header .sam-hl { color: var(--accent-sam); font-weight: 600; }
+  .header .v1-hl { color: var(--accent-v1); font-weight: 600; }
+
+  /* Stats bar */
+  .stats-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    flex: 1;
+    min-width: 65px;
+    text-align: center;
+  }
+  .stat-value {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-top: 4px;
+  }
+
+  .progress-bar-wrap {
+    background: var(--surface2);
+    border-radius: 4px;
+    height: 4px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-v1), var(--accent-sam));
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    width: 0%;
+  }
+
+  /* Question card */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .card-progress {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .card-meta {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    margin-top: 16px;
+  }
+  .card-meta.revealed { display: flex; }
+  .card-meta .code {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: 'SF Mono', 'Consolas', monospace;
+  }
+  .card-meta .topic {
+    font-size: 11px;
+    color: var(--text-dim);
+    background: var(--surface2);
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+
+  .question-text {
+    font-size: 17px;
+    line-height: 1.55;
+    margin-bottom: 22px;
+    font-weight: 400;
+  }
+
+  .answers-list {
+    list-style: none;
+    margin-bottom: 26px;
+  }
+  .answers-list li {
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    border-radius: 9px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    line-height: 1.45;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .answers-list li.correct-answer {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+  }
+  .answers-list li .letter {
+    color: var(--text-dim);
+    font-weight: 600;
+    margin-right: 10px;
+    font-size: 13px;
+  }
+  .answers-list li.correct-answer .letter {
+    color: var(--correct);
+  }
+
+  .vote-area { text-align: center; }
+  .vote-prompt {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .vote-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  .vote-btn {
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid;
+    transition: all 0.15s;
+    min-width: 160px;
+    position: relative;
+  }
+  .vote-btn .kbd {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    font-size: 10px;
+    opacity: 0.5;
+    font-weight: 400;
+    font-family: 'SF Mono', 'Consolas', monospace;
+  }
+  .vote-btn:disabled { opacity: 0.35; cursor: default; }
+  .vote-btn.sam {
+    background: var(--accent-sam-bg);
+    border-color: var(--accent-sam);
+    color: var(--accent-sam);
+  }
+  .vote-btn.sam:hover:not(:disabled) { background: rgba(245,158,11,0.22); }
+  .vote-btn.v1 {
+    background: var(--accent-v1-bg);
+    border-color: var(--accent-v1);
+    color: var(--accent-v1);
+  }
+  .vote-btn.v1:hover:not(:disabled) { background: rgba(59,130,246,0.22); }
+
+  /* Result */
+  .result {
+    display: none;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .result.visible { display: block; }
+  .result.correct-guess {
+    background: var(--correct-bg);
+    border: 1px solid rgba(34,197,94,0.3);
+  }
+  .result.wrong-guess {
+    background: var(--wrong-bg);
+    border: 1px solid rgba(239,68,68,0.3);
+  }
+  .result-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .result-icon { font-size: 20px; }
+  .result-label { font-weight: 700; font-size: 15px; }
+  .result.correct-guess .result-label { color: var(--correct); }
+  .result.correct-guess .result-icon { color: var(--correct); }
+  .result.wrong-guess .result-label { color: var(--wrong); }
+  .result.wrong-guess .result-icon { color: var(--wrong); }
+  .result-detail {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  .result-source {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .result-source.samantha { background: var(--accent-sam-bg); color: var(--accent-sam); }
+  .result-source.working { background: var(--accent-v1-bg); color: var(--accent-v1); }
+
+  .explanation-toggle { margin-top: 12px; }
+  .explanation-toggle button {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 6px 14px;
+    border-radius: 8px;
+    transition: all 0.15s;
+  }
+  .explanation-toggle button:hover { border-color: var(--text-dim); color: var(--text); }
+  .explanation-text {
+    display: none;
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    padding: 12px;
+    background: var(--surface2);
+    border-radius: 8px;
+  }
+
+  .next-btn {
+    display: none;
+    margin: 20px auto 0;
+    padding: 12px 36px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .next-btn:hover { background: var(--border); }
+  .next-btn .kbd {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-left: 8px;
+    font-family: 'SF Mono', 'Consolas', monospace;
+  }
+
+  /* Summary */
+  .summary { display: none; }
+  .summary h2 { font-size: 24px; margin-bottom: 8px; text-align: center; }
+  .summary-subtitle { text-align: center; color: var(--text-dim); font-size: 14px; margin-bottom: 20px; }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .summary-stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+  }
+  .summary-stat .val { font-size: 28px; font-weight: 700; }
+  .summary-stat .lbl { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+
+  .source-breakdown {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .breakdown-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .breakdown-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+  .breakdown-card h3.sam-title { color: var(--accent-sam); }
+  .breakdown-card h3.v1-title { color: var(--accent-v1); }
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    padding: 3px 0;
+    color: var(--text-dim);
+  }
+  .breakdown-row .bval { color: var(--text); font-weight: 500; }
+
+  .review-list { margin-top: 16px; }
+  .review-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+  }
+  .review-icon { font-size: 16px; flex-shrink: 0; width: 24px; text-align: center; }
+  .review-q {
+    flex: 1; line-height: 1.4;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .review-badge {
+    font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600; flex-shrink: 0;
+  }
+  .restart-btn {
+    display: block; margin: 24px auto; padding: 14px 40px;
+    background: #8b5cf6; border: none; color: #fff;
+    border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer;
+  }
+  .restart-btn:hover { opacity: 0.9; }
+
+  @media (max-width: 600px) {
+    .vote-buttons { flex-direction: column; }
+    .vote-btn { min-width: unset; }
+    .stats-bar { gap: 6px; }
+    .stat { padding: 8px 6px; min-width: 50px; }
+    .stat-value { font-size: 16px; }
+    .stat-label { font-size: 9px; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .source-breakdown { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>EMT Exit Exam — Question Review</h1>
+    <p class="context-line">Identify each question's source: <span class="sam-hl">Samantha's</span> or <span class="v1-hl">V1</span>. Answers are shuffled. Correct answer shown after each guess.</p>
+  </div>
+
+  <div class="stats-bar" role="status" aria-label="Review progress">
+    <div class="stat">
+      <div class="stat-value" id="statReviewed">0</div>
+      <div class="stat-label">Reviewed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" style="color:var(--accent-sam)" id="statSamDone">0</div>
+      <div class="stat-label">Sam's Done</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" style="color:var(--accent-sam);opacity:0.5" id="statSamLeft">0</div>
+      <div class="stat-label">Sam's Left</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" style="color:var(--accent-v1)" id="statV1Done">0</div>
+      <div class="stat-label">V1 Done</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" style="color:var(--accent-v1);opacity:0.5" id="statV1Left">0</div>
+      <div class="stat-label">V1 Left</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="statAccuracy">--</div>
+      <div class="stat-label">Accuracy</div>
+    </div>
+  </div>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressFill"></div>
+  </div>
+
+  <div class="card" id="questionCard">
+    <div class="card-top">
+      <span class="card-progress" id="cardProgress"></span>
+    </div>
+
+    <div class="question-text" id="qText"></div>
+    <ul class="answers-list" id="qAnswers" role="list"></ul>
+
+    <div class="vote-area" id="voteArea">
+      <div class="vote-prompt">Which version is this question from?</div>
+      <div class="vote-buttons">
+        <button class="vote-btn sam" id="btnSam" onclick="vote('samantha')">Samantha's<span class="kbd">S</span></button>
+        <button class="vote-btn v1" id="btnV1" onclick="vote('working')">V1<span class="kbd">V</span></button>
+      </div>
+    </div>
+
+    <div class="result" id="result" aria-live="polite">
+      <div class="result-header">
+        <span class="result-icon" id="resultIcon"></span>
+        <span class="result-label" id="resultLabel"></span>
+      </div>
+      <div class="result-detail" id="resultDetail"></div>
+      <div class="card-meta revealed" id="cardMeta">
+        <span class="code" id="qCode"></span>
+        <span class="topic" id="qTopic"></span>
+      </div>
+      <div style="margin-top: 8px;">
+        <span class="result-source" id="resultSource"></span>
+      </div>
+      <div class="explanation-toggle">
+        <button onclick="toggleExplanation()" id="explToggleBtn" aria-expanded="false">Show answer explanation</button>
+      </div>
+      <div class="explanation-text" id="explanationText"></div>
+    </div>
+
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question <span class="kbd">Enter</span></button>
+  </div>
+
+  <div class="summary" id="summary">
+    <h2>Review Complete</h2>
+    <div class="summary-subtitle" id="sumSubtitle"></div>
+    <div class="summary-grid">
+      <div class="summary-stat">
+        <div class="val" id="sumTotal"></div>
+        <div class="lbl">Reviewed</div>
+      </div>
+      <div class="summary-stat">
+        <div class="val" id="sumCorrect" style="color:var(--correct)"></div>
+        <div class="lbl">Correct</div>
+      </div>
+      <div class="summary-stat">
+        <div class="val" id="sumAccuracy"></div>
+        <div class="lbl">Accuracy</div>
+      </div>
+    </div>
+    <div class="source-breakdown">
+      <div class="breakdown-card">
+        <h3 class="sam-title">Samantha's Questions</h3>
+        <div class="breakdown-row"><span>Shown</span><span class="bval" id="bdSamTotal">0</span></div>
+        <div class="breakdown-row"><span>ID'd correctly</span><span class="bval" id="bdSamRight">0</span></div>
+        <div class="breakdown-row"><span>Accuracy</span><span class="bval" id="bdSamAcc">--</span></div>
+      </div>
+      <div class="breakdown-card">
+        <h3 class="v1-title">V1 Questions</h3>
+        <div class="breakdown-row"><span>Shown</span><span class="bval" id="bdV1Total">0</span></div>
+        <div class="breakdown-row"><span>ID'd correctly</span><span class="bval" id="bdV1Right">0</span></div>
+        <div class="breakdown-row"><span>Accuracy</span><span class="bval" id="bdV1Acc">--</span></div>
+      </div>
+    </div>
+    <div class="review-list" id="reviewList"></div>
+    <button class="restart-btn" onclick="location.reload()">Reshuffle &amp; Start Over</button>
+  </div>
+</div>
+
+<script src="questions_data.js"></script>
+<script>
+const LETTERS = ['A','B','C','D','E','F'];
+
+let pool = [];
+let current = 0;
+let history = [];
+let shuffledAnswers = [];
+let correctDisplayIdx = 0;
+let totalSam = 0;
+let totalV1 = 0;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Build a sequence where no source appears more than 2x in a row
+function constrainedShuffle(questions) {
+  const sam = shuffle(questions.filter(q => q.s === 'samantha'));
+  const work = shuffle(questions.filter(q => q.s === 'working'));
+  const result = [];
+  let si = 0, wi = 0;
+  let streak = 0, lastSource = null;
+
+  while (si < sam.length || wi < work.length) {
+    const samOk = si < sam.length && !(lastSource === 'samantha' && streak >= 2);
+    const workOk = wi < work.length && !(lastSource === 'working' && streak >= 2);
+
+    let pick;
+    if (samOk && workOk) {
+      // Prefer whichever has more remaining to keep balance
+      pick = (sam.length - si >= work.length - wi) ? 'samantha' : 'working';
+      // Add randomness so it's not purely alternating
+      if (Math.random() < 0.4) pick = pick === 'samantha' ? 'working' : 'samantha';
+    } else if (samOk) {
+      pick = 'samantha';
+    } else if (workOk) {
+      pick = 'working';
+    } else {
+      // Forced break — shouldn't happen with 2-limit and mixed pool
+      pick = si < sam.length ? 'samantha' : 'working';
+    }
+
+    if (pick === 'samantha') {
+      result.push(sam[si++]);
+    } else {
+      result.push(work[wi++]);
+    }
+
+    if (pick === lastSource) {
+      streak++;
+    } else {
+      streak = 1;
+      lastSource = pick;
+    }
+  }
+  return result;
+}
+
+function init() {
+  pool = constrainedShuffle(ALL_QUESTIONS);
+  current = 0;
+  history = [];
+  totalSam = pool.filter(q => q.s === 'samantha').length;
+  totalV1 = pool.filter(q => q.s === 'working').length;
+
+  document.getElementById('summary').style.display = 'none';
+  document.getElementById('questionCard').style.display = 'block';
+  updateStats();
+  showQuestion();
+}
+
+function updateStats() {
+  const samDone = history.filter(h => h.q.s === 'samantha').length;
+  const v1Done = history.filter(h => h.q.s === 'working').length;
+  const rights = history.filter(h => h.isCorrect).length;
+
+  document.getElementById('statReviewed').textContent = history.length;
+  document.getElementById('statSamDone').textContent = samDone;
+  document.getElementById('statSamLeft').textContent = totalSam - samDone;
+  document.getElementById('statV1Done').textContent = v1Done;
+  document.getElementById('statV1Left').textContent = totalV1 - v1Done;
+  document.getElementById('statAccuracy').textContent =
+    history.length > 0 ? Math.round(rights / history.length * 100) + '%' : '--';
+}
+
+function showQuestion() {
+  if (current >= pool.length) { showSummary(); return; }
+
+  const q = pool[current];
+  document.getElementById('cardProgress').textContent =
+    `Question ${current + 1} of ${pool.length}`;
+  document.getElementById('qText').textContent = q.q;
+
+  const indices = q.a.map((_, i) => i);
+  shuffledAnswers = shuffle(indices);
+  correctDisplayIdx = shuffledAnswers.indexOf(0);
+
+  const list = document.getElementById('qAnswers');
+  list.innerHTML = '';
+  shuffledAnswers.forEach((origIdx, displayIdx) => {
+    const li = document.createElement('li');
+    const letterSpan = document.createElement('span');
+    letterSpan.className = 'letter';
+    letterSpan.textContent = LETTERS[displayIdx] + '.';
+    li.appendChild(letterSpan);
+    li.appendChild(document.createTextNode(q.a[origIdx]));
+    list.appendChild(li);
+  });
+
+  document.getElementById('voteArea').style.display = 'block';
+  document.getElementById('btnSam').disabled = false;
+  document.getElementById('btnV1').disabled = false;
+  document.getElementById('result').className = 'result';
+  document.getElementById('nextBtn').style.display = 'none';
+  document.getElementById('explanationText').style.display = 'none';
+  document.getElementById('explToggleBtn').textContent = 'Show answer explanation';
+  document.getElementById('explToggleBtn').setAttribute('aria-expanded', 'false');
+
+  document.getElementById('progressFill').style.width = (current / pool.length * 100) + '%';
+}
+
+function vote(guess) {
+  const q = pool[current];
+  const isCorrect = guess === q.s;
+
+  document.getElementById('btnSam').disabled = true;
+  document.getElementById('btnV1').disabled = true;
+
+  history.push({ q, guess, isCorrect });
+  updateStats();
+
+  document.querySelectorAll('#qAnswers li')[correctDisplayIdx].classList.add('correct-answer');
+
+  const result = document.getElementById('result');
+  result.className = 'result visible ' + (isCorrect ? 'correct-guess' : 'wrong-guess');
+
+  document.getElementById('resultIcon').textContent = isCorrect ? '\u2713' : '\u2717';
+  document.getElementById('resultLabel').textContent = isCorrect ? 'Correct!' : 'Not quite!';
+
+  const sourceName = q.s === 'samantha' ? "Samantha's" : 'V1 (Working Exit Exam)';
+  const traits = q.s === 'samantha'
+    ? 'Samantha\'s version tends toward recall-style phrasing, shorter scenarios, and "which of the following" patterns.'
+    : 'V1 tends toward scenario-based clinical reasoning with specific patient details and longer stems.';
+
+  document.getElementById('resultDetail').textContent = traits;
+  document.getElementById('qCode').textContent = q.c;
+  document.getElementById('qTopic').textContent = q.t || 'General';
+
+  const badge = document.getElementById('resultSource');
+  badge.textContent = sourceName;
+  badge.className = 'result-source ' + (q.s === 'samantha' ? 'samantha' : 'working');
+
+  document.getElementById('explanationText').textContent = q.e;
+  document.getElementById('progressFill').style.width = ((current + 1) / pool.length * 100) + '%';
+
+  document.getElementById('voteArea').style.display = 'none';
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.style.display = 'block';
+  nextBtn.focus();
+}
+
+function toggleExplanation() {
+  const el = document.getElementById('explanationText');
+  const btn = document.getElementById('explToggleBtn');
+  const showing = el.style.display === 'none' || !el.style.display;
+  el.style.display = showing ? 'block' : 'none';
+  btn.textContent = showing ? 'Hide answer explanation' : 'Show answer explanation';
+  btn.setAttribute('aria-expanded', showing ? 'true' : 'false');
+}
+
+function nextQuestion() {
+  current++;
+  showQuestion();
+}
+
+function showSummary() {
+  document.getElementById('questionCard').style.display = 'none';
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('summary').style.display = 'block';
+
+  const total = history.length;
+  const rights = history.filter(h => h.isCorrect).length;
+  const samItems = history.filter(h => h.q.s === 'samantha');
+  const v1Items = history.filter(h => h.q.s === 'working');
+  const samRight = samItems.filter(h => h.isCorrect).length;
+  const v1Right = v1Items.filter(h => h.isCorrect).length;
+
+  document.getElementById('sumSubtitle').textContent =
+    `${total} questions reviewed (${samItems.length} Samantha's, ${v1Items.length} V1)`;
+  document.getElementById('sumTotal').textContent = total;
+  document.getElementById('sumCorrect').textContent = rights;
+  document.getElementById('sumAccuracy').textContent =
+    total > 0 ? Math.round(rights / total * 100) + '%' : '--';
+
+  document.getElementById('bdSamTotal').textContent = samItems.length;
+  document.getElementById('bdSamRight').textContent = samRight;
+  document.getElementById('bdSamAcc').textContent =
+    samItems.length > 0 ? Math.round(samRight / samItems.length * 100) + '%' : '--';
+  document.getElementById('bdV1Total').textContent = v1Items.length;
+  document.getElementById('bdV1Right').textContent = v1Right;
+  document.getElementById('bdV1Acc').textContent =
+    v1Items.length > 0 ? Math.round(v1Right / v1Items.length * 100) + '%' : '--';
+
+  const list = document.getElementById('reviewList');
+  list.innerHTML = '';
+  history.forEach(h => {
+    const div = document.createElement('div');
+    div.className = 'review-item';
+
+    const icon = document.createElement('span');
+    icon.className = 'review-icon';
+    icon.style.color = h.isCorrect ? 'var(--correct)' : 'var(--wrong)';
+    icon.textContent = h.isCorrect ? '\u2713' : '\u2717';
+
+    const qSpan = document.createElement('span');
+    qSpan.className = 'review-q';
+    qSpan.textContent = h.q.q;
+
+    const badge = document.createElement('span');
+    badge.className = 'review-badge';
+    const isSam = h.q.s === 'samantha';
+    badge.style.background = isSam ? 'var(--accent-sam-bg)' : 'var(--accent-v1-bg)';
+    badge.style.color = isSam ? 'var(--accent-sam)' : 'var(--accent-v1)';
+    badge.textContent = isSam ? "Sam's" : 'V1';
+
+    div.appendChild(icon);
+    div.appendChild(qSpan);
+    div.appendChild(badge);
+    list.appendChild(div);
+  });
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', function(e) {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+  const key = e.key.toLowerCase();
+
+  if (document.getElementById('voteArea').style.display !== 'none') {
+    if (key === 's' && !document.getElementById('btnSam').disabled) { e.preventDefault(); vote('samantha'); }
+    else if (key === 'v' && !document.getElementById('btnV1').disabled) { e.preventDefault(); vote('working'); }
+  }
+  if ((key === 'enter' || key === ' ') && document.getElementById('nextBtn').style.display === 'block') {
+    e.preventDefault(); nextQuestion();
+  }
+});
+
+// Auto-start
+init();
+</script>
+</body>
+</html>
