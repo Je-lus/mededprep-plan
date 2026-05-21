@@ -652,11 +652,7 @@ function vote(guess) {
   document.getElementById('resultLabel').textContent = isCorrect ? 'Correct!' : 'Not quite!';
 
   const sourceName = q.s === 'samantha' ? "Samantha's" : 'V1 (Working Exit Exam)';
-  const traits = q.s === 'samantha'
-    ? 'Samantha\'s version tends toward recall-style phrasing, shorter scenarios, and "which of the following" patterns.'
-    : 'V1 tends toward scenario-based clinical reasoning with specific patient details and longer stems.';
-
-  document.getElementById('resultDetail').textContent = traits;
+  document.getElementById('resultDetail').innerHTML = analyzeQuestion(q);
   document.getElementById('qCode').textContent = q.c;
   document.getElementById('qTopic').textContent = q.t || 'General';
 
@@ -757,6 +753,80 @@ document.addEventListener('keydown', function(e) {
     e.preventDefault(); nextQuestion();
   }
 });
+
+// Analyze a question and return HTML with specific signals
+function analyzeQuestion(q) {
+  const text = q.q;
+  const words = text.split(/\s+/).length;
+  const avgAnsLen = Math.round(q.a.reduce((s, a) => s + a.length, 0) / q.a.length);
+  const signals = [];
+
+  // Detect patterns
+  const hasWOTF = /which of the following/i.test(text);
+  const hasAge = /\d{1,3}[- ]year[- ]old/i.test(text);
+  const hasVitals = /\b(BP|HR|SpO2|Spo2|RR|pulse|blood pressure)\b/i.test(text) || /\d{2,3}\/\d{2,3}/.test(text);
+  const hasScenario = /you (are called|respond|arrive)|called to/i.test(text);
+  const startsWhich = /^\s*which/i.test(text);
+  const hasWhat = /^(what |how (deep|often|should))/i.test(text.trim());
+
+  // Question length signal
+  if (words <= 25) {
+    signals.push({ icon: '\u2190', text: `Short stem (${words} words) \u2014 more common in Samantha's`, leans: 'sam' });
+  } else if (words >= 45) {
+    signals.push({ icon: '\u2192', text: `Long stem (${words} words) \u2014 more common in V1`, leans: 'v1' });
+  }
+
+  // "Which of the following" pattern
+  if (hasWOTF) {
+    signals.push({ icon: '\u2190', text: `Uses "which of the following" \u2014 appears in 74% of Samantha's vs 3% of V1`, leans: 'sam' });
+  }
+
+  // Simple recall opener
+  if (startsWhich || hasWhat) {
+    signals.push({ icon: '\u2190', text: `Starts with a direct recall question \u2014 22% of Samantha's vs 2% of V1`, leans: 'sam' });
+  }
+
+  // Patient age
+  if (hasAge) {
+    signals.push({ icon: '\u2192', text: `Includes specific patient age \u2014 scenario-based, more common in V1`, leans: 'v1' });
+  }
+
+  // Vitals present
+  if (hasVitals) {
+    signals.push({ icon: '\u2192', text: `Contains vital signs \u2014 clinical detail typical of V1 scenarios`, leans: 'v1' });
+  }
+
+  // "You are called to" / "You respond" scenario framing
+  if (hasScenario) {
+    signals.push({ icon: '\u2192', text: `"You are called/respond" framing \u2014 80% of V1 is scenario-based vs 35% of Samantha's`, leans: 'v1' });
+  }
+
+  // Answer option length
+  if (avgAnsLen <= 30) {
+    signals.push({ icon: '\u2190', text: `Short answer options (avg ${avgAnsLen} chars) \u2014 Samantha's avg is 35 vs V1's 48`, leans: 'sam' });
+  } else if (avgAnsLen >= 55) {
+    signals.push({ icon: '\u2192', text: `Longer answer options (avg ${avgAnsLen} chars) \u2014 V1 averages 48 chars per option`, leans: 'v1' });
+  }
+
+  // No strong signals
+  if (signals.length === 0) {
+    signals.push({ icon: '\u2014', text: `No strong version signals \u2014 this one could go either way`, leans: 'neutral' });
+  }
+
+  // Take up to 3 most relevant
+  const show = signals.slice(0, 3);
+
+  const samColor = 'var(--accent-sam)';
+  const v1Color = 'var(--accent-v1)';
+  const neutralColor = 'var(--text-dim)';
+
+  return '<div style="font-size:13px;line-height:1.7">' +
+    show.map(s => {
+      const color = s.leans === 'sam' ? samColor : s.leans === 'v1' ? v1Color : neutralColor;
+      return `<div style="color:${color}">${s.icon} ${s.text}</div>`;
+    }).join('') +
+    '</div>';
+}
 
 // Auto-start
 init();
