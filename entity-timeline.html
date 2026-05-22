@@ -1,0 +1,2262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timeline &amp; Financial Model &mdash; MedEdPrep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0e14;
+    --bg-surface: #111820;
+    --bg-card: #151c25;
+    --bg-card-hover: #1a2331;
+    --bg-elevated: #1e2733;
+    --border: #243040;
+    --border-subtle: #1c2535;
+    --text-primary: #e8edf4;
+    --text-secondary: #8899aa;
+    --text-muted: #5a6a7a;
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+    --teal-glow: rgba(45,212,191,0.06);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.12);
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.12);
+    --orange: #fb923c;
+    --orange-dim: rgba(251,146,60,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.12);
+    --nav-width: 240px;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg-base);
+    background-image: radial-gradient(circle at 1px 1px, rgba(45,212,191,0.02) 1px, transparent 0);
+    background-size: 40px 40px;
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--purple), var(--blue), var(--teal));
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+    z-index: 200;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  nav {
+    width: var(--nav-width);
+    min-width: var(--nav-width);
+    background: rgba(17,24,32,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+
+  nav::-webkit-scrollbar { width: 0; }
+
+  .nav-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+
+  .nav-brand-name {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--teal), #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-brand-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links { flex: 1; padding: 4px 0; }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    position: relative;
+  }
+
+  nav a:hover {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.04);
+    border-left-color: var(--teal);
+  }
+
+  nav a.active {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.06);
+    border-left-color: var(--teal);
+  }
+
+  nav a .nav-icon {
+    font-size: 15px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .nav-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 8px 16px;
+  }
+
+  .nav-footer {
+    padding: 20px 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+
+  .nav-footer-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .nav-footer-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  .hero {
+    margin-left: var(--nav-width);
+    padding: 64px 56px 48px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #080c12 0%, #0d1520 30%, #0a1420 60%, #080e18 100%);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: 10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(45,212,191,0.07) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    left: 20%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(167,139,250,0.05) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .hero-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--teal);
+    vertical-align: middle;
+    margin-left: 12px;
+    opacity: 0.4;
+  }
+
+  .hero-headline {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f0f4f8 25%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-status-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+
+  .hero-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-top: 16px;
+    line-height: 1.7;
+    font-weight: 400;
+    max-width: 760px;
+  }
+
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    align-self: start;
+  }
+
+  .hero-metric {
+    background: var(--bg-surface);
+    padding: 20px 22px;
+    transition: background 0.2s;
+  }
+
+  .hero-metric:hover { background: var(--bg-card); }
+
+  .hero-metric-value {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .c-teal { color: var(--teal); }
+  .c-purple { color: var(--purple); }
+  .c-blue { color: var(--blue); }
+  .c-green { color: var(--green); }
+  .c-amber { color: var(--amber); }
+  .c-pink { color: var(--pink); }
+  .c-orange { color: var(--orange); }
+  .c-red { color: var(--red); }
+
+  .hero-metric-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  .hero-metric-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  .main-inner {
+    margin-left: var(--nav-width);
+    padding: 40px 56px 80px;
+    max-width: 1300px;
+  }
+
+  .controls {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+  }
+
+  .controls button {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .controls button:hover {
+    color: var(--teal);
+    border-color: var(--teal);
+    background: var(--teal-dim);
+  }
+
+  .section {
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section[id] { scroll-margin-top: 24px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+    padding: 16px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-header::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: transparent;
+    transition: background 0.2s;
+    border-radius: 3px 0 0 3px;
+  }
+
+  .section-header:hover { background: var(--bg-card-hover); }
+
+  .section-header.active::before {
+    background: linear-gradient(180deg, var(--teal), var(--purple));
+  }
+
+  .section-header.active {
+    border-color: rgba(45,212,191,0.15);
+    background: linear-gradient(135deg, rgba(45,212,191,0.03) 0%, var(--bg-card) 40%);
+  }
+
+  .section-icon {
+    font-size: 20px;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    flex: 1;
+  }
+
+  .section-subtitle {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-left: 10px;
+  }
+
+  .section-chevron {
+    color: var(--text-muted);
+    font-size: 11px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+
+  .section-chevron.open { transform: rotate(180deg); }
+
+  .section-body {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    opacity: 0;
+  }
+
+  .section-body.open {
+    max-height: 99999px;
+    opacity: 1;
+  }
+
+  .section-inner { padding: 24px 0 0; }
+
+  .badge,
+  .entity-status,
+  .phase-badge,
+  .track-chip,
+  .status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .badge .dot,
+  .entity-status .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .badge-green,
+  .es-operating,
+  .status-green {
+    background: var(--green-dim);
+    color: var(--green);
+  }
+
+  .badge-green .dot,
+  .es-operating .dot { background: var(--green); }
+
+  .badge-teal,
+  .status-teal {
+    background: var(--teal-dim);
+    color: var(--teal);
+  }
+
+  .badge-teal .dot { background: var(--teal); }
+
+  .badge-purple,
+  .status-purple {
+    background: var(--purple-dim);
+    color: var(--purple);
+  }
+
+  .badge-purple .dot { background: var(--purple); }
+
+  .badge-amber,
+  .status-amber {
+    background: var(--amber-dim);
+    color: var(--amber);
+  }
+
+  .badge-amber .dot { background: var(--amber); }
+
+  .badge-blue,
+  .status-blue {
+    background: var(--blue-dim);
+    color: var(--blue);
+  }
+
+  .badge-blue .dot { background: var(--blue); }
+
+  .badge-pink,
+  .status-pink {
+    background: var(--pink-dim);
+    color: var(--pink);
+  }
+
+  .badge-orange,
+  .status-orange {
+    background: var(--orange-dim);
+    color: var(--orange);
+  }
+
+  .badge-red,
+  .status-red {
+    background: var(--red-dim);
+    color: var(--red);
+  }
+
+  .card,
+  .table-wrap,
+  .callout,
+  .revenue-card,
+  .phase-card,
+  .chain-card,
+  .investment-card,
+  .legend-wrap,
+  .chart-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .card,
+  .callout,
+  .chain-card,
+  .investment-card,
+  .revenue-card,
+  .chart-card {
+    padding: 28px 32px;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .card-body,
+  .callout-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .card-body strong,
+  .callout-body strong { color: var(--text-primary); }
+
+  .section-kicker {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+  .phase-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .phase-card {
+    padding: 22px 22px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .phase-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+
+  .phase-card.teal::before { background: linear-gradient(90deg, var(--teal), rgba(45,212,191,0.2)); }
+  .phase-card.purple::before { background: linear-gradient(90deg, var(--purple), rgba(167,139,250,0.2)); }
+  .phase-card.blue::before { background: linear-gradient(90deg, var(--blue), var(--amber)); }
+  .phase-card.amber::before { background: linear-gradient(90deg, var(--amber), var(--orange)); }
+
+  .phase-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .phase-card-range {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .detail-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .detail-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.55;
+  }
+
+  .detail-list li::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+
+  .phase-card.teal .detail-list li::before,
+  .detail-list.teal li::before { background: var(--teal); }
+  .phase-card.purple .detail-list li::before,
+  .detail-list.purple li::before { background: var(--purple); }
+  .phase-card.blue .detail-list li::before,
+  .detail-list.blue li::before { background: var(--blue); }
+  .phase-card.amber .detail-list li::before,
+  .detail-list.amber li::before { background: var(--amber); }
+  .detail-list.green li::before { background: var(--green); }
+  .detail-list.orange li::before { background: var(--orange); }
+  .detail-list.red li::before { background: var(--red); }
+  .detail-list.pink li::before { background: var(--pink); }
+
+  .legend-wrap {
+    padding: 18px 20px;
+    margin-bottom: 18px;
+  }
+
+  .legend-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .track-chip {
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+  }
+
+  .track-cs { background: var(--teal-dim); color: var(--teal); }
+  .track-ip { background: var(--purple-dim); color: var(--purple); }
+  .track-pv { background: var(--blue-dim); color: var(--blue); }
+  .track-cc { background: var(--amber-dim); color: var(--amber); }
+  .track-cb { background: var(--green-dim); color: var(--green); }
+  .track-ce { background: rgba(52, 211, 235, 0.12); color: #67e8f9; }
+  .track-gs { background: var(--orange-dim); color: var(--orange); }
+  .track-sr { background: var(--red-dim); color: var(--red); }
+
+  .table-wrap {
+    overflow: hidden;
+  }
+
+  .table-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .table-scroll { overflow-x: auto; }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 820px;
+  }
+
+  .data-table th {
+    text-align: left;
+    color: var(--text-muted);
+    padding: 10px 12px;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.01);
+  }
+
+  .data-table td {
+    padding: 11px 12px;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border-subtle);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .data-table td:first-child {
+    color: var(--text-primary);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .data-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+  .mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
+  }
+
+  .callout {
+    margin-top: 18px;
+  }
+
+  .callout.teal {
+    background: linear-gradient(135deg, rgba(45,212,191,0.06) 0%, var(--bg-card) 60%);
+    border-color: rgba(45,212,191,0.2);
+  }
+
+  .callout.amber {
+    background: linear-gradient(135deg, rgba(251,191,36,0.06) 0%, var(--bg-card) 60%);
+    border-color: rgba(251,191,36,0.22);
+  }
+
+  .callout.blue {
+    background: linear-gradient(135deg, rgba(96,165,250,0.06) 0%, var(--bg-card) 60%);
+    border-color: rgba(96,165,250,0.22);
+  }
+
+  .callout.red {
+    background: linear-gradient(135deg, rgba(248,113,113,0.05) 0%, var(--bg-card) 60%);
+    border-color: rgba(248,113,113,0.22);
+  }
+
+  .callout-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .callout.teal .callout-title { color: var(--teal); }
+  .callout.amber .callout-title { color: var(--amber); }
+  .callout.blue .callout-title { color: var(--blue); }
+  .callout.red .callout-title { color: var(--red); }
+
+  .chain-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .chain-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chain-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+  }
+
+  .chain-card.teal::before { background: linear-gradient(90deg, var(--teal), var(--blue)); }
+  .chain-card.purple::before { background: linear-gradient(90deg, var(--purple), var(--blue)); }
+  .chain-card.orange::before { background: linear-gradient(90deg, var(--orange), var(--amber)); }
+
+  .chain-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .chain-subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 600;
+  }
+
+  .chain-flow {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+
+  .chain-step {
+    min-width: 150px;
+    flex: 1 1 150px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 14px 12px;
+  }
+
+  .chain-step-code {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+
+  .chain-step-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  .chain-step-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .chain-arrow {
+    align-self: center;
+    color: var(--text-muted);
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .parallel-note {
+    margin-top: 14px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .parallel-note strong { color: var(--text-primary); }
+
+  .blocker-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .blocker-item {
+    background: rgba(248,113,113,0.04);
+    border: 1px solid rgba(248,113,113,0.16);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  .blocker-item strong { color: var(--text-primary); }
+
+  .revenue-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .revenue-card { margin-bottom: 18px; }
+
+  .revenue-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .revenue-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .revenue-note {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-top: 8px;
+  }
+
+  .bar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 90px minmax(0, 1fr) 100px;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .bar-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+
+  .bar-track {
+    height: 14px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    min-width: 2px;
+  }
+
+  .fill-teal { background: linear-gradient(90deg, var(--teal), rgba(45,212,191,0.55)); }
+  .fill-purple { background: linear-gradient(90deg, var(--purple), rgba(167,139,250,0.55)); }
+  .fill-blue { background: linear-gradient(90deg, var(--blue), rgba(96,165,250,0.55)); }
+  .fill-amber { background: linear-gradient(90deg, var(--amber), rgba(251,191,36,0.55)); }
+  .fill-green { background: linear-gradient(90deg, var(--green), rgba(74,222,128,0.55)); }
+  .fill-pink { background: linear-gradient(90deg, var(--pink), rgba(244,114,182,0.55)); }
+  .fill-orange { background: linear-gradient(90deg, var(--orange), rgba(251,146,60,0.55)); }
+  .fill-muted {
+    background: linear-gradient(90deg, rgba(136,153,170,0.4), rgba(136,153,170,0.15));
+    border: 1px dashed rgba(136,153,170,0.3);
+  }
+
+  .bar-value {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: right;
+    font-weight: 600;
+  }
+
+  .entity-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+
+  .entity-grid.single {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .mini-table th {
+    text-align: left;
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mini-table td {
+    padding: 9px 10px;
+    border-top: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+  }
+
+  .mini-table td:first-child {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .metric-panel {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+  }
+
+  .metric-panel-value {
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .metric-panel-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  .consolidated-wrap {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .stacked-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    height: 360px;
+    padding: 28px 20px 34px;
+    background:
+      linear-gradient(to top, rgba(255,255,255,0.02) 1px, transparent 1px) 0 0 / 100% 25%,
+      var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow-x: auto;
+  }
+
+  .stack-group {
+    min-width: 92px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .stack {
+    width: 58px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0;
+    background: rgba(255,255,255,0.015);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px 10px 6px 6px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .stack-total {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    z-index: 2;
+  }
+
+  .stack-segment {
+    width: 100%;
+    min-height: 2px;
+  }
+
+  .seg-b { background: linear-gradient(180deg, var(--green), rgba(74,222,128,0.6)); }
+  .seg-c { background: linear-gradient(180deg, var(--amber), rgba(251,191,36,0.6)); }
+  .seg-e { background: linear-gradient(180deg, var(--pink), rgba(244,114,182,0.6)); }
+  .seg-f { background: linear-gradient(180deg, var(--blue), rgba(96,165,250,0.6)); }
+
+  .stack-year {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+
+  .stack-year-note {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  .chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  .chart-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--teal), var(--blue), var(--purple), var(--amber));
+    border-radius: 1px;
+  }
+
+  .timeline-phase {
+    position: relative;
+    margin-bottom: 32px;
+  }
+
+  .timeline-phase:last-child { margin-bottom: 0; }
+
+  .timeline-dot {
+    position: absolute;
+    left: -30px;
+    top: 3px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2.5px solid;
+    background: var(--bg-base);
+    z-index: 1;
+  }
+
+  .dot-teal { border-color: var(--teal); }
+  .dot-blue { border-color: var(--blue); }
+  .dot-purple { border-color: var(--purple); }
+  .dot-amber { border-color: var(--amber); }
+
+  .phase-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .phase-period {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-left: 10px;
+  }
+
+  .phase-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+
+  .phase-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .phase-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .investment-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .investment-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .investment-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+
+  .investment-card.phase1::before { background: linear-gradient(90deg, var(--teal), rgba(45,212,191,0.2)); }
+  .investment-card.phase2::before { background: linear-gradient(90deg, var(--purple), rgba(167,139,250,0.2)); }
+  .investment-card.phase3::before { background: linear-gradient(90deg, var(--blue), rgba(96,165,250,0.2)); }
+  .investment-card.phase4::before { background: linear-gradient(90deg, var(--amber), rgba(251,191,36,0.2)); }
+
+  .investment-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .investment-range {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    margin-top: 4px;
+    margin-bottom: 16px;
+  }
+
+  .funding-source {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .funding-source strong { color: var(--text-primary); }
+
+  .page-footer {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: right;
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-subtle);
+    font-weight: 500;
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-base); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a4a5a; }
+
+  @media (max-width: 1200px) {
+    .phase-grid,
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .entity-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 980px) {
+    nav { display: none; }
+    .hero { margin-left: 0; padding: 40px 24px 32px; }
+    .main-inner { margin-left: 0; padding: 24px 20px 60px; }
+    .hero-content { grid-template-columns: 1fr; gap: 32px; }
+    .hero-headline { font-size: 28px; }
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+    .grid-2,
+    .grid-3,
+    .investment-grid,
+    .blocker-list { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 720px) {
+    .phase-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-metrics,
+    .metric-grid { grid-template-columns: 1fr; }
+    .bar-row { grid-template-columns: 72px minmax(0, 1fr) 88px; }
+    .card,
+    .callout,
+    .chain-card,
+    .investment-card,
+    .revenue-card,
+    .chart-card { padding: 22px 20px; }
+  }
+
+  @media (max-width: 560px) {
+    .phase-grid { grid-template-columns: 1fr; }
+    .controls { justify-content: stretch; }
+    .controls button { flex: 1; }
+    .hero-headline { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-name">MedEdPrep</div>
+    <div class="nav-brand-sub">ECOSYSTEM COMMAND</div>
+  </div>
+  <div class="nav-links">
+    <a href="hub.html"><span class="nav-icon">🏛</span> Hub</a>
+    <a href="entity-company-a.html"><span class="nav-icon">🎓</span> Company A &mdash; MedEdPrep Education</a>
+    <a href="entity-company-c.html"><span class="nav-icon">🏆</span> Company C &mdash; Certification</a>
+    <a href="entity-nonprofit.html"><span class="nav-icon">💙</span> Foundation (501c3)</a>
+    <a href="entity-ip-vault.html"><span class="nav-icon">🔒</span> IP &amp; The Vault</a>
+    <a href="entity-market.html"><span class="nav-icon">📊</span> Market Landscape</a>
+    <a href="entity-psychometric.html"><span class="nav-icon">🔬</span> Psychometric &amp; Data</a>
+    <a href="#" class="active"><span class="nav-icon">📅</span> Timeline &amp; Financials</a>
+    <div class="nav-divider"></div>
+    <a href="dashboard.html"><span class="nav-icon">⚡</span> Dashboard</a>
+    <a href="action-center.html"><span class="nav-icon">🎯</span> Action Center</a>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-footer-label">Current window</div>
+    <div class="nav-footer-date" id="nav-date">April 2026</div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-content">
+    <div>
+      <div class="hero-eyebrow">Implementation Roadmap</div>
+      <h1 class="hero-headline">Timeline &amp; Financial Model</h1>
+      <div class="hero-status-row">
+        <span class="badge badge-green"><span class="dot"></span>Research Complete</span>
+      </div>
+      <p class="hero-subtitle">8&ndash;9 years to full five-level NCCA certification. Six entities. One integrated system. From 501(c)(3) formation today to $8&ndash;12M consolidated revenue at maturity.</p>
+    </div>
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="hero-metric-value c-teal">8&ndash;9 yrs</div>
+        <div class="hero-metric-label">Full NCCA accreditation</div>
+        <div class="hero-metric-note">All 5 credential levels</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-green">$8&ndash;12M</div>
+        <div class="hero-metric-label">Consolidated revenue at Year 8</div>
+        <div class="hero-metric-note">Excl. Company A baseline</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-purple">6 entities</div>
+        <div class="hero-metric-label">Coordinated build-out</div>
+        <div class="hero-metric-note">Corp structure + IP + ops</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-amber">Year 3&ndash;4</div>
+        <div class="hero-metric-label">Break-even: Company C</div>
+        <div class="hero-metric-note">Dependent on EMT + Paramedic</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main-inner">
+  <div class="controls">
+    <button onclick="toggleAll(true)">Expand All</button>
+    <button onclick="toggleAll(false)">Collapse All</button>
+  </div>
+
+  <div class="section" id="phase-overview">
+    <div class="section-header active" onclick="toggleSection(this)" aria-expanded="true" tabindex="0" role="button">
+      <span class="section-icon">◈</span>
+      <span class="section-title">Phase Overview Strip<span class="section-subtitle">Four implementation phases from formation to full maturity</span></span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="section-inner">
+        <div class="phase-grid">
+          <div class="phase-card teal">
+            <div class="phase-card-title">Phase 1 &mdash; Foundation</div>
+            <div class="phase-card-range">Now &mdash; Month 6</div>
+            <ul class="detail-list">
+              <li>501(c)(3) articles filed + Form 1023 submitted</li>
+              <li>Psychometric validation pipeline begins (PV-1 through PV-6)</li>
+              <li>CAPCE organizational accreditation application</li>
+              <li>CoAssist (Company B) revenue-ready features + Georgia pilot</li>
+              <li>Company E Phase 1: internal analytics warehouse</li>
+              <li>SAM.gov registration (critical bottleneck for federal grants)</li>
+            </ul>
+          </div>
+          <div class="phase-card purple">
+            <div class="phase-card-title">Phase 2 &mdash; Entity Separation</div>
+            <div class="phase-card-range">Month 6 &mdash; Year 2</div>
+            <ul class="detail-list">
+              <li>The Vault (Wyoming LLC) formed; IP assignment executed</li>
+              <li>Company A, B, C, D, E separated as distinct LLCs</li>
+              <li>IP license agreements (Vault &rarr; OpCos); Lite TP study</li>
+              <li>EMT JTA begins (after Company C governance board)</li>
+              <li>CAPCE accreditation received; CE &ldquo;recert by exam&rdquo; launches</li>
+              <li>HRSA RHNDP application (late 2026 / early 2027)</li>
+            </ul>
+          </div>
+          <div class="phase-card blue">
+            <div class="phase-card-title">Phase 3 &mdash; Certification Launch</div>
+            <div class="phase-card-range">Year 2 &mdash; Year 4</div>
+            <ul class="detail-list">
+              <li>EMT certification exam launches (pre-NCCA) &mdash; Year 2</li>
+              <li>NCCA application for EMT &mdash; Year 3; accreditation &mdash; Year 3&ndash;4</li>
+              <li>Paramedic launch &mdash; Year 3; AEMT JTA begins &mdash; Year 3</li>
+              <li>Company E Phase 3&ndash;4: multi-state data, external APIs</li>
+              <li>CoAssist national expansion (NASEMSO); $1M+ ARR</li>
+              <li>Georgia state recognition campaign (post-NCCA)</li>
+            </ul>
+          </div>
+          <div class="phase-card amber">
+            <div class="phase-card-title">Phase 4 &mdash; Expansion</div>
+            <div class="phase-card-range">Year 4 &mdash; Year 8-9</div>
+            <ul class="detail-list">
+              <li>AEMT + EMR certification launch (Year 4&ndash;5)</li>
+              <li>PP JTA, development, launch (Year 5&ndash;7)</li>
+              <li>Full 5-level NCCA accreditation complete (Year 8&ndash;9)</li>
+              <li>Irrevocable dynasty trust triggered ($1M&ndash;2M entity value)</li>
+              <li>Multi-state PP recognition (Kentucky, Georgia, Tier 2-4 states)</li>
+              <li>ISO 17024 dual accreditation evaluation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="workstreams">
+    <div class="section-header active" onclick="toggleSection(this)" aria-expanded="true" tabindex="0" role="button">
+      <span class="section-icon">◈</span>
+      <span class="section-title">Master Workstream Registry<span class="section-subtitle">All workstreams extracted from research documents, organized by track</span></span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="section-inner">
+        <div class="legend-wrap">
+          <div class="section-kicker">Track Legend</div>
+          <div class="legend-grid">
+            <span class="track-chip track-cs">CS = Corporate Structure</span>
+            <span class="track-chip track-ip">IP = IP / Transfer Pricing</span>
+            <span class="track-chip track-pv">PV = Psychometric Validation</span>
+            <span class="track-chip track-cc">CC = Company C Certification</span>
+            <span class="track-chip track-cb">CB = Company B CoAssist</span>
+            <span class="track-chip track-ce">CE = Company E Data</span>
+            <span class="track-chip track-gs">GS = Grant Strategy</span>
+            <span class="track-chip track-sr">SR = State Recognition</span>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <div class="table-label">Master Workstream Registry</div>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Workstream</th>
+                  <th>Duration</th>
+                  <th>Phase</th>
+                  <th>Track</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td class="mono">CS-1</td><td>501(c)(3) Formation (Articles through Form 1023 filing)</td><td>12 weeks</td><td>Phase 1</td><td><span class="track-chip track-cs">CS</span></td></tr>
+                <tr><td class="mono">CS-1a</td><td>Board recruitment (3 independent directors)</td><td>1&ndash;3 weeks</td><td>Phase 1</td><td><span class="track-chip track-cs">CS</span></td></tr>
+                <tr><td class="mono">CS-1b</td><td>Articles of Incorporation drafting and filing</td><td>2 weeks</td><td>Phase 1</td><td><span class="track-chip track-cs">CS</span></td></tr>
+                <tr><td class="mono">CS-1c</td><td>EIN, bank account, SAM.gov registration</td><td>1&ndash;2 weeks (SAM.gov: 4&ndash;8 weeks processing)</td><td>Phase 1</td><td><span class="track-chip track-cs">CS</span></td></tr>
+                <tr><td class="mono">CS-1d</td><td>Organizational meeting</td><td>Week 3</td><td>Phase 1</td><td><span class="track-chip track-cs">CS</span></td></tr>
+                <tr><td class="mono">CS-1e</td><td>Form 1023 preparation</td><td>4&ndash;6 weeks</td><td>Phase 1</td><td><span class="track-chip track-cs">CS</span></td></tr>
+                <tr><td class="mono">CS-1f</td><td>Form 1023 filing and IRS processing</td><td>3&ndash;6 months after filing</td><td>Phase 1</td><td><span class="track-chip track-cs">CS</span></td></tr>
+                <tr><td class="mono">CS-2</td><td>The Vault (Wyoming LLC) formation</td><td>1&ndash;2 weeks</td><td>Phase 2</td><td><span class="track-chip track-cs">CS</span></td></tr>
+                <tr><td class="mono">CS-3</td><td>Company C formation as separate Georgia LLC</td><td>1&ndash;2 weeks</td><td>Phase 2</td><td><span class="track-chip track-cs">CS</span></td></tr>
+                <tr><td class="mono">CS-4</td><td>Company C independent governance board</td><td>2&ndash;4 weeks</td><td>Phase 2</td><td><span class="track-chip track-cs">CS</span></td></tr>
+                <tr><td class="mono">CS-5</td><td>Formal entity separation (Companies A, B, C, D, E as distinct LLCs)</td><td>4&ndash;8 weeks</td><td>Phase 2</td><td><span class="track-chip track-cs">CS</span></td></tr>
+
+                <tr><td class="mono">IP-1</td><td>Software asset inventory</td><td>2&ndash;4 weeks</td><td>Phase 1</td><td><span class="track-chip track-ip">IP</span></td></tr>
+                <tr><td class="mono">IP-2</td><td>IP assignment to The Vault (Section 351 transfer)</td><td>4&ndash;8 weeks</td><td>Phase 2</td><td><span class="track-chip track-ip">IP</span></td></tr>
+                <tr><td class="mono">IP-3</td><td>Master IP license agreements (Vault &rarr; each OpCo)</td><td>2&ndash;4 weeks</td><td>Phase 2</td><td><span class="track-chip track-ip">IP</span></td></tr>
+                <tr><td class="mono">IP-4</td><td>&ldquo;Lite&rdquo; transfer pricing study (15&ndash;20 pages)</td><td>2&ndash;4 weeks</td><td>Phase 2</td><td><span class="track-chip track-ip">IP</span></td></tr>
+                <tr><td class="mono">IP-5</td><td>Full TP study (triggered at $500K+ entity revenue)</td><td>4&ndash;8 weeks</td><td>Phase 3</td><td><span class="track-chip track-ip">IP</span></td></tr>
+                <tr><td class="mono">IP-6</td><td>Revocable living trust (triggered at $100K&ndash;$250K revenue)</td><td>1&ndash;2 weeks</td><td>Phase 2&ndash;3</td><td><span class="track-chip track-ip">IP</span></td></tr>
+                <tr><td class="mono">IP-7</td><td>Irrevocable dynasty trust (triggered at $1M&ndash;$2M entity value)</td><td>4&ndash;8 weeks</td><td>Phase 4</td><td><span class="track-chip track-ip">IP</span></td></tr>
+                <tr><td class="mono">IP-8</td><td>JpGraph license resolution</td><td>1&ndash;2 weeks</td><td>Phase 1</td><td><span class="track-chip track-ip">IP</span></td></tr>
+                <tr><td class="mono">IP-9</td><td>SurveyJS transfer review</td><td>1&ndash;2 weeks</td><td>Phase 1</td><td><span class="track-chip track-ip">IP</span></td></tr>
+                <tr><td class="mono">IP-10</td><td>mpdf swap to DOMPDF</td><td>2&ndash;4 weeks</td><td>Phase 1</td><td><span class="track-chip track-ip">IP</span></td></tr>
+
+                <tr><td class="mono">PV-1</td><td>Phase 0: Data extraction and preparation</td><td>1&ndash;2 weeks</td><td>Phase 1</td><td><span class="track-chip track-pv">PV</span></td></tr>
+                <tr><td class="mono">PV-2</td><td>Phase 1: Exploratory factor analysis</td><td>2&ndash;3 weeks</td><td>Phase 1</td><td><span class="track-chip track-pv">PV</span></td></tr>
+                <tr><td class="mono">PV-3</td><td>Phase 2: SME cognitive process tagging (500&ndash;1,000 items)</td><td>3&ndash;4 weeks (10&ndash;12 weeks end-to-end)</td><td>Phase 1</td><td><span class="track-chip track-pv">PV</span></td></tr>
+                <tr><td class="mono">PV-4</td><td>Phase 3: Bifactor model fitting</td><td>2&ndash;3 weeks</td><td>Phase 1</td><td><span class="track-chip track-pv">PV</span></td></tr>
+                <tr><td class="mono">PV-5</td><td>Phase 4: CDM validation (Q-matrix)</td><td>2&ndash;3 weeks</td><td>Phase 1</td><td><span class="track-chip track-pv">PV</span></td></tr>
+                <tr><td class="mono">PV-6</td><td>Phase 5: Cross-validation and stability</td><td>2 weeks</td><td>Phase 1</td><td><span class="track-chip track-pv">PV</span></td></tr>
+
+                <tr><td class="mono">CC-1</td><td>EMT Job Task Analysis</td><td>6&ndash;12 months</td><td>Phase 2</td><td><span class="track-chip track-cc">CC</span></td></tr>
+                <tr><td class="mono">CC-2</td><td>EMT exam blueprint development</td><td>2&ndash;4 months</td><td>Phase 2</td><td><span class="track-chip track-cc">CC</span></td></tr>
+                <tr><td class="mono">CC-3</td><td>EMT item development (300&ndash;450 items)</td><td>6&ndash;12 months</td><td>Phase 2</td><td><span class="track-chip track-cc">CC</span></td></tr>
+                <tr><td class="mono">CC-4</td><td>EMT pilot testing and standard setting</td><td>4&ndash;6 months</td><td>Phase 2</td><td><span class="track-chip track-cc">CC</span></td></tr>
+                <tr><td class="mono">CC-5</td><td>EMT certification launch (pre-NCCA)</td><td>Year 2</td><td>Phase 3</td><td><span class="track-chip track-cc">CC</span></td></tr>
+                <tr><td class="mono">CC-6</td><td>EMT NCCA application and review</td><td>4&ndash;5 months</td><td>Phase 3</td><td><span class="track-chip track-cc">CC</span></td></tr>
+                <tr><td class="mono">CC-7</td><td>Paramedic JTA</td><td>6&ndash;12 months</td><td>Phase 2</td><td><span class="track-chip track-cc">CC</span></td></tr>
+                <tr><td class="mono">CC-8</td><td>Paramedic item development and pilot</td><td>12&ndash;18 months</td><td>Phase 3</td><td><span class="track-chip track-cc">CC</span></td></tr>
+                <tr><td class="mono">CC-9</td><td>Paramedic certification launch</td><td>Year 3</td><td>Phase 3</td><td><span class="track-chip track-cc">CC</span></td></tr>
+                <tr><td class="mono">CC-10</td><td>AEMT JTA, development, and launch</td><td>Year 3&ndash;4</td><td>Phase 3&ndash;4</td><td><span class="track-chip track-cc">CC</span></td></tr>
+                <tr><td class="mono">CC-11</td><td>EMR JTA, development, and launch</td><td>Year 4&ndash;5</td><td>Phase 4</td><td><span class="track-chip track-cc">CC</span></td></tr>
+                <tr><td class="mono">CC-12</td><td>PP JTA, development, and launch</td><td>Year 5&ndash;7</td><td>Phase 4</td><td><span class="track-chip track-cc">CC</span></td></tr>
+                <tr><td class="mono">CC-13</td><td>CAPCE organizational accreditation</td><td>3&ndash;6 months</td><td>Phase 1&ndash;2</td><td><span class="track-chip track-cc">CC</span></td></tr>
+                <tr><td class="mono">CC-14</td><td>CE &ldquo;recert by exam&rdquo; product launch</td><td>3&ndash;6 months after CAPCE</td><td>Phase 2</td><td><span class="track-chip track-cc">CC</span></td></tr>
+                <tr><td class="mono">CC-15</td><td>CE item pipeline calibration (90&ndash;150 items/year)</td><td>Ongoing from CE launch</td><td>Phase 2+</td><td><span class="track-chip track-cc">CC</span></td></tr>
+                <tr><td class="mono">CC-16</td><td>Full 5-level NCCA accreditation</td><td>8&ndash;9 years total</td><td>Phase 4</td><td><span class="track-chip track-cc">CC</span></td></tr>
+
+                <tr><td class="mono">CB-1</td><td>Phase 1: Revenue-ready features (annual report, payment)</td><td>Q2 2026</td><td>Phase 1</td><td><span class="track-chip track-cb">CB</span></td></tr>
+                <tr><td class="mono">CB-2</td><td>Georgia OEMST standards module + state admin dashboard</td><td>Q3&ndash;Q4 2026</td><td>Phase 1</td><td><span class="track-chip track-cb">CB</span></td></tr>
+                <tr><td class="mono">CB-3</td><td>Georgia pilot (5&ndash;10 programs)</td><td>Q3&ndash;Q4 2026</td><td>Phase 1</td><td><span class="track-chip track-cb">CB</span></td></tr>
+                <tr><td class="mono">CB-4</td><td>Phase 3: AEMT wave features</td><td>Q4 2026 &ndash; Q1 2027</td><td>Phase 2</td><td><span class="track-chip track-cb">CB</span></td></tr>
+                <tr><td class="mono">CB-5</td><td>Georgia state contract proposal</td><td>Q1 2027</td><td>Phase 2</td><td><span class="track-chip track-cb">CB</span></td></tr>
+                <tr><td class="mono">CB-6</td><td>GEMSIS integration</td><td>Q1 2027</td><td>Phase 2</td><td><span class="track-chip track-cb">CB</span></td></tr>
+                <tr><td class="mono">CB-7</td><td>Full Georgia deployment</td><td>Q2&ndash;Q3 2027</td><td>Phase 2</td><td><span class="track-chip track-cb">CB</span></td></tr>
+                <tr><td class="mono">CB-8</td><td>National state expansion (NASEMSO)</td><td>2027+</td><td>Phase 3</td><td><span class="track-chip track-cb">CB</span></td></tr>
+                <tr><td class="mono">CB-9</td><td>Platform maturity (curriculum mapping, Fisdap integration)</td><td>2027</td><td>Phase 2&ndash;3</td><td><span class="track-chip track-cb">CB</span></td></tr>
+
+                <tr><td class="mono">CE-1</td><td>Phase 1: Internal analytics (Company A data warehouse)</td><td>Months 1&ndash;4</td><td>Phase 1</td><td><span class="track-chip track-ce">CE</span></td></tr>
+                <tr><td class="mono">CE-2</td><td>Phase 2: Georgia pilot (external dashboards)</td><td>Months 4&ndash;8</td><td>Phase 1&ndash;2</td><td><span class="track-chip track-ce">CE</span></td></tr>
+                <tr><td class="mono">CE-3</td><td>Phase 3: Multi-entity data integration (B + C)</td><td>Months 8&ndash;18</td><td>Phase 2&ndash;3</td><td><span class="track-chip track-ce">CE</span></td></tr>
+                <tr><td class="mono">CE-4</td><td>Phase 4: External self-service and API</td><td>Months 18&ndash;30</td><td>Phase 3</td><td><span class="track-chip track-ce">CE</span></td></tr>
+
+                <tr><td class="mono">GS-1</td><td>SAM.gov registration</td><td>4&ndash;8 weeks processing</td><td>Phase 1</td><td><span class="track-chip track-gs">GS</span></td></tr>
+                <tr><td class="mono">GS-2</td><td>Grants.gov account activation</td><td>7&ndash;10 days after SAM.gov</td><td>Phase 1</td><td><span class="track-chip track-gs">GS</span></td></tr>
+                <tr><td class="mono">GS-3</td><td>HRSA EHB registration</td><td>1&ndash;2 weeks</td><td>Phase 1</td><td><span class="track-chip track-gs">GS</span></td></tr>
+                <tr><td class="mono">GS-4</td><td>Firehouse Subs Q4 2026 application</td><td>Opens July 9, 2026</td><td>Phase 1</td><td><span class="track-chip track-gs">GS</span></td></tr>
+                <tr><td class="mono">GS-5</td><td>Hero Fund America application</td><td>June 2026</td><td>Phase 1</td><td><span class="track-chip track-gs">GS</span></td></tr>
+                <tr><td class="mono">GS-6</td><td>HRSA RHNDP application ($100K planning grant)</td><td>Late 2026 / Early 2027</td><td>Phase 2</td><td><span class="track-chip track-gs">GS</span></td></tr>
+                <tr><td class="mono">GS-7</td><td>Perkins V CTE vendor pathway</td><td>Ongoing</td><td>Phase 2+</td><td><span class="track-chip track-gs">GS</span></td></tr>
+
+                <tr><td class="mono">SR-1</td><td>Georgia relationship building (DPH, OEMS)</td><td>Years 1&ndash;3</td><td>Phase 2&ndash;3</td><td><span class="track-chip track-sr">SR</span></td></tr>
+                <tr><td class="mono">SR-2</td><td>Kentucky KBEMS engagement (PP credential)</td><td>Years 1&ndash;3</td><td>Phase 2&ndash;3</td><td><span class="track-chip track-sr">SR</span></td></tr>
+                <tr><td class="mono">SR-3</td><td>I-CAPP engagement</td><td>Years 1&ndash;3</td><td>Phase 2&ndash;3</td><td><span class="track-chip track-sr">SR</span></td></tr>
+                <tr><td class="mono">SR-4</td><td>Georgia PP recognition campaign</td><td>Years 5&ndash;7</td><td>Phase 4</td><td><span class="track-chip track-sr">SR</span></td></tr>
+                <tr><td class="mono">SR-5</td><td>Multi-state PP recognition (Tier 2&ndash;4 states)</td><td>Years 2&ndash;7</td><td>Phase 3&ndash;4</td><td><span class="track-chip track-sr">SR</span></td></tr>
+                <tr><td class="mono">SR-6</td><td>EMT/Paramedic state recognition (Georgia first)</td><td>Years 3&ndash;5</td><td>Phase 3</td><td><span class="track-chip track-sr">SR</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="critical-path">
+    <div class="section-header active" onclick="toggleSection(this)" aria-expanded="true" tabindex="0" role="button">
+      <span class="section-icon">◈</span>
+      <span class="section-title">Critical Path Analysis<span class="section-subtitle">Workstreams that block other workstreams &mdash; the true sequencing constraints</span></span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="section-inner">
+        <div class="chain-grid">
+          <div class="chain-card teal">
+            <div class="chain-title">Chain 1: EMT Certification Launch (~24&ndash;30 months)</div>
+            <div class="chain-flow">
+              <div class="chain-step"><div class="chain-step-code">CS-3</div><div class="chain-step-title">Company C LLC</div><div class="chain-step-note">2 weeks</div></div>
+              <div class="chain-arrow">&rarr;</div>
+              <div class="chain-step"><div class="chain-step-code">CS-4</div><div class="chain-step-title">Governance Board</div><div class="chain-step-note">4 weeks</div></div>
+              <div class="chain-arrow">&rarr;</div>
+              <div class="chain-step"><div class="chain-step-code">CC-1</div><div class="chain-step-title">EMT JTA</div><div class="chain-step-note">6&ndash;12 months</div></div>
+              <div class="chain-arrow">&rarr;</div>
+              <div class="chain-step"><div class="chain-step-code">CC-2</div><div class="chain-step-title">EMT Blueprint</div><div class="chain-step-note">2&ndash;4 months</div></div>
+              <div class="chain-arrow">&rarr;</div>
+              <div class="chain-step"><div class="chain-step-code">CC-3</div><div class="chain-step-title">Item Development</div><div class="chain-step-note">6&ndash;12 months</div></div>
+              <div class="chain-arrow">&rarr;</div>
+              <div class="chain-step"><div class="chain-step-code">CC-4</div><div class="chain-step-title">Pilot + Standard Setting</div><div class="chain-step-note">4&ndash;6 months</div></div>
+              <div class="chain-arrow">&rarr;</div>
+              <div class="chain-step"><div class="chain-step-code">CC-5</div><div class="chain-step-title">EMT Launch</div><div class="chain-step-note">~Month 24</div></div>
+            </div>
+            <div class="parallel-note"><strong>Parallel:</strong> PV-1&rarr;PV-6 (psychometric validation, 12&ndash;17 weeks) feeds into CC-2 / CC-3 as trait ontology input.</div>
+            <div class="parallel-note"><strong>Parallel:</strong> CC-13 + CC-14 (CAPCE + CE launch) feeds items into CC-3.</div>
+          </div>
+
+          <div class="chain-card purple">
+            <div class="chain-title">Chain 2: First NCCA Accreditation (~30&ndash;36 months)</div>
+            <div class="chain-flow">
+              <div class="chain-step"><div class="chain-step-code">CC-5</div><div class="chain-step-title">EMT Launch</div><div class="chain-step-note">Month 24</div></div>
+              <div class="chain-arrow">&rarr;</div>
+              <div class="chain-step"><div class="chain-step-code">OPS</div><div class="chain-step-title">1 operational exam cycle</div><div class="chain-step-note">6&ndash;12 months</div></div>
+              <div class="chain-arrow">&rarr;</div>
+              <div class="chain-step"><div class="chain-step-code">CC-6</div><div class="chain-step-title">NCCA Application + Review</div><div class="chain-step-note">4&ndash;5 months</div></div>
+              <div class="chain-arrow">&rarr;</div>
+              <div class="chain-step"><div class="chain-step-code">NCCA</div><div class="chain-step-title">EMT NCCA ACCREDITED</div><div class="chain-step-note">~Month 36</div></div>
+            </div>
+          </div>
+
+          <div class="chain-card orange">
+            <div class="chain-title">Chain 3: Federal Grants (Critical bottleneck: SAM.gov)</div>
+            <div class="chain-flow">
+              <div class="chain-step"><div class="chain-step-code">CS-1b</div><div class="chain-step-title">Articles filed</div><div class="chain-step-note">Foundation formed</div></div>
+              <div class="chain-arrow">&rarr;</div>
+              <div class="chain-step"><div class="chain-step-code">CS-1c</div><div class="chain-step-title">EIN + bank</div><div class="chain-step-note">Immediate prerequisite</div></div>
+              <div class="chain-arrow">&rarr;</div>
+              <div class="chain-step"><div class="chain-step-code">GS-1</div><div class="chain-step-title">SAM.gov</div><div class="chain-step-note">4&ndash;8 weeks BOTTLENECK</div></div>
+              <div class="chain-arrow">&rarr;</div>
+              <div class="chain-step"><div class="chain-step-code">GS-2</div><div class="chain-step-title">Grants.gov</div><div class="chain-step-note">+7&ndash;10 days</div></div>
+              <div class="chain-arrow">&rarr;</div>
+              <div class="chain-step"><div class="chain-step-code">GS-6</div><div class="chain-step-title">HRSA RHNDP</div><div class="chain-step-note">When NOFO drops late 2026</div></div>
+            </div>
+            <div class="parallel-note"><strong>SAM.gov is the single biggest bottleneck for federal grants. Submit Day 10.</strong></div>
+          </div>
+        </div>
+
+        <div class="callout red">
+          <div class="callout-title">Key Blockers</div>
+          <div class="blocker-list">
+            <div class="blocker-item"><strong>1. CS-1a Board recruitment</strong> &rarr; blocks entire 501(c)(3) track</div>
+            <div class="blocker-item"><strong>2. GS-1 SAM.gov registration</strong> &rarr; blocks all federal grant applications</div>
+            <div class="blocker-item"><strong>3. CS-3 Company C formation</strong> &rarr; blocks entire CC-* certification track</div>
+            <div class="blocker-item"><strong>4. CS-4 Company C governance board</strong> &rarr; blocks EMT JTA and starts the 24-month certification clock</div>
+            <div class="blocker-item"><strong>5. CC-1 EMT JTA</strong> &rarr; longest single step in the critical path (6&ndash;12 months)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="entity-revenue">
+    <div class="section-header active" onclick="toggleSection(this)" aria-expanded="true" tabindex="0" role="button">
+      <span class="section-icon">◈</span>
+      <span class="section-title">Revenue Projections by Entity<span class="section-subtitle">Conservative / Moderate / Aggressive scenarios from research documents</span></span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="section-inner">
+        <div class="revenue-stack">
+          <div class="revenue-card">
+            <div class="revenue-head">
+              <div>
+                <div class="revenue-title">Company A &mdash; MedEdPrep Education</div>
+                <div class="revenue-note">Currently operating &mdash; no startup projections in source documents. Revenue from EOPA ($30/student/attempt, GTC-mandated), test prep subscriptions, CE platform. Direct driver of Company C candidate pipeline and Company E data density.</div>
+              </div>
+              <span class="entity-status es-operating"><span class="dot"></span>Operating</span>
+            </div>
+            <div class="entity-grid">
+              <div>
+                <div class="bar-list">
+                  <div class="bar-row"><div class="bar-label">Y1</div><div class="bar-track"><div class="bar-fill fill-muted" style="width:100%;"></div></div><div class="bar-value">Not projected</div></div>
+                  <div class="bar-row"><div class="bar-label">Y2</div><div class="bar-track"><div class="bar-fill fill-muted" style="width:100%;"></div></div><div class="bar-value">Not projected</div></div>
+                  <div class="bar-row"><div class="bar-label">Y3</div><div class="bar-track"><div class="bar-fill fill-muted" style="width:100%;"></div></div><div class="bar-value">Not projected</div></div>
+                  <div class="bar-row"><div class="bar-label">Y5</div><div class="bar-track"><div class="bar-fill fill-muted" style="width:100%;"></div></div><div class="bar-value">Not projected</div></div>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <div class="table-label">Operating Revenue Drivers</div>
+                <div class="table-scroll">
+                  <table class="mini-table">
+                    <thead>
+                      <tr><th>Stream</th><th>Source detail</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>EOPA</td><td>$30 per student attempt, GTC-mandated</td></tr>
+                      <tr><td>Test prep</td><td>Subscription and prep product revenue</td></tr>
+                      <tr><td>CE platform</td><td>Current operating platform revenue base</td></tr>
+                      <tr><td>Strategic role</td><td>Feeds Company C candidate pipeline and Company E data density</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="revenue-card">
+            <div class="revenue-head">
+              <div>
+                <div class="revenue-title">Company B &mdash; CoAssist Accreditation</div>
+                <div class="revenue-note">CoAssist is free tier + paid SaaS ($1,500&ndash;$2,500/yr per program) + state contracts ($50K&ndash;$150K/yr). Free tier drives market penetration and data moat.</div>
+              </div>
+            </div>
+            <div class="entity-grid">
+              <div>
+                <div class="section-kicker">Moderate Scenario Bars (max scale: $3.5M)</div>
+                <div class="bar-list">
+                  <div class="bar-row"><div class="bar-label">Y1 2026</div><div class="bar-track"><div class="bar-fill fill-green" style="width:2.4%;"></div></div><div class="bar-value">$84K</div></div>
+                  <div class="bar-row"><div class="bar-label">Y2 2027</div><div class="bar-track"><div class="bar-fill fill-green" style="width:9.4%;"></div></div><div class="bar-value">$330K</div></div>
+                  <div class="bar-row"><div class="bar-label">Y3 2028</div><div class="bar-track"><div class="bar-fill fill-green" style="width:20.6%;"></div></div><div class="bar-value">$720K</div></div>
+                  <div class="bar-row"><div class="bar-label">Y5 2030</div><div class="bar-track"><div class="bar-fill fill-green" style="width:56.6%;"></div></div><div class="bar-value">$1.98M</div></div>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <div class="table-label">Scenario Table</div>
+                <div class="table-scroll">
+                  <table class="mini-table">
+                    <thead>
+                      <tr><th>Year</th><th>Conservative</th><th>Moderate</th><th>Aggressive</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Y1 2026</td><td>$42K</td><td>$84K</td><td>$126K</td></tr>
+                      <tr><td>Y2 2027</td><td>$176K</td><td>$330K</td><td>$578K</td></tr>
+                      <tr><td>Y3 2028</td><td>$361K</td><td>$720K</td><td>$1.29M</td></tr>
+                      <tr><td>Y5 2030</td><td>$1.06M</td><td>$1.98M</td><td>$3.33M</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="revenue-card">
+            <div class="revenue-head">
+              <div>
+                <div class="revenue-title">Company C &mdash; Certification Body</div>
+                <div class="revenue-note">Exam fees only. Add CE recert revenue separately below. Break-even Year 3&ndash;4.</div>
+              </div>
+            </div>
+            <div class="entity-grid">
+              <div>
+                <div class="section-kicker">Mid Scenario Bars (max scale: $3.5M)</div>
+                <div class="bar-list">
+                  <div class="bar-row"><div class="bar-label">Y1</div><div class="bar-track"><div class="bar-fill fill-amber" style="width:0%;"></div></div><div class="bar-value">$0</div></div>
+                  <div class="bar-row"><div class="bar-label">Y2</div><div class="bar-track"><div class="bar-fill fill-amber" style="width:5.4%;"></div></div><div class="bar-value">$190K</div></div>
+                  <div class="bar-row"><div class="bar-label">Y3</div><div class="bar-track"><div class="bar-fill fill-amber" style="width:24.6%;"></div></div><div class="bar-value">$860K</div></div>
+                  <div class="bar-row"><div class="bar-label">Y5</div><div class="bar-track"><div class="bar-fill fill-amber" style="width:63.1%;"></div></div><div class="bar-value">$2.21M</div></div>
+                  <div class="bar-row"><div class="bar-label">Y8</div><div class="bar-track"><div class="bar-fill fill-amber" style="width:100%;"></div></div><div class="bar-value">$3.88M</div></div>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <div class="table-label">Scenario Table</div>
+                <div class="table-scroll">
+                  <table class="mini-table">
+                    <thead>
+                      <tr><th>Year</th><th>Low</th><th>Mid</th><th>High</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Y1</td><td>$0</td><td>$0</td><td>$0</td></tr>
+                      <tr><td>Y2</td><td>$95K</td><td>$190K</td><td>$285K</td></tr>
+                      <tr><td>Y3</td><td>$430K</td><td>$860K</td><td>$1.29M</td></tr>
+                      <tr><td>Y5</td><td>$1.09M</td><td>$2.21M</td><td>$3.32M</td></tr>
+                      <tr><td>Y8</td><td>$2.59M</td><td>$3.88M</td><td>$5.17M</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="revenue-card">
+            <div class="revenue-head">
+              <div>
+                <div class="revenue-title">Company C &mdash; CE &ldquo;Recert by Exam&rdquo;</div>
+                <div class="revenue-note">CAPCE-accredited continuing education subscriptions. $49.95/yr individual EMT, $79.95/yr Paramedic.</div>
+              </div>
+            </div>
+            <div class="entity-grid">
+              <div>
+                <div class="section-kicker">Subscription Revenue Range Bars</div>
+                <div class="bar-list">
+                  <div class="bar-row"><div class="bar-label">Y1&ndash;2</div><div class="bar-track"><div class="bar-fill fill-blue" style="width:4.6%;"></div></div><div class="bar-value">$159.5K/yr</div></div>
+                  <div class="bar-row"><div class="bar-label">Y3&ndash;4</div><div class="bar-track"><div class="bar-fill fill-blue" style="width:18.1%;"></div></div><div class="bar-value">$632.5K/yr</div></div>
+                  <div class="bar-row"><div class="bar-label">Y5+ low</div><div class="bar-track"><div class="bar-fill fill-blue" style="width:45.1%;"></div></div><div class="bar-value">$1.58M/yr</div></div>
+                  <div class="bar-row"><div class="bar-label">Y5+ high</div><div class="bar-track"><div class="bar-fill fill-blue" style="width:60%;"></div></div><div class="bar-value">$2.1M/yr</div></div>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <div class="table-label">CE Revenue Benchmarks</div>
+                <div class="table-scroll">
+                  <table class="mini-table">
+                    <thead>
+                      <tr><th>Window</th><th>Revenue</th><th>Interpretation</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Conservative Y1&ndash;2</td><td>$159.5K/yr</td><td>Initial subscription base after CAPCE launch</td></tr>
+                      <tr><td>Moderate Y3&ndash;4</td><td>$632.5K/yr</td><td>Scaled CE platform with recurring recert demand</td></tr>
+                      <tr><td>Aggressive Y5+</td><td>$1.58M&ndash;$2.1M/yr</td><td>Mature CE layer on top of certification audience</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="revenue-card">
+            <div class="revenue-head">
+              <div>
+                <div class="revenue-title">Company E &mdash; MedEdPrep Data</div>
+              </div>
+            </div>
+            <div class="entity-grid">
+              <div>
+                <div class="section-kicker">Mid Scenario Bars (max scale: $3.5M)</div>
+                <div class="bar-list">
+                  <div class="bar-row"><div class="bar-label">Y1</div><div class="bar-track"><div class="bar-fill fill-pink" style="width:1.6%;"></div></div><div class="bar-value">$55K</div></div>
+                  <div class="bar-row"><div class="bar-label">Y3</div><div class="bar-track"><div class="bar-fill fill-pink" style="width:20.9%;"></div></div><div class="bar-value">$733K</div></div>
+                  <div class="bar-row"><div class="bar-label">Y5</div><div class="bar-track"><div class="bar-fill fill-pink" style="width:68%;"></div></div><div class="bar-value">$2.38M</div></div>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <div class="table-label">Scenario Table</div>
+                <div class="table-scroll">
+                  <table class="mini-table">
+                    <thead>
+                      <tr><th>Year</th><th>Low</th><th>Mid</th><th>High</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Y1</td><td>$20K</td><td>$55K</td><td>$90K</td></tr>
+                      <tr><td>Y3</td><td>$405K</td><td>$733K</td><td>$1.06M</td></tr>
+                      <tr><td>Y5</td><td>$1.3M</td><td>$2.38M</td><td>$3.45M</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="revenue-card">
+            <div class="revenue-head">
+              <div>
+                <div class="revenue-title">501(c)(3) Foundation &mdash; Grants</div>
+              </div>
+            </div>
+            <div class="entity-grid">
+              <div>
+                <div class="section-kicker">Midpoint Range Bars (max scale: $3.5M)</div>
+                <div class="bar-list">
+                  <div class="bar-row"><div class="bar-label">Y1</div><div class="bar-track"><div class="bar-fill fill-blue" style="width:1.7%;"></div></div><div class="bar-value">$29K&ndash;$91K</div></div>
+                  <div class="bar-row"><div class="bar-label">Y2</div><div class="bar-track"><div class="bar-fill fill-blue" style="width:7.1%;"></div></div><div class="bar-value">$100K&ndash;$400K</div></div>
+                  <div class="bar-row"><div class="bar-label">Y3+</div><div class="bar-track"><div class="bar-fill fill-blue" style="width:10.7%;"></div></div><div class="bar-value">$200K&ndash;$550K</div></div>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <div class="table-label">Grant Outlook</div>
+                <div class="table-scroll">
+                  <table class="mini-table">
+                    <thead>
+                      <tr><th>Year</th><th>Range</th><th>Primary sources</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Y1</td><td>$29K&ndash;$91K</td><td>Small grants: Hero Fund, Firehouse Subs, Kaiser</td></tr>
+                      <tr><td>Y2</td><td>$100K&ndash;$400K</td><td>HRSA RHNDP planning grant ($100K) + others</td></tr>
+                      <tr><td>Y3+</td><td>$200K&ndash;$550K</td><td>HRSA Rural Outreach $250K&ndash;$300K/yr &times; 4yr</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="consolidated-revenue">
+    <div class="section-header active" onclick="toggleSection(this)" aria-expanded="true" tabindex="0" role="button">
+      <span class="section-icon">◈</span>
+      <span class="section-title">Consolidated Revenue Trajectory<span class="section-subtitle">All entities combined, moderate scenario. Company A revenue not projected in source documents.</span></span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="section-inner">
+        <div class="consolidated-wrap">
+          <div class="stacked-chart">
+            <div class="stack-group">
+              <div class="stack">
+                <div class="stack-total">~$199K</div>
+                <div class="stack-segment seg-f" style="height:0.63%;"></div>
+                <div class="stack-segment seg-e" style="height:0.58%;"></div>
+                <div class="stack-segment seg-c" style="height:0%;"></div>
+                <div class="stack-segment seg-b" style="height:0.88%;"></div>
+              </div>
+              <div>
+                <div class="stack-year">Y1 2026</div>
+                <div class="stack-year-note">~$199K</div>
+              </div>
+            </div>
+            <div class="stack-group">
+              <div class="stack">
+                <div class="stack-total">~$825K</div>
+                <div class="stack-segment seg-f" style="height:2.63%;"></div>
+                <div class="stack-segment seg-e" style="height:0.58%;"></div>
+                <div class="stack-segment seg-c" style="height:2%;"></div>
+                <div class="stack-segment seg-b" style="height:3.47%;"></div>
+              </div>
+              <div>
+                <div class="stack-year">Y2 2027</div>
+                <div class="stack-year-note">~$825K</div>
+              </div>
+            </div>
+            <div class="stack-group">
+              <div class="stack">
+                <div class="stack-total">~$2.71M</div>
+                <div class="stack-segment seg-f" style="height:4.21%;"></div>
+                <div class="stack-segment seg-e" style="height:7.72%;"></div>
+                <div class="stack-segment seg-c" style="height:9.05%;"></div>
+                <div class="stack-segment seg-b" style="height:7.58%;"></div>
+              </div>
+              <div>
+                <div class="stack-year">Y3 2028</div>
+                <div class="stack-year-note">~$2.71M</div>
+              </div>
+            </div>
+            <div class="stack-group">
+              <div class="stack">
+                <div class="stack-total">~$4.12M</div>
+                <div class="stack-segment seg-f" style="height:4.74%;"></div>
+                <div class="stack-segment seg-e" style="height:7.72%;"></div>
+                <div class="stack-segment seg-c" style="height:17.58%;"></div>
+                <div class="stack-segment seg-b" style="height:13.37%;"></div>
+              </div>
+              <div>
+                <div class="stack-year">Y4 2029</div>
+                <div class="stack-year-note">~$4.12M</div>
+              </div>
+            </div>
+            <div class="stack-group">
+              <div class="stack">
+                <div class="stack-total">~$7.02M</div>
+                <div class="stack-segment seg-f" style="height:4.74%;"></div>
+                <div class="stack-segment seg-e" style="height:25.05%;"></div>
+                <div class="stack-segment seg-c" style="height:23.26%;"></div>
+                <div class="stack-segment seg-b" style="height:20.84%;"></div>
+              </div>
+              <div>
+                <div class="stack-year">Y5 2030</div>
+                <div class="stack-year-note">~$7.02M</div>
+              </div>
+            </div>
+            <div class="stack-group">
+              <div class="stack">
+                <div class="stack-total">~$7.0M+</div>
+                <div class="stack-segment seg-f" style="height:4.74%;"></div>
+                <div class="stack-segment seg-e" style="height:25.05%;"></div>
+                <div class="stack-segment seg-c" style="height:24.74%;"></div>
+                <div class="stack-segment seg-b" style="height:20.84%;"></div>
+              </div>
+              <div>
+                <div class="stack-year">Y6 2031</div>
+                <div class="stack-year-note">CoB mature</div>
+              </div>
+            </div>
+            <div class="stack-group">
+              <div class="stack">
+                <div class="stack-total">~$8M+</div>
+                <div class="stack-segment seg-f" style="height:4.74%;"></div>
+                <div class="stack-segment seg-e" style="height:25.05%;"></div>
+                <div class="stack-segment seg-c" style="height:36.74%;"></div>
+                <div class="stack-segment seg-b" style="height:20.84%;"></div>
+              </div>
+              <div>
+                <div class="stack-year">Y7 2032</div>
+                <div class="stack-year-note">CoB mature</div>
+              </div>
+            </div>
+            <div class="stack-group">
+              <div class="stack">
+                <div class="stack-total">~$9M+</div>
+                <div class="stack-segment seg-f" style="height:4.74%;"></div>
+                <div class="stack-segment seg-e" style="height:36.32%;"></div>
+                <div class="stack-segment seg-c" style="height:40.84%;"></div>
+                <div class="stack-segment seg-b" style="height:20.84%;"></div>
+              </div>
+              <div>
+                <div class="stack-year">Y8 2033</div>
+                <div class="stack-year-note">CoB mature</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-legend" style="margin-bottom:14px;">
+              <div class="chart-legend-item"><span class="legend-dot" style="background:var(--green);"></span>CoB &mdash; CoAssist</div>
+              <div class="chart-legend-item"><span class="legend-dot" style="background:var(--amber);"></span>CoC &mdash; Certification</div>
+              <div class="chart-legend-item"><span class="legend-dot" style="background:var(--pink);"></span>CoE &mdash; Data</div>
+              <div class="chart-legend-item"><span class="legend-dot" style="background:var(--blue);"></span>Foundation</div>
+            </div>
+            <div class="card-body">Year 6 through Year 8 use Company B held at its mature Year 5 moderate level for visualization because the source table describes CoB as &ldquo;mature&rdquo; rather than giving a new annual figure. Company A is additive to every bar and is intentionally excluded here.</div>
+          </div>
+
+          <div class="table-wrap">
+            <div class="table-label">Moderate Scenario Breakdown</div>
+            <div class="table-scroll">
+              <table class="mini-table">
+                <thead>
+                  <tr><th>Year</th><th>Entity mix</th><th>Total</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Y1 2026</td><td>CoB $84K + CoC $0 + CoE $55K + Foundation $60K</td><td>~$199K</td></tr>
+                  <tr><td>Y2 2027</td><td>CoB $330K + CoC $190K + CoE $55K + Foundation $250K</td><td>~$825K</td></tr>
+                  <tr><td>Y3 2028</td><td>CoB $720K + CoC $860K + CoE $733K + Foundation $400K</td><td>~$2.71M</td></tr>
+                  <tr><td>Y4 2029</td><td>CoB $1.27M + CoC $1.67M + CoE $733K + Foundation $450K</td><td>~$4.12M</td></tr>
+                  <tr><td>Y5 2030</td><td>CoB $1.98M + CoC $2.21M + CoE $2.38M + Foundation $450K</td><td>~$7.02M</td></tr>
+                  <tr><td>Y6 2031</td><td>CoB mature + CoC $2.35M + CoE $2.38M + Foundation $450K</td><td>~$7.0M+</td></tr>
+                  <tr><td>Y7 2032</td><td>CoC $3.49M + CoE $2.38M + mature</td><td>~$8M+</td></tr>
+                  <tr><td>Y8 2033</td><td>CoC $3.88M + CoE $3.45M + mature</td><td>~$9M+</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="callout teal">
+            <div class="callout-title">Inflection Point</div>
+            <div class="callout-body">Year 3 is the inflection point &mdash; Company C cert revenue comes online and Company E hits multi-state scale.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="milestones">
+    <div class="section-header active" onclick="toggleSection(this)" aria-expanded="true" tabindex="0" role="button">
+      <span class="section-icon">◈</span>
+      <span class="section-title">Key Milestones<span class="section-subtitle">Calendar-approximate milestones from start date (April 2026)</span></span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="section-inner">
+        <div class="timeline">
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-teal"></div>
+            <div>
+              <span class="phase-name" style="color:var(--teal);">Phase 1 &mdash; Foundation</span>
+              <span class="phase-period">April 2026 &rarr; Month 6</span>
+            </div>
+            <ul class="phase-items">
+              <li class="phase-item">Apr 2026 &mdash; 501(c)(3) name selected, board recruitment begins</li>
+              <li class="phase-item">Apr 2026 &mdash; Articles of Incorporation filed with GA SOS; EIN obtained; SAM.gov started</li>
+              <li class="phase-item">Apr 2026 &mdash; Organizational meeting held (board, bylaws, COI adopted)</li>
+              <li class="phase-item">Apr&ndash;May 2026 &mdash; Form 1023 preparation begins</li>
+              <li class="phase-item">May 2026 &mdash; Psychometric data extraction begins (PV-1)</li>
+              <li class="phase-item">May 2026 &mdash; SAM.gov registration active (earliest)</li>
+              <li class="phase-item">Jun 2026 &mdash; Hero Fund America application submitted</li>
+              <li class="phase-item">Jun 2026 &mdash; CoAssist revenue-ready features complete (Phase 1)</li>
+              <li class="phase-item">Jun&ndash;Jul 2026 &mdash; Form 1023 filed with IRS</li>
+              <li class="phase-item">Jun&ndash;Jul 2026 &mdash; The Vault (Wyoming LLC) formed</li>
+              <li class="phase-item">Q3 2026 &mdash; CoAssist Georgia pilot launches (5&ndash;10 programs)</li>
+              <li class="phase-item">Q3&ndash;Q4 2026 &mdash; IP license agreements executed (Vault &rarr; OpCos)</li>
+              <li class="phase-item">Oct&ndash;Nov 2026 &mdash; Full psychometric validation complete (Phase 5)</li>
+              <li class="phase-item">Oct&ndash;Nov 2026 &mdash; 501(c)(3) IRS determination letter received</li>
+              <li class="phase-item">Q4 2026 &mdash; Company C formation decision + brand selection</li>
+              <li class="phase-item">Late 2026 &mdash; CAPCE application submitted</li>
+              <li class="phase-item">Late 2026 / Early 2027 &mdash; HRSA RHNDP NOFO: ready to apply</li>
+            </ul>
+          </div>
+
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-purple"></div>
+            <div>
+              <span class="phase-name" style="color:var(--purple);">Phase 2 &mdash; Entity Separation</span>
+              <span class="phase-period">Month 6 &rarr; Year 2</span>
+            </div>
+            <ul class="phase-items">
+              <li class="phase-item">Q1 2027 &mdash; Company E Phase 2 complete (Georgia pilot dashboards)</li>
+              <li class="phase-item">Q1 2027 &mdash; CoAssist state contract proposal to Georgia DPH</li>
+              <li class="phase-item">Q1&ndash;Q2 2027 &mdash; Company C governance board constituted</li>
+              <li class="phase-item">Q1&ndash;Q2 2027 &mdash; EMT JTA begins (starts the certification clock)</li>
+              <li class="phase-item">Q2&ndash;Q3 2027 &mdash; CE &ldquo;recert by exam&rdquo; product launches</li>
+              <li class="phase-item">Q3 2027 &mdash; Paramedic JTA begins (parallel with EMT)</li>
+            </ul>
+          </div>
+
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-blue"></div>
+            <div>
+              <span class="phase-name" style="color:var(--blue);">Phase 3 &mdash; Certification Launch</span>
+              <span class="phase-period">Year 2 &rarr; Year 4</span>
+            </div>
+            <ul class="phase-items">
+              <li class="phase-item">Year 2 (Apr 2028) &mdash; EMT certification exam launches (pre-NCCA)</li>
+              <li class="phase-item">Year 2 &mdash; CE pipeline calibrating at scale (90&ndash;150 items/year at 3K examinees)</li>
+              <li class="phase-item">Year 2&ndash;3 &mdash; Paramedic certification launch</li>
+              <li class="phase-item">Year 3 (Apr 2029) &mdash; EMT NCCA application submitted</li>
+              <li class="phase-item">Year 3 &mdash; EMT NCCA accredited (4&ndash;5 month review)</li>
+              <li class="phase-item">Year 3 &mdash; AEMT JTA begins</li>
+              <li class="phase-item">Year 3 &mdash; Georgia state recognition campaign begins (post-NCCA)</li>
+              <li class="phase-item">Year 4 (Apr 2030) &mdash; EMR JTA begins; PP JTA begins</li>
+            </ul>
+          </div>
+
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-amber"></div>
+            <div>
+              <span class="phase-name" style="color:var(--amber);">Phase 4 &mdash; Expansion</span>
+              <span class="phase-period">Year 4 &rarr; Year 8-9</span>
+            </div>
+            <ul class="phase-items">
+              <li class="phase-item">Year 4&ndash;5 &mdash; Entity value may trigger irrevocable trust ($1M&ndash;$2M threshold)</li>
+              <li class="phase-item">Year 5 (Apr 2031) &mdash; AEMT NCCA accredited; EMR certification launch</li>
+              <li class="phase-item">Year 5 &mdash; CoAssist $1M&ndash;$2M ARR; Company E $500K&ndash;$1M ARR</li>
+              <li class="phase-item">Year 7 (Apr 2033) &mdash; EMR NCCA accredited; PP certification launch</li>
+              <li class="phase-item">Year 7 &mdash; PP state recognition campaign (Georgia, Kentucky)</li>
+              <li class="phase-item">Year 8 (Apr 2034) &mdash; PP NCCA application filed</li>
+              <li class="phase-item">Year 8&ndash;9 &mdash; PP NCCA accredited &rarr; ALL 5 LEVELS NCCA-ACCREDITED</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="investment">
+    <div class="section-header active" onclick="toggleSection(this)" aria-expanded="true" tabindex="0" role="button">
+      <span class="section-icon">◈</span>
+      <span class="section-title">Investment Requirements by Phase<span class="section-subtitle">What needs to be funded, and where the money comes from</span></span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="section-inner">
+        <div class="investment-grid">
+          <div class="investment-card phase1">
+            <div class="investment-title">Phase 1 &mdash; Foundation</div>
+            <div class="investment-range">Now &ndash; Month 6</div>
+            <div class="section-kicker">Needs funding</div>
+            <ul class="detail-list teal">
+              <li>501(c)(3) formation: ~$2K&ndash;$5K legal/filing</li>
+              <li>Psychometric validation (PV-1&rarr;PV-6): founder time + SME compensation</li>
+              <li>CAPCE accreditation application: $25K&ndash;$60K (first year cost)</li>
+              <li>CoAssist revenue features: development labor (shared with Co A)</li>
+            </ul>
+            <div class="funding-source"><strong>Where it comes from:</strong> Company A operating revenue, founder capital</div>
+          </div>
+
+          <div class="investment-card phase2">
+            <div class="investment-title">Phase 2 &mdash; Entity Separation</div>
+            <div class="investment-range">Month 6 &ndash; Year 2</div>
+            <div class="section-kicker">Needs funding</div>
+            <ul class="detail-list purple">
+              <li>The Vault formation + IP assignment: $10K&ndash;$25K legal</li>
+              <li>Lite TP study: $15K&ndash;$30K</li>
+              <li>Company C governance board: recruitment + compensation</li>
+              <li>EMT JTA: $40K&ndash;$60K</li>
+              <li>EMT item development begins: $60K&ndash;$100K</li>
+              <li>CE infrastructure: $25K&ndash;$60K (CAPCE + LMS + reporting)</li>
+            </ul>
+            <div class="funding-source"><strong>Where it comes from:</strong> Company A revenue + early CoAssist revenue + HRSA RHNDP grant ($100K in Year 2)</div>
+          </div>
+
+          <div class="investment-card phase3">
+            <div class="investment-title">Phase 3 &mdash; Certification Launch</div>
+            <div class="investment-range">Year 2 &ndash; Year 4</div>
+            <div class="section-kicker">Needs funding</div>
+            <ul class="detail-list blue">
+              <li>EMT pilot + standard setting: $15K&ndash;$25K</li>
+              <li>NCCA application fees: $2,892 initial + $6,870/yr</li>
+              <li>Testing vendor setup (Prometric/PSI): ~$33&ndash;$60 per candidate</li>
+              <li>Psychometric consulting ongoing: $20K&ndash;$50K/yr</li>
+              <li>Paramedic JTA + item dev: $50K&ndash;$80K JTA + $80K&ndash;$150K items</li>
+              <li>Total Company C investment through Year 4: $700K&ndash;$1.1M cumulative</li>
+            </ul>
+            <div class="funding-source"><strong>Where it comes from:</strong> Company C exam fees (self-funding by Year 3&ndash;4) + Company A revenue + HRSA Rural Outreach grants (Year 3+)</div>
+          </div>
+
+          <div class="investment-card phase4">
+            <div class="investment-title">Phase 4 &mdash; Expansion</div>
+            <div class="investment-range">Year 4 &ndash; Year 8-9</div>
+            <div class="section-kicker">Needs funding</div>
+            <ul class="detail-list amber">
+              <li>AEMT, EMR, PP JTA + item dev + pilots: $137K&ndash;$375K per level</li>
+              <li>Full TP study (triggered at $500K+ revenue): $15K&ndash;$40K</li>
+              <li>Irrevocable dynasty trust: $10K&ndash;$20K legal</li>
+              <li>NCCA fees at 5 levels: $12,045/yr steady state</li>
+              <li>ISO 17024 dual accreditation evaluation (optional)</li>
+              <li>Total all 5 levels cumulative (adjusted for shared infrastructure): $600K&ndash;$1.0M</li>
+            </ul>
+            <div class="funding-source"><strong>Where it comes from:</strong> Company C self-funding (break-even Year 3&ndash;4, profitable Year 4&ndash;5) + Vault royalties</div>
+          </div>
+        </div>
+
+        <div class="callout teal">
+          <div class="callout-title">Cumulative Investment View</div>
+          <div class="callout-body">All 5 levels cumulative investment: $600K&ndash;$1.0M (adjusted for 30&ndash;50% shared infrastructure discount on levels 2&ndash;5). Company C reaches break-even Year 3&ndash;4 and self-funds thereafter.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">Timeline &amp; Financial Model for internal use &middot; Last updated: 2026-04-09</div>
+</div>
+
+<script>
+  function toggleSection(header) {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.section-chevron');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    header.classList.toggle('active', !isOpen);
+    header.setAttribute('aria-expanded', String(!isOpen));
+    if (chevron) chevron.classList.toggle('open', !isOpen);
+  }
+
+  function toggleAll(open) {
+    document.querySelectorAll('.section-body').forEach((body) => {
+      const header = body.previousElementSibling;
+      const chevron = header.querySelector('.section-chevron');
+      body.classList.toggle('open', open);
+      header.classList.toggle('active', open);
+      header.setAttribute('aria-expanded', String(open));
+      if (chevron) chevron.classList.toggle('open', open);
+    });
+  }
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -60px 0px', threshold: 0.05 });
+
+  document.querySelectorAll('.section').forEach((section) => {
+    revealObserver.observe(section);
+  });
+
+  document.querySelectorAll('.section-header').forEach((header) => {
+    header.setAttribute('tabindex', '0');
+    header.setAttribute('role', 'button');
+    header.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        header.click();
+      }
+    });
+  });
+
+  const currentDisplayDate = 'April 2026';
+  const navDate = document.getElementById('nav-date');
+  if (navDate) navDate.textContent = currentDisplayDate;
+</script>
+</body>
+</html>

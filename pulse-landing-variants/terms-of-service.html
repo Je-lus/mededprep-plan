@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service | Pulse by MedEdPrep</title>
+<meta name="description" content="Terms of Service for Pulse by MedEdPrep, the free gamified EMS education platform.">
+<meta name="theme-color" content="#000000">
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%2336C98D' rx='20' width='100' height='100'/><text x='50' y='72' text-anchor='middle' font-size='60' fill='white'>P</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ========================================
+   RESET & BASE
+   ======================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333333;
+  background: #ffffff;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   NAV
+   ======================================== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 72px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #36C98D;
+  color: #000000;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 24px;
+  min-height: 40px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: #2db87d;
+  transform: translateY(-1px);
+}
+
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 1px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 72px;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  flex-direction: column;
+  padding: 16px 24px 24px;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transform: translateY(-8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-mobile-menu.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-mobile-menu a {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  padding: 10px 0;
+  transition: color 0.2s ease;
+}
+
+.nav-mobile-menu a:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .nav-mobile-toggle {
+    display: flex;
+  }
+  .nav-mobile-menu {
+    display: flex;
+  }
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+.page-header {
+  position: relative;
+  background: linear-gradient(165deg, #000000 0%, #071a12 40%, #0a2a1a 70%, #0d1f17 100%);
+  color: #ffffff;
+  padding: 140px 0 64px;
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.page-header .effective-date {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+}
+
+.page-header .effective-date strong {
+  color: #36C98D;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    padding: 120px 0 48px;
+  }
+  .page-header h1 {
+    font-size: 28px;
+  }
+}
+
+/* ========================================
+   CONTENT
+   ======================================== */
+.content-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 64px 24px 96px;
+}
+
+.content-wrapper h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111111;
+  margin-top: 48px;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.content-wrapper h2:first-of-type {
+  margin-top: 0;
+}
+
+.content-wrapper h3 {
+  font-size: 17px;
+  font-weight: 600;
+  color: #222222;
+  margin-top: 32px;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.content-wrapper p {
+  font-size: 15px;
+  line-height: 1.75;
+  color: #444444;
+  margin-bottom: 16px;
+}
+
+.content-wrapper ul, .content-wrapper ol {
+  font-size: 15px;
+  line-height: 1.75;
+  color: #444444;
+  margin-bottom: 16px;
+  padding-left: 24px;
+}
+
+.content-wrapper li {
+  margin-bottom: 8px;
+}
+
+.content-wrapper a {
+  color: #36C98D;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.content-wrapper a:hover {
+  text-decoration: underline;
+}
+
+.content-wrapper .disclaimer-box {
+  background: #f8f9fa;
+  border-left: 4px solid #36C98D;
+  border-radius: 0 8px 8px 0;
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+
+.content-wrapper .disclaimer-box p {
+  color: #333333;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.content-wrapper .disclaimer-box p:last-child {
+  margin-bottom: 0;
+}
+
+.content-wrapper .disclaimer-box strong {
+  color: #111111;
+}
+
+.section-divider {
+  border: none;
+  border-top: 1px solid #e8e8e8;
+  margin: 48px 0;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+  position: relative;
+  background: #000000;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.5);
+  padding: 48px 0 32px;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.footer-brand {
+  max-width: 280px;
+}
+
+.footer-brand .nav-logo {
+  margin-bottom: 16px;
+}
+
+.footer-tagline {
+  font-size: 14px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.35);
+  margin-bottom: 16px;
+}
+
+.footer-contact {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.footer-contact a {
+  color: #36C98D;
+  text-decoration: none;
+}
+
+.footer-contact a:hover {
+  text-decoration: underline;
+}
+
+.footer-links-group {
+  display: flex;
+  gap: 64px;
+}
+
+@media (max-width: 768px) {
+  .footer-links-group {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-links-group {
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+.footer-col h4 {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.25);
+  margin-bottom: 16px;
+}
+
+.footer-col a {
+  display: block;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 4px 0;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+  color: #36C98D;
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 32px auto 0;
+  padding: 24px 24px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.footer-bottom a {
+  color: rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-bottom a:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-legal {
+  display: flex;
+  gap: 24px;
+}
+</style>
+</head>
+<body>
+
+<!-- ========================================
+     NAV
+     ======================================== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="https://pulse.mededprep.com" class="nav-logo" aria-label="Pulse by MedEdPrep home">
+      <svg style="height:44px;flex-shrink:0;" viewBox="440 820 1120 360" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#36C98D" d="M978.18,1133.63c0,7.56-5.98,14.58-15.11,14.58h-17.69v-47.76h13.03c7.97,0,13.72,5.63,13.72,11.91c0,5.18-3.76,8.95-6.19,8.95C972.08,1121.31,978.18,1126.43,978.18,1133.63z M950.75,1105.69v14.46h7.94c5.18,0.03,8.38-3.14,8.38-7.17c0-4.09-3.82-7.29-8.35-7.29H950.75z M972.91,1133.27c0-4.47-4.24-8.35-10.55-8.32h-11.61v17.98h11.88C968.08,1142.93,972.91,1138.81,972.91,1133.27z"/>
+        <path fill="#36C98D" d="M994.58,1127.91l-16.86-27.46h6.04l13.51,21.45l13.51-21.45h6.07l-16.92,27.46v20.29h-5.36V1127.91z"/>
+        <path fill="#36C98D" d="M1092.04,1099.56v48.64h-5.39v-32.41l-17.95,31.61h-0.06l-17.98-31.67v32.47h-5.39v-48.64h0.62l22.78,37.98l22.78-37.98H1092.04z"/>
+        <path fill="#36C98D" d="M1109.12,1105.75v15.11h19.64v5.39h-19.64v16.59h22.66v5.36h-28.05v-47.76h28.05v5.3H1109.12z"/>
+        <path fill="#36C98D" d="M1177.68,1124.36c0,14.58-9.48,23.85-24.35,23.85h-13.3v-47.76l13.3-0.03C1168.2,1100.42,1177.68,1109.72,1177.68,1124.36z M1172.26,1124.36c0-11.29-7.41-18.57-18.96-18.57h-7.88v37.03h7.97C1164.88,1142.81,1172.26,1135.58,1172.26,1124.36z"/>
+        <path fill="#36C98D" d="M1192.4,1105.75v15.11h19.64v5.39h-19.64v16.59h22.66v5.36H1187v-47.76h28.05v5.3H1192.4z"/>
+        <path fill="#36C98D" d="M1260.95,1124.36c0,14.58-9.48,23.85-24.35,23.85h-13.3v-47.76l13.3-0.03C1251.47,1100.42,1260.95,1109.72,1260.95,1124.36z M1255.53,1124.36c0-11.29-7.41-18.57-18.96-18.57h-7.88v37.03h7.97C1248.15,1142.81,1255.53,1135.58,1255.53,1124.36z"/>
+        <path fill="#36C98D" d="M1270.27,1100.45h15.14c9.24,0,16.8,6.93,16.8,15.41c0,8.12-7.56,14.72-16.8,14.72h-9.75v17.63h-5.39V1100.45z M1296.82,1115.8c0-5.51-5.13-10.01-11.41-10.01h-9.75v19.46l9.75,0.03C1291.69,1125.31,1296.82,1121.04,1296.82,1115.8z"/>
+        <path fill="#36C98D" d="M1337.19,1148.21l-13.33-18.63h-8.92v18.63h-5.39l-0.03-47.76h14.1c8.86,0,16.09,6.81,16.09,15.23c0,6.19-4.24,11.52-10.04,13.27l14.19,19.26H1337.19z M1323.79,1125.04c5.69,0,10.37-4.32,10.37-9.48c0-5.51-4.74-9.78-10.37-9.78h-8.89v19.23L1323.79,1125.04z"/>
+        <path fill="#36C98D" d="M1356.07,1105.75v15.11h19.64v5.39h-19.64v16.59h22.66v5.36h-28.05v-47.76h28.05v5.3H1356.07z"/>
+        <path fill="#36C98D" d="M1386.96,1100.45h15.14c9.24,0,16.8,6.93,16.8,15.41c0,8.12-7.56,14.72-16.8,14.72h-9.75v17.63h-5.39V1100.45z M1413.51,1115.8c0-5.51-5.13-10.01-11.41-10.01h-9.75v19.46l9.75,0.03C1408.38,1125.31,1413.51,1121.04,1413.51,1115.8z"/>
+        <path fill="#FFFFFF" d="M844.74,874.32h61.06c37.28,0,67.75,27.96,67.75,62.13c0,32.74-30.47,59.39-67.75,59.39h-39.31v71.09h-21.75V874.32z M951.8,936.22c0-22.23-20.67-40.39-46-40.39h-39.31v78.5l39.31,0.12C931.13,974.57,951.8,957.37,951.8,936.22z"/>
+        <path fill="#FFFFFF" d="M986.4,992.14V874.32h21.87v117.7c0,32.38,21.03,55.92,49.47,55.92c28.44,0,49.47-23.66,49.47-55.92v-117.7h21.87v117.81c0,44.93-30.35,77.79-71.33,77.79C1016.87,1069.93,986.4,1037.07,986.4,992.14z"/>
+        <path fill="#FFFFFF" d="M1274.78,1045.31v21.63h-116.14V874.32h21.75v170.99H1274.78z"/>
+        <path fill="#FFFFFF" d="M1279.73,1032.53l16.73-12.31c8.72,16.49,28.44,27.48,48.87,27.48c25.21,0,45.76-13.62,45.76-32.62c0-21.63-27.6-32.02-52.22-41.34c-23.66-9.2-50.07-20.79-50.07-50.54c0-29.63,26.65-51.74,60.46-51.74c28.56,0,48.03,15.65,55.2,34.65l-16.37,10.99c-6.21-14.46-21.75-24.26-39.07-24.26c-20.67,0-38.36,13.62-38.36,30.83c0,18.64,21.15,25.45,46,35.01c28.92,11.71,56.28,25.09,56.28,56.04c0,33.22-30.71,54.85-67.75,54.85C1313.54,1069.57,1288.93,1053.08,1279.73,1032.53z"/>
+        <path fill="#FFFFFF" d="M1452.84,895.71v60.94h79.22v21.75h-79.22v66.91h91.41v21.63h-113.15V874.32h113.15v21.39H1452.84z"/>
+        <path fill="#36C98D" d="M775.79,865.39l-0.12-4.66c-0.06-2.25-1.53-4.23-3.66-4.94l-4.69-1.55c-1.77-0.58-18.08-5.78-43.7-10.93c-35.94-7.2-72.19-10.85-107.76-10.86c-35.57,0.01-71.82,3.66-107.76,10.86c-14.03,2.82-25.15,5.63-32.01,7.5c-3.14,0.85-6.08,1.7-8.74,2.5c-1.01,0.31-1.79,0.55-2.33,0.72l-0.63,0.2l-4.68,1.54c-2.13,0.7-3.61,2.68-3.67,4.93l-0.13,4.67c-0.11,4.08-0.16,8.27-0.16,12.46c0,49.58,8.06,95.53,23.95,136.57c22.41,57.87,56.64,95.81,81.4,117.44c11.16,9.75,23.2,18.67,34.83,25.78c3.74,2.29,7.35,4.34,10.73,6.1c1.3,0.67,2.32,1.18,3.05,1.53c0.37,0.18,0.66,0.31,0.87,0.41l3.07,1.39c0.69,0.31,1.43,0.47,2.2,0.47c0.76,0,1.5-0.16,2.19-0.47l2.71-1.22l-0.05-0.16l0.07,0.15c4.07-1.84,40.83-19.27,78.2-62.56c22.4-25.95,40.23-55.84,53.02-88.86c15.89-41.02,23.95-86.94,23.95-136.57C775.95,873.68,775.9,869.49,775.79,865.39z M616.38,1156.1l-0.52,0.23l-0.86-0.39c-2.2-1.02-22.24-10.6-46.86-32.13c-22.76-19.88-53.8-54.07-75.38-105.61h20.32c5.36,0,10.52-1.96,14.54-5.51l10.33-9.84c1.68-1.47,3.75-2.24,5.98-2.25c1.33,0,2.66,0.29,3.86,0.85c1.2,0.56,2.25,1.36,3.05,2.31l4.67,6.98c0.12,0.19,0.15,0.22,0.29,0.39c4.18,5.15,10.39,8.11,17.02,8.11h11.64c1.83,0,3.48,1.08,4.21,2.76l8.57,19.71c0.85,1.95,2.77,3.21,4.9,3.21c0.31,0,0.62-0.03,0.93-0.08c2.44-0.43,4.25-2.46,4.41-4.93l8.78-81.58l8.9,114.58c0.21,2.71,2.42,4.83,5.13,4.93l0.2,0c2.62,0,4.89-1.95,5.28-4.54l8.49-55.56c0.06-0.41,0.25-0.75,0.56-1.01c0.31-0.27,0.68-0.4,1.09-0.41h11.34c8.58,0,16.59-4.6,20.91-12.01l12.39-21.24c0.15-0.24,0.27-0.35,0.42-0.43c0.16-0.09,0.36-0.14,0.56-0.14c0.21,0,0.43,0.06,0.59,0.15c0.17,0.1,0.3,0.22,0.43,0.48l8.73,17.65c4.35,8.79,13.14,14.25,22.95,14.25h16c-12.19,30.08-28.77,57.4-49.34,81.23C653.59,1139.52,616.76,1155.94,616.38,1156.1z M467.21,863.63l0.33,0.83c1.7-0.56,17.38-5.59,42.66-10.66c24.23-4.86,62.22-10.65,105.66-10.65c43.43,0.01,81.43,5.8,105.66,10.65c13.73,2.76,24.6,5.51,31.3,7.33c3.04,0.83,5.88,1.64,8.45,2.42c0.96,0.29,1.7,0.52,2.19,0.68l1.62,0.53l0.02,0.91c0.11,4,0.16,8.09,0.16,12.25c0,45.74-7.05,88.24-20.92,126.45h-20.1c-5.71,0-10.84-3.18-13.37-8.3l-8.73-17.65c-1-2.04-2.62-3.79-4.55-4.93c-1.83-1.08-3.92-1.65-6.06-1.66c-2,0-3.98,0.51-5.71,1.46c-1.86,1.02-3.41,2.54-4.49,4.41l-12.4,21.25c-2.41,4.14-6.89,6.71-11.68,6.71h-11.34c-2.95,0-5.81,1.06-8.05,2.98c-2.24,1.92-3.72,4.59-4.17,7.51l-1.47,9.64l-11.23-144.65c-0.21-2.77-2.55-4.93-5.37-4.93c-2.8,0.02-5.12,2.22-5.29,5.01l-12.14,135.9c-2.56-5.22-7.87-8.56-13.72-8.56h-11.63c-3.33,0-6.47-1.47-8.56-3.95l-4.67-6.98c-0.12-0.19-0.15-0.22-0.29-0.39c-1.89-2.33-4.31-4.22-7.01-5.47c-2.6-1.21-5.49-1.85-8.39-1.85c-4.82,0-9.47,1.77-13.1,4.98l-10.34,9.85c-2.05,1.79-4.67,2.77-7.39,2.77h-24.55c-14.65-39.04-22.09-82.64-22.1-129.67c0-4.11,0.05-8.2,0.16-12.17l0.02-0.92l0.86-0.28L467.21,863.63z"/>
+      </svg>
+    </a>
+    <div class="nav-links">
+      <a href="https://pulse.mededprep.com" class="nav-link">Home</a>
+      <a href="https://pulse.mededprep.com/#features" class="nav-link">Features</a>
+      <a href="https://pulse.mededprep.com/#faq" class="nav-link">FAQ</a>
+      <a href="https://pulse.mededprep.com/#get-started" class="btn-primary">Get Started Free</a>
+    </div>
+    <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu" aria-controls="mobileMenu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu" id="mobileMenu">
+    <a href="https://pulse.mededprep.com" onclick="closeMobileMenu()">Home</a>
+    <a href="https://pulse.mededprep.com/#features" onclick="closeMobileMenu()">Features</a>
+    <a href="https://pulse.mededprep.com/#faq" onclick="closeMobileMenu()">FAQ</a>
+    <a href="https://pulse.mededprep.com/#get-started" class="btn-primary" onclick="closeMobileMenu()">Get Started Free</a>
+  </div>
+</nav>
+
+<!-- ========================================
+     HEADER
+     ======================================== -->
+<header class="page-header">
+  <h1>Terms of Service</h1>
+  <p class="effective-date"><strong>Effective Date:</strong> May 21, 2026</p>
+</header>
+
+<!-- ========================================
+     CONTENT
+     ======================================== -->
+<main class="content-wrapper">
+
+  <p>Welcome to Pulse by MedEdPrep. These Terms of Service ("Terms") govern your access to and use of the Pulse platform available at <a href="https://pulse.mededprep.com">pulse.mededprep.com</a> (the "Service"), operated by MedEdPrep ("we," "us," or "our").</p>
+
+  <p>By creating an account, joining a session, or otherwise using Pulse, you agree to these Terms. If you do not agree, do not use the Service.</p>
+
+  <div class="disclaimer-box">
+    <p><strong>Important:</strong> Pulse is a free educational engagement tool for EMS classrooms. It is not a medical training certification, a substitute for clinical instruction, or a predictor of NREMT exam performance. Please read these Terms carefully.</p>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- 1 -->
+  <h2>1. Description of the Service</h2>
+
+  <p>Pulse is a free, web-based, gamified education platform designed for Emergency Medical Services (EMS) classrooms. The Service provides:</p>
+
+  <ul>
+    <li><strong>Live game sessions</strong> &mdash; Instructors launch multiplayer quiz games (Classic, Lightning, Survival, Team Battle, Jeopardy, and more) that students join from their phones via session codes or QR codes.</li>
+    <li><strong>Solo study</strong> &mdash; Spaced repetition flashcards and practice questions for individual review between classes.</li>
+    <li><strong>Engagement features</strong> &mdash; XP, streak tracking, achievement patches, leaderboards, and an in-app currency called "Pulses." Pulses are earned through participation and can be spent on streak freezes. Pulses have no real-world monetary value and are not redeemable for cash.</li>
+    <li><strong>Analytics dashboards</strong> &mdash; Instructor-facing tools showing performance by NREMT content area, by student, and over time.</li>
+    <li><strong>Question bank</strong> &mdash; A built-in EMS question bank with multiple question types (multiple choice, true/false, select-all, image identification, ordering, hotspot, and more), plus the ability for instructors to import their own questions.</li>
+    <li><strong>Conference mode</strong> &mdash; A special mode for trade shows and events where participants can play anonymously using temporary session tokens without creating an account.</li>
+  </ul>
+
+  <p>Pulse is mobile-first and browser-based. No app download is required. Students access sessions through any modern web browser.</p>
+
+  <!-- 2 -->
+  <h2>2. Account Registration and Responsibilities</h2>
+
+  <h3>Instructor Accounts</h3>
+  <p>Instructors must register for an account to create and manage game sessions. When registering, you agree to:</p>
+  <ul>
+    <li>Provide accurate and current information.</li>
+    <li>Keep your login credentials secure and confidential.</li>
+    <li>Notify us promptly at <a href="mailto:support@mededprep.com">support@mededprep.com</a> if you believe your account has been compromised.</li>
+    <li>Accept responsibility for all activity that occurs under your account.</li>
+  </ul>
+
+  <h3>Student Participants</h3>
+  <p>Students join sessions using instructor-provided session codes or QR codes. Depending on the implementation, students may or may not need to create persistent accounts. When creating an account, students provide a display name, email, and optionally a phone number. A fun EMS-themed nickname and avatar are automatically generated for leaderboard use. Students are expected to use the Service in accordance with their instructor's guidelines and these Terms.</p>
+
+  <h3>School Affiliation</h3>
+  <p>When students join via a session code or QR code, they may be automatically affiliated with the instructor's school or program. This affiliation determines which instructor can view the student's performance data. Instructors may also share school invite codes for direct enrollment.</p>
+
+  <h3>Age Requirement</h3>
+  <p>Pulse is designed for use by EMS students and professionals. You must be at least 16 years old to use the Service. If you are under 18, you should have parental or guardian consent and be participating under instructor supervision.</p>
+
+  <!-- 3 -->
+  <h2>3. Acceptable Use</h2>
+
+  <p>You agree to use Pulse only for its intended purpose: EMS education and classroom engagement. You may not:</p>
+
+  <ul>
+    <li><strong>Cheat or manipulate</strong> &mdash; Use bots, scripts, or other automated means to gain unfair advantages in games, inflate scores, or manipulate leaderboards.</li>
+    <li><strong>Upload abusive content</strong> &mdash; Submit custom questions or other content that is offensive, discriminatory, harassing, sexually explicit, or otherwise inappropriate for an educational setting.</li>
+    <li><strong>Scrape or harvest</strong> &mdash; Use automated tools to extract, scrape, crawl, or collect data from the Service, including questions, analytics, or user information.</li>
+    <li><strong>Interfere with the Service</strong> &mdash; Attempt to disrupt, overload, or compromise the Service's infrastructure, security, or availability.</li>
+    <li><strong>Impersonate others</strong> &mdash; Misrepresent your identity, role, or affiliation when using the Service.</li>
+    <li><strong>Redistribute content</strong> &mdash; Copy, reproduce, or distribute questions from the built-in question bank outside of the Pulse platform without written permission from MedEdPrep.</li>
+    <li><strong>Use for unauthorized commercial purposes</strong> &mdash; Resell access to the Service or use it to build a competing product.</li>
+  </ul>
+
+  <p>We reserve the right to investigate violations and take appropriate action, including suspending or terminating accounts.</p>
+
+  <!-- 4 -->
+  <h2>4. Instructor Responsibilities</h2>
+
+  <p>If you use Pulse as an instructor, you acknowledge and agree that:</p>
+
+  <ul>
+    <li><strong>Classroom management is yours.</strong> You are responsible for managing your classroom sessions, including who has access and how session codes are shared.</li>
+    <li><strong>Student data is your responsibility.</strong> If you use Pulse analytics to assess student performance, you are responsible for how you interpret and act on that data. Pulse provides informational data for educational insight only.</li>
+    <li><strong>Custom content must be appropriate.</strong> Any questions you create or import must be accurate, relevant to EMS education, and free from content that violates these Terms or applicable law.</li>
+    <li><strong>Institutional compliance is on you.</strong> If your institution has policies governing the use of third-party educational tools, you are responsible for ensuring your use of Pulse complies with those policies.</li>
+    <li><strong>Student privacy matters.</strong> You should not share individual student performance data from Pulse with unauthorized parties.</li>
+  </ul>
+
+  <!-- 5 -->
+  <h2>5. User-Generated Content</h2>
+
+  <h3>Your Content</h3>
+  <p>Instructors may upload custom questions and other educational content to the Service ("User Content"). You retain ownership of any User Content you create. By uploading User Content to Pulse, you grant MedEdPrep a non-exclusive, royalty-free, worldwide license to host, store, display, and distribute your User Content solely for the purpose of operating and providing the Service to you and your students.</p>
+
+  <h3>Content Standards</h3>
+  <p>User Content must comply with the Acceptable Use provisions in Section 3. We reserve the right to remove User Content that violates these Terms, without prior notice.</p>
+
+  <h3>No Obligation to Monitor</h3>
+  <p>We are not obligated to review, monitor, or approve User Content before it appears on the platform. However, we may do so at our discretion.</p>
+
+  <!-- 6 -->
+  <h2>6. Intellectual Property</h2>
+
+  <h3>Our Content</h3>
+  <p>The Pulse platform, including its design, code, built-in question bank, visual assets, logos, trademarks ("Pulse," "Pulse by MedEdPrep," "MedEdPrep"), and all other original content are owned by MedEdPrep and protected by applicable intellectual property laws. You may not copy, modify, distribute, or create derivative works from our content without written permission.</p>
+
+  <h3>Built-In Question Bank</h3>
+  <p>The built-in EMS question bank is proprietary content developed by MedEdPrep. It is provided for use within the Pulse platform only. You may not extract, reproduce, or redistribute questions from the built-in bank in any form.</p>
+
+  <h3>Feedback</h3>
+  <p>If you provide us with feedback, suggestions, or ideas about the Service, you grant us the right to use that feedback without restriction or compensation to you.</p>
+
+  <!-- 7 -->
+  <h2>7. Educational Disclaimers</h2>
+
+  <div class="disclaimer-box">
+    <p><strong>Pulse is an educational engagement tool. It is NOT a substitute for formal medical training, clinical instruction, or hands-on skills practice.</strong></p>
+  </div>
+
+  <p>By using Pulse, you acknowledge and agree that:</p>
+
+  <ul>
+    <li><strong>Not a certification platform.</strong> Pulse does not grant, imply, or replace any professional certification, license, or credential. Completion of games, quizzes, or study sessions on Pulse does not certify competency in any medical skill or body of knowledge.</li>
+    <li><strong>No guarantee of exam results.</strong> Performance on Pulse does not predict, guarantee, or correlate with results on the NREMT exam, state certification exams, or any other professional assessment. The question bank is designed for learning reinforcement, not exam simulation.</li>
+    <li><strong>Not for clinical decision-making.</strong> Content on Pulse is designed for educational reinforcement in a classroom context. It should never be used as a basis for clinical decisions, patient care, or medical treatment.</li>
+    <li><strong>Analytics are informational only.</strong> Performance data and analytics are provided for educational insight. They are not diagnostic, evaluative, or predictive of a student's clinical readiness or professional competence.</li>
+    <li><strong>Instructor discretion required.</strong> MedEdPrep is not responsible for how instructors choose to use analytics data, present game results, or incorporate Pulse into their curricula or grading.</li>
+  </ul>
+
+  <!-- 8 -->
+  <h2>8. Virtual Currency and Economy</h2>
+
+  <p>Pulse includes an in-app virtual currency called "Pulses" and related engagement features:</p>
+
+  <ul>
+    <li><strong>Pulses</strong> are earned through gameplay and study activity. They can be spent on in-app items such as streak freezes (which protect your daily streak if you miss a day).</li>
+    <li><strong>Pulses have no real-world monetary value.</strong> They cannot be redeemed for cash, transferred to other users, or exchanged outside the platform.</li>
+    <li><strong>XP, streaks, achievements, and prestige levels</strong> are engagement metrics that reflect your activity on the platform. They do not represent professional credentials or certifications of any kind.</li>
+    <li>We reserve the right to modify the virtual economy, including the earning rate, spending options, and balance of Pulses, at any time without notice.</li>
+  </ul>
+
+  <!-- 9 -->
+  <h2>9. Privacy</h2>
+
+  <p>Your privacy matters to us. Our collection and use of personal information in connection with the Service is described in our <a href="privacy-policy.html">Privacy Policy</a>. By using Pulse, you consent to the practices described in that policy.</p>
+
+  <p>In brief: we collect only what we need to operate the Service (account information, session data, performance data). We do not sell personal information to third parties.</p>
+
+  <!-- 10 -->
+  <h2>10. Service Availability</h2>
+
+  <p>Pulse is provided as a free tool. While we work to keep the Service running smoothly, we make no guarantees regarding:</p>
+
+  <ul>
+    <li>Uptime or availability of the Service.</li>
+    <li>Uninterrupted or error-free operation.</li>
+    <li>Preservation of data, scores, streaks, or session history.</li>
+    <li>Compatibility with all devices or browsers.</li>
+  </ul>
+
+  <p>We may modify, suspend, or discontinue any part of the Service at any time, with or without notice, and without liability to you. We will make reasonable efforts to notify users of significant changes.</p>
+
+  <!-- 11 -->
+  <h2>11. Limitation of Liability</h2>
+
+  <p>To the fullest extent permitted by applicable law:</p>
+
+  <ul>
+    <li><strong>The Service is provided "as is" and "as available"</strong> without warranties of any kind, whether express, implied, or statutory, including but not limited to warranties of merchantability, fitness for a particular purpose, and non-infringement.</li>
+    <li><strong>MedEdPrep shall not be liable</strong> for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of the Service, including but not limited to loss of data, loss of revenue, or interruption of educational activities.</li>
+    <li><strong>Our total liability</strong> for any claim arising from your use of the Service shall not exceed one hundred dollars ($100 USD).</li>
+  </ul>
+
+  <p>Some jurisdictions do not allow the exclusion of certain warranties or the limitation of liability for certain damages. In those jurisdictions, our liability is limited to the greatest extent permitted by law.</p>
+
+  <!-- 12 -->
+  <h2>12. Indemnification</h2>
+
+  <p>You agree to indemnify and hold harmless MedEdPrep, its officers, employees, and agents from any claims, damages, losses, or expenses (including reasonable attorneys' fees) arising from:</p>
+
+  <ul>
+    <li>Your use of the Service.</li>
+    <li>Your violation of these Terms.</li>
+    <li>User Content you upload or create.</li>
+    <li>Your violation of any rights of a third party.</li>
+  </ul>
+
+  <!-- 13 -->
+  <h2>13. Account Termination</h2>
+
+  <h3>By You</h3>
+  <p>You may stop using Pulse at any time. If you wish to delete your account and associated data, contact us at <a href="mailto:support@mededprep.com">support@mededprep.com</a>.</p>
+
+  <h3>By Us</h3>
+  <p>We reserve the right to suspend or terminate your account at any time, for any reason, including but not limited to violation of these Terms, abusive behavior, or extended inactivity. Where possible, we will provide notice before taking such action.</p>
+
+  <h3>Effect of Termination</h3>
+  <p>Upon termination, your right to access the Service ceases immediately. We may, but are not obligated to, retain your data for a reasonable period. Provisions of these Terms that by their nature should survive termination will survive, including Sections 5 (User-Generated Content licenses), 6 (Intellectual Property), 7 (Disclaimers), 11 (Limitation of Liability), 12 (Indemnification), and 15 (Governing Law).</p>
+
+  <!-- 14 -->
+  <h2>14. Changes to These Terms</h2>
+
+  <p>We may update these Terms from time to time. When we make material changes, we will update the "Effective Date" at the top of this page and make reasonable efforts to notify active users (for example, via an in-app notice or email).</p>
+
+  <p>Your continued use of the Service after changes become effective constitutes your acceptance of the revised Terms. If you do not agree with any changes, you should stop using the Service.</p>
+
+  <!-- 15 -->
+  <h2>15. Governing Law and Disputes</h2>
+
+  <p>These Terms are governed by and construed in accordance with the laws of the State of Georgia, United States, without regard to conflict of law principles.</p>
+
+  <p>Any disputes arising from or relating to these Terms or the Service shall be resolved exclusively in the state or federal courts located in Georgia, and you consent to personal jurisdiction in those courts.</p>
+
+  <!-- 16 -->
+  <h2>16. General Provisions</h2>
+
+  <ul>
+    <li><strong>Entire Agreement.</strong> These Terms, together with our Privacy Policy, constitute the entire agreement between you and MedEdPrep regarding the Service.</li>
+    <li><strong>Severability.</strong> If any provision of these Terms is found to be unenforceable, the remaining provisions will remain in full force and effect.</li>
+    <li><strong>No Waiver.</strong> Our failure to enforce any provision of these Terms does not constitute a waiver of that provision.</li>
+    <li><strong>Assignment.</strong> You may not assign your rights or obligations under these Terms without our prior written consent. We may assign our rights and obligations without restriction.</li>
+  </ul>
+
+  <!-- 17 -->
+  <h2>17. Contact Us</h2>
+
+  <p>If you have questions about these Terms, need to report a violation, or want to request account deletion, contact us at:</p>
+
+  <p>
+    <strong>MedEdPrep</strong><br>
+    Email: <a href="mailto:support@mededprep.com">support@mededprep.com</a><br>
+    Website: <a href="https://mededprep.com" target="_blank" rel="noopener">mededprep.com</a>
+  </p>
+
+</main>
+
+<!-- ========================================
+     FOOTER
+     ======================================== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="https://pulse.mededprep.com" class="nav-logo" aria-label="Pulse by MedEdPrep home">
+        <svg style="height:44px;flex-shrink:0;" viewBox="440 820 1120 360" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#36C98D" d="M978.18,1133.63c0,7.56-5.98,14.58-15.11,14.58h-17.69v-47.76h13.03c7.97,0,13.72,5.63,13.72,11.91c0,5.18-3.76,8.95-6.19,8.95C972.08,1121.31,978.18,1126.43,978.18,1133.63z M950.75,1105.69v14.46h7.94c5.18,0.03,8.38-3.14,8.38-7.17c0-4.09-3.82-7.29-8.35-7.29H950.75z M972.91,1133.27c0-4.47-4.24-8.35-10.55-8.32h-11.61v17.98h11.88C968.08,1142.93,972.91,1138.81,972.91,1133.27z"/>
+          <path fill="#36C98D" d="M994.58,1127.91l-16.86-27.46h6.04l13.51,21.45l13.51-21.45h6.07l-16.92,27.46v20.29h-5.36V1127.91z"/>
+          <path fill="#36C98D" d="M1092.04,1099.56v48.64h-5.39v-32.41l-17.95,31.61h-0.06l-17.98-31.67v32.47h-5.39v-48.64h0.62l22.78,37.98l22.78-37.98H1092.04z"/>
+          <path fill="#36C98D" d="M1109.12,1105.75v15.11h19.64v5.39h-19.64v16.59h22.66v5.36h-28.05v-47.76h28.05v5.3H1109.12z"/>
+          <path fill="#36C98D" d="M1177.68,1124.36c0,14.58-9.48,23.85-24.35,23.85h-13.3v-47.76l13.3-0.03C1168.2,1100.42,1177.68,1109.72,1177.68,1124.36z M1172.26,1124.36c0-11.29-7.41-18.57-18.96-18.57h-7.88v37.03h7.97C1164.88,1142.81,1172.26,1135.58,1172.26,1124.36z"/>
+          <path fill="#36C98D" d="M1192.4,1105.75v15.11h19.64v5.39h-19.64v16.59h22.66v5.36H1187v-47.76h28.05v5.3H1192.4z"/>
+          <path fill="#36C98D" d="M1260.95,1124.36c0,14.58-9.48,23.85-24.35,23.85h-13.3v-47.76l13.3-0.03C1251.47,1100.42,1260.95,1109.72,1260.95,1124.36z M1255.53,1124.36c0-11.29-7.41-18.57-18.96-18.57h-7.88v37.03h7.97C1248.15,1142.81,1255.53,1135.58,1255.53,1124.36z"/>
+          <path fill="#36C98D" d="M1270.27,1100.45h15.14c9.24,0,16.8,6.93,16.8,15.41c0,8.12-7.56,14.72-16.8,14.72h-9.75v17.63h-5.39V1100.45z M1296.82,1115.8c0-5.51-5.13-10.01-11.41-10.01h-9.75v19.46l9.75,0.03C1291.69,1125.31,1296.82,1121.04,1296.82,1115.8z"/>
+          <path fill="#36C98D" d="M1337.19,1148.21l-13.33-18.63h-8.92v18.63h-5.39l-0.03-47.76h14.1c8.86,0,16.09,6.81,16.09,15.23c0,6.19-4.24,11.52-10.04,13.27l14.19,19.26H1337.19z M1323.79,1125.04c5.69,0,10.37-4.32,10.37-9.48c0-5.51-4.74-9.78-10.37-9.78h-8.89v19.23L1323.79,1125.04z"/>
+          <path fill="#36C98D" d="M1356.07,1105.75v15.11h19.64v5.39h-19.64v16.59h22.66v5.36h-28.05v-47.76h28.05v5.3H1356.07z"/>
+          <path fill="#36C98D" d="M1386.96,1100.45h15.14c9.24,0,16.8,6.93,16.8,15.41c0,8.12-7.56,14.72-16.8,14.72h-9.75v17.63h-5.39V1100.45z M1413.51,1115.8c0-5.51-5.13-10.01-11.41-10.01h-9.75v19.46l9.75,0.03C1408.38,1125.31,1413.51,1121.04,1413.51,1115.8z"/>
+          <path fill="#FFFFFF" d="M844.74,874.32h61.06c37.28,0,67.75,27.96,67.75,62.13c0,32.74-30.47,59.39-67.75,59.39h-39.31v71.09h-21.75V874.32z M951.8,936.22c0-22.23-20.67-40.39-46-40.39h-39.31v78.5l39.31,0.12C931.13,974.57,951.8,957.37,951.8,936.22z"/>
+          <path fill="#FFFFFF" d="M986.4,992.14V874.32h21.87v117.7c0,32.38,21.03,55.92,49.47,55.92c28.44,0,49.47-23.66,49.47-55.92v-117.7h21.87v117.81c0,44.93-30.35,77.79-71.33,77.79C1016.87,1069.93,986.4,1037.07,986.4,992.14z"/>
+          <path fill="#FFFFFF" d="M1274.78,1045.31v21.63h-116.14V874.32h21.75v170.99H1274.78z"/>
+          <path fill="#FFFFFF" d="M1279.73,1032.53l16.73-12.31c8.72,16.49,28.44,27.48,48.87,27.48c25.21,0,45.76-13.62,45.76-32.62c0-21.63-27.6-32.02-52.22-41.34c-23.66-9.2-50.07-20.79-50.07-50.54c0-29.63,26.65-51.74,60.46-51.74c28.56,0,48.03,15.65,55.2,34.65l-16.37,10.99c-6.21-14.46-21.75-24.26-39.07-24.26c-20.67,0-38.36,13.62-38.36,30.83c0,18.64,21.15,25.45,46,35.01c28.92,11.71,56.28,25.09,56.28,56.04c0,33.22-30.71,54.85-67.75,54.85C1313.54,1069.57,1288.93,1053.08,1279.73,1032.53z"/>
+          <path fill="#FFFFFF" d="M1452.84,895.71v60.94h79.22v21.75h-79.22v66.91h91.41v21.63h-113.15V874.32h113.15v21.39H1452.84z"/>
+          <path fill="#36C98D" d="M775.79,865.39l-0.12-4.66c-0.06-2.25-1.53-4.23-3.66-4.94l-4.69-1.55c-1.77-0.58-18.08-5.78-43.7-10.93c-35.94-7.2-72.19-10.85-107.76-10.86c-35.57,0.01-71.82,3.66-107.76,10.86c-14.03,2.82-25.15,5.63-32.01,7.5c-3.14,0.85-6.08,1.7-8.74,2.5c-1.01,0.31-1.79,0.55-2.33,0.72l-0.63,0.2l-4.68,1.54c-2.13,0.7-3.61,2.68-3.67,4.93l-0.13,4.67c-0.11,4.08-0.16,8.27-0.16,12.46c0,49.58,8.06,95.53,23.95,136.57c22.41,57.87,56.64,95.81,81.4,117.44c11.16,9.75,23.2,18.67,34.83,25.78c3.74,2.29,7.35,4.34,10.73,6.1c1.3,0.67,2.32,1.18,3.05,1.53c0.37,0.18,0.66,0.31,0.87,0.41l3.07,1.39c0.69,0.31,1.43,0.47,2.2,0.47c0.76,0,1.5-0.16,2.19-0.47l2.71-1.22l-0.05-0.16l0.07,0.15c4.07-1.84,40.83-19.27,78.2-62.56c22.4-25.95,40.23-55.84,53.02-88.86c15.89-41.02,23.95-86.94,23.95-136.57C775.95,873.68,775.9,869.49,775.79,865.39z M616.38,1156.1l-0.52,0.23l-0.86-0.39c-2.2-1.02-22.24-10.6-46.86-32.13c-22.76-19.88-53.8-54.07-75.38-105.61h20.32c5.36,0,10.52-1.96,14.54-5.51l10.33-9.84c1.68-1.47,3.75-2.24,5.98-2.25c1.33,0,2.66,0.29,3.86,0.85c1.2,0.56,2.25,1.36,3.05,2.31l4.67,6.98c0.12,0.19,0.15,0.22,0.29,0.39c4.18,5.15,10.39,8.11,17.02,8.11h11.64c1.83,0,3.48,1.08,4.21,2.76l8.57,19.71c0.85,1.95,2.77,3.21,4.9,3.21c0.31,0,0.62-0.03,0.93-0.08c2.44-0.43,4.25-2.46,4.41-4.93l8.78-81.58l8.9,114.58c0.21,2.71,2.42,4.83,5.13,4.93l0.2,0c2.62,0,4.89-1.95,5.28-4.54l8.49-55.56c0.06-0.41,0.25-0.75,0.56-1.01c0.31-0.27,0.68-0.4,1.09-0.41h11.34c8.58,0,16.59-4.6,20.91-12.01l12.39-21.24c0.15-0.24,0.27-0.35,0.42-0.43c0.16-0.09,0.36-0.14,0.56-0.14c0.21,0,0.43,0.06,0.59,0.15c0.17,0.1,0.3,0.22,0.43,0.48l8.73,17.65c4.35,8.79,13.14,14.25,22.95,14.25h16c-12.19,30.08-28.77,57.4-49.34,81.23C653.59,1139.52,616.76,1155.94,616.38,1156.1z M467.21,863.63l0.33,0.83c1.7-0.56,17.38-5.59,42.66-10.66c24.23-4.86,62.22-10.65,105.66-10.65c43.43,0.01,81.43,5.8,105.66,10.65c13.73,2.76,24.6,5.51,31.3,7.33c3.04,0.83,5.88,1.64,8.45,2.42c0.96,0.29,1.7,0.52,2.19,0.68l1.62,0.53l0.02,0.91c0.11,4,0.16,8.09,0.16,12.25c0,45.74-7.05,88.24-20.92,126.45h-20.1c-5.71,0-10.84-3.18-13.37-8.3l-8.73-17.65c-1-2.04-2.62-3.79-4.55-4.93c-1.83-1.08-3.92-1.65-6.06-1.66c-2,0-3.98,0.51-5.71,1.46c-1.86,1.02-3.41,2.54-4.49,4.41l-12.4,21.25c-2.41,4.14-6.89,6.71-11.68,6.71h-11.34c-2.95,0-5.81,1.06-8.05,2.98c-2.24,1.92-3.72,4.59-4.17,7.51l-1.47,9.64l-11.23-144.65c-0.21-2.77-2.55-4.93-5.37-4.93c-2.8,0.02-5.12,2.22-5.29,5.01l-12.14,135.9c-2.56-5.22-7.87-8.56-13.72-8.56h-11.63c-3.33,0-6.47-1.47-8.56-3.95l-4.67-6.98c-0.12-0.19-0.15-0.22-0.29-0.39c-1.89-2.33-4.31-4.22-7.01-5.47c-2.6-1.21-5.49-1.85-8.39-1.85c-4.82,0-9.47,1.77-13.1,4.98l-10.34,9.85c-2.05,1.79-4.67,2.77-7.39,2.77h-24.55c-14.65-39.04-22.09-82.64-22.1-129.67c0-4.11,0.05-8.2,0.16-12.17l0.02-0.92l0.86-0.28L467.21,863.63z"/>
+        </svg>
+      </a>
+      <p class="footer-tagline">Game-day energy. Exam-day data.</p>
+      <p class="footer-contact"><a href="mailto:support@mededprep.com">support@mededprep.com</a></p>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="https://pulse.mededprep.com/#features">Features</a>
+        <a href="https://pulse.mededprep.com/#how-it-works">How It Works</a>
+        <a href="https://pulse.mededprep.com/#faq">FAQ</a>
+        <a href="https://pulse.mededprep.com/#get-started">Get Started</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="https://mededprep.com" target="_blank" rel="noopener">MedEdPrep.com</a>
+        <a href="https://linkedin.com/company/mededprep" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-service.html">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 MedEdPrep. All rights reserved.</span>
+    <div class="footer-legal">
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="terms-of-service.html">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ========================================
+     JAVASCRIPT
+     ======================================== -->
+<script>
+(function() {
+  'use strict';
+
+  // Mobile menu toggle
+  var toggle = document.getElementById('mobileToggle');
+  var menu = document.getElementById('mobileMenu');
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', function() {
+      var isOpen = menu.classList.contains('open');
+      menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', !isOpen);
+    });
+  }
+
+  window.closeMobileMenu = function() {
+    if (menu) menu.classList.remove('open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+  };
+})();
+</script>
+
+</body>
+</html>

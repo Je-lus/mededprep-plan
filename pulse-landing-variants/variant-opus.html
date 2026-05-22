@@ -1,0 +1,1907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse by MedEdPrep — Free Gamified EMS Education Platform</title>
+<meta name="description" content="Pulse turns EMS classrooms into live competitions. Students answer on their phones. You see exactly where they stand. Free for every EMS classroom.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ========================================
+   RESET & BASE
+   ======================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333333;
+  background: #000000;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   NOISE TEXTURE OVERLAY
+   ======================================== */
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 1;
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+/* ========================================
+   SECTION ANIMATIONS
+   ======================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+
+/* ========================================
+   SHARED STYLES
+   ======================================== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.section-dark {
+  position: relative;
+  background: linear-gradient(165deg, #000000 0%, #071a12 40%, #0a2a1a 70%, #0d1f17 100%);
+  color: #ffffff;
+}
+
+.section-light {
+  position: relative;
+  background: #ffffff;
+  color: #333333;
+}
+
+.section-padding {
+  padding: 96px 0;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 64px 0;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #36C98D;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 14px 36px;
+  min-height: 52px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  background: #2db87d;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(54, 201, 141, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 14px 36px;
+  min-height: 52px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.btn-ghost:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+  .btn-primary, .btn-ghost {
+    width: 100%;
+    padding: 16px 24px;
+    font-size: 17px;
+    min-height: 56px;
+  }
+}
+
+/* ========================================
+   SECTION LABELS
+   ======================================== */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #36C98D;
+  margin-bottom: 20px;
+}
+
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1.5px;
+  background: #36C98D;
+}
+
+/* ========================================
+   NAV
+   ======================================== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.3s ease;
+}
+
+.nav.scrolled {
+  background: rgba(0, 0, 0, 0.95);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 72px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-logo-icon {
+  width: 38px;
+  height: 38px;
+}
+
+.nav-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.nav-logo-pulse {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.nav-logo-mededprep {
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #36C98D;
+  margin-top: 2px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+}
+
+.nav-cta {
+  font-size: 14px;
+  padding: 10px 24px;
+  min-height: 40px;
+}
+
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 72px;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 24px;
+  flex-direction: column;
+  gap: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.nav-mobile-menu.open {
+  display: flex;
+}
+
+.nav-mobile-menu a {
+  display: block;
+  padding: 14px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.nav-mobile-menu a:last-child {
+  border-bottom: none;
+}
+
+.nav-mobile-menu .btn-primary {
+  margin-top: 12px;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .nav-mobile-toggle {
+    display: flex;
+  }
+}
+
+/* ========================================
+   HERO
+   ======================================== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: radial-gradient(ellipse at 30% 50%, #0f3326 0%, #071a12 35%, #000000 70%);
+  overflow: hidden;
+  padding-top: 72px;
+}
+
+.hero .noise-overlay {
+  opacity: 0.04;
+}
+
+.hero-bg-glow {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(54, 201, 141, 0.08) 0%, transparent 70%);
+  top: -200px;
+  right: -200px;
+  pointer-events: none;
+}
+
+.hero-bg-glow-2 {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(1, 205, 171, 0.05) 0%, transparent 70%);
+  bottom: -100px;
+  left: -100px;
+  pointer-events: none;
+}
+
+.hero-ekg-bg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  padding: 80px 0;
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 48px 0 64px;
+  }
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(54, 201, 141, 0.1);
+  border: 1px solid rgba(54, 201, 141, 0.2);
+  border-radius: 100px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #36C98D;
+  margin-bottom: 32px;
+}
+
+.hero-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #36C98D;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero h1 {
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 24px;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+}
+
+.hero h1 .accent {
+  color: #36C98D;
+}
+
+.hero-sub {
+  font-size: clamp(16px, 2.2vw, 20px);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.65;
+  margin-bottom: 40px;
+  max-width: 600px;
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.hero-tagline {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* ========================================
+   EKG DIVIDER
+   ======================================== */
+.ekg-divider {
+  width: 100%;
+  height: 48px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ekg-divider svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   TRUST BAR
+   ======================================== */
+.trust-bar {
+  position: relative;
+  background: #ffffff;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.trust-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 20px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.trust-bar-text {
+  font-size: 14px;
+  font-weight: 400;
+  color: #666666;
+  line-height: 1.5;
+}
+
+.trust-bar-text strong {
+  font-weight: 600;
+  color: #333333;
+}
+
+.trust-bar-text .mint {
+  color: #36C98D;
+  font-weight: 600;
+}
+
+.trust-bar-sep {
+  color: #CDCDCD;
+  margin: 0 4px;
+}
+
+@media (max-width: 768px) {
+  .trust-bar-inner {
+    padding: 16px 24px;
+  }
+  .trust-bar-text {
+    font-size: 13px;
+  }
+}
+
+/* ========================================
+   PROBLEM SECTION
+   ======================================== */
+.problem-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.problem-header h2 {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  color: #111111;
+  letter-spacing: -0.02em;
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .problem-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.problem-card {
+  padding: 36px 32px;
+  border-radius: 16px;
+  border: 1px solid #eeeeee;
+  background: #fafafa;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.problem-card:hover {
+  border-color: #ddd;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+}
+
+.problem-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(54, 201, 141, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.problem-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111111;
+  margin-bottom: 12px;
+}
+
+.problem-card p {
+  font-size: 15px;
+  color: #666666;
+  line-height: 1.65;
+}
+
+/* ========================================
+   HOW IT WORKS
+   ======================================== */
+.how-header {
+  text-align: center;
+  margin-bottom: 72px;
+}
+
+.how-header h2 {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.how-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-bottom: 64px;
+}
+
+@media (max-width: 768px) {
+  .how-steps {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+.how-step {
+  text-align: center;
+  position: relative;
+}
+
+.how-step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #36C98D, #01CDAB);
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.how-step h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.how-step p {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.65;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+/* connector line between steps on desktop */
+@media (min-width: 769px) {
+  .how-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 28px;
+    right: -20px;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(54, 201, 141, 0.4), rgba(54, 201, 141, 0.1));
+    pointer-events: none;
+  }
+}
+
+.how-closing {
+  text-align: center;
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.how-closing em {
+  font-style: normal;
+  color: #36C98D;
+}
+
+/* ========================================
+   FEATURES
+   ======================================== */
+.features-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.features-header h2 {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.feature-card:first-child {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  .feature-card:first-child {
+    grid-column: auto;
+  }
+}
+
+.feature-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  padding: 40px 36px;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.feature-card:hover {
+  border-color: rgba(54, 201, 141, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(54, 201, 141, 0.06);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.feature-card-glow {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(54, 201, 141, 0.06), transparent);
+  top: -80px;
+  right: -80px;
+  pointer-events: none;
+}
+
+.feature-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(54, 201, 141, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.feature-card-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #36C98D;
+  margin-bottom: 12px;
+}
+
+.feature-card h3 {
+  font-size: clamp(18px, 2.5vw, 22px);
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.feature-card p {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.65;
+}
+
+/* ========================================
+   CREDIBILITY / PARENT BRAND
+   ======================================== */
+.credibility-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.credibility-header h2 {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  color: #111111;
+  letter-spacing: -0.02em;
+}
+
+.credibility-header p {
+  font-size: 17px;
+  color: #666666;
+  margin-top: 16px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.65;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-bottom: 56px;
+}
+
+@media (max-width: 768px) {
+  .stats-row {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 700;
+  color: #36C98D;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.stat-label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #666666;
+  margin-top: 8px;
+}
+
+.credibility-quote {
+  text-align: center;
+  font-size: 17px;
+  font-style: italic;
+  color: #555555;
+  line-height: 1.7;
+  max-width: 700px;
+  margin: 0 auto 32px;
+  padding: 32px 0;
+  border-top: 1px solid #eeeeee;
+}
+
+.credibility-bridge {
+  text-align: center;
+  font-size: 15px;
+  color: #888888;
+  line-height: 1.6;
+}
+
+.credibility-bridge a {
+  color: #36C98D;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.credibility-bridge a:hover {
+  color: #2db87d;
+}
+
+/* ========================================
+   FOR INSTRUCTORS / FOR STUDENTS
+   ======================================== */
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .audience-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.audience-panel {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 48px 40px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.audience-panel:hover {
+  border-color: rgba(54, 201, 141, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+@media (max-width: 480px) {
+  .audience-panel {
+    padding: 36px 28px;
+  }
+}
+
+.audience-panel-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #36C98D;
+  margin-bottom: 16px;
+}
+
+.audience-panel h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 24px;
+}
+
+.audience-panel ul {
+  list-style: none;
+  margin-bottom: 32px;
+}
+
+.audience-panel li {
+  position: relative;
+  padding-left: 24px;
+  padding-bottom: 14px;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.55;
+}
+
+.audience-panel li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #36C98D;
+  opacity: 0.7;
+}
+
+/* ========================================
+   FAQ
+   ======================================== */
+.faq-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.faq-header h2 {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  color: #111111;
+  letter-spacing: -0.02em;
+}
+
+.faq-list {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  border-bottom: 1px solid #eeeeee;
+}
+
+.faq-item:first-child {
+  border-top: 1px solid #eeeeee;
+}
+
+.faq-item details {
+  padding: 0;
+}
+
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 0;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 600;
+  color: #111111;
+  list-style: none;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::marker {
+  display: none;
+  content: '';
+}
+
+.faq-item summary:hover {
+  color: #36C98D;
+}
+
+.faq-chevron {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  margin-left: 16px;
+  transition: transform 0.3s ease;
+  color: #999999;
+}
+
+details[open] .faq-chevron {
+  transform: rotate(180deg);
+  color: #36C98D;
+}
+
+.faq-answer {
+  padding: 0 0 24px;
+  font-size: 15px;
+  color: #666666;
+  line-height: 1.7;
+  max-width: 680px;
+}
+
+/* ========================================
+   FINAL CTA
+   ======================================== */
+.final-cta {
+  position: relative;
+  background: radial-gradient(ellipse at 50% 50%, #0f3326 0%, #071a12 40%, #000000 80%);
+  text-align: center;
+  overflow: hidden;
+}
+
+.final-cta .noise-overlay {
+  opacity: 0.05;
+}
+
+.final-cta-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.025;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.final-cta-content {
+  position: relative;
+  z-index: 2;
+}
+
+.final-cta h2 {
+  font-size: clamp(28px, 5vw, 52px);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.final-cta-sub {
+  font-size: clamp(16px, 2vw, 19px);
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 40px;
+  line-height: 1.6;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.final-cta-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+  position: relative;
+  background: #000000;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.5);
+  padding: 48px 0 32px;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.footer-brand {
+  max-width: 280px;
+}
+
+.footer-brand .nav-logo {
+  margin-bottom: 16px;
+}
+
+.footer-tagline {
+  font-size: 14px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.35);
+  margin-bottom: 16px;
+}
+
+.footer-contact {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.footer-contact a {
+  color: #36C98D;
+  text-decoration: none;
+}
+
+.footer-contact a:hover {
+  text-decoration: underline;
+}
+
+.footer-links-group {
+  display: flex;
+  gap: 64px;
+}
+
+@media (max-width: 768px) {
+  .footer-links-group {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-links-group {
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+.footer-col h4 {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.25);
+  margin-bottom: 16px;
+}
+
+.footer-col a {
+  display: block;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 4px 0;
+  transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+  color: #36C98D;
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 32px auto 0;
+  padding: 24px 24px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.footer-bottom a {
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 0.2s ease;
+}
+
+.footer-bottom a:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-legal {
+  display: flex;
+  gap: 24px;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes ekg-draw {
+  to { stroke-dashoffset: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========================================
+     NAV
+     ======================================== -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" aria-label="Pulse by MedEdPrep home">
+      <!-- Shield + EKG Logo -->
+      <svg class="nav-logo-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 4L6 14V26C6 36.5 14 44.5 24 46C34 44.5 42 36.5 42 26V14L24 4Z" stroke="#36C98D" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+        <polyline points="10,30 16,30 19,24 22,36 26,18 29,30 32,30 34,26 37,30 40,30" stroke="#36C98D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="nav-logo-text">
+        <span class="nav-logo-pulse">Pulse</span>
+        <span class="nav-logo-mededprep">by MedEdPrep</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a href="#how-it-works" class="nav-link">How It Works</a>
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+      <a href="#get-started" class="btn-primary nav-cta">Get Started Free</a>
+    </div>
+    <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu" id="mobileMenu">
+    <a href="#how-it-works" onclick="closeMobileMenu()">How It Works</a>
+    <a href="#features" onclick="closeMobileMenu()">Features</a>
+    <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
+    <a href="#get-started" class="btn-primary" onclick="closeMobileMenu()">Get Started Free</a>
+  </div>
+</nav>
+
+<!-- ========================================
+     HERO
+     ======================================== -->
+<section class="hero section-dark" id="hero">
+  <div class="noise-overlay"></div>
+  <div class="hero-bg-glow"></div>
+  <div class="hero-bg-glow-2"></div>
+
+  <!-- Subtle EKG waveform background -->
+  <svg class="hero-ekg-bg" viewBox="0 0 1440 120" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polyline points="0,80 120,80 180,80 210,40 240,100 270,20 300,80 360,80 480,80 540,80 570,40 600,100 630,20 660,80 720,80 840,80 900,80 930,40 960,100 990,20 1020,80 1080,80 1200,80 1260,80 1290,40 1320,100 1350,20 1380,80 1440,80" stroke="#36C98D" stroke-width="1.5" fill="none"/>
+  </svg>
+
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge reveal">
+        <span class="hero-badge-dot"></span>
+        Free for every EMS classroom
+      </div>
+      <h1 class="reveal reveal-delay-1">Your Students Already Have Their <span class="accent">Phones Out</span></h1>
+      <p class="hero-sub reveal reveal-delay-2">Pulse turns EMS classrooms into live competitions. Students answer on their phones. You see exactly where they stand &mdash; by NREMT domain, by student, by session. Free for every EMS classroom.</p>
+      <div class="hero-ctas reveal reveal-delay-3">
+        <a href="#get-started" class="btn-primary">Get Started Free</a>
+        <a href="#how-it-works" class="btn-ghost">See How It Works</a>
+      </div>
+      <div class="hero-tagline reveal reveal-delay-4">Train. Track. Perform.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     TRUST BAR
+     ======================================== -->
+<section class="trust-bar">
+  <div class="trust-bar-inner">
+    <span class="trust-bar-text">From the team behind <strong>MedEdPrep</strong> &mdash; trusted by <span class="mint">100+</span> EMS programs</span>
+    <span class="trust-bar-sep">|</span>
+    <span class="trust-bar-text"><span class="mint">10,600+</span> exam questions</span>
+    <span class="trust-bar-sep">|</span>
+    <span class="trust-bar-text"><span class="mint">1.55M+</span> student responses</span>
+  </div>
+</section>
+
+<!-- ========================================
+     PROBLEM STATEMENT
+     ======================================== -->
+<section class="section-light section-padding" id="problem">
+  <div class="container">
+    <div class="problem-header reveal">
+      <span class="section-label">The problem</span>
+      <h2>You already know the problem.</h2>
+    </div>
+    <div class="problem-grid">
+      <!-- Card 1 -->
+      <div class="problem-card reveal reveal-delay-1">
+        <div class="problem-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+            <line x1="12" y1="18" x2="12.01" y2="18"/>
+          </svg>
+        </div>
+        <h3>The phone problem.</h3>
+        <p>Your students are on their phones &mdash; but not reviewing lecture material. You can fight it, or you can use it.</p>
+      </div>
+      <!-- Card 2 -->
+      <div class="problem-card reveal reveal-delay-2">
+        <div class="problem-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+            <line x1="1" y1="1" x2="23" y2="23" stroke="#36C98D" stroke-width="2"/>
+          </svg>
+        </div>
+        <h3>The visibility problem.</h3>
+        <p>You teach the content, run your scenarios, and hope for the best on exam day. You have no idea who's actually studying between classes or what they're struggling with until the test tells you.</p>
+      </div>
+      <!-- Card 3 -->
+      <div class="problem-card reveal reveal-delay-3">
+        <div class="problem-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <h3>The tool problem.</h3>
+        <p>Kahoot is fun but tops out at trivia-night MCQ. Quizlet is solo and you never see it. Fisdap is for testing, not teaching. Nothing connects your classroom to your students' study habits &mdash; until now.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     EKG DIVIDER
+     ======================================== -->
+<div class="ekg-divider section-dark" style="height:4px; background: linear-gradient(90deg, #000, #0a2a1a, #000);"></div>
+
+<!-- ========================================
+     HOW IT WORKS
+     ======================================== -->
+<section class="section-dark section-padding" id="how-it-works">
+  <div class="noise-overlay"></div>
+  <div class="container">
+    <div class="how-header reveal">
+      <span class="section-label">How it works</span>
+      <h2>Running a Pulse Session Takes 60 Seconds</h2>
+    </div>
+    <div class="how-steps">
+      <!-- Step 1 -->
+      <div class="how-step reveal reveal-delay-1">
+        <div class="how-step-number">1</div>
+        <h3>Pick Your Content</h3>
+        <p>Choose from EMS questions mapped to NREMT domains and cert levels &mdash; EMR through Paramedic. Filter by topic or difficulty. Or use your own.</p>
+      </div>
+      <!-- Step 2 -->
+      <div class="how-step reveal reveal-delay-2">
+        <div class="how-step-number">2</div>
+        <h3>Launch the Game</h3>
+        <p>Students join on their phones with a session code. Choose your mode: Classic, Lightning, Team Battle, or Survival. Project the leaderboard. Watch the room come alive.</p>
+      </div>
+      <!-- Step 3 -->
+      <div class="how-step reveal reveal-delay-3">
+        <div class="how-step-number">3</div>
+        <h3>See the Data</h3>
+        <p>Your dashboard shows performance by NREMT content area, by student, over time. Know which students missed every cardiac question before they do.</p>
+      </div>
+    </div>
+    <div class="how-closing reveal">
+      No training required. No IT department. No budget approval. <em>It's free.</em>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     EKG SECTION DIVIDER
+     ======================================== -->
+<div class="section-dark" style="padding: 0; overflow: hidden;">
+  <svg width="100%" height="40" viewBox="0 0 1440 40" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block; opacity: 0.12;">
+    <polyline points="0,20 200,20 260,20 280,8 300,32 320,4 340,20 400,20 600,20 660,20 680,8 700,32 720,4 740,20 800,20 1000,20 1060,20 1080,8 1100,32 1120,4 1140,20 1200,20 1440,20" stroke="#36C98D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
+
+<!-- ========================================
+     FEATURES
+     ======================================== -->
+<section class="section-dark section-padding" id="features">
+  <div class="noise-overlay"></div>
+  <div class="container">
+    <div class="features-header reveal">
+      <span class="section-label">Features</span>
+      <h2>Everything Your Classroom Needs</h2>
+    </div>
+    <div class="features-grid">
+      <!-- Feature 1: Live Competition (spans full width) -->
+      <div class="feature-card reveal">
+        <div class="feature-card-glow"></div>
+        <div class="feature-card-icon">
+          <!-- Live Session icon -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+        </div>
+        <div class="feature-card-label">Live Competition</div>
+        <h3>The energy of game night. The rigor of an assessment.</h3>
+        <p>Real-time multiplayer sessions where students compete on their phones and results display on your projector. Speed-based scoring and streak multipliers keep the room loud. Multiple game modes &mdash; Classic, Lightning, Team Battle, Survival, Jeopardy &mdash; keep it fresh.</p>
+      </div>
+      <!-- Feature 2: Analytics -->
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-card-glow"></div>
+        <div class="feature-card-icon">
+          <!-- Analytics icon -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"/>
+            <line x1="12" y1="20" x2="12" y2="4"/>
+            <line x1="6" y1="20" x2="6" y2="14"/>
+          </svg>
+        </div>
+        <div class="feature-card-label">Analytics</div>
+        <h3>Know Who's Struggling Before the Exam Tells You</h3>
+        <p>Performance data by NREMT content area &mdash; not just a score. After every session, see your class broken down by domain: Airway, Cardiology, Trauma, Medical, OB, Pediatrics, Operations. Track individual students over time.</p>
+      </div>
+      <!-- Feature 3: NREMT Content -->
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-card-glow"></div>
+        <div class="feature-card-icon">
+          <!-- Achievement/Shield icon -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+        </div>
+        <div class="feature-card-label">NREMT-Mapped Content</div>
+        <h3>Every question aligned to what they'll actually see on the Registry.</h3>
+        <p>Questions organized by the NHTSA EMS Education Standards taxonomy, by certification level, by cognitive complexity. Not a generic quiz bank with a medical skin. Built from the ground up around EMS competency domains.</p>
+      </div>
+      <!-- Feature 4: Solo Study -->
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-card-glow"></div>
+        <div class="feature-card-icon">
+          <!-- Streak/Level Up icon -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5C542" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+        <div class="feature-card-label">Solo Study &amp; Streaks</div>
+        <h3>The Duolingo Effect, But for EMS</h3>
+        <p>Flashcards powered by spaced repetition. Daily streaks. Achievement patches. Quick 5-minute sessions that fit between shifts. You see who's practicing and what they're struggling with &mdash; even when class isn't in session.</p>
+      </div>
+      <!-- Feature 5: Question Types -->
+      <div class="feature-card reveal reveal-delay-4">
+        <div class="feature-card-glow"></div>
+        <div class="feature-card-icon">
+          <!-- Grid/Types icon -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+        </div>
+        <div class="feature-card-label">10 Question Types</div>
+        <h3>Because real EMS decisions aren't always A, B, C, or D.</h3>
+        <p>Image identification for 12-leads. Hotspot tapping for anatomy. Ordering questions for procedure sequencing. Triage sort for MCI prioritization. The NREMT is moving beyond simple MCQ &mdash; your students should be practicing that way now.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     CREDIBILITY / PARENT BRAND
+     ======================================== -->
+<section class="section-light section-padding" id="credibility">
+  <div class="container">
+    <div class="credibility-header reveal">
+      <span class="section-label" style="color: #36C98D;">Built by MedEdPrep</span>
+      <h2>Built by MedEdPrep</h2>
+      <p>Pulse is built by the same team behind MedEdPrep &mdash; the adaptive test prep platform used by 100+ EMS programs nationwide.</p>
+    </div>
+    <div class="stats-row">
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-number" data-target="10600" data-suffix="+">0</div>
+        <div class="stat-label">EMS exam questions in our bank</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-number" data-target="1550000" data-suffix="+" data-format="1.55M">0</div>
+        <div class="stat-label">Student responses analyzed</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-3">
+        <div class="stat-number" data-target="100" data-suffix="+">0</div>
+        <div class="stat-label">EMS programs trust MedEdPrep</div>
+      </div>
+    </div>
+    <div class="credibility-quote reveal">
+      "We've been building tools for EMS education since the beginning. Pulse is how we're making classroom engagement free for everyone &mdash; and connecting it to the deepest question bank in EMS."
+    </div>
+    <div class="credibility-bridge reveal">
+      Want the full test prep experience? <a href="https://mededprep.com" target="_blank" rel="noopener">MedEdPrep.com</a> gives students adaptive exams, diagnostic reports, and NREMT readiness tracking &mdash; powered by the same question bank.
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     FOR INSTRUCTORS / FOR STUDENTS
+     ======================================== -->
+<section class="section-dark section-padding" id="audience">
+  <div class="noise-overlay"></div>
+  <div class="container">
+    <div class="audience-grid">
+      <!-- Instructors -->
+      <div class="audience-panel reveal">
+        <div class="audience-panel-label">For Instructors</div>
+        <h3>Your classroom, supercharged.</h3>
+        <ul>
+          <li>Run live games with zero prep time</li>
+          <li>Track student performance by NREMT domain</li>
+          <li>Use our question bank or import your own</li>
+          <li>See who's studying between classes</li>
+          <li>Free &mdash; no budget approval needed</li>
+        </ul>
+        <a href="#get-started" class="btn-primary">Get Your Classroom Started</a>
+      </div>
+      <!-- Students -->
+      <div class="audience-panel reveal reveal-delay-2">
+        <div class="audience-panel-label">For Students</div>
+        <h3>Study smarter. Compete harder.</h3>
+        <ul>
+          <li>Compete against classmates in live sessions</li>
+          <li>Study anywhere on your phone</li>
+          <li>Spaced repetition flashcards that adapt to you</li>
+          <li>Practice question types beyond basic MCQ</li>
+          <li>Track your progress by NREMT content area</li>
+        </ul>
+        <a href="#get-started" class="btn-primary">Join Your Class</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     FAQ
+     ======================================== -->
+<section class="section-light section-padding" id="faq">
+  <div class="container">
+    <div class="faq-header reveal">
+      <span class="section-label" style="color: #36C98D;">FAQ</span>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <details>
+          <summary>
+            Is Pulse really free?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">Yes. Free for instructors, free for students. No credit card, no trial period, no catch. We built Pulse to be in every EMS classroom &mdash; not behind a paywall.</div>
+        </details>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <details>
+          <summary>
+            Do I need to create all my own content?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">No. Pulse comes with EMS questions mapped to NREMT domains and cert levels. You can also add your own questions if you want to customize for your program.</div>
+        </details>
+      </div>
+      <div class="faq-item reveal reveal-delay-2">
+        <details>
+          <summary>
+            Does it work on student phones?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">Yes. Pulse is mobile-first &mdash; built for the phones your students already have. Works on any modern browser, iOS or Android. Students join with a session code, no app install required for games.</div>
+        </details>
+      </div>
+      <div class="faq-item reveal reveal-delay-3">
+        <details>
+          <summary>
+            Can I use this for NREMT exam prep?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">Absolutely. Every question is mapped to the NHTSA EMS Education Standards taxonomy. Your analytics show performance against the same domains that appear on the Registry exam.</div>
+        </details>
+      </div>
+      <div class="faq-item reveal reveal-delay-4">
+        <details>
+          <summary>
+            What's the difference between Pulse and MedEdPrep?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">Pulse is the free classroom engagement and study tool &mdash; live games, flashcards, and quick analytics. MedEdPrep is the full test prep platform &mdash; adaptive exams, diagnostic reports, NREMT readiness prediction, and school management tools. They work great together, but Pulse stands on its own.</div>
+        </details>
+      </div>
+      <div class="faq-item reveal reveal-delay-5">
+        <details>
+          <summary>
+            I'm not tech-savvy. Is this complicated?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">If you can share a link, you can run Pulse. Instructors launch a session, students scan a code. The whole setup takes under a minute. No IT department needed.</div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     FINAL CTA
+     ======================================== -->
+<section class="final-cta section-dark section-padding" id="get-started">
+  <div class="noise-overlay"></div>
+  <!-- Subtle shield pattern background -->
+  <div class="final-cta-pattern">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="shield-pattern" x="0" y="0" width="100" height="120" patternUnits="userSpaceOnUse">
+          <path d="M50 10L30 22V34C30 42 38 48.5 50 50C62 48.5 70 42 70 34V22L50 10Z" stroke="#36C98D" stroke-width="0.6" fill="none" opacity="0.25"/>
+          <polyline points="36,36 42,36 44,32 47,40 50,28 53,36 56,36 58,34 60,36" stroke="#36C98D" stroke-width="0.5" fill="none" opacity="0.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#shield-pattern)"/>
+    </svg>
+  </div>
+  <div class="container">
+    <div class="final-cta-content">
+      <h2 class="reveal">Put Pulse in Your Classroom Tomorrow</h2>
+      <p class="final-cta-sub reveal reveal-delay-1">Free. No setup. No approval process. Join the EMS instructors already using Pulse to turn review sessions into the best part of class.</p>
+      <div class="final-cta-buttons reveal reveal-delay-2">
+        <a href="#" class="btn-primary" style="font-size: 18px; padding: 18px 48px; min-height: 60px;">Get Started Free</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     FOOTER
+     ======================================== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo" aria-label="Pulse by MedEdPrep home">
+        <svg width="38" height="38" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 4L6 14V26C6 36.5 14 44.5 24 46C34 44.5 42 36.5 42 26V14L24 4Z" stroke="#36C98D" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+          <polyline points="10,30 16,30 19,24 22,36 26,18 29,30 32,30 34,26 37,30 40,30" stroke="#36C98D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="nav-logo-text">
+          <span class="nav-logo-pulse">Pulse</span>
+          <span class="nav-logo-mededprep">by MedEdPrep</span>
+        </span>
+      </a>
+      <p class="footer-tagline">Game-day energy. Exam-day data.</p>
+      <p class="footer-contact"><a href="mailto:hello@mededprep.com">hello@mededprep.com</a></p>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#faq">FAQ</a>
+        <a href="#get-started">Get Started</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="https://mededprep.com" target="_blank" rel="noopener">MedEdPrep.com</a>
+        <a href="https://linkedin.com/company/mededprep" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 MedEdPrep. All rights reserved.</span>
+    <div class="footer-legal">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ========================================
+     JAVASCRIPT
+     ======================================== -->
+<script>
+(function() {
+  'use strict';
+
+  // ===== GENERATE NOISE TEXTURE =====
+  (function generateNoise() {
+    var canvas = document.createElement('canvas');
+    canvas.width = 200;
+    canvas.height = 200;
+    var ctx = canvas.getContext('2d');
+    var imageData = ctx.createImageData(200, 200);
+    var data = imageData.data;
+    for (var i = 0; i < data.length; i += 4) {
+      var v = Math.random() * 255;
+      data[i] = v;
+      data[i + 1] = v;
+      data[i + 2] = v;
+      data[i + 3] = 255;
+    }
+    ctx.putImageData(imageData, 0, 0);
+    var dataUrl = canvas.toDataURL('image/png');
+    var overlays = document.querySelectorAll('.noise-overlay');
+    overlays.forEach(function(el) {
+      el.style.backgroundImage = 'url(' + dataUrl + ')';
+    });
+  })();
+
+  // ===== NAV SCROLL BEHAVIOR =====
+  var nav = document.getElementById('nav');
+  var lastScrollY = 0;
+
+  function onScroll() {
+    var scrollY = window.scrollY || window.pageYOffset;
+    if (scrollY > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+    lastScrollY = scrollY;
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ===== MOBILE MENU =====
+  var mobileToggle = document.getElementById('mobileToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var menuOpen = false;
+
+  mobileToggle.addEventListener('click', function() {
+    menuOpen = !menuOpen;
+    mobileMenu.classList.toggle('open', menuOpen);
+    // Animate hamburger
+    var spans = mobileToggle.querySelectorAll('span');
+    if (menuOpen) {
+      spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+      spans[1].style.opacity = '0';
+      spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+    } else {
+      spans[0].style.transform = 'none';
+      spans[1].style.opacity = '1';
+      spans[2].style.transform = 'none';
+    }
+  });
+
+  window.closeMobileMenu = function() {
+    menuOpen = false;
+    mobileMenu.classList.remove('open');
+    var spans = mobileToggle.querySelectorAll('span');
+    spans[0].style.transform = 'none';
+    spans[1].style.opacity = '1';
+    spans[2].style.transform = 'none';
+  };
+
+  // ===== INTERSECTION OBSERVER FOR REVEAL ANIMATIONS =====
+  var revealElements = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(function(el) {
+      observer.observe(el);
+    });
+  } else {
+    // Fallback for older browsers
+    revealElements.forEach(function(el) {
+      el.classList.add('visible');
+    });
+  }
+
+  // ===== ANIMATED COUNTER FOR STATS =====
+  var statNumbers = document.querySelectorAll('.stat-number[data-target]');
+  var countersStarted = {};
+
+  function formatNumber(n) {
+    if (n >= 1000000) {
+      return (n / 1000000).toFixed(2) + 'M';
+    }
+    return n.toLocaleString('en-US');
+  }
+
+  function animateCounter(el) {
+    var id = el.getAttribute('data-target');
+    if (countersStarted[id]) return;
+    countersStarted[id] = true;
+
+    var target = parseInt(el.getAttribute('data-target'), 10);
+    var suffix = el.getAttribute('data-suffix') || '';
+    var customFormat = el.getAttribute('data-format');
+    var duration = 2000;
+    var startTime = null;
+
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      // Ease out cubic
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = Math.floor(eased * target);
+
+      if (customFormat && progress >= 1) {
+        el.textContent = customFormat + suffix;
+      } else if (customFormat) {
+        // Animate as decimal for large numbers
+        var currentFormatted;
+        if (target >= 1000000) {
+          currentFormatted = (current / 1000000).toFixed(2) + 'M';
+        } else {
+          currentFormatted = current.toLocaleString('en-US');
+        }
+        el.textContent = currentFormatted + suffix;
+      } else {
+        el.textContent = current.toLocaleString('en-US') + suffix;
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  if ('IntersectionObserver' in window) {
+    var counterObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.3
+    });
+
+    statNumbers.forEach(function(el) {
+      counterObserver.observe(el);
+    });
+  } else {
+    statNumbers.forEach(function(el) {
+      var customFormat = el.getAttribute('data-format');
+      var suffix = el.getAttribute('data-suffix') || '';
+      if (customFormat) {
+        el.textContent = customFormat + suffix;
+      } else {
+        el.textContent = parseInt(el.getAttribute('data-target'), 10).toLocaleString('en-US') + suffix;
+      }
+    });
+  }
+
+})();
+</script>
+
+</body>
+</html>

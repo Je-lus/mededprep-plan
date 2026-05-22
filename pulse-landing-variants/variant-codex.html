@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse by MedEdPrep — Free Gamified EMS Education Platform</title>
+<meta name="description" content="Pulse turns EMS classrooms into live competitions. Students answer on their phones. You see exactly where they stand. Free for every EMS classroom.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ========================================
+   CSS RESET & BASE
+   ======================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --black: #000000;
+  --mint: #36C98D;
+  --mint-dark: #2ba876;
+  --mint-glow: rgba(54, 201, 141, 0.15);
+  --aqua: #01CDAB;
+  --yellow: #F5C542;
+  --dark-gray: #333333;
+  --light-gray: #CDCDCD;
+  --white: #FFFFFF;
+  --off-white: #F8F9FA;
+  --card-bg: #0D0D0D;
+  --card-border: #1a1a1a;
+  --section-dark: #050505;
+  --gradient-start: #000000;
+  --gradient-mid: #041a10;
+  --gradient-end: #0a2e1c;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  color: var(--white);
+  background: var(--black);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* ========================================
+   NOISE / GRAIN TEXTURE OVERLAY
+   ======================================== */
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  z-index: 1;
+}
+
+.section-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* ========================================
+   EKG WAVEFORM DECORATIVE
+   ======================================== */
+.ekg-divider {
+  width: 100%;
+  height: 40px;
+  overflow: hidden;
+  opacity: 0.15;
+}
+
+.ekg-divider svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   UTILITY
+   ======================================== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.text-mint { color: var(--mint); }
+.text-aqua { color: var(--aqua); }
+.text-yellow { color: var(--yellow); }
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: var(--mint);
+  color: var(--white);
+  padding: 16px 36px;
+  min-height: 52px;
+  font-size: 17px;
+  box-shadow: 0 4px 24px rgba(54, 201, 141, 0.25);
+}
+
+.btn-primary:hover {
+  background: var(--aqua);
+  box-shadow: 0 6px 32px rgba(1, 205, 171, 0.35);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--white);
+  padding: 14px 32px;
+  min-height: 48px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.btn-secondary:hover {
+  border-color: var(--mint);
+  color: var(--mint);
+}
+
+.btn-nav {
+  background: var(--mint);
+  color: var(--white);
+  padding: 10px 24px;
+  min-height: 40px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+.btn-nav:hover {
+  background: var(--aqua);
+}
+
+/* ========================================
+   STICKY NAV
+   ======================================== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(54, 201, 141, 0.1);
+  transition: background 0.3s ease;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.nav-logo svg {
+  width: 32px;
+  height: 32px;
+}
+
+.nav-logo-text {
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--white);
+  line-height: 1;
+}
+
+.nav-logo-sub {
+  font-weight: 500;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--mint);
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-links a {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--mint);
+}
+
+.nav-cta {
+  flex-shrink: 0;
+}
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Mobile nav */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.97);
+  backdrop-filter: blur(20px);
+  z-index: 999;
+  padding: 40px 24px;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mobile-nav.active {
+  display: flex;
+}
+
+.mobile-nav a {
+  font-size: 20px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mobile-nav a:hover {
+  color: var(--mint);
+}
+
+@media (max-width: 768px) {
+  .nav-links, .nav-cta {
+    display: none;
+  }
+  .nav-hamburger {
+    display: flex;
+  }
+}
+
+/* ========================================
+   HERO
+   ======================================== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 0 80px;
+  background: linear-gradient(165deg, var(--gradient-start) 0%, var(--gradient-mid) 50%, var(--gradient-end) 100%);
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(54, 201, 141, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -100px;
+  left: -150px;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(1, 205, 171, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero .section-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.hero-text {
+  max-width: 560px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(54, 201, 141, 0.1);
+  border: 1px solid rgba(54, 201, 141, 0.25);
+  border-radius: 100px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mint);
+  margin-bottom: 28px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.hero-badge .badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mint);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.hero h1 {
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--white);
+  margin-bottom: 24px;
+}
+
+.hero h1 .highlight {
+  background: linear-gradient(135deg, var(--mint), var(--aqua));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: clamp(16px, 2vw, 19px);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-mockup {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 4/3;
+  background: linear-gradient(145deg, #0a1f15, #0d0d0d);
+  border-radius: 16px;
+  border: 1px solid rgba(54, 201, 141, 0.15);
+  overflow: hidden;
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5), 0 0 60px rgba(54, 201, 141, 0.08);
+}
+
+.mockup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: rgba(54, 201, 141, 0.08);
+  border-bottom: 1px solid rgba(54, 201, 141, 0.1);
+}
+
+.mockup-header-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mint);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.mockup-header-code {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.mockup-body {
+  padding: 20px;
+}
+
+.mockup-question {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.mockup-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mockup-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.2s;
+}
+
+.mockup-option.correct {
+  background: rgba(54, 201, 141, 0.12);
+  border-color: rgba(54, 201, 141, 0.3);
+  color: var(--mint);
+}
+
+.mockup-option-letter {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.mockup-option.correct .mockup-option-letter {
+  background: var(--mint);
+  color: var(--white);
+}
+
+.mockup-leaderboard {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mockup-lb-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.mockup-lb-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.mockup-lb-name {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 500;
+}
+
+.mockup-lb-score {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mint);
+}
+
+.mockup-lb-row:first-child .mockup-lb-name {
+  color: var(--yellow);
+}
+
+/* Floating phone mockup */
+.hero-phone {
+  position: absolute;
+  bottom: -20px;
+  right: -30px;
+  width: 140px;
+  background: linear-gradient(145deg, #111, #0a0a0a);
+  border-radius: 20px;
+  border: 2px solid rgba(54, 201, 141, 0.2);
+  padding: 8px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+  animation: float-phone 3s ease-in-out infinite;
+}
+
+@keyframes float-phone {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.phone-screen {
+  background: #0d0d0d;
+  border-radius: 14px;
+  padding: 12px;
+  aspect-ratio: 9/16;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.phone-score {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--mint);
+}
+
+.phone-streak {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--yellow);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.phone-rank {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 900px) {
+  .hero .section-content {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    text-align: center;
+  }
+  .hero-text {
+    max-width: 100%;
+  }
+  .hero-ctas {
+    justify-content: center;
+  }
+  .hero-visual {
+    display: none;
+  }
+}
+
+/* ========================================
+   TRUST BAR
+   ======================================== */
+.trust-bar {
+  position: relative;
+  background: var(--white);
+  padding: 28px 0;
+  overflow: hidden;
+}
+
+.trust-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.trust-text {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--dark-gray);
+}
+
+.trust-text strong {
+  font-weight: 700;
+  color: var(--black);
+}
+
+.trust-stat {
+  color: var(--mint);
+  font-weight: 700;
+}
+
+.trust-divider {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--light-gray);
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .trust-inner {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .trust-divider {
+    display: none;
+  }
+}
+
+/* ========================================
+   PROBLEM SECTION (light)
+   ======================================== */
+.problems {
+  position: relative;
+  padding: 100px 0;
+  background: var(--off-white);
+}
+
+.section-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 16px;
+}
+
+.problems .section-label {
+  color: var(--aqua);
+}
+
+.section-title {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.section-title-dark {
+  color: var(--dark-gray);
+}
+
+.problems-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 56px;
+}
+
+.problem-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 36px 28px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.problem-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.problem-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.problem-icon-1 {
+  background: rgba(54, 201, 141, 0.1);
+  color: var(--mint);
+}
+
+.problem-icon-2 {
+  background: rgba(245, 197, 66, 0.1);
+  color: var(--yellow);
+}
+
+.problem-icon-3 {
+  background: rgba(1, 205, 171, 0.1);
+  color: var(--aqua);
+}
+
+.problem-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--dark-gray);
+  margin-bottom: 12px;
+}
+
+.problem-card p {
+  font-size: 15px;
+  color: #666;
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .problems-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* ========================================
+   HOW IT WORKS (light)
+   ======================================== */
+.how-it-works {
+  position: relative;
+  padding: 100px 0;
+  background: var(--white);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 56px;
+  counter-reset: step-counter;
+}
+
+.step {
+  position: relative;
+  text-align: center;
+  padding: 0 12px;
+}
+
+.step-number {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--mint), var(--aqua));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0 auto 24px;
+  box-shadow: 0 4px 20px rgba(54, 201, 141, 0.3);
+}
+
+.step h3 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--dark-gray);
+  margin-bottom: 14px;
+}
+
+.step p {
+  font-size: 15px;
+  color: #666;
+  line-height: 1.7;
+}
+
+.step-connector {
+  display: none;
+}
+
+/* Connector arrows between steps on desktop */
+@media (min-width: 769px) {
+  .step-connector {
+    display: block;
+    position: absolute;
+    top: 32px;
+    right: -24px;
+    width: 48px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--mint), var(--aqua));
+    opacity: 0.4;
+  }
+  .step-connector::after {
+    content: '';
+    position: absolute;
+    right: -2px;
+    top: -4px;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 8px solid var(--aqua);
+    opacity: 0.6;
+  }
+  .step:last-child .step-connector {
+    display: none;
+  }
+}
+
+.how-closing {
+  text-align: center;
+  margin-top: 56px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--dark-gray);
+  background: rgba(54, 201, 141, 0.06);
+  border: 1px solid rgba(54, 201, 141, 0.15);
+  border-radius: 12px;
+  padding: 24px 32px;
+}
+
+.how-closing strong {
+  color: var(--mint);
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+/* ========================================
+   FEATURES (dark)
+   ======================================== */
+.features {
+  position: relative;
+  padding: 100px 0;
+  background: linear-gradient(175deg, var(--gradient-start) 0%, var(--gradient-mid) 50%, var(--gradient-end) 100%);
+  overflow: hidden;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(54, 201, 141, 0.1);
+  border-radius: 16px;
+  padding: 36px 30px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--mint), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.feature-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(54, 201, 141, 0.25);
+  transform: translateY(-2px);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-card:last-child {
+  grid-column: 1 / -1;
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(54, 201, 141, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.feature-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.feature-card .feature-tagline {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--mint);
+  font-style: italic;
+  margin-bottom: 14px;
+}
+
+.feature-card p {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  .feature-card:last-child {
+    grid-column: auto;
+  }
+}
+
+/* ========================================
+   CREDIBILITY / PARENT BRAND (light)
+   ======================================== */
+.credibility {
+  position: relative;
+  padding: 100px 0;
+  background: var(--white);
+  overflow: hidden;
+}
+
+.cred-intro {
+  max-width: 700px;
+  margin: 0 auto 56px;
+  text-align: center;
+}
+
+.cred-intro p {
+  font-size: 17px;
+  color: #666;
+  line-height: 1.7;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-bottom: 56px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 32px 20px;
+  background: var(--off-white);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.stat-number {
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700;
+  color: var(--mint);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #888;
+  line-height: 1.4;
+}
+
+.cred-quote {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cred-quote p {
+  font-size: 17px;
+  font-style: italic;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+
+.cred-bridge {
+  font-size: 15px;
+  color: #888;
+  font-style: normal !important;
+}
+
+.cred-bridge a {
+  color: var(--mint);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(54, 201, 141, 0.3);
+  transition: border-color 0.2s;
+}
+
+.cred-bridge a:hover {
+  border-color: var(--mint);
+}
+
+@media (max-width: 600px) {
+  .stats-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* ========================================
+   AUDIENCE PANELS (dark)
+   ======================================== */
+.audience {
+  position: relative;
+  padding: 100px 0;
+  background: linear-gradient(175deg, var(--section-dark) 0%, var(--gradient-mid) 100%);
+  overflow: hidden;
+}
+
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  margin-top: 56px;
+}
+
+.audience-panel {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 44px 36px;
+  position: relative;
+  overflow: hidden;
+}
+
+.audience-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.audience-panel.instructors::before {
+  background: linear-gradient(90deg, var(--mint), var(--aqua));
+}
+
+.audience-panel.students::before {
+  background: linear-gradient(90deg, var(--yellow), #f5a623);
+}
+
+.audience-panel h3 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 28px;
+}
+
+.audience-panel.instructors h3 {
+  color: var(--mint);
+}
+
+.audience-panel.students h3 {
+  color: var(--yellow);
+}
+
+.audience-panel ul {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.audience-panel li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+}
+
+.audience-panel li svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.audience-panel.instructors li svg {
+  color: var(--mint);
+}
+
+.audience-panel.students li svg {
+  color: var(--yellow);
+}
+
+@media (max-width: 768px) {
+  .audience-grid {
+    grid-template-columns: 1fr;
+  }
+  .audience-panel {
+    padding: 32px 24px;
+  }
+}
+
+/* ========================================
+   FAQ
+   ======================================== */
+.faq {
+  position: relative;
+  padding: 100px 0;
+  background: var(--off-white);
+}
+
+.faq-list {
+  max-width: 760px;
+  margin: 56px auto 0;
+}
+
+.faq-item {
+  background: var(--white);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.faq-item:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--dark-gray);
+  text-align: left;
+  transition: color 0.2s;
+}
+
+.faq-question:hover {
+  color: var(--mint);
+}
+
+.faq-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(54, 201, 141, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.faq-item.active .faq-icon {
+  transform: rotate(180deg);
+  background: var(--mint);
+}
+
+.faq-icon svg {
+  transition: color 0.3s ease;
+}
+
+.faq-item.active .faq-icon svg {
+  color: var(--white);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+}
+
+.faq-answer-inner {
+  padding: 0 28px 24px;
+  font-size: 15px;
+  color: #666;
+  line-height: 1.8;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 300px;
+}
+
+/* ========================================
+   FINAL CTA (dark)
+   ======================================== */
+.final-cta {
+  position: relative;
+  padding: 120px 0;
+  background: linear-gradient(165deg, var(--gradient-start) 0%, var(--gradient-mid) 40%, var(--gradient-end) 100%);
+  text-align: center;
+  overflow: hidden;
+}
+
+.final-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(54, 201, 141, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.final-cta h2 {
+  font-size: clamp(30px, 4.5vw, 48px);
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+
+.final-cta p {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 580px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+
+.final-cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+  background: var(--black);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 56px 0 32px;
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+.footer-brand p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.7;
+  margin-top: 16px;
+  max-width: 320px;
+}
+
+.footer-tagline {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-top: 12px;
+}
+
+.footer-col h4 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 16px;
+}
+
+.footer-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-col a {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
+  transition: color 0.2s;
+}
+
+.footer-col a:hover {
+  color: var(--mint);
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-legal {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.footer-legal-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-legal-links a {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.footer-legal-links a:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 768px) {
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@media (prefers-reduced-motion: no-preference) {
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ========================================
+   GLOBAL RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+  .section-label {
+    font-size: 12px;
+  }
+  .btn-primary {
+    width: 100%;
+    padding: 16px 24px;
+  }
+  .btn-secondary {
+    width: 100%;
+    padding: 14px 24px;
+  }
+  .hero-ctas {
+    flex-direction: column;
+  }
+  .final-cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  .final-cta-buttons .btn {
+    width: 100%;
+    max-width: 340px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" aria-label="Pulse by MedEdPrep home">
+      <!-- Shield + EKG Inline SVG -->
+      <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M24 4L8 12V22C8 33.1 14.9 43.3 24 46C33.1 43.3 40 33.1 40 22V12L24 4Z" stroke="#36C98D" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+        <polyline points="12,28 18,28 21,22 24,34 27,26 30,28 36,28" stroke="#36C98D" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <div class="nav-logo-text">PULSE</div>
+        <div class="nav-logo-sub">BY MEDEDPREP</div>
+      </div>
+    </a>
+
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <div class="nav-cta">
+      <a href="#get-started" class="btn btn-nav">Get Started Free</a>
+    </div>
+
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#features" class="mobile-nav-link">Features</a>
+  <a href="#how-it-works" class="mobile-nav-link">How It Works</a>
+  <a href="#built-by" class="mobile-nav-link">About</a>
+  <a href="#faq" class="mobile-nav-link">FAQ</a>
+  <a href="#get-started" class="btn btn-primary" style="margin-top: 16px; text-align: center;">Get Started Free</a>
+</div>
+
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero" id="hero">
+  <div class="grain-overlay"></div>
+  <div class="container section-content">
+    <div class="hero-text">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        100% Free for Every Classroom
+      </div>
+      <h1>Your Students Already Have Their <span class="highlight">Phones Out</span></h1>
+      <p class="hero-sub">Pulse turns EMS classrooms into live competitions. Students answer on their phones. You see exactly where they stand &mdash; by NREMT domain, by student, by session. Free for every EMS classroom.</p>
+      <div class="hero-ctas">
+        <a href="#get-started" class="btn btn-primary">
+          Get Started Free
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-mockup">
+        <div class="mockup-header">
+          <span class="mockup-header-title">Pulse Live Session</span>
+          <span class="mockup-header-code">Code: 4829</span>
+        </div>
+        <div class="mockup-body">
+          <div class="mockup-question">A patient presents with JVD, hypotension, and muffled heart sounds. What condition should you suspect?</div>
+          <div class="mockup-options">
+            <div class="mockup-option">
+              <span class="mockup-option-letter">A</span>
+              Tension pneumothorax
+            </div>
+            <div class="mockup-option correct">
+              <span class="mockup-option-letter">B</span>
+              Cardiac tamponade
+            </div>
+            <div class="mockup-option">
+              <span class="mockup-option-letter">C</span>
+              Aortic dissection
+            </div>
+            <div class="mockup-option">
+              <span class="mockup-option-letter">D</span>
+              Pulmonary embolism
+            </div>
+          </div>
+          <div class="mockup-leaderboard">
+            <div class="mockup-lb-title">Leaderboard</div>
+            <div class="mockup-lb-row">
+              <span class="mockup-lb-name">Sarah M.</span>
+              <span class="mockup-lb-score">2,450</span>
+            </div>
+            <div class="mockup-lb-row">
+              <span class="mockup-lb-name">Jake R.</span>
+              <span class="mockup-lb-score">2,180</span>
+            </div>
+            <div class="mockup-lb-row">
+              <span class="mockup-lb-name">Maria L.</span>
+              <span class="mockup-lb-score">1,920</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating phone -->
+        <div class="hero-phone">
+          <div class="phone-screen">
+            <span class="phone-rank">2nd Place</span>
+            <span class="phone-score">2,180</span>
+            <span class="phone-streak">&#x1F525; 5 streak</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     TRUST BAR
+     ============================================================ -->
+<section class="trust-bar">
+  <div class="container">
+    <div class="trust-inner">
+      <span class="trust-text">From the team behind <strong>MedEdPrep</strong> &mdash; trusted by</span>
+      <span class="trust-text"><span class="trust-stat">100+</span> EMS programs</span>
+      <span class="trust-divider"></span>
+      <span class="trust-text"><span class="trust-stat">10,600+</span> exam questions</span>
+      <span class="trust-divider"></span>
+      <span class="trust-text"><span class="trust-stat">1.55M+</span> student responses</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     PROBLEM STATEMENT
+     ============================================================ -->
+<section class="problems" id="problems">
+  <div class="container section-content">
+    <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+      <span class="section-label">Sound familiar?</span>
+      <h2 class="section-title section-title-dark">You already know the problem.</h2>
+    </div>
+
+    <div class="problems-grid">
+      <div class="problem-card fade-up">
+        <div class="problem-icon problem-icon-1">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
+        </div>
+        <h3>The Phone Problem</h3>
+        <p>Your students are on their phones &mdash; but not reviewing lecture material. You can fight it, or you can use it.</p>
+      </div>
+
+      <div class="problem-card fade-up" style="transition-delay: 0.1s;">
+        <div class="problem-icon problem-icon-2">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h3>The Visibility Problem</h3>
+        <p>You teach the content, run your scenarios, and hope for the best on exam day. You have no idea who's actually studying between classes or what they're struggling with until the test tells you.</p>
+      </div>
+
+      <div class="problem-card fade-up" style="transition-delay: 0.2s;">
+        <div class="problem-icon problem-icon-3">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h3>The Tool Problem</h3>
+        <p>Kahoot is fun but tops out at trivia-night MCQ. Quizlet is solo and you never see it. Fisdap is for testing, not teaching. Nothing connects your classroom to your students' study habits &mdash; until now.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     HOW IT WORKS
+     ============================================================ -->
+<section class="how-it-works" id="how-it-works">
+  <div class="container section-content">
+    <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+      <span class="section-label">Dead simple</span>
+      <h2 class="section-title section-title-dark">Running a Pulse Session Takes 60 Seconds</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step fade-up">
+        <div class="step-number">1</div>
+        <div class="step-connector"></div>
+        <h3>Pick Your Content</h3>
+        <p>Choose from EMS questions mapped to NREMT domains and cert levels &mdash; EMR through Paramedic. Filter by topic or difficulty. Or use your own.</p>
+      </div>
+
+      <div class="step fade-up" style="transition-delay: 0.15s;">
+        <div class="step-number">2</div>
+        <div class="step-connector"></div>
+        <h3>Launch the Game</h3>
+        <p>Students join on their phones with a session code. Choose your mode: Classic, Lightning, Team Battle, Survival, or Jeopardy. Project the leaderboard. Watch the room come alive.</p>
+      </div>
+
+      <div class="step fade-up" style="transition-delay: 0.3s;">
+        <div class="step-number">3</div>
+        <h3>See the Data</h3>
+        <p>Your dashboard shows performance by NREMT content area, by student, over time. Know which students missed every cardiac question before they do.</p>
+      </div>
+    </div>
+
+    <div class="how-closing fade-up">
+      No training required. No IT department. No budget approval. <strong>It's free.</strong>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     EKG DIVIDER
+     ============================================================ -->
+<div class="ekg-divider" style="background: linear-gradient(180deg, var(--white), var(--black));">
+  <svg viewBox="0 0 1200 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <polyline points="0,20 200,20 240,20 260,8 280,32 300,14 320,26 340,20 400,20 600,20 640,20 660,8 680,32 700,14 720,26 740,20 800,20 1000,20 1040,20 1060,8 1080,32 1100,14 1120,26 1140,20 1200,20" fill="none" stroke="#36C98D" stroke-width="1.5" opacity="0.3"/>
+  </svg>
+</div>
+
+
+<!-- ============================================================
+     FEATURES
+     ============================================================ -->
+<section class="features" id="features">
+  <div class="grain-overlay"></div>
+  <div class="container section-content">
+    <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+      <span class="section-label">What you get</span>
+      <h2 class="section-title">Game-Day Energy.<br>Exam-Day Data.</h2>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <h3>Live Classroom Competition</h3>
+        <p class="feature-tagline">"The energy of game night. The rigor of an assessment."</p>
+        <p>Real-time multiplayer sessions where students compete on their phones and results display on your projector. Speed-based scoring and streak multipliers keep the room loud. Multiple game modes &mdash; Classic, Lightning, Team Battle, Survival, Jeopardy &mdash; keep it fresh.</p>
+      </div>
+
+      <div class="feature-card fade-up" style="transition-delay: 0.1s;">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="12" y1="6" x2="12" y2="12"/></svg>
+        </div>
+        <h3>Know Who's Struggling Before the Exam Tells You</h3>
+        <p class="feature-tagline">"Performance data by NREMT content area &mdash; not just a score."</p>
+        <p>After every session, see your class broken down by domain: Airway, Cardiology, Trauma, Medical, OB, Pediatrics, Operations. Track individual students over time. Identify who needs intervention while there's still time.</p>
+      </div>
+
+      <div class="feature-card fade-up" style="transition-delay: 0.2s;">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+        <h3>NREMT-Mapped Content</h3>
+        <p class="feature-tagline">"Every question aligned to what they'll actually see on the Registry."</p>
+        <p>Questions organized by the NHTSA EMS Education Standards taxonomy, by certification level, by cognitive complexity. Not a generic quiz bank with a medical skin. Built from the ground up around EMS competency domains.</p>
+      </div>
+
+      <div class="feature-card fade-up" style="transition-delay: 0.3s;">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3>The Duolingo Effect, But for EMS</h3>
+        <p class="feature-tagline">"Between classes, students practice on their own."</p>
+        <p>Flashcards powered by spaced repetition. Daily streaks. Achievement patches. Quick 5-minute sessions that fit between shifts. You see who's practicing and what they're struggling with &mdash; even when class isn't in session.</p>
+      </div>
+
+      <div class="feature-card fade-up" style="transition-delay: 0.4s;">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </div>
+        <h3>Beyond Multiple Choice</h3>
+        <p class="feature-tagline">"Because real EMS decisions aren't always A, B, C, or D."</p>
+        <p>Image identification for 12-leads. Hotspot tapping for anatomy. Ordering questions for procedure sequencing. Triage sort for MCI prioritization. The NREMT is moving beyond simple MCQ &mdash; your students should be practicing that way now.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     CREDIBILITY / BUILT BY MEDEDPREP
+     ============================================================ -->
+<section class="credibility" id="built-by">
+  <div class="container section-content">
+    <div style="text-align: center;">
+      <span class="section-label" style="color: var(--aqua);">The team behind it</span>
+      <h2 class="section-title section-title-dark">Built by MedEdPrep</h2>
+    </div>
+
+    <div class="cred-intro">
+      <p>Pulse is built by the same team behind MedEdPrep &mdash; the adaptive test prep platform used by 100+ EMS programs nationwide.</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card fade-up">
+        <div class="stat-number">10,600+</div>
+        <div class="stat-label">EMS exam questions in our bank</div>
+      </div>
+      <div class="stat-card fade-up" style="transition-delay: 0.1s;">
+        <div class="stat-number">1.55M+</div>
+        <div class="stat-label">Student responses analyzed</div>
+      </div>
+      <div class="stat-card fade-up" style="transition-delay: 0.2s;">
+        <div class="stat-number">100+</div>
+        <div class="stat-label">EMS programs trust MedEdPrep</div>
+      </div>
+    </div>
+
+    <div class="cred-quote">
+      <p>"We've been building tools for EMS education since the beginning. Pulse is how we're making classroom engagement free for everyone &mdash; and connecting it to the deepest question bank in EMS."</p>
+      <p class="cred-bridge">Want the full test prep experience? <a href="https://mededprep.com" target="_blank" rel="noopener">MedEdPrep.com</a> gives students adaptive exams, diagnostic reports, and NREMT readiness tracking &mdash; powered by the same question bank.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     AUDIENCE PANELS
+     ============================================================ -->
+<section class="audience" id="audience">
+  <div class="grain-overlay"></div>
+  <div class="container section-content">
+    <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+      <span class="section-label">Who it's for</span>
+      <h2 class="section-title">One Platform. Two Experiences.</h2>
+    </div>
+
+    <div class="audience-grid">
+      <div class="audience-panel instructors fade-up">
+        <h3>For Instructors</h3>
+        <ul>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Run live games with zero prep time
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Track student performance by NREMT domain
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Use our question bank or import your own
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            See who's studying between classes
+          </li>
+        </ul>
+        <a href="#get-started" class="btn btn-primary">Get Your Classroom Started</a>
+      </div>
+
+      <div class="audience-panel students fade-up" style="transition-delay: 0.15s;">
+        <h3>For Students</h3>
+        <ul>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Compete against classmates in live sessions
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Study anywhere on your phone
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Spaced repetition flashcards that adapt to what you don't know
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Practice question types beyond basic MCQ
+          </li>
+        </ul>
+        <a href="#get-started" class="btn btn-primary" style="background: var(--yellow); box-shadow: 0 4px 24px rgba(245, 197, 66, 0.25);">Join Your Class</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     EKG DIVIDER
+     ============================================================ -->
+<div class="ekg-divider" style="background: linear-gradient(180deg, var(--section-dark), var(--off-white));">
+  <svg viewBox="0 0 1200 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <polyline points="0,20 200,20 240,20 260,8 280,32 300,14 320,26 340,20 400,20 600,20 640,20 660,8 680,32 700,14 720,26 740,20 800,20 1000,20 1040,20 1060,8 1080,32 1100,14 1120,26 1140,20 1200,20" fill="none" stroke="#36C98D" stroke-width="1.5" opacity="0.3"/>
+  </svg>
+</div>
+
+
+<!-- ============================================================
+     FAQ
+     ============================================================ -->
+<section class="faq" id="faq">
+  <div class="container section-content">
+    <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+      <span class="section-label" style="color: var(--aqua);">Questions?</span>
+      <h2 class="section-title section-title-dark">Frequently Asked Questions</h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Is Pulse really free?
+          <span class="faq-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes. Free for instructors, free for students. No credit card, no trial period, no catch. We built Pulse to be in every EMS classroom &mdash; not behind a paywall.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Do I need to create all my own content?
+          <span class="faq-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">No. Pulse comes with EMS questions mapped to NREMT domains and cert levels. You can also add your own questions if you want to customize for your program.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Does it work on student phones?
+          <span class="faq-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes. Pulse is mobile-first &mdash; built for the phones your students already have. Works on any modern browser, iOS or Android. Students join with a session code, no app install required for games.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Can I use this for NREMT exam prep?
+          <span class="faq-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Absolutely. Every question is mapped to the NHTSA EMS Education Standards taxonomy. Your analytics show performance against the same domains that appear on the Registry exam.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          What's the difference between Pulse and MedEdPrep?
+          <span class="faq-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Pulse is the free classroom engagement and study tool &mdash; live games, flashcards, and quick analytics. MedEdPrep is the full test prep platform &mdash; adaptive exams, diagnostic reports, NREMT readiness prediction, and school management tools. They work great together, but Pulse stands on its own.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          I'm not tech-savvy. Is this complicated?
+          <span class="faq-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#36C98D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">If you can share a link, you can run Pulse. Instructors launch a session, students scan a code. The whole setup takes under a minute. No IT department needed.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FINAL CTA
+     ============================================================ -->
+<section class="final-cta" id="get-started">
+  <div class="grain-overlay"></div>
+  <div class="container section-content">
+    <h2 class="fade-up">Put Pulse in Your Classroom Tomorrow</h2>
+    <p class="fade-up" style="transition-delay: 0.1s;">Free. No setup. No approval process. Join the EMS instructors already using Pulse to turn review sessions into the best part of class.</p>
+    <div class="final-cta-buttons fade-up" style="transition-delay: 0.2s;">
+      <a href="https://pulse.mededprep.com/?utm_source=accreditcon&utm_medium=qr&utm_campaign=launch" class="btn btn-primary">
+        Get Started Free
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="#" class="btn btn-secondary">See a Live Demo</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" style="margin-bottom: 4px;">
+          <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M24 4L8 12V22C8 33.1 14.9 43.3 24 46C33.1 43.3 40 33.1 40 22V12L24 4Z" stroke="#36C98D" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+            <polyline points="12,28 18,28 21,22 24,34 27,26 30,28 36,28" stroke="#36C98D" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div>
+            <div class="nav-logo-text" style="font-size: 14px;">PULSE</div>
+            <div class="nav-logo-sub" style="font-size: 8px;">BY MEDEDPREP</div>
+          </div>
+        </a>
+        <p>Free gamified education platform for EMS classrooms. Live competitions, spaced repetition study, and NREMT-mapped analytics.</p>
+        <div class="footer-tagline">Train. Track. Perform.</div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="https://mededprep.com" target="_blank" rel="noopener">MedEdPrep.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="https://mededprep.com" target="_blank" rel="noopener">About MedEdPrep</a></li>
+          <li><a href="https://www.linkedin.com/company/mededprep" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="mailto:info@mededprep.com">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Get Started</h4>
+        <ul>
+          <li><a href="https://pulse.mededprep.com/?utm_source=accreditcon&utm_medium=qr&utm_campaign=launch">Instructor Sign Up</a></li>
+          <li><a href="#">Join a Session</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-legal">&copy; 2026 MedEdPrep. All rights reserved.</span>
+      <div class="footer-legal-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+(function() {
+  'use strict';
+
+  // ---- Mobile Nav Toggle ----
+  var hamburger = document.getElementById('nav-hamburger');
+  var mobileNav = document.getElementById('mobile-nav');
+
+  if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', function() {
+      var isOpen = mobileNav.classList.toggle('active');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      // Animate hamburger to X
+      var spans = hamburger.querySelectorAll('span');
+      if (isOpen) {
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+      } else {
+        spans[0].style.transform = '';
+        spans[1].style.opacity = '';
+        spans[2].style.transform = '';
+      }
+    });
+
+    // Close mobile nav on link click
+    var mobileLinks = mobileNav.querySelectorAll('a');
+    for (var i = 0; i < mobileLinks.length; i++) {
+      mobileLinks[i].addEventListener('click', function() {
+        mobileNav.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        var spans = hamburger.querySelectorAll('span');
+        spans[0].style.transform = '';
+        spans[1].style.opacity = '';
+        spans[2].style.transform = '';
+      });
+    }
+  }
+
+  // ---- FAQ Accordion ----
+  var faqItems = document.querySelectorAll('.faq-item');
+  for (var j = 0; j < faqItems.length; j++) {
+    (function(item) {
+      var btn = item.querySelector('.faq-question');
+      if (!btn) return;
+      btn.addEventListener('click', function() {
+        var isActive = item.classList.contains('active');
+        // Close all
+        for (var k = 0; k < faqItems.length; k++) {
+          faqItems[k].classList.remove('active');
+          var b = faqItems[k].querySelector('.faq-question');
+          if (b) b.setAttribute('aria-expanded', 'false');
+        }
+        // Toggle current
+        if (!isActive) {
+          item.classList.add('active');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    })(faqItems[j]);
+  }
+
+  // ---- Scroll Fade-Up Animation (IntersectionObserver) ----
+  if ('IntersectionObserver' in window) {
+    var fadeEls = document.querySelectorAll('.fade-up');
+    var observer = new IntersectionObserver(function(entries) {
+      for (var e = 0; e < entries.length; e++) {
+        if (entries[e].isIntersecting) {
+          entries[e].target.classList.add('visible');
+          observer.unobserve(entries[e].target);
+        }
+      }
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    for (var f = 0; f < fadeEls.length; f++) {
+      observer.observe(fadeEls[f]);
+    }
+  } else {
+    // Fallback: show all
+    var all = document.querySelectorAll('.fade-up');
+    for (var g = 0; g < all.length; g++) {
+      all[g].classList.add('visible');
+    }
+  }
+
+  // ---- Smooth scroll offset for sticky nav ----
+  var navHeight = 64;
+  var anchorLinks = document.querySelectorAll('a[href^="#"]');
+  for (var h = 0; h < anchorLinks.length; h++) {
+    anchorLinks[h].addEventListener('click', function(evt) {
+      var href = this.getAttribute('href');
+      if (href === '#') return;
+      var target = document.querySelector(href);
+      if (target) {
+        evt.preventDefault();
+        var top = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    });
+  }
+
+})();
+</script>
+
+</body>
+</html>

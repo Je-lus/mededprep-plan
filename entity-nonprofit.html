@@ -1,0 +1,2073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foundation — 501(c)(3) | MedEdPrep</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0a0e14;
+      --bg-surface: #111820;
+      --bg-card: #151c25;
+      --bg-card-hover: #1a2331;
+      --bg-elevated: #1e2733;
+      --border: #243040;
+      --border-subtle: #1c2535;
+      --text-primary: #e8edf4;
+      --text-secondary: #8899aa;
+      --text-muted: #5a6a7a;
+      --teal: #2dd4bf;
+      --teal-dim: rgba(45,212,191,0.12);
+      --teal-glow: rgba(45,212,191,0.06);
+      --purple: #a78bfa;
+      --purple-dim: rgba(167,139,250,0.12);
+      --amber: #fbbf24;
+      --amber-dim: rgba(251,191,36,0.12);
+      --blue: #60a5fa;
+      --blue-dim: rgba(96,165,250,0.12);
+      --pink: #f472b6;
+      --pink-dim: rgba(244,114,182,0.12);
+      --green: #4ade80;
+      --green-dim: rgba(74,222,128,0.12);
+      --orange: #fb923c;
+      --orange-dim: rgba(251,146,60,0.12);
+      --red: #f87171;
+      --red-dim: rgba(248,113,113,0.12);
+      --nav-width: 240px;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-xs: 6px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg-base);
+      background-image: radial-gradient(circle at 1px 1px, rgba(45,212,191,0.02) 1px, transparent 0);
+      background-size: 40px 40px;
+      color: var(--text-primary);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--teal), var(--purple), var(--blue), var(--teal));
+      background-size: 300% 100%;
+      animation: shimmer 8s linear infinite;
+      z-index: 200;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+
+    @keyframes pulse-live {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
+      50% { opacity: 0.7; box-shadow: 0 0 0 5px rgba(74,222,128,0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    nav {
+      width: var(--nav-width);
+      min-width: var(--nav-width);
+      background: rgba(17,24,32,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border);
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 28px 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav::-webkit-scrollbar { width: 0; }
+
+    .nav-brand {
+      padding: 0 24px 24px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    .nav-brand-name {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--teal), #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-brand-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links { flex: 1; padding: 4px 0; }
+
+    nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 24px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s;
+      border-left: 2px solid transparent;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: var(--text-primary);
+      background: rgba(45,212,191,0.04);
+      border-left-color: var(--teal);
+    }
+
+    nav a.active {
+      color: var(--text-primary);
+      background: rgba(45,212,191,0.06);
+      border-left-color: var(--teal);
+    }
+
+    nav a .nav-icon {
+      font-size: 15px;
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .nav-divider {
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 8px 24px;
+    }
+
+    .nav-footer {
+      padding: 20px 24px 0;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+
+    .nav-footer-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .nav-footer-date {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    .hero {
+      margin-left: var(--nav-width);
+      padding: 64px 56px 48px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, #080c12 0%, #0d1520 30%, #0a1420 60%, #080e18 100%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: 10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(45,212,191,0.07) 0%, transparent 60%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      left: 20%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(167,139,250,0.05) 0%, transparent 60%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 48px;
+      align-items: start;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .hero-eyebrow::after {
+      content: '';
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      background: var(--teal);
+      vertical-align: middle;
+      margin-left: 12px;
+      opacity: 0.4;
+    }
+
+    .hero-headline {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      position: relative;
+      background: linear-gradient(135deg, #f0f4f8 25%, var(--teal) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .badge .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .badge-green {
+      background: var(--green-dim);
+      color: var(--green);
+      border-color: rgba(74,222,128,0.18);
+    }
+
+    .badge-green .dot {
+      background: var(--green);
+      animation: pulse-live 2s ease infinite;
+    }
+
+    .badge-teal {
+      background: var(--teal-dim);
+      color: var(--teal);
+      border-color: rgba(45,212,191,0.18);
+    }
+
+    .badge-purple {
+      background: var(--purple-dim);
+      color: var(--purple);
+      border-color: rgba(167,139,250,0.18);
+    }
+
+    .badge-blue {
+      background: var(--blue-dim);
+      color: var(--blue);
+      border-color: rgba(96,165,250,0.18);
+    }
+
+    .badge-amber {
+      background: var(--amber-dim);
+      color: var(--amber);
+      border-color: rgba(251,191,36,0.18);
+    }
+
+    .badge-red {
+      background: var(--red-dim);
+      color: var(--red);
+      border-color: rgba(248,113,113,0.18);
+    }
+
+    .hero-narrative {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-top: 18px;
+      line-height: 1.7;
+      font-weight: 400;
+      max-width: 720px;
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      align-self: start;
+    }
+
+    .hero-metric {
+      background: var(--bg-surface);
+      padding: 20px 22px;
+      transition: background 0.2s;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    .hero-metric:nth-child(1) { animation-delay: 0.05s; }
+    .hero-metric:nth-child(2) { animation-delay: 0.1s; }
+    .hero-metric:nth-child(3) { animation-delay: 0.15s; }
+    .hero-metric:nth-child(4) { animation-delay: 0.2s; }
+
+    .hero-metric:hover { background: var(--bg-card); }
+
+    .hero-metric-value {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .c-teal { color: var(--teal); }
+    .c-purple { color: var(--purple); }
+    .c-blue { color: var(--blue); }
+    .c-green { color: var(--green); }
+    .c-amber { color: var(--amber); }
+    .c-pink { color: var(--pink); }
+
+    .hero-metric-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    .hero-metric-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    .main-inner {
+      margin-left: var(--nav-width);
+      padding: 40px 56px 80px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-bottom: 24px;
+    }
+
+    .controls button {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .controls button:hover {
+      color: var(--teal);
+      border-color: var(--teal);
+      background: var(--teal-dim);
+    }
+
+    .section {
+      margin-bottom: 22px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      user-select: none;
+      padding: 16px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-header::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: transparent;
+      transition: background 0.2s;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .section-header:hover { background: var(--bg-card-hover); }
+
+    .section-header.active::before {
+      background: linear-gradient(180deg, var(--teal), var(--purple));
+    }
+
+    .section-header.active {
+      border-color: rgba(45,212,191,0.15);
+      background: linear-gradient(135deg, rgba(45,212,191,0.03) 0%, var(--bg-card) 40%);
+    }
+
+    .section-icon {
+      font-size: 20px;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      flex: 1;
+    }
+
+    .section-subtitle {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-left: 10px;
+    }
+
+    .section-chevron {
+      color: var(--text-muted);
+      font-size: 11px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      flex-shrink: 0;
+    }
+
+    .section-chevron.open { transform: rotate(180deg); }
+
+    .section-body {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+      opacity: 0;
+    }
+
+    .section-body.open {
+      max-height: 99999px;
+      opacity: 1;
+    }
+
+    .section-inner {
+      padding: 18px 0 10px;
+    }
+
+    .panel,
+    .callout,
+    .info-card,
+    .warning-card,
+    .tier-card,
+    .quote-card,
+    .status-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .callout {
+      padding: 22px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .callout::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--teal);
+    }
+
+    .callout.amber::before { background: var(--amber); }
+    .callout.purple::before { background: var(--purple); }
+    .callout.blue::before { background: var(--blue); }
+    .callout.green::before { background: var(--green); }
+    .callout.red::before { background: var(--red); }
+
+    .callout-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal);
+      margin-bottom: 8px;
+    }
+
+    .callout.amber .callout-label { color: var(--amber); }
+    .callout.purple .callout-label { color: var(--purple); }
+    .callout.blue .callout-label { color: var(--blue); }
+    .callout.green .callout-label { color: var(--green); }
+    .callout.red .callout-label { color: var(--red); }
+
+    .callout-text,
+    .panel-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .callout-text strong,
+    .panel-text strong,
+    .quote-card strong,
+    .info-card strong,
+    .warning-card strong {
+      color: var(--text-primary);
+    }
+
+    .warning-card {
+      padding: 16px 18px;
+      background: linear-gradient(135deg, rgba(251,191,36,0.05) 0%, var(--bg-card) 45%);
+      border-color: rgba(251,191,36,0.18);
+    }
+
+    .warning-card.red {
+      background: linear-gradient(135deg, rgba(248,113,113,0.05) 0%, var(--bg-card) 45%);
+      border-color: rgba(248,113,113,0.18);
+    }
+
+    .warning-title {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 6px;
+    }
+
+    .warning-card.red .warning-title { color: var(--red); }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .info-card {
+      padding: 20px;
+      transition: border-color 0.2s, transform 0.2s;
+      border-color: var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent 60%), var(--bg-card);
+    }
+
+    .info-card:hover {
+      border-color: #344050;
+      transform: translateY(-2px);
+    }
+
+    .info-card-header {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .info-card-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      font-weight: 700;
+    }
+
+    .info-card[data-accent="teal"] .info-card-icon {
+      background: var(--teal-dim);
+      color: var(--teal);
+    }
+
+    .info-card[data-accent="purple"] .info-card-icon {
+      background: var(--purple-dim);
+      color: var(--purple);
+    }
+
+    .info-card[data-accent="green"] .info-card-icon {
+      background: var(--green-dim);
+      color: var(--green);
+    }
+
+    .info-card[data-accent="blue"] .info-card-icon {
+      background: var(--blue-dim);
+      color: var(--blue);
+    }
+
+    .info-card[data-accent="pink"] .info-card-icon {
+      background: var(--pink-dim);
+      color: var(--pink);
+    }
+
+    .info-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .info-card-text {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    .mono-diagram {
+      margin-top: 18px;
+      padding: 20px;
+      background: #0b1017;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #c9d5e2;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+    }
+
+    .legend-note,
+    .subtle-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    .subtle-note strong { color: var(--text-secondary); }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      margin-top: 16px;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+      font-size: 12.5px;
+    }
+
+    .data-table th {
+      text-align: left;
+      padding: 14px 16px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 700;
+      background: rgba(255,255,255,0.01);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .data-table td {
+      padding: 14px 16px;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-subtle);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+
+    .data-table tr:first-child td { border-top: none; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.01); }
+    .data-table strong { color: var(--text-primary); }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+      white-space: normal;
+      line-height: 1.25;
+    }
+
+    .status-chip.ok {
+      background: var(--green-dim);
+      color: var(--green);
+      border-color: rgba(74,222,128,0.16);
+    }
+
+    .status-chip.ok::before,
+    .status-chip.warn::before,
+    .status-chip.note::before,
+    .status-chip.alert::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .status-chip.ok::before { background: var(--green); }
+
+    .status-chip.warn {
+      background: var(--amber-dim);
+      color: var(--amber);
+      border-color: rgba(251,191,36,0.16);
+    }
+
+    .status-chip.warn::before { background: var(--amber); }
+
+    .status-chip.note {
+      background: var(--blue-dim);
+      color: var(--blue);
+      border-color: rgba(96,165,250,0.16);
+    }
+
+    .status-chip.note::before { background: var(--blue); }
+
+    .status-chip.alert {
+      background: var(--red-dim);
+      color: var(--red);
+      border-color: rgba(248,113,113,0.16);
+    }
+
+    .status-chip.alert::before { background: var(--red); }
+
+    .progress-card {
+      margin-top: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 18px;
+    }
+
+    .progress-meta {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .progress-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .progress-value {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--green);
+      letter-spacing: -0.03em;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: var(--border-subtle);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--teal), var(--green));
+      width: 0;
+      transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .quote-card {
+      padding: 24px 26px;
+      border-left: 4px solid var(--teal);
+      background: linear-gradient(135deg, rgba(45,212,191,0.05) 0%, var(--bg-card) 42%);
+    }
+
+    .quote-card blockquote {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .program-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .program-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .program-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--teal);
+    }
+
+    .program-card.purple::before { background: var(--purple); }
+    .program-card.pink::before { background: var(--pink); }
+
+    .program-card:hover {
+      border-color: #344050;
+      transform: translateY(-2px);
+    }
+
+    .program-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .program-card.teal .program-title { color: var(--teal); }
+    .program-card.purple .program-title { color: var(--purple); }
+    .program-card.pink .program-title { color: var(--pink); }
+
+    .program-card ul,
+    .status-panel ul,
+    .bullet-list {
+      list-style: none;
+    }
+
+    .program-card li,
+    .status-panel li,
+    .bullet-list li {
+      color: var(--text-secondary);
+      font-size: 12.5px;
+      line-height: 1.65;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .program-card li + li,
+    .status-panel li + li,
+    .bullet-list li + li {
+      margin-top: 10px;
+    }
+
+    .program-card li::before,
+    .bullet-list li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+
+    .program-card.teal li::before { background: var(--teal); }
+    .program-card.purple li::before { background: var(--purple); }
+    .program-card.pink li::before { background: var(--pink); }
+
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .status-panel {
+      padding: 20px;
+    }
+
+    .status-panel.complete {
+      background: linear-gradient(135deg, rgba(74,222,128,0.04) 0%, var(--bg-card) 42%);
+      border-color: rgba(74,222,128,0.16);
+    }
+
+    .status-panel.pending {
+      background: linear-gradient(135deg, rgba(251,191,36,0.04) 0%, var(--bg-card) 42%);
+      border-color: rgba(251,191,36,0.16);
+    }
+
+    .status-heading {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .status-panel.complete .status-heading { color: var(--green); }
+    .status-panel.pending .status-heading { color: var(--amber); }
+
+    .status-panel li::before {
+      content: '';
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .status-panel.complete li::before { background: var(--green); }
+    .status-panel.pending li::before { background: var(--amber); }
+
+    .status-item-title {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .tier-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .tier-card {
+      overflow: hidden;
+    }
+
+    .tier-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tier-header h3 {
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .tier-header p {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .tier-card.green .tier-header {
+      background: linear-gradient(135deg, rgba(74,222,128,0.06) 0%, rgba(74,222,128,0.02) 55%, transparent 100%);
+    }
+
+    .tier-card.green .tier-header h3 { color: var(--green); }
+
+    .tier-card.blue .tier-header {
+      background: linear-gradient(135deg, rgba(96,165,250,0.06) 0%, rgba(45,212,191,0.03) 55%, transparent 100%);
+    }
+
+    .tier-card.blue .tier-header h3 { color: var(--blue); }
+
+    .tier-card.purple .tier-header {
+      background: linear-gradient(135deg, rgba(167,139,250,0.06) 0%, rgba(244,114,182,0.03) 55%, transparent 100%);
+    }
+
+    .tier-card.purple .tier-header h3 { color: var(--purple); }
+
+    .tier-body {
+      padding: 18px 20px 20px;
+    }
+
+    .action-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 16px;
+      margin-top: 16px;
+    }
+
+    .action-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    .action-item strong { color: var(--text-primary); }
+
+    .subsection-title {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 18px 0 10px;
+    }
+
+    .file-link {
+      color: var(--teal);
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(45,212,191,0.22);
+      transition: color 0.2s, border-color 0.2s;
+      word-break: break-word;
+    }
+
+    .file-link:hover {
+      color: #7ce7d7;
+      border-color: rgba(124,231,215,0.5);
+    }
+
+    .needed-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 18px;
+      margin-top: 14px;
+    }
+
+    .needed-item {
+      background: rgba(251,191,36,0.04);
+      border: 1px solid rgba(251,191,36,0.12);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      color: var(--text-secondary);
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+
+    .needed-item::before {
+      content: '•';
+      color: var(--amber);
+      font-weight: 900;
+      margin-right: 8px;
+    }
+
+    .page-footer {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-subtle);
+      font-weight: 500;
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #3a4a5a; }
+
+    @media (max-width: 1200px) {
+      .hero-content { grid-template-columns: 1fr; gap: 32px; }
+      .program-grid,
+      .info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 980px) {
+      nav { display: none; }
+      .hero { margin-left: 0; padding: 44px 24px 36px; }
+      .main-inner { margin-left: 0; padding: 24px 20px 60px; }
+      .split-grid,
+      .action-list,
+      .needed-grid,
+      .program-grid,
+      .info-grid { grid-template-columns: 1fr; }
+      .hero-headline { font-size: 28px; }
+    }
+
+    @media (max-width: 720px) {
+      .hero-metrics { grid-template-columns: 1fr; }
+      .section-header {
+        align-items: flex-start;
+        padding: 14px 16px;
+      }
+      .section-title {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .section-subtitle { margin-left: 0; }
+      .hero-headline { font-size: 24px; }
+      .quote-card blockquote { font-size: 16px; }
+    }
+
+    @media print {
+      nav { display: none; }
+      body { background: white; color: #111; }
+      body::before { display: none; }
+      .hero,
+      .main-inner { margin-left: 0; }
+      .hero { background: #f8f8f8; }
+      .section { opacity: 1 !important; transform: none !important; }
+      .section-body { max-height: none !important; opacity: 1 !important; }
+      .progress-fill { width: 100% !important; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-brand">
+      <div class="nav-brand-name">MedEdPrep</div>
+      <div class="nav-brand-sub">Founder Command Center</div>
+    </div>
+    <div class="nav-links">
+      <a href="hub.html"><span class="nav-icon">⬡</span> Hub</a>
+      <a href="entity-company-a.html"><span class="nav-icon">🎓</span> Company A — MedEdPrep Education</a>
+      <a href="entity-company-c.html"><span class="nav-icon">🏆</span> Company C — Certification</a>
+      <a href="entity-nonprofit.html" class="active"><span class="nav-icon">🤝</span> Foundation (501c3)</a>
+      <a href="entity-ip-vault.html"><span class="nav-icon">🔐</span> IP &amp; The Vault</a>
+      <a href="entity-market.html"><span class="nav-icon">📊</span> Market Landscape</a>
+      <a href="entity-psychometric.html"><span class="nav-icon">🧬</span> Psychometric &amp; Data</a>
+      <div class="nav-divider"></div>
+      <a href="dashboard.html"><span class="nav-icon">◈</span> Dashboard</a>
+      <a href="action-center.html"><span class="nav-icon">⚡</span> Action Center</a>
+    </div>
+    <div class="nav-footer">
+      <div class="nav-footer-label">LAST UPDATED</div>
+      <div class="nav-footer-date">April 9, 2026</div>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-content">
+      <div>
+        <div class="hero-eyebrow">501(c)(3) Formation</div>
+        <h1 class="hero-headline">Foundation — 501(c)(3)</h1>
+        <div class="hero-badge-row">
+          <span class="badge badge-green"><span class="dot"></span> Formation Ready — Board Confirmed</span>
+        </div>
+        <div class="warning-card" style="margin-top: 16px; max-width: 640px;">
+          <div class="warning-title">Independent Entity</div>
+          <div class="panel-text">NOT a subsidiary of The Vault. No parent. No owner.</div>
+        </div>
+        <p class="hero-narrative">The [TBD Foundation] is a standalone Georgia nonprofit corporation, legally independent of all MedEdPrep entities. It purchases services at arm's length FMV. An 80% independent board creates IRS rebuttable presumption of reasonableness on every related-party transaction.</p>
+      </div>
+
+      <div class="hero-metrics">
+        <div class="hero-metric">
+          <div class="hero-metric-value c-teal">5</div>
+          <div class="hero-metric-label">Board Members Confirmed</div>
+          <div class="hero-metric-note">4 independent</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value c-green">80%</div>
+          <div class="hero-metric-label">Board Independence</div>
+          <div class="hero-metric-note">Exceeds 2/3 best practice</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value c-purple">3</div>
+          <div class="hero-metric-label">Program Areas</div>
+          <div class="hero-metric-note">EMS Access · Workforce · Hospice</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value c-amber">TBD</div>
+          <div class="hero-metric-label">Legal Name</div>
+          <div class="hero-metric-note">Open decision</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-inner">
+    <div class="controls">
+      <button type="button" onclick="toggleAll(true)">Expand All</button>
+      <button type="button" onclick="toggleAll(false)">Collapse All</button>
+    </div>
+
+    <div class="section" id="independence-architecture">
+      <div class="section-header" onclick="toggleSection(this)" aria-expanded="false">
+        <span class="section-icon">⚖️</span>
+        <span class="section-title">Independence Architecture<span class="section-subtitle">Why this structure is bulletproof</span></span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="callout">
+            <div class="callout-label">The Structural Reality</div>
+            <p class="callout-text">The 501(c)(3) is a standalone nonprofit corporation incorporated in Georgia under O.C.G.A. Title 14, Chapter 3. It cannot be owned. It has no parent entity. It has no subsidiary relationship to The Vault, MedEdPrep LLC, or any other entity in the structure.</p>
+          </div>
+
+          <pre class="mono-diagram">┌─────────────────────────────────────────┐       ┌───────────────────────────┐
+│  Trust (future — Wyoming DAPT)          │       │  [TBD Foundation]         │
+│    └── The Vault — MedEdPrep LLC        │       │  501(c)(3)                │
+│          │  (Holding / IPCo)            │       │                           │
+│          ├── Company A  (Education)  ◄──┼───────┤  Purchases software/      │
+│          ├── Company B  (Accreditation) │       │  services at FMV          │
+│          ├── Company C  (Certification) │       │  via arm's-length         │
+│          ├── Company D  (Hospice)    ◄──┼───────┤  contracts                │
+│          └── Company E  (Data)          │       │                           │
+└─────────────────────────────────────────┘       │  Independent board        │
+                                                  │  Not owned by anyone      │
+                                                  └───────────────────────────┘</pre>
+
+          <div class="legend-note">Left box = ownership structure | Right box = independent legal entity | Arrows = contractual (FMV purchases), NOT ownership</div>
+
+          <div class="info-grid">
+            <div class="info-card" data-accent="teal">
+              <div class="info-card-header">
+                <div class="info-card-icon">✓</div>
+                <div class="info-card-title">Rebuttable Presumption</div>
+              </div>
+              <div class="info-card-text">When 2+ independent directors with no MedEdPrep financial stake approve a transaction in advance, rely on comparability data, and document it in minutes — the burden shifts to the IRS to prove the transaction wasn’t fair.</div>
+            </div>
+
+            <div class="info-card" data-accent="purple">
+              <div class="info-card-header">
+                <div class="info-card-icon">⚖</div>
+                <div class="info-card-title">Bryan Rothkin’s COI</div>
+              </div>
+              <div class="info-card-text">Bryan’s future Company D (Hospice) relationship is handled by the Conflict of Interest policy. He recuses from votes on Company D transactions. His independence on all other matters remains clean.</div>
+            </div>
+
+            <div class="info-card" data-accent="green">
+              <div class="info-card-header">
+                <div class="info-card-icon">🛡</div>
+                <div class="info-card-title">Firewall Checklist</div>
+              </div>
+              <div class="info-card-text">Separate legal entity, separate EIN, separate bank accounts, separate accounting, 80%+ independent board, written COI policy, arm’s length transactions, independent programs not involving MedEdPrep.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="board-of-directors">
+      <div class="section-header" onclick="toggleSection(this)" aria-expanded="false">
+        <span class="section-icon">👥</span>
+        <span class="section-title">Board of Directors<span class="section-subtitle">5 confirmed · 4 independent · 80%</span></span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <span class="badge badge-green"><span class="dot"></span> Recruitment Complete — Board Confirmed April 9, 2026</span>
+
+          <div class="progress-card">
+            <div class="progress-meta">
+              <div class="progress-label">Board independence ratio</div>
+              <div class="progress-value">80%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" data-width="80"></div>
+            </div>
+            <div class="subtle-note">Exceeds the practical 2/3 independence threshold and supports clean related-party approval mechanics.</div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Person</th>
+                  <th>Title / Background</th>
+                  <th>Board Role</th>
+                  <th>Independence</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Jeramey</strong></td>
+                  <td>Founder, MedEdPrep</td>
+                  <td>Founder Seat</td>
+                  <td><span class="status-chip alert">Not Independent</span></td>
+                  <td>Provides vision &amp; institutional knowledge. Not recommended as board chair.</td>
+                </tr>
+                <tr>
+                  <td><strong>Allyson Cooper</strong></td>
+                  <td>PA / ACOD, pursuing MBA</td>
+                  <td>Independent Director</td>
+                  <td><span class="status-chip ok">✓ Independent</span></td>
+                  <td>Finance, governance, healthcare background. No MedEdPrep ties.</td>
+                </tr>
+                <tr>
+                  <td><strong>Bryan Rothkin</strong></td>
+                  <td>Hospice business partner (separate company, no MedEdPrep ties)</td>
+                  <td>Independent Director</td>
+                  <td><span class="status-chip ok">✓ Independent</span></td>
+                  <td>COI policy covers future Company D conflict. Recuses from Company D votes only.</td>
+                </tr>
+                <tr>
+                  <td><strong>Chrystal McDaniel</strong></td>
+                  <td>NP / Paramedic, 30+ years healthcare</td>
+                  <td>Independent Director</td>
+                  <td><span class="status-chip ok">✓ Independent</span></td>
+                  <td>Deep domain expertise. EMS + clinical credibility for grant applications.</td>
+                </tr>
+                <tr>
+                  <td><strong>David Tanner</strong></td>
+                  <td>Local friend, community / public safety</td>
+                  <td>Independent Director</td>
+                  <td><span class="status-chip ok">✓ Independent</span></td>
+                  <td>Community representation. Public safety background.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout blue" style="margin-top: 16px;">
+            <div class="callout-label">IRS 4-Part Independence Test</div>
+            <p class="callout-text">A director is independent only if: (1) not compensated as officer or employee, (2) did not receive &gt;$10K as contractor, (3) no reportable Schedule L transactions with the nonprofit, (4) no reportable transactions with related organizations. All 4 independent directors pass all 4 tests.</p>
+          </div>
+
+          <div class="warning-card" style="margin-top: 16px;">
+            <div class="warning-title">Next Step Framing</div>
+            <div class="panel-text">Next step: Attorney/accountant meeting (staged — not immediate). This is NOT an urgent action item. Board is complete.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="mission-programs">
+      <div class="section-header" onclick="toggleSection(this)" aria-expanded="false">
+        <span class="section-icon">🎯</span>
+        <span class="section-title">Mission &amp; Programs<span class="section-subtitle">3 program areas · Dual mission</span></span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="quote-card">
+            <blockquote>“The corporation is organized exclusively for charitable and educational purposes within the meaning of Section 501(c)(3) of the Internal Revenue Code, including but not limited to: advancing the quality, accessibility, and equity of emergency medical services education and training; promoting public health and safety through workforce development in out-of-hospital care; supporting end-of-life and hospice care education and access; and providing educational tools and resources to underserved communities and educational institutions.”</blockquote>
+          </div>
+
+          <div class="program-grid">
+            <div class="program-card teal">
+              <div class="program-title">Program 1: EMS Education Access</div>
+              <ul>
+                <li>Provide free or subsidized access to validated educational tools, test prep, and state-approved exams for high school EMS programs, underserved communities, and students facing financial barriers.</li>
+                <li><strong>How:</strong> Foundation receives grant funding → purchases MedEdPrep access at FMV → provides free to qualifying programs and students.</li>
+                <li><strong>Baseline:</strong> MedEdPrep currently serves HS programs with free test prep and $30/student EOPA exams. Foundation formalizes and scales this.</li>
+                <li><strong>Measurable outcomes:</strong> HS programs served, students with free access, pass rates on EOPA/state exams, geographic reach.</li>
+              </ul>
+            </div>
+
+            <div class="program-card purple">
+              <div class="program-title">Program 2: Out-of-Hospital Workforce Development</div>
+              <ul>
+                <li>Advance EMS education quality through research, standards development, CE access, and professional development for EMS educators and practitioners.</li>
+                <li><strong>How:</strong> Fund scholarships, support research (powered by anonymized aggregate data from Company E), develop open educational resources, host/sponsor CE events.</li>
+                <li>This is the GEMSA-model program — positions the nonprofit as advancing EMS education broadly.</li>
+                <li><strong>Measurable outcomes:</strong> Scholarships awarded, research publications, CE events hosted, educator training programs supported.</li>
+              </ul>
+            </div>
+
+            <div class="program-card pink">
+              <div class="program-title">Program 3: End-of-Life Care Education &amp; Access</div>
+              <ul>
+                <li>Improve hospice and palliative care quality through technology access, workforce training, and community education.</li>
+                <li><strong>How:</strong> As Company D (Hospice) matures, foundation purchases hospice tech at FMV; provides hospice education to underserved communities; supports training for hospice workers and caregivers.</li>
+                <li>Ensures nonprofit serves beyond EMS/MedEdPrep interests. Broadens mission and opens grant doors in aging/palliative space.</li>
+                <li><strong>Measurable outcomes:</strong> Communities served, hospice workers trained, technology access provided.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout purple" style="margin-top: 18px;">
+            <div class="callout-label">Vision Statement</div>
+            <p class="callout-text">Propel out-of-hospital education, clinical capabilities, and end-of-life care forward through equitable technology access, workforce development, and public safety advancement.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="formation-status">
+      <div class="section-header" onclick="toggleSection(this)" aria-expanded="false">
+        <span class="section-icon">📋</span>
+        <span class="section-title">Formation Status<span class="section-subtitle">What’s done · What’s next</span></span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="split-grid">
+            <div class="status-panel complete">
+              <div class="status-heading">Completed</div>
+              <ul>
+                <li><div><span class="status-item-title">Articles of Incorporation</span> — drafted (purpose clause + dissolution clause from O.C.G.A. § 14-3-202)</div></li>
+                <li><div><span class="status-item-title">Bylaws</span> — outlined (501c3-bylaws-outline.md)</div></li>
+                <li><div><span class="status-item-title">Conflict of Interest Policy</span> — written (501c3-coi-policy.md)</div></li>
+                <li><div><span class="status-item-title">30-Day Action Plan</span> — created</div></li>
+                <li><div><span class="status-item-title">Board</span> — confirmed (5 members, 4 independent)</div></li>
+                <li><div><span class="status-item-title">Formation design</span> — complete (501c3-formation-design.md)</div></li>
+                <li><div><span class="status-item-title">Grant strategy</span> — complete (grant-strategy-comprehensive.md)</div></li>
+              </ul>
+            </div>
+
+            <div class="status-panel pending">
+              <div class="status-heading">Pending — Not Urgent</div>
+              <ul>
+                <li><div><span class="status-item-title">Name decision</span> — open — see Name Decision section below</div></li>
+                <li><div><span class="status-item-title">Attorney / accountant meeting</span> — staged, not immediate</div></li>
+                <li><div><span class="status-item-title">Georgia SOS filing</span> — $100 Articles of Incorporation</div></li>
+                <li><div><span class="status-item-title">Newspaper publication</span> — ~$40, within 1 day of filing</div></li>
+                <li><div><span class="status-item-title">EIN from IRS</span> — free, immediate after filing</div></li>
+                <li><div><span class="status-item-title">Bank account</span> — after EIN</div></li>
+                <li><div><span class="status-item-title">SAM.gov registration</span> — START IMMEDIATELY after EIN — 4-8 week processing</div></li>
+                <li><div><span class="status-item-title">Organizational meeting</span> — after Articles filed</div></li>
+                <li><div><span class="status-item-title">Form 1023 filing</span> — $600, weeks 10-12</div></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout green" style="margin-top: 18px;">
+            <div class="callout-label">Formation Cost Range</div>
+            <p class="callout-text">Formation costs: ~$775 DIY | ~$5,775 with attorney (recommended)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="name-decision">
+      <div class="section-header" onclick="toggleSection(this)" aria-expanded="false">
+        <span class="section-icon">⚠️</span>
+        <span class="section-title">Open Decision — Name<span class="section-subtitle">Legal name must be chosen before filing</span></span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="warning-card">
+            <div class="warning-title">⚠ Open Decision: 501(c)(3) Legal Name — TBD</div>
+            <div class="panel-text">The foundation’s legal name has not been selected. This decision must be made before filing Articles of Incorporation with the Georgia Secretary of State.</div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-card" data-accent="amber">
+              <div class="info-card-header">
+                <div class="info-card-icon" style="background: var(--amber-dim); color: var(--amber);">①</div>
+                <div class="info-card-title">Key Criteria From Research</div>
+              </div>
+              <div class="info-card-text">Must include “Corporation,” “Incorporated,” “Company,” or abbreviation (Georgia law). Research strongly recommends a mission-focused name with NO MedEdPrep branding.</div>
+            </div>
+
+            <div class="info-card" data-accent="blue">
+              <div class="info-card-header">
+                <div class="info-card-icon" style="background: var(--blue-dim); color: var(--blue);">②</div>
+                <div class="info-card-title">Why Branding Distance Matters</div>
+              </div>
+              <div class="info-card-text">A name tied to MedEdPrep raises IRS scrutiny about independence. The nonprofit’s credibility with grantors depends on being seen as independent.</div>
+            </div>
+
+            <div class="info-card" data-accent="teal">
+              <div class="info-card-header">
+                <div class="info-card-icon">③</div>
+                <div class="info-card-title">Availability Check</div>
+              </div>
+              <div class="info-card-text">Check availability: GA SOS Name Search at ecorp.sos.ga.gov/BusinessSearch. Optional name reservation: $25.</div>
+            </div>
+          </div>
+
+          <div class="callout amber" style="margin-top: 18px;">
+            <div class="callout-label">Suggested Naming Directions</div>
+            <p class="callout-text">Focus on mission: “Georgia EMS Education Foundation” / “Out-of-Hospital Care Foundation” / “[Geographic] Healthcare Workforce Foundation”. Focus on geography + mission. Avoid: “MedEdPrep Foundation,” “MedEdPrep Education Foundation,” or any name that implies ownership by MedEdPrep.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="grant-strategy">
+      <div class="section-header" onclick="toggleSection(this)" aria-expanded="false">
+        <span class="section-icon">💰</span>
+        <span class="section-title">Grant Strategy<span class="section-subtitle">Tiered by timeline and probability</span></span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="warning-card">
+            <div class="warning-title">Public Charity Status Matters</div>
+            <div class="panel-text">The 501(c)(3) transaction model depends on PUBLIC CHARITY status. If the nonprofit fails the one-third public support test, it becomes a private foundation — and Section 4941 self-dealing rules prohibit ALL transactions with MedEdPrep regardless of FMV. Keep founder/MedEdPrep contributions minimal while grant revenue ramps.</div>
+          </div>
+
+          <div class="tier-stack">
+            <div class="tier-card green">
+              <div class="tier-header">
+                <div>
+                  <h3>TIER 1 — IMMEDIATE (Months 1-6, No track record needed)</h3>
+                  <p>Fastest path to qualifying public support revenue</p>
+                </div>
+                <span class="badge badge-green"><span class="dot"></span> Priority Tier</span>
+              </div>
+              <div class="tier-body">
+                <div class="table-wrap" style="margin-top: 0;">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Funder</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Probability</th>
+                        <th>Window</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Firehouse Subs Public Safety Foundation</strong></td>
+                        <td>Foundation grant</td>
+                        <td>$15K–$25K</td>
+                        <td><span class="status-chip ok">High</span></td>
+                        <td>Q4 2026: July 9 (10AM ET) — fills at 600 apps</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Laerdal Medical</strong></td>
+                        <td>Corporate partnership</td>
+                        <td>In-kind training equipment</td>
+                        <td><span class="status-chip ok">High</span></td>
+                        <td>Outreach immediately — CSR team</td>
+                      </tr>
+                      <tr>
+                        <td><strong>AHA Heart Club Partnerships</strong></td>
+                        <td>In-kind + cash</td>
+                        <td>$500/school + CPR kits</td>
+                        <td><span class="status-chip ok">High</span></td>
+                        <td>Contact AHA Georgia regional office</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Hero Fund America</strong></td>
+                        <td>Foundation grant</td>
+                        <td>Up to $1,500</td>
+                        <td><span class="status-chip ok">High</span></td>
+                        <td>June 2026 annual round</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Georgia’s Own Foundation</strong></td>
+                        <td>Foundation grant</td>
+                        <td>Under $5,000</td>
+                        <td><span class="status-chip warn">Moderate</span></td>
+                        <td>Spring 2026 cycle</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Kaiser Permanente Georgia</strong></td>
+                        <td>Corporate grant</td>
+                        <td>$5K–$25K</td>
+                        <td><span class="status-chip note">Moderate-High</span></td>
+                        <td>Relationship building now</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="callout green" style="margin-top: 16px;">
+                  <div class="callout-label">Immediate Priority</div>
+                  <p class="callout-text">Firehouse Subs is the #1 priority. EMS education falls squarely in scope. Must apply Q4 2026 (July 9) — applications fill fast. 3-year reapplication wait after approval.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="tier-card blue">
+              <div class="tier-header">
+                <div>
+                  <h3>TIER 2 — SHORT TO MEDIUM TERM (Year 1-2, Federal)</h3>
+                  <p>Higher-dollar pathway with federal registration lead time</p>
+                </div>
+                <span class="badge badge-blue">Federal Track</span>
+              </div>
+              <div class="tier-body">
+                <div class="table-wrap" style="margin-top: 0;">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Program</th>
+                        <th>Amount</th>
+                        <th>Probability</th>
+                        <th>Notes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>HRSA RHNDP — Rural Health Network Dev Planning</strong></td>
+                        <td>$100K / 1 year</td>
+                        <td><span class="status-chip ok">High</span></td>
+                        <td>Designed for new networks. Next NOFO: ~Early 2027. START BUILDING CONSORTIUM NOW.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>HRSA Rural Health Care Services Outreach</strong></td>
+                        <td>$250K–$300K/yr × 4 yr</td>
+                        <td><span class="status-chip note">Medium-High</span></td>
+                        <td>Requires consortium of 3+ healthcare providers, 66% in rural areas. Best after RHNDP year.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>HRSA Rural Health Network Development (RHND)</strong></td>
+                        <td>$300K/yr × 4 yr</td>
+                        <td><span class="status-chip warn">Medium</span></td>
+                        <td>Better after RHNDP track record. Not annual.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>FEMA AFG</strong></td>
+                        <td>$10K–$100K</td>
+                        <td><span class="status-chip warn">Moderate</span></td>
+                        <td>As non-affiliated EMS org. Help fire departments include nonprofit tools in AFG budgets.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="subsection-title">Critical Actions</div>
+                <div class="action-list">
+                  <div class="action-item"><strong>SAM.gov registration:</strong> START THE DAY YOU GET YOUR EIN (4-8 week processing — critical path for all federal grants).</div>
+                  <div class="action-item"><strong>Grants.gov account:</strong> Register 1 day after SAM submission.</div>
+                  <div class="action-item"><strong>HRSA Electronic Handbooks (EHB):</strong> Register for HRSA-specific grants.</div>
+                  <div class="action-item"><strong>Keyword alerts:</strong> Set “rural health network,” “EMS,” “health workforce,” “emergency medical services,” “career technical education”.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tier-card purple">
+              <div class="tier-header">
+                <div>
+                  <h3>TIER 3 — STATE (Georgia-specific)</h3>
+                  <p>Blended grant, partnership, and vendor-enabled access strategy</p>
+                </div>
+                <span class="badge badge-purple">State Layer</span>
+              </div>
+              <div class="tier-body">
+                <div class="table-wrap" style="margin-top: 0;">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Source</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Notes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>CTAE / Perkins V</strong></td>
+                        <td>Vendor revenue pathway</td>
+                        <td>$60K–$600K/yr statewide</td>
+                        <td>Districts use Perkins V funds to buy MedEdPrep tools. Nonprofit facilitates access for underserved programs.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Georgia OEMS</strong></td>
+                        <td>Regulatory relationship</td>
+                        <td>N/A direct</td>
+                        <td>Validates grant applications. Potential partnership for EOPA access.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Community Foundation for Greater Atlanta</strong></td>
+                        <td>Foundation grant</td>
+                        <td>$5K–$50K</td>
+                        <td>Next window ~January 2027.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Georgia Health Foundation</strong></td>
+                        <td>Foundation grant</td>
+                        <td>$10K–$30K</td>
+                        <td>Year 2+ only — explicitly excludes startups. June 1 deadline.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="subsection-title">Year 1 Financial Projection For Public Support Test</div>
+                <div class="table-wrap" style="margin-top: 0;">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Source</th>
+                        <th>Projected Amount</th>
+                        <th>Qualifies for Public Support?</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td><strong>Firehouse Subs</strong></td><td>$15K-$25K</td><td><span class="status-chip ok">Yes</span></td></tr>
+                      <tr><td><strong>AHA</strong></td><td>$2K-$5K</td><td><span class="status-chip ok">Yes</span></td></tr>
+                      <tr><td><strong>Hero Fund</strong></td><td>$1.5K</td><td><span class="status-chip ok">Yes</span></td></tr>
+                      <tr><td><strong>Georgia’s Own</strong></td><td>$3K-$5K</td><td><span class="status-chip ok">Yes</span></td></tr>
+                      <tr><td><strong>Kaiser</strong></td><td>$5K-$25K</td><td><span class="status-chip ok">Yes</span></td></tr>
+                      <tr><td><strong>Small donations</strong></td><td>$2K-$5K</td><td><span class="status-chip ok">Yes</span></td></tr>
+                      <tr><td><strong>Total qualifying</strong></td><td>$28.5K-$90.5K</td><td><span class="status-chip ok">Supports ratio</span></td></tr>
+                      <tr><td><strong>MedEdPrep contribution</strong></td><td>NO</td><td><span class="status-chip alert">Hurts ratio</span></td></tr>
+                      <tr><td><strong>Founder contribution</strong></td><td>NO</td><td><span class="status-chip alert">Hurts ratio</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="callout purple" style="margin-top: 16px;">
+                  <div class="callout-label">Strategic Framing Note</div>
+                  <p class="callout-text">Frame ALL grant applications as “healthcare workforce pipeline + health equity” — not just “EMS training.” Funders respond to: “removing financial barriers to healthcare career entry,” “diversifying EMS workforce pipeline,” “rural healthcare workforce shortage,” “health equity in emergency care.”</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="governance-artifacts">
+      <div class="section-header" onclick="toggleSection(this)" aria-expanded="false">
+        <span class="section-icon">📁</span>
+        <span class="section-title">Governance Artifacts Ready<span class="section-subtitle">Documents produced and ready</span></span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="subtle-note">All documents in <strong>01-corporate-structure/</strong> directory. Links are relative paths.</div>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Document</th>
+                  <th>Status</th>
+                  <th>File</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>501(c)(3) Formation Design</strong></td>
+                  <td><span class="status-chip ok">✓ Complete</span></td>
+                  <td><a class="file-link" href="01-corporate-structure/501c3-formation-design.md">01-corporate-structure/501c3-formation-design.md</a></td>
+                </tr>
+                <tr>
+                  <td><strong>30-Day Action Plan</strong></td>
+                  <td><span class="status-chip ok">✓ Complete</span></td>
+                  <td><a class="file-link" href="01-corporate-structure/501c3-30-day-action-plan.md">01-corporate-structure/501c3-30-day-action-plan.md</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Articles of Incorporation Draft</strong></td>
+                  <td><span class="status-chip ok">✓ Complete</span></td>
+                  <td><a class="file-link" href="01-corporate-structure/501c3-articles-of-incorporation-draft.md">01-corporate-structure/501c3-articles-of-incorporation-draft.md</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Bylaws Outline</strong></td>
+                  <td><span class="status-chip ok">✓ Complete</span></td>
+                  <td><a class="file-link" href="01-corporate-structure/501c3-bylaws-outline.md">01-corporate-structure/501c3-bylaws-outline.md</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Conflict of Interest Policy</strong></td>
+                  <td><span class="status-chip ok">✓ Complete</span></td>
+                  <td><a class="file-link" href="01-corporate-structure/501c3-coi-policy.md">01-corporate-structure/501c3-coi-policy.md</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Grant Strategy (Comprehensive)</strong></td>
+                  <td><span class="status-chip ok">✓ Complete</span></td>
+                  <td><a class="file-link" href="01-corporate-structure/grant-strategy-comprehensive.md">01-corporate-structure/grant-strategy-comprehensive.md</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Grant Landscape — Private Foundations</strong></td>
+                  <td><span class="status-chip ok">✓ Complete</span></td>
+                  <td><a class="file-link" href="01-corporate-structure/grant-landscape-private-foundations.md">01-corporate-structure/grant-landscape-private-foundations.md</a></td>
+                </tr>
+                <tr>
+                  <td><strong>HRSA Programs Research</strong></td>
+                  <td><span class="status-chip ok">✓ Complete</span></td>
+                  <td><a class="file-link" href="01-corporate-structure/hrsa-programs.md">01-corporate-structure/hrsa-programs.md</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Georgia State Funding</strong></td>
+                  <td><span class="status-chip ok">✓ Complete</span></td>
+                  <td><a class="file-link" href="01-corporate-structure/georgia-state-funding.md">01-corporate-structure/georgia-state-funding.md</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Board Independence Check Tool</strong></td>
+                  <td><span class="status-chip ok">✓ Complete</span></td>
+                  <td><a class="file-link" href="01-corporate-structure/board-independence-check.html">01-corporate-structure/board-independence-check.html</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Dual-Entity Framework</strong></td>
+                  <td><span class="status-chip ok">✓ Complete</span></td>
+                  <td><a class="file-link" href="01-corporate-structure/dual-entity-framework.md">01-corporate-structure/dual-entity-framework.md</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Entity Domicile Analysis</strong></td>
+                  <td><span class="status-chip ok">✓ Complete</span></td>
+                  <td><a class="file-link" href="01-corporate-structure/entity-domicile-analysis.md">01-corporate-structure/entity-domicile-analysis.md</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Federal Workforce Grants</strong></td>
+                  <td><span class="status-chip ok">✓ Complete</span></td>
+                  <td><a class="file-link" href="01-corporate-structure/federal-workforce-grants.md">01-corporate-structure/federal-workforce-grants.md</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Trust Ownership Analysis</strong></td>
+                  <td><span class="status-chip ok">✓ Complete</span></td>
+                  <td><a class="file-link" href="01-corporate-structure/trust-ownership.md">01-corporate-structure/trust-ownership.md</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Grant Landscape Overview</strong></td>
+                  <td><span class="status-chip ok">✓ Complete</span></td>
+                  <td><a class="file-link" href="01-corporate-structure/grant-landscape.md">01-corporate-structure/grant-landscape.md</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="warning-card" style="margin-top: 18px;">
+            <div class="warning-title">Still Needed</div>
+            <div class="panel-text">Documents referenced but not yet drafted:</div>
+            <div class="needed-grid">
+              <div class="needed-item">Articles of Incorporation (final, complete draft with all O.C.G.A. § 14-3-202 provisions)</div>
+              <div class="needed-item">Organizational Meeting Minutes template</div>
+              <div class="needed-item">Board Resolution templates (4 types)</div>
+              <div class="needed-item">Annual Compliance Calendar</div>
+              <div class="needed-item">Whistleblower Policy</div>
+              <div class="needed-item">Document Retention Policy</div>
+              <div class="needed-item">Gift Acceptance Policy</div>
+              <div class="needed-item">Year 1 Operating Budget</div>
+              <div class="needed-item">3-Year Financial Projections</div>
+              <div class="needed-item">FMV Documentation Framework</div>
+              <div class="needed-item">Grant-Ready Program Descriptions</div>
+              <div class="needed-item">Perkins V Positioning Sheet</div>
+              <div class="needed-item">HRSA Consortium Partnership Framework</div>
+              <div class="needed-item">Shared Services Agreement template</div>
+              <div class="needed-item">Data Access Agreement template</div>
+              <div class="needed-item">Software License Agreement template</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="filing-sequence">
+      <div class="section-header" onclick="toggleSection(this)" aria-expanded="false">
+        <span class="section-icon">📅</span>
+        <span class="section-title">Filing Sequence<span class="section-subtitle">Georgia + Federal steps</span></span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="section-inner">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Phase</th>
+                  <th>Action</th>
+                  <th>Cost</th>
+                  <th>Timeline</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Step 1a</strong></td>
+                  <td>Choose legal name</td>
+                  <td>Free (or $25 reserve)</td>
+                  <td>Day 1-2</td>
+                  <td><span class="status-chip warn">Open Decision</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Step 1b</strong></td>
+                  <td>File Articles of Incorporation with GA SOS</td>
+                  <td>$100 (standard), $250 (same day)</td>
+                  <td>7 business days standard</td>
+                  <td><span class="status-chip warn">Awaiting name + attorney meeting</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Step 1c</strong></td>
+                  <td>Publish newspaper notice of incorporation</td>
+                  <td>~$40</td>
+                  <td>Within 1 day of filing</td>
+                  <td><span class="status-chip warn">Awaiting filing</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Step 1d</strong></td>
+                  <td>Obtain EIN from IRS (Form SS-4 online)</td>
+                  <td>Free</td>
+                  <td>Immediate</td>
+                  <td><span class="status-chip warn">Awaiting Articles</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Step 1e</strong></td>
+                  <td>Open bank account (different bank than MedEdPrep)</td>
+                  <td>Varies</td>
+                  <td>After EIN</td>
+                  <td><span class="status-chip warn">Awaiting EIN</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Step 1f</strong></td>
+                  <td>Register on SAM.gov (CRITICAL PATH)</td>
+                  <td>Free</td>
+                  <td>4-8 weeks processing</td>
+                  <td><span class="status-chip note">START SAME DAY AS EIN</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Step 2a</strong></td>
+                  <td>Hold organizational meeting</td>
+                  <td>Free</td>
+                  <td>After Articles + board</td>
+                  <td><span class="status-chip warn">Awaiting filing</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Step 2b</strong></td>
+                  <td>File Initial Annual Registration (CD 920)</td>
+                  <td>Free</td>
+                  <td>Within 90 days of incorporation</td>
+                  <td><span class="status-chip warn">After Articles</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Step 3</strong></td>
+                  <td>Prepare Form 1023</td>
+                  <td>$600 filing fee</td>
+                  <td>Weeks 6-10 prep</td>
+                  <td><span class="status-chip warn">After org meeting</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Step 4</strong></td>
+                  <td>File Form 1023 + C-100 (if soliciting donations)</td>
+                  <td>$600 + $35</td>
+                  <td>Weeks 10-12</td>
+                  <td><span class="status-chip warn">After prep</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Step 5</strong></td>
+                  <td>IRS processing</td>
+                  <td>N/A</td>
+                  <td>3-6 months</td>
+                  <td><span class="status-chip warn">After filing</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout blue" style="margin-top: 18px;">
+            <div class="callout-label">Key Dates Beyond Day 30</div>
+            <ul class="bullet-list">
+              <li>July 9, 2026: Firehouse Subs Q4 2026 application window opens (10 AM ET) — 600 app limit, fills fast.</li>
+              <li>June 2026: Hero Fund America First Responders Grant Round.</li>
+              <li>Late 2026/Early 2027: HRSA RHNDP NOFO expected.</li>
+              <li>~January 2027: Community Foundation for Greater Atlanta 2027 cycle opens.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-footer">Foundation page for internal use · Last updated: 2026-04-09</div>
+  </div>
+
+  <script>
+    function toggleSection(header) {
+      const body = header.nextElementSibling;
+      const chevron = header.querySelector('.section-chevron');
+      const isOpen = body.classList.contains('open');
+      body.classList.toggle('open', !isOpen);
+      header.classList.toggle('active', !isOpen);
+      header.setAttribute('aria-expanded', String(!isOpen));
+      if (chevron) chevron.classList.toggle('open', !isOpen);
+    }
+
+    function toggleAll(open) {
+      document.querySelectorAll('.section-body').forEach((body) => {
+        const header = body.previousElementSibling;
+        const chevron = header.querySelector('.section-chevron');
+        body.classList.toggle('open', open);
+        header.classList.toggle('active', open);
+        header.setAttribute('aria-expanded', String(open));
+        if (chevron) chevron.classList.toggle('open', open);
+      });
+    }
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -60px 0px', threshold: 0.05 });
+
+    document.querySelectorAll('.section').forEach((section) => {
+      revealObserver.observe(section);
+    });
+
+    const progressObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.progress-fill').forEach((fill) => {
+            fill.style.width = (fill.dataset.width || '0') + '%';
+          });
+          progressObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.section-body').forEach((sectionBody) => {
+      progressObserver.observe(sectionBody);
+    });
+
+    document.querySelectorAll('.section-header').forEach((header) => {
+      header.setAttribute('tabindex', '0');
+      header.setAttribute('role', 'button');
+      header.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          header.click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
