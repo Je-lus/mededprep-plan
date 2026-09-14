@@ -22,12 +22,22 @@ export interface BugWidgetConfig {
   autoReportDebounceMs?: number;
   /** z-index for the widget (default: 99999) */
   zIndex?: number;
+  /** Extra distance in px between the launcher and a viewport edge, on top of
+   *  the default margin and safe-area insets. Use `offset.bottom` to lift the
+   *  launcher above a fixed bottom tab bar. Participates in the default CSS
+   *  position, the drag-snap clamp, the saved-position re-clamp at boot, and
+   *  the resize/orientation re-clamp. */
+  offset?: { bottom?: number };
   /** URL patterns where the widget should NOT appear */
   exclude?: string[];
   /** Headers to strip from error context (in addition to defaults) */
   sanitizeHeaders?: string[];
   /** Headless mode — capture + auto-report without the visible button/modal */
   headless?: boolean;
+  /** App-supplied filter for auto-reports — return false to suppress
+   *  (e.g. expected 401s on /me, known 410s). Runs after the widget's own
+   *  self-endpoint exclusion. */
+  shouldAutoReport?: (error: { url: string; status: number; method?: string }) => boolean;
 }
 
 export interface BugWidgetInstance {
@@ -60,9 +70,11 @@ export function initBugWidget(config: BugWidgetConfig): BugWidgetInstance {
     autoReportErrors = true,
     autoReportDebounceMs = 30000,
     zIndex = 99999,
+    offset = {},
     exclude = [],
     sanitizeHeaders = [],
     headless = false,
+    shouldAutoReport,
   } = config;
 
   if (!project || !apiUrl) {
@@ -89,9 +101,10 @@ export function initBugWidget(config: BugWidgetConfig): BugWidgetInstance {
 
   // Create the UI (skip in headless mode)
   let widgetCleanup: (() => void) | null = null;
+  const bottomOffset = Math.max(0, offset.bottom ?? 0);
   if (!headless) {
-    injectStyles(position, zIndex);
-    widgetCleanup = createWidget(project, apiUrl, sessionTracker, position, zIndex);
+    injectStyles(position, zIndex, bottomOffset);
+    widgetCleanup = createWidget(project, apiUrl, sessionTracker, position, zIndex, bottomOffset);
   }
 
   // Set up auto-reporting
@@ -99,6 +112,7 @@ export function initBugWidget(config: BugWidgetConfig): BugWidgetInstance {
   if (autoReportErrors) {
     autoReporter = new AutoReporter(project, apiUrl, sessionTracker, {
       debounceMs: autoReportDebounceMs,
+      shouldAutoReport,
       sanitizeHeaders: [
         'authorization',
         'cookie',

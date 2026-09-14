@@ -17,7 +17,8 @@ export const CLASS = {
 
 export function injectStyles(
   position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left',
-  zIndex: number = 99999
+  zIndex: number = 99999,
+  bottomOffset: number = 0
 ): void {
   if (document.getElementById(`${PREFIX}styles`)) return;
 
@@ -28,7 +29,7 @@ export function injectStyles(
   const css = `
     .${CLASS.button} {
       position: fixed;
-      ${isBottom ? 'bottom: 20px' : 'top: 20px'};
+      ${isBottom ? `bottom: calc(${20 + bottomOffset}px + env(safe-area-inset-bottom, 0px))` : 'top: calc(20px + env(safe-area-inset-top, 0px))'};
       ${isRight ? 'right: 20px' : 'left: 20px'};
       width: 48px;
       height: 48px;
@@ -41,10 +42,7 @@ export function injectStyles(
       align-items: center;
       justify-content: center;
       z-index: ${zIndex};
-      transition: transform 0.3s ease, box-shadow 0.3s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
       padding: 0;
-      opacity: 0;
-      animation: ${PREFIX}fadeIn 0.4s ease 2s forwards;
       touch-action: none;
       user-select: none;
       -webkit-user-select: none;
@@ -65,9 +63,20 @@ export function injectStyles(
       height: 12px;
       min-width: 12px;
       min-height: 12px;
-      opacity: 0.5;
+      opacity: 0.9;
       border-width: 0;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .${CLASS.button}.${CLASS.buttonMinimized}::before {
+      /* Invisible enlarged hit target: the dot stays 12px visually but keeps
+         a 44x44 minimum touch target (WCAG 2.5.5 / Apple HIG) */
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 44px;
+      height: 44px;
+      transform: translate(-50%, -50%);
     }
     .${CLASS.button}.${CLASS.buttonMinimized}:hover,
     .${CLASS.button}.${CLASS.buttonMinimized}:focus {
@@ -81,7 +90,6 @@ export function injectStyles(
     }
     .${CLASS.button}.${CLASS.buttonMinimized} svg {
       opacity: 0;
-      transition: opacity 0.2s ease;
     }
     .${CLASS.button}.${CLASS.buttonMinimized}:hover svg,
     .${CLASS.button}.${CLASS.buttonMinimized}:focus svg {
@@ -97,7 +105,6 @@ export function injectStyles(
       width: 24px;
       height: 24px;
       fill: #e94560;
-      transition: opacity 0.2s ease;
     }
     .${CLASS.overlay} {
       position: fixed;
@@ -109,7 +116,6 @@ export function injectStyles(
       justify-content: center;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.2s ease, visibility 0.2s ease;
     }
     .${CLASS.overlay}.active {
       opacity: 1;
@@ -169,13 +175,12 @@ export function injectStyles(
       resize: vertical;
       box-sizing: border-box;
       outline: none;
-      transition: border-color 0.2s;
     }
     .${CLASS.textarea}:focus {
       border-color: #e94560;
     }
     .${CLASS.textarea}::placeholder {
-      color: #999;
+      color: #6b7280;
     }
     .${CLASS.submit} {
       margin-top: 16px;
@@ -188,7 +193,6 @@ export function injectStyles(
       font-size: 16px;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s;
       min-height: 48px;
     }
     .${CLASS.submit}:hover {
@@ -211,7 +215,6 @@ export function injectStyles(
       border: 2px solid #ddd;
       border-top-color: #e94560;
       border-radius: 50%;
-      animation: ${PREFIX}spin 0.6s linear infinite;
       vertical-align: middle;
       margin-right: 8px;
     }
@@ -219,30 +222,56 @@ export function injectStyles(
       to { transform: rotate(360deg); }
     }
 
-    /* Mobile: smaller icon, full-screen modal */
+    /* Motion is opt-in: fade/size transitions and the spinner only animate
+       when the user has not asked for reduced motion. Without this block the
+       button is simply visible (opacity 1) and state changes are instant. */
+    @media (prefers-reduced-motion: no-preference) {
+      .${CLASS.button} {
+        transition: transform 0.3s ease, box-shadow 0.3s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+        opacity: 0;
+        animation: ${PREFIX}fadeIn 0.4s ease 2s forwards;
+      }
+      .${CLASS.button} svg {
+        transition: opacity 0.2s ease;
+      }
+      .${CLASS.overlay} {
+        transition: opacity 0.2s ease, visibility 0.2s ease;
+      }
+      .${CLASS.textarea} {
+        transition: border-color 0.2s;
+      }
+      .${CLASS.submit} {
+        transition: background 0.2s;
+      }
+      .${CLASS.spinner} {
+        animation: ${PREFIX}spin 0.6s linear infinite;
+      }
+    }
+
+    /* Mobile: tighter edge margin, smaller icon, full-screen modal.
+       The button stays at its effective 44px minimum (the old width/height
+       36px declarations were dead: the base min-width/min-height 44px always
+       won, so they are gone rather than pretending to shrink the button). */
     @media (max-width: 480px) {
       .${CLASS.button} {
-        width: 36px;
-        height: 36px;
-        ${isBottom ? 'bottom: 16px' : 'top: 16px'};
+        ${isBottom ? `bottom: calc(${16 + bottomOffset}px + env(safe-area-inset-bottom, 0px))` : 'top: calc(16px + env(safe-area-inset-top, 0px))'};
         ${isRight ? 'right: 16px' : 'left: 16px'};
       }
       .${CLASS.button} svg {
         width: 18px;
         height: 18px;
       }
-      .${CLASS.button}.${CLASS.buttonMinimized}:hover,
-      .${CLASS.button}.${CLASS.buttonMinimized}:focus {
-        width: 36px;
-        height: 36px;
-      }
       .${CLASS.content} {
         width: 100%;
         max-width: 100%;
         height: 100vh;
+        height: 100dvh;
         max-height: 100vh;
+        max-height: 100dvh;
         border-radius: 0;
         padding: 16px;
+        padding-top: calc(16px + env(safe-area-inset-top, 0px));
+        padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
         display: flex;
         flex-direction: column;
       }

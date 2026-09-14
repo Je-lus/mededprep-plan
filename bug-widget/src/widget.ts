@@ -17,7 +17,8 @@ export function createWidget(
   apiUrl: string,
   sessionTracker: SessionTracker | null,
   position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left',
-  zIndex: number
+  zIndex: number,
+  bottomOffset: number = 0
 ): () => void {
   // Create floating button
   const button = document.createElement('button');
@@ -30,9 +31,9 @@ export function createWidget(
   const overlay = document.createElement('div');
   overlay.className = CLASS.overlay;
   overlay.innerHTML = `
-    <div class="${CLASS.content}">
+    <div class="${CLASS.content}" role="dialog" aria-modal="true" aria-labelledby="bw__dialog-title">
       <div class="${CLASS.header}">
-        <h3>Report a Bug</h3>
+        <h3 id="bw__dialog-title">Report a Bug</h3>
         <button class="${CLASS.close}" aria-label="Close">&times;</button>
       </div>
       <textarea class="${CLASS.textarea}" placeholder="What went wrong? Describe what you were doing and what happened..."></textarea>
@@ -44,6 +45,7 @@ export function createWidget(
   document.body.appendChild(button);
   document.body.appendChild(overlay);
 
+  const content = overlay.querySelector(`.${CLASS.content}`) as HTMLDivElement;
   const textarea = overlay.querySelector(`.${CLASS.textarea}`) as HTMLTextAreaElement;
   const submitBtn = overlay.querySelector(`.${CLASS.submit}`) as HTMLButtonElement;
   const closeBtn = overlay.querySelector(`.${CLASS.close}`) as HTMLButtonElement;
@@ -65,23 +67,28 @@ export function createWidget(
   // Start the minimize timer after the entrance animation completes
   setTimeout(resetMinimizeTimer, 2400);
 
-  // Reset on any user interaction with the button
+  // Reset on hover. Touch interaction is handled inside onDragStart so the
+  // minimized state can be read before it is cleared.
   button.addEventListener('mouseenter', resetMinimizeTimer);
-  button.addEventListener('touchstart', resetMinimizeTimer, { passive: true });
 
   // --- Draggable behavior ---
   let isDragging = false;
   let dragStarted = false;
+  let dragThreshold = 5;
+  let suppressClickOpen = false;
+  let lastTouchTime = 0;
   let startX = 0;
   let startY = 0;
   let currentX = 0;
   let currentY = 0;
   let buttonRect: DOMRect;
 
-  // Restore saved position
+  // Restore saved position, re-clamped so it is on-screen and clear of the
+  // configured bottom offset even if the viewport changed since it was saved
   const savedPos = loadPosition();
   if (savedPos) {
-    applyPosition(savedPos.x, savedPos.y);
+    const clamped = clampToViewport(savedPos.x, savedPos.y);
+    applyPosition(clamped.x, clamped.y);
   }
 
   function getPointerPos(e: MouseEvent | TouchEvent): { x: number; y: number } {
@@ -93,6 +100,16 @@ export function createWidget(
 
   function onDragStart(e: MouseEvent | TouchEvent): void {
     if (overlay.classList.contains('active')) return;
+
+    const isTouch = 'touches' in e;
+    if (isTouch) {
+      lastTouchTime = Date.now();
+    } else if (Date.now() - lastTouchTime < 800) {
+      // Compatibility mouse events fired right after a touch (mousedown after
+      // touchend) must not restart the gesture or clear the tap state.
+      return;
+    }
+    const wasMinimized = button.classList.contains(CLASS.buttonMinimized);
 
     // Un-minimize when user interacts
     resetMinimizeTimer();
@@ -106,7 +123,21 @@ export function createWidget(
     isDragging = true;
     dragStarted = false;
 
-    e.preventDefault();
+    // Touch jitter routinely exceeds 5px; require more deliberate movement
+    // before a touch gesture is treated as a drag.
+    dragThreshold = isTouch ? 12 : 5;
+
+    // A tap on the minimized dot should only expand the button (and restart
+    // the idle timer). The next tap, on the expanded button, opens the form.
+    suppressClickOpen = isTouch && wasMinimized;
+
+    // Only prevent default for mouse (text selection, native drag). Calling
+    // preventDefault on touchstart would suppress the synthetic click that
+    // opens the form; scrolling during a drag is already blocked by the
+    // button's touch-action: none.
+    if (!isTouch) {
+      e.preventDefault();
+    }
   }
 
   function onDragMove(e: MouseEvent | TouchEvent): void {
@@ -116,8 +147,8 @@ export function createWidget(
     const dx = pos.x - startX;
     const dy = pos.y - startY;
 
-    // Only start dragging after 5px movement (distinguish from click)
-    if (!dragStarted && Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
+    // Only start dragging past the movement threshold (distinguish from click/tap)
+    if (!dragStarted && Math.abs(dx) < dragThreshold && Math.abs(dy) < dragThreshold) return;
 
     dragStarted = true;
     button.classList.add(CLASS.buttonDragging);
@@ -125,9 +156,9 @@ export function createWidget(
     const newX = currentX + dx;
     const newY = currentY + dy;
 
-    // Constrain to viewport
+    // Constrain to viewport (keep clear of the configured bottom offset)
     const maxX = window.innerWidth - buttonRect.width;
-    const maxY = window.innerHeight - buttonRect.height;
+    const maxY = window.innerHeight - buttonRect.height - bottomOffset;
     const clampedX = Math.max(0, Math.min(newX, maxX));
     const clampedY = Math.max(0, Math.min(newY, maxY));
 
@@ -147,14 +178,14 @@ export function createWidget(
       return;
     }
 
-    // Snap to nearest edge
+    // Snap to nearest edge (vertical clamp respects the bottom offset)
     const rect = button.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const viewW = window.innerWidth;
     const viewH = window.innerHeight;
 
     let finalX: number;
-    let finalY = Math.max(8, Math.min(rect.top, viewH - rect.height - 8));
+    let finalY = Math.max(8, Math.min(rect.top, viewH - rect.height - 8 - bottomOffset));
 
     // Snap to left or right edge
     if (centerX < viewW / 2) {
@@ -175,6 +206,30 @@ export function createWidget(
     button.style.top = `${y}px`;
     button.style.right = 'auto';
     button.style.bottom = 'auto';
+  }
+
+  function clampToViewport(x: number, y: number): { x: number; y: number } {
+    const rect = button.getBoundingClientRect();
+    const w = rect.width || 48;
+    const h = rect.height || 48;
+    const maxX = window.innerWidth - w - 8;
+    const maxY = window.innerHeight - h - 8 - bottomOffset;
+    return {
+      x: Math.max(8, Math.min(x, maxX)),
+      y: Math.max(8, Math.min(y, maxY)),
+    };
+  }
+
+  // Keep a dragged/saved inline position on-screen through viewport resizes
+  // and orientation changes (same clamp as the boot-time restore). The
+  // default CSS position needs no help; it is anchored to the viewport edge.
+  function onViewportChange(): void {
+    if (!button.style.left && !button.style.top) return;
+    const rect = button.getBoundingClientRect();
+    const clamped = clampToViewport(rect.left, rect.top);
+    if (clamped.x !== rect.left || clamped.y !== rect.top) {
+      applyPosition(clamped.x, clamped.y);
+    }
   }
 
   function savePosition(x: number, y: number): void {
@@ -215,6 +270,10 @@ export function createWidget(
   document.addEventListener('touchmove', onDragMove, { passive: true });
   document.addEventListener('touchend', onDragEnd);
 
+  // Re-clamp on viewport changes
+  window.addEventListener('resize', onViewportChange);
+  window.addEventListener('orientationchange', onViewportChange);
+
   // --- Modal behavior ---
   function openModal(): void {
     overlay.classList.add('active');
@@ -229,14 +288,49 @@ export function createWidget(
   function closeModal(): void {
     overlay.classList.remove('active');
     resetMinimizeTimer();
+    // Return focus to the launcher so keyboard users are not dropped at the
+    // top of the document (dialog pattern)
+    button.focus();
   }
 
-  button.addEventListener('click', (e) => {
-    // Only open modal if it wasn't a drag
-    if (!dragStarted) {
-      openModal();
+  // Focus trap: while the form dialog is open, Tab and Shift+Tab cycle
+  // through the dialog's controls instead of escaping into the page.
+  function trapFocus(e: KeyboardEvent): void {
+    if (e.key !== 'Tab' || !overlay.classList.contains('active')) return;
+    const focusables = Array.from(
+      content.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+      )
+    );
+    if (focusables.length === 0) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    const active = document.activeElement;
+    if (e.shiftKey) {
+      if (active === first || !content.contains(active)) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else if (active === last || !content.contains(active)) {
+      e.preventDefault();
+      first.focus();
     }
-    dragStarted = false;
+  }
+
+  document.addEventListener('keydown', trapFocus);
+
+  button.addEventListener('click', () => {
+    if (dragStarted) {
+      // It was a drag, not a click
+      dragStarted = false;
+      return;
+    }
+    if (suppressClickOpen) {
+      // Tap on the minimized dot: expand only, do not open the form
+      suppressClickOpen = false;
+      return;
+    }
+    openModal();
   });
 
   closeBtn.addEventListener('click', closeModal);
@@ -292,6 +386,9 @@ export function createWidget(
     button.removeEventListener('touchstart', onDragStart);
     document.removeEventListener('touchmove', onDragMove);
     document.removeEventListener('touchend', onDragEnd);
+    window.removeEventListener('resize', onViewportChange);
+    window.removeEventListener('orientationchange', onViewportChange);
+    document.removeEventListener('keydown', trapFocus);
     button.remove();
     overlay.remove();
   };

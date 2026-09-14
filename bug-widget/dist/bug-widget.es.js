@@ -1,23 +1,24 @@
-const m = "bw__", c = {
-  button: `${m}btn`,
-  buttonMinimized: `${m}btn--minimized`,
-  buttonDragging: `${m}btn--dragging`,
-  overlay: `${m}overlay`,
-  content: `${m}content`,
-  header: `${m}header`,
-  textarea: `${m}textarea`,
-  submit: `${m}submit`,
-  close: `${m}close`,
-  status: `${m}status`,
-  spinner: `${m}spinner`
+/* eslint-disable */
+const g = "bw__", c = {
+  button: `${g}btn`,
+  buttonMinimized: `${g}btn--minimized`,
+  buttonDragging: `${g}btn--dragging`,
+  overlay: `${g}overlay`,
+  content: `${g}content`,
+  header: `${g}header`,
+  textarea: `${g}textarea`,
+  submit: `${g}submit`,
+  close: `${g}close`,
+  status: `${g}status`,
+  spinner: `${g}spinner`
 };
-function Dt(t, e = 99999) {
-  if (document.getElementById(`${m}styles`)) return;
-  const n = t.includes("right"), r = t.includes("bottom"), i = e + 1, s = `
+function jt(t, e = 99999, n = 0) {
+  if (document.getElementById(`${g}styles`)) return;
+  const r = t.includes("right"), o = t.includes("bottom"), i = e + 1, s = `
     .${c.button} {
       position: fixed;
-      ${r ? "bottom: 20px" : "top: 20px"};
-      ${n ? "right: 20px" : "left: 20px"};
+      ${o ? `bottom: calc(${20 + n}px + env(safe-area-inset-bottom, 0px))` : "top: calc(20px + env(safe-area-inset-top, 0px))"};
+      ${r ? "right: 20px" : "left: 20px"};
       width: 48px;
       height: 48px;
       border-radius: 50%;
@@ -29,17 +30,14 @@ function Dt(t, e = 99999) {
       align-items: center;
       justify-content: center;
       z-index: ${e};
-      transition: transform 0.3s ease, box-shadow 0.3s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
       padding: 0;
-      opacity: 0;
-      animation: ${m}fadeIn 0.4s ease 2s forwards;
       touch-action: none;
       user-select: none;
       -webkit-user-select: none;
       min-width: 44px;
       min-height: 44px;
     }
-    @keyframes ${m}fadeIn {
+    @keyframes ${g}fadeIn {
       from { opacity: 0; transform: scale(0.8); }
       to { opacity: 1; transform: scale(1); }
     }
@@ -53,9 +51,20 @@ function Dt(t, e = 99999) {
       height: 12px;
       min-width: 12px;
       min-height: 12px;
-      opacity: 0.5;
+      opacity: 0.9;
       border-width: 0;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .${c.button}.${c.buttonMinimized}::before {
+      /* Invisible enlarged hit target: the dot stays 12px visually but keeps
+         a 44x44 minimum touch target (WCAG 2.5.5 / Apple HIG) */
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 44px;
+      height: 44px;
+      transform: translate(-50%, -50%);
     }
     .${c.button}.${c.buttonMinimized}:hover,
     .${c.button}.${c.buttonMinimized}:focus {
@@ -69,7 +78,6 @@ function Dt(t, e = 99999) {
     }
     .${c.button}.${c.buttonMinimized} svg {
       opacity: 0;
-      transition: opacity 0.2s ease;
     }
     .${c.button}.${c.buttonMinimized}:hover svg,
     .${c.button}.${c.buttonMinimized}:focus svg {
@@ -85,7 +93,6 @@ function Dt(t, e = 99999) {
       width: 24px;
       height: 24px;
       fill: #e94560;
-      transition: opacity 0.2s ease;
     }
     .${c.overlay} {
       position: fixed;
@@ -97,7 +104,6 @@ function Dt(t, e = 99999) {
       justify-content: center;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.2s ease, visibility 0.2s ease;
     }
     .${c.overlay}.active {
       opacity: 1;
@@ -157,13 +163,12 @@ function Dt(t, e = 99999) {
       resize: vertical;
       box-sizing: border-box;
       outline: none;
-      transition: border-color 0.2s;
     }
     .${c.textarea}:focus {
       border-color: #e94560;
     }
     .${c.textarea}::placeholder {
-      color: #999;
+      color: #6b7280;
     }
     .${c.submit} {
       margin-top: 16px;
@@ -176,7 +181,6 @@ function Dt(t, e = 99999) {
       font-size: 16px;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s;
       min-height: 48px;
     }
     .${c.submit}:hover {
@@ -199,38 +203,63 @@ function Dt(t, e = 99999) {
       border: 2px solid #ddd;
       border-top-color: #e94560;
       border-radius: 50%;
-      animation: ${m}spin 0.6s linear infinite;
       vertical-align: middle;
       margin-right: 8px;
     }
-    @keyframes ${m}spin {
+    @keyframes ${g}spin {
       to { transform: rotate(360deg); }
     }
 
-    /* Mobile: smaller icon, full-screen modal */
+    /* Motion is opt-in: fade/size transitions and the spinner only animate
+       when the user has not asked for reduced motion. Without this block the
+       button is simply visible (opacity 1) and state changes are instant. */
+    @media (prefers-reduced-motion: no-preference) {
+      .${c.button} {
+        transition: transform 0.3s ease, box-shadow 0.3s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+        opacity: 0;
+        animation: ${g}fadeIn 0.4s ease 2s forwards;
+      }
+      .${c.button} svg {
+        transition: opacity 0.2s ease;
+      }
+      .${c.overlay} {
+        transition: opacity 0.2s ease, visibility 0.2s ease;
+      }
+      .${c.textarea} {
+        transition: border-color 0.2s;
+      }
+      .${c.submit} {
+        transition: background 0.2s;
+      }
+      .${c.spinner} {
+        animation: ${g}spin 0.6s linear infinite;
+      }
+    }
+
+    /* Mobile: tighter edge margin, smaller icon, full-screen modal.
+       The button stays at its effective 44px minimum (the old width/height
+       36px declarations were dead: the base min-width/min-height 44px always
+       won, so they are gone rather than pretending to shrink the button). */
     @media (max-width: 480px) {
       .${c.button} {
-        width: 36px;
-        height: 36px;
-        ${r ? "bottom: 16px" : "top: 16px"};
-        ${n ? "right: 16px" : "left: 16px"};
+        ${o ? `bottom: calc(${16 + n}px + env(safe-area-inset-bottom, 0px))` : "top: calc(16px + env(safe-area-inset-top, 0px))"};
+        ${r ? "right: 16px" : "left: 16px"};
       }
       .${c.button} svg {
         width: 18px;
         height: 18px;
       }
-      .${c.button}.${c.buttonMinimized}:hover,
-      .${c.button}.${c.buttonMinimized}:focus {
-        width: 36px;
-        height: 36px;
-      }
       .${c.content} {
         width: 100%;
         max-width: 100%;
         height: 100vh;
+        height: 100dvh;
         max-height: 100vh;
+        max-height: 100dvh;
         border-radius: 0;
         padding: 16px;
+        padding-top: calc(16px + env(safe-area-inset-top, 0px));
+        padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
         display: flex;
         flex-direction: column;
       }
@@ -239,20 +268,20 @@ function Dt(t, e = 99999) {
         min-height: 100px;
       }
     }
-  `, o = document.createElement("style");
-  o.id = `${m}styles`, o.textContent = s, document.head.appendChild(o);
+  `, a = document.createElement("style");
+  a.id = `${g}styles`, a.textContent = s, document.head.appendChild(a);
 }
-function Mt(t, e) {
+function Vt(t, e) {
   if (t.match(/^[a-z]+:\/\//i))
     return t;
   if (t.match(/^\/\//))
     return window.location.protocol + t;
   if (t.match(/^[a-z]+:/i))
     return t;
-  const n = document.implementation.createHTMLDocument(), r = n.createElement("base"), i = n.createElement("a");
-  return n.head.appendChild(r), n.body.appendChild(i), e && (r.href = e), i.href = t, i.href;
+  const n = document.implementation.createHTMLDocument(), r = n.createElement("base"), o = n.createElement("a");
+  return n.head.appendChild(r), n.body.appendChild(o), e && (r.href = e), o.href = t, o.href;
 }
-const Ht = /* @__PURE__ */ (() => {
+const Xt = /* @__PURE__ */ (() => {
   let t = 0;
   const e = () => (
     // eslint-disable-next-line no-bitwise
@@ -260,33 +289,33 @@ const Ht = /* @__PURE__ */ (() => {
   );
   return () => (t += 1, `u${e()}${t}`);
 })();
-function T(t) {
+function _(t) {
   const e = [];
   for (let n = 0, r = t.length; n < r; n++)
     e.push(t[n]);
   return e;
 }
-let k = null;
-function lt(t = {}) {
-  return k || (t.includeStyleProperties ? (k = t.includeStyleProperties, k) : (k = T(window.getComputedStyle(document.documentElement)), k));
+let A = null;
+function xt(t = {}) {
+  return A || (t.includeStyleProperties ? (A = t.includeStyleProperties, A) : (A = _(window.getComputedStyle(document.documentElement)), A));
 }
-function j(t, e) {
+function Y(t, e) {
   const r = (t.ownerDocument.defaultView || window).getComputedStyle(t).getPropertyValue(e);
   return r ? parseFloat(r.replace("px", "")) : 0;
 }
-function _t(t) {
-  const e = j(t, "border-left-width"), n = j(t, "border-right-width");
+function Gt(t) {
+  const e = Y(t, "border-left-width"), n = Y(t, "border-right-width");
   return t.clientWidth + e + n;
 }
-function It(t) {
-  const e = j(t, "border-top-width"), n = j(t, "border-bottom-width");
+function Yt(t) {
+  const e = Y(t, "border-top-width"), n = Y(t, "border-bottom-width");
   return t.clientHeight + e + n;
 }
-function ut(t, e = {}) {
-  const n = e.width || _t(t), r = e.height || It(t);
+function vt(t, e = {}) {
+  const n = e.width || Gt(t), r = e.height || Yt(t);
   return { width: n, height: r };
 }
-function At() {
+function Jt() {
   let t, e;
   try {
     e = process;
@@ -295,11 +324,11 @@ function At() {
   const n = e && e.env ? e.env.devicePixelRatio : null;
   return n && (t = parseInt(n, 10), Number.isNaN(t) && (t = 1)), t || window.devicePixelRatio || 1;
 }
-const b = 16384;
-function Ot(t) {
-  (t.width > b || t.height > b) && (t.width > b && t.height > b ? t.width > t.height ? (t.height *= b / t.width, t.width = b) : (t.width *= b / t.height, t.height = b) : t.width > b ? (t.height *= b / t.width, t.width = b) : (t.width *= b / t.height, t.height = b));
+const x = 16384;
+function Kt(t) {
+  (t.width > x || t.height > x) && (t.width > x && t.height > x ? t.width > t.height ? (t.height *= x / t.width, t.width = x) : (t.width *= x / t.height, t.height = x) : t.width > x ? (t.height *= x / t.width, t.width = x) : (t.width *= x / t.height, t.height = x));
 }
-function B(t) {
+function J(t) {
   return new Promise((e, n) => {
     const r = new Image();
     r.onload = () => {
@@ -309,12 +338,12 @@ function B(t) {
     }, r.onerror = n, r.crossOrigin = "anonymous", r.decoding = "async", r.src = t;
   });
 }
-async function zt(t) {
+async function Zt(t) {
   return Promise.resolve().then(() => new XMLSerializer().serializeToString(t)).then(encodeURIComponent).then((e) => `data:image/svg+xml;charset=utf-8,${e}`);
 }
-async function Ft(t, e, n) {
-  const r = "http://www.w3.org/2000/svg", i = document.createElementNS(r, "svg"), s = document.createElementNS(r, "foreignObject");
-  return i.setAttribute("width", `${e}`), i.setAttribute("height", `${n}`), i.setAttribute("viewBox", `0 0 ${e} ${n}`), s.setAttribute("width", "100%"), s.setAttribute("height", "100%"), s.setAttribute("x", "0"), s.setAttribute("y", "0"), s.setAttribute("externalResourcesRequired", "true"), i.appendChild(s), s.appendChild(t), zt(i);
+async function Qt(t, e, n) {
+  const r = "http://www.w3.org/2000/svg", o = document.createElementNS(r, "svg"), i = document.createElementNS(r, "foreignObject");
+  return o.setAttribute("width", `${e}`), o.setAttribute("height", `${n}`), o.setAttribute("viewBox", `0 0 ${e} ${n}`), i.setAttribute("width", "100%"), i.setAttribute("height", "100%"), i.setAttribute("x", "0"), i.setAttribute("y", "0"), i.setAttribute("externalResourcesRequired", "true"), o.appendChild(i), i.appendChild(t), Zt(o);
 }
 const w = (t, e) => {
   if (t instanceof e)
@@ -322,442 +351,442 @@ const w = (t, e) => {
   const n = Object.getPrototypeOf(t);
   return n === null ? !1 : n.constructor.name === e.name || w(n, e);
 };
-function Ut(t) {
+function Nt(t) {
   const e = t.getPropertyValue("content");
   return `${t.cssText} content: '${e.replace(/'|"/g, "")}';`;
 }
-function qt(t, e) {
-  return lt(e).map((n) => {
-    const r = t.getPropertyValue(n), i = t.getPropertyPriority(n);
-    return `${n}: ${r}${i ? " !important" : ""};`;
+function te(t, e) {
+  return xt(e).map((n) => {
+    const r = t.getPropertyValue(n), o = t.getPropertyPriority(n);
+    return `${n}: ${r}${o ? " !important" : ""};`;
   }).join(" ");
 }
-function jt(t, e, n, r) {
-  const i = `.${t}:${e}`, s = n.cssText ? Ut(n) : qt(n, r);
-  return document.createTextNode(`${i}{${s}}`);
+function ee(t, e, n, r) {
+  const o = `.${t}:${e}`, i = n.cssText ? Nt(n) : te(n, r);
+  return document.createTextNode(`${o}{${i}}`);
 }
-function N(t, e, n, r) {
-  const i = window.getComputedStyle(t, n), s = i.getPropertyValue("content");
-  if (s === "" || s === "none")
+function at(t, e, n, r) {
+  const o = window.getComputedStyle(t, n), i = o.getPropertyValue("content");
+  if (i === "" || i === "none")
     return;
-  const o = Ht();
+  const s = Xt();
   try {
-    e.className = `${e.className} ${o}`;
+    e.className = `${e.className} ${s}`;
   } catch {
     return;
   }
   const a = document.createElement("style");
-  a.appendChild(jt(o, n, i, r)), e.appendChild(a);
+  a.appendChild(ee(s, n, o, r)), e.appendChild(a);
 }
-function Bt(t, e, n) {
-  N(t, e, ":before", n), N(t, e, ":after", n);
+function ne(t, e, n) {
+  at(t, e, ":before", n), at(t, e, ":after", n);
 }
-const tt = "application/font-woff", et = "image/jpeg", Wt = {
-  woff: tt,
-  woff2: tt,
+const ct = "application/font-woff", lt = "image/jpeg", re = {
+  woff: ct,
+  woff2: ct,
   ttf: "application/font-truetype",
   eot: "application/vnd.ms-fontobject",
   png: "image/png",
-  jpg: et,
-  jpeg: et,
+  jpg: lt,
+  jpeg: lt,
   gif: "image/gif",
   tiff: "image/tiff",
   svg: "image/svg+xml",
   webp: "image/webp"
 };
-function Vt(t) {
+function ie(t) {
   const e = /\.([^./]*?)$/g.exec(t);
   return e ? e[1] : "";
 }
-function J(t) {
-  const e = Vt(t).toLowerCase();
-  return Wt[e] || "";
+function et(t) {
+  const e = ie(t).toLowerCase();
+  return re[e] || "";
 }
-function Xt(t) {
+function se(t) {
   return t.split(/,/)[1];
 }
-function Y(t) {
+function tt(t) {
   return t.search(/^(data:)/) !== -1;
 }
-function Gt(t, e) {
+function oe(t, e) {
   return `data:${e};base64,${t}`;
 }
-async function ht(t, e, n) {
+async function Et(t, e, n) {
   const r = await fetch(t, e);
   if (r.status === 404)
     throw new Error(`Resource "${r.url}" not found`);
-  const i = await r.blob();
-  return new Promise((s, o) => {
+  const o = await r.blob();
+  return new Promise((i, s) => {
     const a = new FileReader();
-    a.onerror = o, a.onloadend = () => {
+    a.onerror = s, a.onloadend = () => {
       try {
-        s(n({ res: r, result: a.result }));
+        i(n({ res: r, result: a.result }));
       } catch (l) {
-        o(l);
+        s(l);
       }
-    }, a.readAsDataURL(i);
+    }, a.readAsDataURL(o);
   });
 }
-const G = {};
-function Yt(t, e, n) {
+const N = {};
+function ae(t, e, n) {
   let r = t.replace(/\?.*/, "");
   return n && (r = t), /ttf|otf|eot|woff2?/i.test(r) && (r = r.replace(/.*\//, "")), e ? `[${e}]${r}` : r;
 }
-async function K(t, e, n) {
-  const r = Yt(t, e, n.includeQueryParams);
-  if (G[r] != null)
-    return G[r];
+async function nt(t, e, n) {
+  const r = ae(t, e, n.includeQueryParams);
+  if (N[r] != null)
+    return N[r];
   n.cacheBust && (t += (/\?/.test(t) ? "&" : "?") + (/* @__PURE__ */ new Date()).getTime());
-  let i;
+  let o;
   try {
-    const s = await ht(t, n.fetchRequestInit, ({ res: o, result: a }) => (e || (e = o.headers.get("Content-Type") || ""), Xt(a)));
-    i = Gt(s, e);
-  } catch (s) {
-    i = n.imagePlaceholder || "";
-    let o = `Failed to fetch resource: ${t}`;
-    s && (o = typeof s == "string" ? s : s.message), o && console.warn(o);
+    const i = await Et(t, n.fetchRequestInit, ({ res: s, result: a }) => (e || (e = s.headers.get("Content-Type") || ""), se(a)));
+    o = oe(i, e);
+  } catch (i) {
+    o = n.imagePlaceholder || "";
+    let s = `Failed to fetch resource: ${t}`;
+    i && (s = typeof i == "string" ? i : i.message), s && console.warn(s);
   }
-  return G[r] = i, i;
+  return N[r] = o, o;
 }
-async function Jt(t) {
+async function ce(t) {
   const e = t.toDataURL();
-  return e === "data:," ? t.cloneNode(!1) : B(e);
+  return e === "data:," ? t.cloneNode(!1) : J(e);
 }
-async function Kt(t, e) {
+async function le(t, e) {
   if (t.currentSrc) {
-    const s = document.createElement("canvas"), o = s.getContext("2d");
-    s.width = t.clientWidth, s.height = t.clientHeight, o == null || o.drawImage(t, 0, 0, s.width, s.height);
-    const a = s.toDataURL();
-    return B(a);
+    const i = document.createElement("canvas"), s = i.getContext("2d");
+    i.width = t.clientWidth, i.height = t.clientHeight, s == null || s.drawImage(t, 0, 0, i.width, i.height);
+    const a = i.toDataURL();
+    return J(a);
   }
-  const n = t.poster, r = J(n), i = await K(n, r, e);
-  return B(i);
+  const n = t.poster, r = et(n), o = await nt(n, r, e);
+  return J(o);
 }
-async function Zt(t, e) {
+async function ue(t, e) {
   var n;
   try {
     if (!((n = t == null ? void 0 : t.contentDocument) === null || n === void 0) && n.body)
-      return await W(t.contentDocument.body, e, !0);
+      return await K(t.contentDocument.body, e, !0);
   } catch {
   }
   return t.cloneNode(!1);
 }
-async function Qt(t, e) {
-  return w(t, HTMLCanvasElement) ? Jt(t) : w(t, HTMLVideoElement) ? Kt(t, e) : w(t, HTMLIFrameElement) ? Zt(t, e) : t.cloneNode(dt(t));
+async function he(t, e) {
+  return w(t, HTMLCanvasElement) ? ce(t) : w(t, HTMLVideoElement) ? le(t, e) : w(t, HTMLIFrameElement) ? ue(t, e) : t.cloneNode(St(t));
 }
-const Nt = (t) => t.tagName != null && t.tagName.toUpperCase() === "SLOT", dt = (t) => t.tagName != null && t.tagName.toUpperCase() === "SVG";
-async function te(t, e, n) {
-  var r, i;
-  if (dt(e))
+const de = (t) => t.tagName != null && t.tagName.toUpperCase() === "SLOT", St = (t) => t.tagName != null && t.tagName.toUpperCase() === "SVG";
+async function fe(t, e, n) {
+  var r, o;
+  if (St(e))
     return e;
-  let s = [];
-  return Nt(t) && t.assignedNodes ? s = T(t.assignedNodes()) : w(t, HTMLIFrameElement) && (!((r = t.contentDocument) === null || r === void 0) && r.body) ? s = T(t.contentDocument.body.childNodes) : s = T(((i = t.shadowRoot) !== null && i !== void 0 ? i : t).childNodes), s.length === 0 || w(t, HTMLVideoElement) || await s.reduce((o, a) => o.then(() => W(a, n)).then((l) => {
+  let i = [];
+  return de(t) && t.assignedNodes ? i = _(t.assignedNodes()) : w(t, HTMLIFrameElement) && (!((r = t.contentDocument) === null || r === void 0) && r.body) ? i = _(t.contentDocument.body.childNodes) : i = _(((o = t.shadowRoot) !== null && o !== void 0 ? o : t).childNodes), i.length === 0 || w(t, HTMLVideoElement) || await i.reduce((s, a) => s.then(() => K(a, n)).then((l) => {
     l && e.appendChild(l);
   }), Promise.resolve()), e;
 }
-function ee(t, e, n) {
+function me(t, e, n) {
   const r = e.style;
   if (!r)
     return;
-  const i = window.getComputedStyle(t);
-  i.cssText ? (r.cssText = i.cssText, r.transformOrigin = i.transformOrigin) : lt(n).forEach((s) => {
-    let o = i.getPropertyValue(s);
-    s === "font-size" && o.endsWith("px") && (o = `${Math.floor(parseFloat(o.substring(0, o.length - 2))) - 0.1}px`), w(t, HTMLIFrameElement) && s === "display" && o === "inline" && (o = "block"), s === "d" && e.getAttribute("d") && (o = `path(${e.getAttribute("d")})`), r.setProperty(s, o, i.getPropertyPriority(s));
+  const o = window.getComputedStyle(t);
+  o.cssText ? (r.cssText = o.cssText, r.transformOrigin = o.transformOrigin) : xt(n).forEach((i) => {
+    let s = o.getPropertyValue(i);
+    i === "font-size" && s.endsWith("px") && (s = `${Math.floor(parseFloat(s.substring(0, s.length - 2))) - 0.1}px`), w(t, HTMLIFrameElement) && i === "display" && s === "inline" && (s = "block"), i === "d" && e.getAttribute("d") && (s = `path(${e.getAttribute("d")})`), r.setProperty(i, s, o.getPropertyPriority(i));
   });
 }
-function ne(t, e) {
+function pe(t, e) {
   w(t, HTMLTextAreaElement) && (e.innerHTML = t.value), w(t, HTMLInputElement) && e.setAttribute("value", t.value);
 }
-function re(t, e) {
+function ge(t, e) {
   if (w(t, HTMLSelectElement)) {
-    const n = e, r = Array.from(n.children).find((i) => t.value === i.getAttribute("value"));
+    const n = e, r = Array.from(n.children).find((o) => t.value === o.getAttribute("value"));
     r && r.setAttribute("selected", "");
   }
 }
-function se(t, e, n) {
-  return w(e, Element) && (ee(t, e, n), Bt(t, e, n), ne(t, e), re(t, e)), e;
+function we(t, e, n) {
+  return w(e, Element) && (me(t, e, n), ne(t, e, n), pe(t, e), ge(t, e)), e;
 }
-async function ie(t, e) {
+async function ye(t, e) {
   const n = t.querySelectorAll ? t.querySelectorAll("use") : [];
   if (n.length === 0)
     return t;
   const r = {};
-  for (let s = 0; s < n.length; s++) {
-    const a = n[s].getAttribute("xlink:href");
+  for (let i = 0; i < n.length; i++) {
+    const a = n[i].getAttribute("xlink:href");
     if (a) {
-      const l = t.querySelector(a), p = document.querySelector(a);
-      !l && p && !r[a] && (r[a] = await W(p, e, !0));
+      const l = t.querySelector(a), m = document.querySelector(a);
+      !l && m && !r[a] && (r[a] = await K(m, e, !0));
     }
   }
-  const i = Object.values(r);
-  if (i.length) {
-    const s = "http://www.w3.org/1999/xhtml", o = document.createElementNS(s, "svg");
-    o.setAttribute("xmlns", s), o.style.position = "absolute", o.style.width = "0", o.style.height = "0", o.style.overflow = "hidden", o.style.display = "none";
-    const a = document.createElementNS(s, "defs");
-    o.appendChild(a);
-    for (let l = 0; l < i.length; l++)
-      a.appendChild(i[l]);
-    t.appendChild(o);
+  const o = Object.values(r);
+  if (o.length) {
+    const i = "http://www.w3.org/1999/xhtml", s = document.createElementNS(i, "svg");
+    s.setAttribute("xmlns", i), s.style.position = "absolute", s.style.width = "0", s.style.height = "0", s.style.overflow = "hidden", s.style.display = "none";
+    const a = document.createElementNS(i, "defs");
+    s.appendChild(a);
+    for (let l = 0; l < o.length; l++)
+      a.appendChild(o[l]);
+    t.appendChild(s);
   }
   return t;
 }
-async function W(t, e, n) {
-  return !n && e.filter && !e.filter(t) ? null : Promise.resolve(t).then((r) => Qt(r, e)).then((r) => te(t, r, e)).then((r) => se(t, r, e)).then((r) => ie(r, e));
+async function K(t, e, n) {
+  return !n && e.filter && !e.filter(t) ? null : Promise.resolve(t).then((r) => he(r, e)).then((r) => fe(t, r, e)).then((r) => we(t, r, e)).then((r) => ye(r, e));
 }
-const ft = /url\((['"]?)([^'"]+?)\1\)/g, oe = /url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g, ae = /src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;
-function ce(t) {
+const $t = /url\((['"]?)([^'"]+?)\1\)/g, be = /url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g, xe = /src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;
+function ve(t) {
   const e = t.replace(/([.*+?^${}()|\[\]\/\\])/g, "\\$1");
   return new RegExp(`(url\\(['"]?)(${e})(['"]?\\))`, "g");
 }
-function le(t) {
+function Ee(t) {
   const e = [];
-  return t.replace(ft, (n, r, i) => (e.push(i), n)), e.filter((n) => !Y(n));
+  return t.replace($t, (n, r, o) => (e.push(o), n)), e.filter((n) => !tt(n));
 }
-async function ue(t, e, n, r, i) {
+async function Se(t, e, n, r, o) {
   try {
-    const s = n ? Mt(e, n) : e, o = J(e);
+    const i = n ? Vt(e, n) : e, s = et(e);
     let a;
-    return i || (a = await K(s, o, r)), t.replace(ce(e), `$1${a}$3`);
+    return o || (a = await nt(i, s, r)), t.replace(ve(e), `$1${a}$3`);
   } catch {
   }
   return t;
 }
-function he(t, { preferredFontFormat: e }) {
-  return e ? t.replace(ae, (n) => {
+function $e(t, { preferredFontFormat: e }) {
+  return e ? t.replace(xe, (n) => {
     for (; ; ) {
-      const [r, , i] = oe.exec(n) || [];
-      if (!i)
+      const [r, , o] = be.exec(n) || [];
+      if (!o)
         return "";
-      if (i === e)
+      if (o === e)
         return `src: ${r};`;
     }
   }) : t;
 }
-function mt(t) {
-  return t.search(ft) !== -1;
+function Rt(t) {
+  return t.search($t) !== -1;
 }
-async function pt(t, e, n) {
-  if (!mt(t))
+async function Tt(t, e, n) {
+  if (!Rt(t))
     return t;
-  const r = he(t, n);
-  return le(r).reduce((s, o) => s.then((a) => ue(a, o, e, n)), Promise.resolve(r));
+  const r = $e(t, n);
+  return Ee(r).reduce((i, s) => i.then((a) => Se(a, s, e, n)), Promise.resolve(r));
 }
-async function P(t, e, n) {
+async function z(t, e, n) {
   var r;
-  const i = (r = e.style) === null || r === void 0 ? void 0 : r.getPropertyValue(t);
-  if (i) {
-    const s = await pt(i, null, n);
-    return e.style.setProperty(t, s, e.style.getPropertyPriority(t)), !0;
+  const o = (r = e.style) === null || r === void 0 ? void 0 : r.getPropertyValue(t);
+  if (o) {
+    const i = await Tt(o, null, n);
+    return e.style.setProperty(t, i, e.style.getPropertyPriority(t)), !0;
   }
   return !1;
 }
-async function de(t, e) {
-  await P("background", t, e) || await P("background-image", t, e), await P("mask", t, e) || await P("-webkit-mask", t, e) || await P("mask-image", t, e) || await P("-webkit-mask-image", t, e);
+async function Re(t, e) {
+  await z("background", t, e) || await z("background-image", t, e), await z("mask", t, e) || await z("-webkit-mask", t, e) || await z("mask-image", t, e) || await z("-webkit-mask-image", t, e);
 }
-async function fe(t, e) {
+async function Te(t, e) {
   const n = w(t, HTMLImageElement);
-  if (!(n && !Y(t.src)) && !(w(t, SVGImageElement) && !Y(t.href.baseVal)))
+  if (!(n && !tt(t.src)) && !(w(t, SVGImageElement) && !tt(t.href.baseVal)))
     return;
-  const r = n ? t.src : t.href.baseVal, i = await K(r, J(r), e);
-  await new Promise((s, o) => {
-    t.onload = s, t.onerror = e.onImageErrorHandler ? (...l) => {
+  const r = n ? t.src : t.href.baseVal, o = await nt(r, et(r), e);
+  await new Promise((i, s) => {
+    t.onload = i, t.onerror = e.onImageErrorHandler ? (...l) => {
       try {
-        s(e.onImageErrorHandler(...l));
-      } catch (p) {
-        o(p);
+        i(e.onImageErrorHandler(...l));
+      } catch (m) {
+        s(m);
       }
-    } : o;
+    } : s;
     const a = t;
-    a.decode && (a.decode = s), a.loading === "lazy" && (a.loading = "eager"), n ? (t.srcset = "", t.src = i) : t.href.baseVal = i;
+    a.decode && (a.decode = i), a.loading === "lazy" && (a.loading = "eager"), n ? (t.srcset = "", t.src = o) : t.href.baseVal = o;
   });
 }
-async function me(t, e) {
-  const r = T(t.childNodes).map((i) => gt(i, e));
+async function Le(t, e) {
+  const r = _(t.childNodes).map((o) => Lt(o, e));
   await Promise.all(r).then(() => t);
 }
-async function gt(t, e) {
-  w(t, Element) && (await de(t, e), await fe(t, e), await me(t, e));
+async function Lt(t, e) {
+  w(t, Element) && (await Re(t, e), await Te(t, e), await Le(t, e));
 }
-function pe(t, e) {
+function Ce(t, e) {
   const { style: n } = t;
   e.backgroundColor && (n.backgroundColor = e.backgroundColor), e.width && (n.width = `${e.width}px`), e.height && (n.height = `${e.height}px`);
   const r = e.style;
-  return r != null && Object.keys(r).forEach((i) => {
-    n[i] = r[i];
+  return r != null && Object.keys(r).forEach((o) => {
+    n[o] = r[o];
   }), t;
 }
-const nt = {};
-async function rt(t) {
-  let e = nt[t];
+const ut = {};
+async function ht(t) {
+  let e = ut[t];
   if (e != null)
     return e;
   const r = await (await fetch(t)).text();
-  return e = { url: t, cssText: r }, nt[t] = e, e;
+  return e = { url: t, cssText: r }, ut[t] = e, e;
 }
-async function st(t, e) {
+async function dt(t, e) {
   let n = t.cssText;
-  const r = /url\(["']?([^"')]+)["']?\)/g, s = (n.match(/url\([^)]+\)/g) || []).map(async (o) => {
-    let a = o.replace(r, "$1");
-    return a.startsWith("https://") || (a = new URL(a, t.url).href), ht(a, e.fetchRequestInit, ({ result: l }) => (n = n.replace(o, `url(${l})`), [o, l]));
+  const r = /url\(["']?([^"')]+)["']?\)/g, i = (n.match(/url\([^)]+\)/g) || []).map(async (s) => {
+    let a = s.replace(r, "$1");
+    return a.startsWith("https://") || (a = new URL(a, t.url).href), Et(a, e.fetchRequestInit, ({ result: l }) => (n = n.replace(s, `url(${l})`), [s, l]));
   });
-  return Promise.all(s).then(() => n);
+  return Promise.all(i).then(() => n);
 }
-function it(t) {
+function ft(t) {
   if (t == null)
     return [];
   const e = [], n = /(\/\*[\s\S]*?\*\/)/gi;
   let r = t.replace(n, "");
-  const i = new RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})", "gi");
+  const o = new RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})", "gi");
   for (; ; ) {
-    const l = i.exec(r);
+    const l = o.exec(r);
     if (l === null)
       break;
     e.push(l[0]);
   }
-  r = r.replace(i, "");
-  const s = /@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi, o = "((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})", a = new RegExp(o, "gi");
+  r = r.replace(o, "");
+  const i = /@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi, s = "((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})", a = new RegExp(s, "gi");
   for (; ; ) {
-    let l = s.exec(r);
+    let l = i.exec(r);
     if (l === null) {
       if (l = a.exec(r), l === null)
         break;
-      s.lastIndex = a.lastIndex;
+      i.lastIndex = a.lastIndex;
     } else
-      a.lastIndex = s.lastIndex;
+      a.lastIndex = i.lastIndex;
     e.push(l[0]);
   }
   return e;
 }
-async function ge(t, e) {
+async function ke(t, e) {
   const n = [], r = [];
-  return t.forEach((i) => {
-    if ("cssRules" in i)
+  return t.forEach((o) => {
+    if ("cssRules" in o)
       try {
-        T(i.cssRules || []).forEach((s, o) => {
-          if (s.type === CSSRule.IMPORT_RULE) {
-            let a = o + 1;
-            const l = s.href, p = rt(l).then((d) => st(d, e)).then((d) => it(d).forEach((u) => {
+        _(o.cssRules || []).forEach((i, s) => {
+          if (i.type === CSSRule.IMPORT_RULE) {
+            let a = s + 1;
+            const l = i.href, m = ht(l).then((p) => dt(p, e)).then((p) => ft(p).forEach((d) => {
               try {
-                i.insertRule(u, u.startsWith("@import") ? a += 1 : i.cssRules.length);
-              } catch (g) {
+                o.insertRule(d, d.startsWith("@import") ? a += 1 : o.cssRules.length);
+              } catch (f) {
                 console.error("Error inserting rule from remote css", {
-                  rule: u,
-                  error: g
+                  rule: d,
+                  error: f
                 });
               }
-            })).catch((d) => {
-              console.error("Error loading remote css", d.toString());
+            })).catch((p) => {
+              console.error("Error loading remote css", p.toString());
             });
-            r.push(p);
+            r.push(m);
           }
         });
-      } catch (s) {
-        const o = t.find((a) => a.href == null) || document.styleSheets[0];
-        i.href != null && r.push(rt(i.href).then((a) => st(a, e)).then((a) => it(a).forEach((l) => {
-          o.insertRule(l, o.cssRules.length);
+      } catch (i) {
+        const s = t.find((a) => a.href == null) || document.styleSheets[0];
+        o.href != null && r.push(ht(o.href).then((a) => dt(a, e)).then((a) => ft(a).forEach((l) => {
+          s.insertRule(l, s.cssRules.length);
         })).catch((a) => {
           console.error("Error loading remote stylesheet", a);
-        })), console.error("Error inlining remote css file", s);
+        })), console.error("Error inlining remote css file", i);
       }
-  }), Promise.all(r).then(() => (t.forEach((i) => {
-    if ("cssRules" in i)
+  }), Promise.all(r).then(() => (t.forEach((o) => {
+    if ("cssRules" in o)
       try {
-        T(i.cssRules || []).forEach((s) => {
-          n.push(s);
+        _(o.cssRules || []).forEach((i) => {
+          n.push(i);
         });
-      } catch (s) {
-        console.error(`Error while reading CSS rules from ${i.href}`, s);
+      } catch (i) {
+        console.error(`Error while reading CSS rules from ${o.href}`, i);
       }
   }), n));
 }
-function we(t) {
-  return t.filter((e) => e.type === CSSRule.FONT_FACE_RULE).filter((e) => mt(e.style.getPropertyValue("src")));
+function _e(t) {
+  return t.filter((e) => e.type === CSSRule.FONT_FACE_RULE).filter((e) => Rt(e.style.getPropertyValue("src")));
 }
-async function ye(t, e) {
+async function Me(t, e) {
   if (t.ownerDocument == null)
     throw new Error("Provided element is not within a Document");
-  const n = T(t.ownerDocument.styleSheets), r = await ge(n, e);
-  return we(r);
+  const n = _(t.ownerDocument.styleSheets), r = await ke(n, e);
+  return _e(r);
 }
-function wt(t) {
+function Ct(t) {
   return t.trim().replace(/["']/g, "");
 }
-function be(t) {
+function De(t) {
   const e = /* @__PURE__ */ new Set();
   function n(r) {
-    (r.style.fontFamily || getComputedStyle(r).fontFamily).split(",").forEach((s) => {
-      e.add(wt(s));
-    }), Array.from(r.children).forEach((s) => {
-      s instanceof HTMLElement && n(s);
+    (r.style.fontFamily || getComputedStyle(r).fontFamily).split(",").forEach((i) => {
+      e.add(Ct(i));
+    }), Array.from(r.children).forEach((i) => {
+      i instanceof HTMLElement && n(i);
     });
   }
   return n(t), e;
 }
-async function xe(t, e) {
-  const n = await ye(t, e), r = be(t);
-  return (await Promise.all(n.filter((s) => r.has(wt(s.style.fontFamily))).map((s) => {
-    const o = s.parentStyleSheet ? s.parentStyleSheet.href : null;
-    return pt(s.cssText, o, e);
+async function Pe(t, e) {
+  const n = await Me(t, e), r = De(t);
+  return (await Promise.all(n.filter((i) => r.has(Ct(i.style.fontFamily))).map((i) => {
+    const s = i.parentStyleSheet ? i.parentStyleSheet.href : null;
+    return Tt(i.cssText, s, e);
   }))).join(`
 `);
 }
-async function ve(t, e) {
-  const n = e.fontEmbedCSS != null ? e.fontEmbedCSS : e.skipFonts ? null : await xe(t, e);
+async function He(t, e) {
+  const n = e.fontEmbedCSS != null ? e.fontEmbedCSS : e.skipFonts ? null : await Pe(t, e);
   if (n) {
-    const r = document.createElement("style"), i = document.createTextNode(n);
-    r.appendChild(i), t.firstChild ? t.insertBefore(r, t.firstChild) : t.appendChild(r);
+    const r = document.createElement("style"), o = document.createTextNode(n);
+    r.appendChild(o), t.firstChild ? t.insertBefore(r, t.firstChild) : t.appendChild(r);
   }
 }
-async function Ee(t, e = {}) {
-  const { width: n, height: r } = ut(t, e), i = await W(t, e, !0);
-  return await ve(i, e), await gt(i, e), pe(i, e), await Ft(i, n, r);
+async function Ie(t, e = {}) {
+  const { width: n, height: r } = vt(t, e), o = await K(t, e, !0);
+  return await He(o, e), await Lt(o, e), Ce(o, e), await Qt(o, n, r);
 }
-async function Se(t, e = {}) {
-  const { width: n, height: r } = ut(t, e), i = await Ee(t, e), s = await B(i), o = document.createElement("canvas"), a = o.getContext("2d"), l = e.pixelRatio || At(), p = e.canvasWidth || n, d = e.canvasHeight || r;
-  return o.width = p * l, o.height = d * l, e.skipAutoScale || Ot(o), o.style.width = `${p}`, o.style.height = `${d}`, e.backgroundColor && (a.fillStyle = e.backgroundColor, a.fillRect(0, 0, o.width, o.height)), a.drawImage(s, 0, 0, o.width, o.height), o;
+async function Ae(t, e = {}) {
+  const { width: n, height: r } = vt(t, e), o = await Ie(t, e), i = await J(o), s = document.createElement("canvas"), a = s.getContext("2d"), l = e.pixelRatio || Jt(), m = e.canvasWidth || n, p = e.canvasHeight || r;
+  return s.width = m * l, s.height = p * l, e.skipAutoScale || Kt(s), s.style.width = `${m}`, s.style.height = `${p}`, e.backgroundColor && (a.fillStyle = e.backgroundColor, a.fillRect(0, 0, s.width, s.height)), a.drawImage(i, 0, 0, s.width, s.height), s;
 }
-async function $e(t, e = {}) {
-  return (await Se(t, e)).toDataURL();
+async function mt(t, e = {}) {
+  return (await Ae(t, e)).toDataURL("image/jpeg", e.quality || 1);
 }
-const E = [], S = [], D = 50;
-let ot = !1;
-const q = [];
-function Re(t) {
-  return q.push(t), () => {
-    const e = q.indexOf(t);
-    e >= 0 && q.splice(e, 1);
+const T = [], L = [], O = 50;
+let pt = !1;
+const G = [];
+function ze(t) {
+  return G.push(t), () => {
+    const e = G.indexOf(t);
+    e >= 0 && G.splice(e, 1);
   };
 }
-function at(t) {
-  for (const e of q)
+function gt(t) {
+  for (const e of G)
     try {
       e(t);
     } catch {
     }
 }
-function Te(t) {
+function Oe(t) {
   const e = {};
   if (!t) return e;
-  const n = (r, i) => {
-    e[r.toLowerCase()] = i;
+  const n = (r, o) => {
+    e[r.toLowerCase()] = o;
   };
   if (t instanceof Headers)
-    t.forEach((r, i) => n(i, r));
+    t.forEach((r, o) => n(o, r));
   else if (Array.isArray(t))
-    for (const [r, i] of t)
-      n(r, i);
+    for (const [r, o] of t)
+      n(r, o);
   else
-    for (const [r, i] of Object.entries(t))
-      n(r, i);
+    for (const [r, o] of Object.entries(t))
+      n(r, o);
   return e;
 }
-function Le() {
-  if (ot) return;
-  ot = !0;
+function Ue() {
+  if (pt) return;
+  pt = !0;
   const t = console.error;
-  console.error = (...s) => {
+  console.error = (...i) => {
     const a = {
-      message: s.map((l) => {
+      message: i.map((l) => {
         if (l instanceof Error) return l.message;
         if (typeof l == "string") return l;
         try {
@@ -768,79 +797,79 @@ function Le() {
       }).join(" "),
       timestamp: Date.now()
     };
-    s[0] instanceof Error && (a.stack = s[0].stack), E.push(a), E.length > D && E.shift(), t.apply(console, s);
-  }, window.addEventListener("error", (s) => {
-    var o;
-    E.push({
-      message: s.message || "Unknown error",
+    i[0] instanceof Error && (a.stack = i[0].stack), T.push(a), T.length > O && T.shift(), t.apply(console, i);
+  }, window.addEventListener("error", (i) => {
+    var s;
+    T.push({
+      message: i.message || "Unknown error",
       timestamp: Date.now(),
-      stack: (o = s.error) == null ? void 0 : o.stack
-    }), E.length > D && E.shift();
-  }), window.addEventListener("unhandledrejection", (s) => {
+      stack: (s = i.error) == null ? void 0 : s.stack
+    }), T.length > O && T.shift();
+  }), window.addEventListener("unhandledrejection", (i) => {
     var a;
-    const o = s.reason instanceof Error ? s.reason.message : String(s.reason);
-    E.push({
-      message: `Unhandled Promise: ${o}`,
+    const s = i.reason instanceof Error ? i.reason.message : String(i.reason);
+    T.push({
+      message: `Unhandled Promise: ${s}`,
       timestamp: Date.now(),
-      stack: (a = s.reason) == null ? void 0 : a.stack
-    }), E.length > D && E.shift();
+      stack: (a = i.reason) == null ? void 0 : a.stack
+    }), T.length > O && T.shift();
   });
   const e = window.fetch;
-  window.fetch = async (...s) => {
-    var d;
-    const o = new Request(...s), a = o.method, l = o.url, p = Te(
-      s[0] instanceof Request ? s[0].headers : (d = s[1]) == null ? void 0 : d.headers
+  window.fetch = async (...i) => {
+    var p;
+    const s = new Request(...i), a = s.method, l = s.url, m = Oe(
+      i[0] instanceof Request ? i[0].headers : (p = i[1]) == null ? void 0 : p.headers
     );
     try {
-      const u = await e(...s);
-      if (!u.ok) {
-        let g = "";
+      const d = await e(...i);
+      if (!d.ok) {
+        let f = "";
         try {
-          g = (await u.clone().text()).slice(0, 500);
+          f = (await d.clone().text()).slice(0, 500);
         } catch {
-          g = "[Could not read response body]";
+          f = "[Could not read response body]";
         }
-        const y = {
+        const E = {
           url: l,
           method: a,
-          status: u.status,
-          statusText: u.statusText,
-          responseBody: g,
-          requestHeaders: p,
+          status: d.status,
+          statusText: d.statusText,
+          responseBody: f,
+          requestHeaders: m,
           timestamp: Date.now()
         };
-        S.push({
+        L.push({
           url: l,
           method: a,
-          status: u.status,
-          statusText: u.statusText,
+          status: d.status,
+          statusText: d.statusText,
           timestamp: Date.now(),
-          responseBody: g,
-          requestHeaders: p
-        }), S.length > D && S.shift(), u.status >= 400 && at(y);
+          responseBody: f,
+          requestHeaders: m
+        }), L.length > O && L.shift(), d.status >= 400 && d.status !== 401 && gt(E);
       }
-      return u;
-    } catch (u) {
-      throw S.push({
+      return d;
+    } catch (d) {
+      throw L.push({
         url: l,
         method: a,
         status: 0,
-        statusText: u instanceof Error ? u.message : "Network Error",
+        statusText: d instanceof Error ? d.message : "Network Error",
         timestamp: Date.now()
-      }), S.length > D && S.shift(), u;
+      }), L.length > O && L.shift(), d;
     }
   };
-  const n = XMLHttpRequest.prototype.open, r = XMLHttpRequest.prototype.send, i = XMLHttpRequest.prototype.setRequestHeader;
-  XMLHttpRequest.prototype.open = function(s, o, ...a) {
+  const n = XMLHttpRequest.prototype.open, r = XMLHttpRequest.prototype.send, o = XMLHttpRequest.prototype.setRequestHeader;
+  XMLHttpRequest.prototype.open = function(i, s, ...a) {
     const l = this;
-    return l._bw_method = s, l._bw_url = String(o), l._bw_headers = {}, n.call(this, s, o, ...a);
-  }, XMLHttpRequest.prototype.setRequestHeader = function(s, o) {
+    return l._bw_method = i, l._bw_url = String(s), l._bw_headers = {}, n.call(this, i, s, ...a);
+  }, XMLHttpRequest.prototype.setRequestHeader = function(i, s) {
     const a = this;
-    return a._bw_headers && (a._bw_headers[s.toLowerCase()] = o), i.call(this, s, o);
-  }, XMLHttpRequest.prototype.send = function(...s) {
+    return a._bw_headers && (a._bw_headers[i.toLowerCase()] = s), o.call(this, i, s);
+  }, XMLHttpRequest.prototype.send = function(...i) {
     return this.addEventListener("loadend", () => {
       if (this.status >= 400 || this.status === 0) {
-        const o = this;
+        const s = this;
         let a = "";
         try {
           a = (this.responseText || "").slice(0, 500);
@@ -848,48 +877,59 @@ function Le() {
           a = "[Could not read response body]";
         }
         const l = {
-          url: o._bw_url || "",
-          method: o._bw_method || "GET",
+          url: s._bw_url || "",
+          method: s._bw_method || "GET",
           status: this.status,
           statusText: this.statusText || "Error",
           timestamp: Date.now(),
           responseBody: a,
-          requestHeaders: o._bw_headers || {}
+          requestHeaders: s._bw_headers || {}
         };
-        S.push(l), S.length > D && S.shift(), this.status >= 400 && at({
-          url: o._bw_url || "",
-          method: o._bw_method || "GET",
+        L.push(l), L.length > O && L.shift(), this.status >= 400 && this.status !== 401 && gt({
+          url: s._bw_url || "",
+          method: s._bw_method || "GET",
           status: this.status,
           statusText: this.statusText || "Error",
           responseBody: a,
-          requestHeaders: o._bw_headers || {},
+          requestHeaders: s._bw_headers || {},
           timestamp: Date.now()
         });
       }
-    }), r.apply(this, s);
+    }), r.apply(this, i);
   };
 }
-async function yt() {
+const wt = 45e4;
+async function kt() {
+  var n;
+  if ((n = navigator.connection) != null && n.saveData) return null;
+  const e = (r) => {
+    var o;
+    return r instanceof HTMLElement ? !((o = r.className) != null && o.toString().includes("bw__")) : !0;
+  };
   try {
-    return await $e(document.body, {
-      quality: 0.7,
+    let r = await mt(document.body, {
+      quality: window.innerWidth <= 480 ? 0.5 : 0.7,
       pixelRatio: 1,
-      filter: (e) => {
-        var n;
-        return e instanceof HTMLElement ? !((n = e.className) != null && n.toString().includes("bw__")) : !0;
-      }
+      backgroundColor: "#ffffff",
+      filter: e
     });
-  } catch (t) {
-    return console.warn("[BugWidget] Screenshot capture failed:", t), null;
+    return r.length > wt && (r = await mt(document.body, {
+      quality: 0.4,
+      pixelRatio: 0.75,
+      backgroundColor: "#ffffff",
+      filter: e
+    })), r.length > wt ? null : r;
+  } catch (r) {
+    return console.warn("[BugWidget] Screenshot capture failed:", r), null;
   }
 }
-function bt() {
-  return [...E];
+function _t() {
+  return [...T];
 }
-function xt() {
-  return [...S];
+function Mt() {
+  return [...L];
 }
-function vt() {
+function Dt() {
   var n;
   const t = {
     url: window.location.href,
@@ -905,25 +945,25 @@ function vt() {
   }, e = navigator;
   return (n = e.connection) != null && n.effectiveType && (t.connection = e.connection.effectiveType), t;
 }
-class Ce {
+class Fe {
   constructor(e = 50) {
     this.events = [], this.scrollTimeout = null, this.maxScrollDepth = 0, this.active = !1, this.handleClick = (n) => {
       const r = n.target;
       if (!r) return;
-      const i = this.buildSelector(r), s = this.getSafeText(r);
+      const o = this.buildSelector(r), i = this.getSafeText(r);
       this.addEvent({
         type: "click",
         timestamp: Date.now(),
-        data: { selector: i, text: s }
+        data: { selector: o, text: i }
       });
     }, this.handleScroll = () => {
       this.scrollTimeout || (this.scrollTimeout = setTimeout(() => {
         this.scrollTimeout = null;
-        const n = window.scrollY || document.documentElement.scrollTop, r = document.documentElement.scrollHeight - window.innerHeight, i = r > 0 ? Math.round(n / r * 100) : 0;
-        i > this.maxScrollDepth && (this.maxScrollDepth = i, this.addEvent({
+        const n = window.scrollY || document.documentElement.scrollTop, r = document.documentElement.scrollHeight - window.innerHeight, o = r > 0 ? Math.round(n / r * 100) : 0;
+        o > this.maxScrollDepth && (this.maxScrollDepth = o, this.addEvent({
           type: "scroll",
           timestamp: Date.now(),
-          data: { depth: i, maxDepth: this.maxScrollDepth }
+          data: { depth: o, maxDepth: this.maxScrollDepth }
         }));
       }, 500));
     }, this.handleNavigation = () => {
@@ -968,18 +1008,18 @@ class Ce {
   }
   buildSelector(e) {
     const n = [];
-    let r = e, i = 0;
-    for (; r && i < 3; ) {
-      let s = r.tagName.toLowerCase();
+    let r = e, o = 0;
+    for (; r && o < 3; ) {
+      let i = r.tagName.toLowerCase();
       if (r.id) {
-        s += `#${r.id}`, n.unshift(s);
+        i += `#${r.id}`, n.unshift(i);
         break;
       }
       if (r.className && typeof r.className == "string") {
-        const o = r.className.split(/\s+/).filter((a) => a && !a.startsWith("bw__")).slice(0, 2).join(".");
-        o && (s += `.${o}`);
+        const s = r.className.split(/\s+/).filter((a) => a && !a.startsWith("bw__")).slice(0, 2).join(".");
+        s && (i += `.${s}`);
       }
-      n.unshift(s), r = r.parentElement, i++;
+      n.unshift(i), r = r.parentElement, o++;
     }
     return n.join(" > ");
   }
@@ -991,183 +1031,229 @@ class Ce {
     return r.length > 50 ? r.slice(0, 50) + "..." : r;
   }
 }
-const I = "bw__pending_reports";
-async function ke(t, e, n) {
-  const r = await yt();
+function Pt() {
+  return window.__bw_user_identity ? { userIdentity: window.__bw_user_identity } : {};
+}
+const q = "bw__pending_reports";
+async function qe(t, e, n) {
+  const r = await kt();
   return {
     project: t,
     url: window.location.href,
     trigger: "user-click",
     description: e,
     screenshot: r,
-    consoleErrors: bt(),
-    networkErrors: xt(),
+    consoleErrors: _t(),
+    networkErrors: Mt(),
     sessionEvents: n ? n.getEvents() : [],
-    environment: vt(),
+    environment: Dt(),
     timeOnPage: n ? n.getTimeOnPage() : 0,
-    timestamp: (/* @__PURE__ */ new Date()).toISOString()
+    timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+    ...Pt()
   };
 }
-async function Et(t, e) {
+function Ht(t) {
+  return t === 429 || t >= 500;
+}
+async function It(t, e) {
   try {
     const n = await fetch(t, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(e)
     });
-    if (!n.ok)
-      throw new Error(`Server responded with ${n.status}`);
-    return $t(t), !0;
+    return n.ok ? (zt(t), !0) : (Ht(n.status) ? (console.warn(`[BugWidget] Report submission failed (${n.status}), saving to localStorage`), yt(e)) : console.warn(`[BugWidget] Report rejected by server (${n.status}), dropping`), !1);
   } catch (n) {
-    return console.warn("[BugWidget] Report submission failed, saving to localStorage:", n), Pe(e), !1;
+    return console.warn("[BugWidget] Report submission failed, saving to localStorage:", n), yt(e), !1;
   }
 }
-function Pe(t) {
+function yt(t) {
   try {
-    const e = St();
+    const e = At();
     e.push(t);
     const n = e.slice(-10);
-    localStorage.setItem(I, JSON.stringify(n));
+    localStorage.setItem(q, JSON.stringify(n));
   } catch {
   }
 }
-function St() {
+function At() {
   try {
-    const t = localStorage.getItem(I);
+    const t = localStorage.getItem(q);
     return t ? JSON.parse(t) : [];
   } catch {
     return [];
   }
 }
-function De(t, e = 3e5) {
+function Be(t, e = 3e5) {
   const n = setInterval(() => {
-    const r = localStorage.getItem(I);
-    r && r !== "[]" && $t(t);
+    const r = localStorage.getItem(q);
+    r && r !== "[]" && zt(t);
   }, e);
   return () => clearInterval(n);
 }
-async function $t(t) {
-  const e = St();
+async function zt(t) {
+  const e = At();
   if (e.length === 0) return;
   const n = [];
   for (const r of e)
     try {
-      (await fetch(t, {
+      const o = await fetch(t, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(r)
-      })).ok || n.push(r);
+      });
+      !o.ok && Ht(o.status) && n.push(r);
     } catch {
       n.push(r);
     }
-  n.length > 0 ? localStorage.setItem(I, JSON.stringify(n)) : localStorage.removeItem(I);
+  n.length > 0 ? localStorage.setItem(q, JSON.stringify(n)) : localStorage.removeItem(q);
 }
-const Me = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5s-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20V8zm-6 8h-4v-2h4v2zm0-4h-4v-2h4v2z"/></svg>', ct = "bw__position", He = 1e4;
-function _e(t, e, n, r, i) {
+const We = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5s-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20V8zm-6 8h-4v-2h4v2zm0-4h-4v-2h4v2z"/></svg>', bt = "bw__position", je = 1e4;
+function Ve(t, e, n, r, o, i = 0) {
   const s = document.createElement("button");
-  s.className = c.button, s.innerHTML = Me, s.setAttribute("aria-label", "Report a bug"), s.setAttribute("title", "Report a bug");
-  const o = document.createElement("div");
-  o.className = c.overlay, o.innerHTML = `
-    <div class="${c.content}">
+  s.className = c.button, s.innerHTML = We, s.setAttribute("aria-label", "Report a bug"), s.setAttribute("title", "Report a bug");
+  const a = document.createElement("div");
+  a.className = c.overlay, a.innerHTML = `
+    <div class="${c.content}" role="dialog" aria-modal="true" aria-labelledby="bw__dialog-title">
       <div class="${c.header}">
-        <h3>Report a Bug</h3>
+        <h3 id="bw__dialog-title">Report a Bug</h3>
         <button class="${c.close}" aria-label="Close">&times;</button>
       </div>
       <textarea class="${c.textarea}" placeholder="What went wrong? Describe what you were doing and what happened..."></textarea>
       <button class="${c.submit}">Submit Report</button>
       <div class="${c.status}"></div>
     </div>
-  `, document.body.appendChild(s), document.body.appendChild(o);
-  const a = o.querySelector(`.${c.textarea}`), l = o.querySelector(`.${c.submit}`), p = o.querySelector(`.${c.close}`), d = o.querySelector(`.${c.status}`);
-  let u = null;
-  function g() {
-    u && clearTimeout(u), s.classList.remove(c.buttonMinimized), u = setTimeout(() => {
-      o.classList.contains("active") || s.classList.add(c.buttonMinimized);
-    }, He);
+  `, document.body.appendChild(s), document.body.appendChild(a);
+  const l = a.querySelector(`.${c.content}`), m = a.querySelector(`.${c.textarea}`), p = a.querySelector(`.${c.submit}`), d = a.querySelector(`.${c.close}`), f = a.querySelector(`.${c.status}`);
+  let E = null;
+  function M() {
+    E && clearTimeout(E), s.classList.remove(c.buttonMinimized), E = setTimeout(() => {
+      a.classList.contains("active") || s.classList.add(c.buttonMinimized);
+    }, je);
   }
-  setTimeout(g, 2400), s.addEventListener("mouseenter", g), s.addEventListener("touchstart", g, { passive: !0 });
-  let y = !1, x = !1, R = 0, A = 0, v = 0, L = 0, $;
-  const V = Tt();
-  V && Q(V.x, V.y);
-  function Z(h) {
-    return "touches" in h ? { x: h.touches[0].clientX, y: h.touches[0].clientY } : { x: h.clientX, y: h.clientY };
+  setTimeout(M, 2400), s.addEventListener("mouseenter", M);
+  let v = !1, S = !1, D = 5, C = !1, B = 0, $ = 0, P = 0, H = 0, rt = 0, U;
+  const Z = Ut();
+  if (Z) {
+    const u = st(Z.x, Z.y);
+    Q(u.x, u.y);
   }
-  function O(h) {
-    if (o.classList.contains("active")) return;
-    g(), $ = s.getBoundingClientRect();
-    const f = Z(h);
-    R = f.x, A = f.y, v = $.left, L = $.top, y = !0, x = !1, h.preventDefault();
+  function it(u) {
+    return "touches" in u ? { x: u.touches[0].clientX, y: u.touches[0].clientY } : { x: u.clientX, y: u.clientY };
   }
-  function z(h) {
-    if (!y) return;
-    const f = Z(h), H = f.x - R, _ = f.y - A;
-    if (!x && Math.abs(H) < 5 && Math.abs(_) < 5) return;
-    x = !0, s.classList.add(c.buttonDragging);
-    const X = v + H, C = L + _, U = window.innerWidth - $.width, Ct = window.innerHeight - $.height, kt = Math.max(0, Math.min(X, U)), Pt = Math.max(0, Math.min(C, Ct));
-    s.style.left = `${kt}px`, s.style.top = `${Pt}px`, s.style.right = "auto", s.style.bottom = "auto";
-  }
-  function F(h) {
-    if (!y || (y = !1, s.classList.remove(c.buttonDragging), !x))
+  function W(u) {
+    if (a.classList.contains("active")) return;
+    const h = "touches" in u;
+    if (h)
+      B = Date.now();
+    else if (Date.now() - B < 800)
       return;
-    const f = s.getBoundingClientRect(), H = f.left + f.width / 2, _ = window.innerWidth, X = window.innerHeight;
-    let C, U = Math.max(8, Math.min(f.top, X - f.height - 8));
-    H < _ / 2 ? C = 16 : C = _ - f.width - 16, Q(C, U), Rt(C, U), h.preventDefault();
+    const y = s.classList.contains(c.buttonMinimized);
+    M(), U = s.getBoundingClientRect();
+    const b = it(u);
+    $ = b.x, P = b.y, H = U.left, rt = U.top, v = !0, S = !1, D = h ? 12 : 5, C = h && y, h || u.preventDefault();
   }
-  function Q(h, f) {
-    s.style.left = `${h}px`, s.style.top = `${f}px`, s.style.right = "auto", s.style.bottom = "auto";
+  function j(u) {
+    if (!v) return;
+    const h = it(u), y = h.x - $, b = h.y - P;
+    if (!S && Math.abs(y) < D && Math.abs(b) < D) return;
+    S = !0, s.classList.add(c.buttonDragging);
+    const R = H + y, k = rt + b, I = window.innerWidth - U.width, qt = window.innerHeight - U.height - i, Bt = Math.max(0, Math.min(R, I)), Wt = Math.max(0, Math.min(k, qt));
+    s.style.left = `${Bt}px`, s.style.top = `${Wt}px`, s.style.right = "auto", s.style.bottom = "auto";
   }
-  function Rt(h, f) {
+  function V(u) {
+    if (!v || (v = !1, s.classList.remove(c.buttonDragging), !S))
+      return;
+    const h = s.getBoundingClientRect(), y = h.left + h.width / 2, b = window.innerWidth, R = window.innerHeight;
+    let k, I = Math.max(8, Math.min(h.top, R - h.height - 8 - i));
+    y < b / 2 ? k = 16 : k = b - h.width - 16, Q(k, I), Ot(k, I), u.preventDefault();
+  }
+  function Q(u, h) {
+    s.style.left = `${u}px`, s.style.top = `${h}px`, s.style.right = "auto", s.style.bottom = "auto";
+  }
+  function st(u, h) {
+    const y = s.getBoundingClientRect(), b = y.width || 48, R = y.height || 48, k = window.innerWidth - b - 8, I = window.innerHeight - R - 8 - i;
+    return {
+      x: Math.max(8, Math.min(u, k)),
+      y: Math.max(8, Math.min(h, I))
+    };
+  }
+  function X() {
+    if (!s.style.left && !s.style.top) return;
+    const u = s.getBoundingClientRect(), h = st(u.left, u.top);
+    (h.x !== u.left || h.y !== u.top) && Q(h.x, h.y);
+  }
+  function Ot(u, h) {
     try {
-      localStorage.setItem(ct, JSON.stringify({ x: h, y: f }));
+      localStorage.setItem(bt, JSON.stringify({ x: u, y: h }));
     } catch {
     }
   }
-  function Tt() {
+  function Ut() {
     try {
-      const h = localStorage.getItem(ct);
-      if (!h) return null;
-      const f = JSON.parse(h);
-      return f.x >= 0 && f.x < window.innerWidth - 20 && f.y >= 0 && f.y < window.innerHeight - 20 ? f : null;
+      const u = localStorage.getItem(bt);
+      if (!u) return null;
+      const h = JSON.parse(u);
+      return h.x >= 0 && h.x < window.innerWidth - 20 && h.y >= 0 && h.y < window.innerHeight - 20 ? h : null;
     } catch {
       return null;
     }
   }
-  s.addEventListener("mousedown", O), document.addEventListener("mousemove", z), document.addEventListener("mouseup", F), s.addEventListener("touchstart", O, { passive: !1 }), document.addEventListener("touchmove", z, { passive: !0 }), document.addEventListener("touchend", F);
-  function Lt() {
-    o.classList.add("active"), a.value = "", d.textContent = "", l.disabled = !1, u && clearTimeout(u), s.classList.remove(c.buttonMinimized), setTimeout(() => a.focus(), 100);
+  s.addEventListener("mousedown", W), document.addEventListener("mousemove", j), document.addEventListener("mouseup", V), s.addEventListener("touchstart", W, { passive: !1 }), document.addEventListener("touchmove", j, { passive: !0 }), document.addEventListener("touchend", V), window.addEventListener("resize", X), window.addEventListener("orientationchange", X);
+  function Ft() {
+    a.classList.add("active"), m.value = "", f.textContent = "", p.disabled = !1, E && clearTimeout(E), s.classList.remove(c.buttonMinimized), setTimeout(() => m.focus(), 100);
   }
-  function M() {
-    o.classList.remove("active"), g();
+  function F() {
+    a.classList.remove("active"), M(), s.focus();
   }
-  return s.addEventListener("click", (h) => {
-    x || Lt(), x = !1;
-  }), p.addEventListener("click", M), o.addEventListener("click", (h) => {
-    h.target === o && M();
-  }), document.addEventListener("keydown", (h) => {
-    h.key === "Escape" && o.classList.contains("active") && M();
-  }), l.addEventListener("click", async () => {
-    const h = a.value.trim();
-    if (!h) {
-      d.textContent = "Please describe the issue.", d.style.color = "#e94560";
+  function ot(u) {
+    if (u.key !== "Tab" || !a.classList.contains("active")) return;
+    const h = Array.from(
+      l.querySelectorAll(
+        'button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+      )
+    );
+    if (h.length === 0) return;
+    const y = h[0], b = h[h.length - 1], R = document.activeElement;
+    u.shiftKey ? (R === y || !l.contains(R)) && (u.preventDefault(), b.focus()) : (R === b || !l.contains(R)) && (u.preventDefault(), y.focus());
+  }
+  return document.addEventListener("keydown", ot), s.addEventListener("click", () => {
+    if (S) {
+      S = !1;
       return;
     }
-    l.disabled = !0, d.innerHTML = `<span class="${c.spinner}"></span> Capturing context & submitting...`, d.style.color = "#666";
+    if (C) {
+      C = !1;
+      return;
+    }
+    Ft();
+  }), d.addEventListener("click", F), a.addEventListener("click", (u) => {
+    u.target === a && F();
+  }), document.addEventListener("keydown", (u) => {
+    u.key === "Escape" && a.classList.contains("active") && F();
+  }), p.addEventListener("click", async () => {
+    const u = m.value.trim();
+    if (!u) {
+      f.textContent = "Please describe the issue.", f.style.color = "#e94560";
+      return;
+    }
+    p.disabled = !0, f.innerHTML = `<span class="${c.spinner}"></span> Capturing context & submitting...`, f.style.color = "#666";
     try {
-      const f = await ke(t, h, n);
-      await Et(e, f) ? (d.textContent = "Bug report submitted. Thank you!", d.style.color = "#27ae60", setTimeout(M, 2e3)) : (d.textContent = "Saved locally. Will retry when connection is available.", d.style.color = "#f39c12", setTimeout(M, 3e3));
+      const h = await qe(t, u, n);
+      await It(e, h) ? (f.textContent = "Bug report submitted. Thank you!", f.style.color = "#27ae60", setTimeout(F, 2e3)) : (f.textContent = "Saved locally. Will retry when connection is available.", f.style.color = "#f39c12", setTimeout(F, 3e3));
     } catch {
-      d.textContent = "Failed to submit. Report saved locally for retry.", d.style.color = "#e94560", l.disabled = !1;
+      f.textContent = "Failed to submit. Report saved locally for retry.", f.style.color = "#e94560", p.disabled = !1;
     }
   }), () => {
-    u && clearTimeout(u), s.removeEventListener("mousedown", O), document.removeEventListener("mousemove", z), document.removeEventListener("mouseup", F), s.removeEventListener("touchstart", O), document.removeEventListener("touchmove", z), document.removeEventListener("touchend", F), s.remove(), o.remove();
+    E && clearTimeout(E), s.removeEventListener("mousedown", W), document.removeEventListener("mousemove", j), document.removeEventListener("mouseup", V), s.removeEventListener("touchstart", W), document.removeEventListener("touchmove", j), document.removeEventListener("touchend", V), window.removeEventListener("resize", X), window.removeEventListener("orientationchange", X), document.removeEventListener("keydown", ot), s.remove(), a.remove();
   };
 }
-class Ie {
-  constructor(e, n, r, i) {
-    this.lastReportTime = 0, this.unsubscribe = null, this.project = e, this.apiUrl = n, this.sessionTracker = r, this.options = i;
+class Xe {
+  constructor(e, n, r, o) {
+    this.lastReportTime = 0, this.unsubscribe = null, this.project = e, this.apiUrl = n, this.sessionTracker = r, this.options = o;
   }
   start() {
-    this.unsubscribe = Re((e) => {
+    this.unsubscribe = ze((e) => {
       this.handleApiError(e);
     });
   }
@@ -1175,93 +1261,112 @@ class Ie {
     this.unsubscribe && (this.unsubscribe(), this.unsubscribe = null);
   }
   async handleApiError(e) {
+    if (this.isOwnEndpoint(e.url) || this.options.shouldAutoReport && !this.options.shouldAutoReport({
+      url: e.url,
+      status: e.status,
+      method: e.method
+    }))
+      return;
     const n = Date.now();
     if (!(n - this.lastReportTime < this.options.debounceMs)) {
       this.lastReportTime = n;
       try {
-        const r = await yt(), i = this.sanitize(e.requestHeaders), s = {
+        const r = await kt(), o = this.sanitize(e.requestHeaders), i = {
           project: this.project,
           url: window.location.href,
           trigger: "auto-api-error",
           description: `Auto-reported: ${e.method} ${e.url} returned ${e.status} ${e.statusText}`,
           screenshot: r,
-          consoleErrors: bt(),
-          networkErrors: xt(),
+          consoleErrors: _t(),
+          networkErrors: Mt(),
           sessionEvents: this.sessionTracker ? this.sessionTracker.getEvents() : [],
-          environment: vt(),
+          environment: Dt(),
           timeOnPage: this.sessionTracker ? this.sessionTracker.getTimeOnPage() : 0,
           timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+          ...Pt(),
           apiErrorContext: {
             url: e.url,
             method: e.method,
             status: e.status,
             statusText: e.statusText,
             responseBody: e.responseBody,
-            requestHeaders: i
+            requestHeaders: o
           }
         };
-        await Et(this.apiUrl, s);
+        await It(this.apiUrl, i);
       } catch (r) {
         console.warn("[BugWidget] Auto-report failed:", r);
       }
     }
   }
+  isOwnEndpoint(e) {
+    try {
+      const n = new URL(e, window.location.origin), r = new URL(this.apiUrl, window.location.origin);
+      return n.pathname === r.pathname;
+    } catch {
+      return e.includes(this.apiUrl);
+    }
+  }
   sanitize(e) {
     const n = {};
-    for (const [r, i] of Object.entries(e))
-      this.options.sanitizeHeaders.includes(r.toLowerCase()) ? n[r] = "[REDACTED]" : n[r] = i;
+    for (const [r, o] of Object.entries(e))
+      this.options.sanitizeHeaders.includes(r.toLowerCase()) ? n[r] = "[REDACTED]" : n[r] = o;
     return n;
   }
 }
-function Ae(t) {
+function Ge(t) {
   const {
     project: e,
     apiUrl: n,
     position: r = "bottom-right",
-    captureSession: i = !0,
-    maxSessionEvents: s = 50,
-    autoReportErrors: o = !0,
+    captureSession: o = !0,
+    maxSessionEvents: i = 50,
+    autoReportErrors: s = !0,
     autoReportDebounceMs: a = 3e4,
     zIndex: l = 99999,
+    offset: m = {},
     exclude: p = [],
     sanitizeHeaders: d = [],
-    headless: u = !1
+    headless: f = !1,
+    shouldAutoReport: E
   } = t;
   if (!e || !n)
     throw new Error('[BugWidget] "project" and "apiUrl" are required config options.');
-  const g = window.location.href;
-  for (const v of p)
-    if (Oe(v, g))
+  const M = window.location.href;
+  for (const $ of p)
+    if (Ye($, M))
       return { destroy() {
       } };
-  Le();
-  let y = null;
-  i && (y = new Ce(s), y.start());
-  let x = null;
-  u || (Dt(r, l), x = _e(e, n, y));
-  let R = null;
-  o && (R = new Ie(e, n, y, {
+  Ue();
+  let v = null;
+  o && (v = new Fe(i), v.start());
+  let S = null;
+  const D = Math.max(0, m.bottom ?? 0);
+  f || (jt(r, l, D), S = Ve(e, n, v, r, l, D));
+  let C = null;
+  s && (C = new Xe(e, n, v, {
     debounceMs: a,
+    shouldAutoReport: E,
     sanitizeHeaders: [
       "authorization",
       "cookie",
       "x-auth-token",
       "x-api-key",
       "x-csrf-token",
-      ...d.map((v) => v.toLowerCase())
+      ...d.map(($) => $.toLowerCase())
     ]
-  }), R.start());
-  const A = De(n);
+  }), C.start());
+  const B = Be(n);
   return {
     destroy() {
-      if (A(), y && y.stop(), R && R.stop(), x && x(), !u) {
-        const v = document.querySelector(".bw__btn"), L = document.querySelector(".bw__overlay"), $ = document.getElementById("bw__styles");
-        v == null || v.remove(), L == null || L.remove(), $ == null || $.remove();
+      if (B(), v && v.stop(), C && C.stop(), S && S(), !f) {
+        const $ = document.querySelector(".bw__btn"), P = document.querySelector(".bw__overlay"), H = document.getElementById("bw__styles");
+        $ == null || $.remove(), P == null || P.remove(), H == null || H.remove();
       }
     }
   };
 }
-function Oe(t, e) {
+function Ye(t, e) {
   const n = t.replace(/[.+^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*").replace(/\?/g, ".");
   try {
     return new RegExp(`^${n}$`).test(e);
@@ -1272,7 +1377,7 @@ function Oe(t, e) {
 if (typeof document < "u") {
   const t = document.currentScript;
   t != null && t.dataset.project && (t != null && t.dataset.apiUrl) && document.addEventListener("DOMContentLoaded", () => {
-    Ae({
+    Ge({
       project: t.dataset.project,
       apiUrl: t.dataset.apiUrl,
       position: t.dataset.position || "bottom-right",
@@ -1282,6 +1387,6 @@ if (typeof document < "u") {
   });
 }
 export {
-  Ae as initBugWidget
+  Ge as initBugWidget
 };
 //# sourceMappingURL=bug-widget.es.js.map

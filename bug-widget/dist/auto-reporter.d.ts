@@ -2,6 +2,12 @@ import { SessionTracker } from './session';
 export interface AutoReporterOptions {
     debounceMs: number;
     sanitizeHeaders: string[];
+    /** App-supplied filter — return false to suppress an auto-report */
+    shouldAutoReport?: (error: {
+        url: string;
+        status: number;
+        method?: string;
+    }) => boolean;
 }
 export declare class AutoReporter {
     private project;
@@ -14,5 +20,6 @@ export declare class AutoReporter {
     start(): void;
     stop(): void;
     private handleApiError;
+    private isOwnEndpoint;
     private sanitize;
 }

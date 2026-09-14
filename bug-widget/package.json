@@ -1,6 +1,6 @@
 {
   "name": "@mededprep/bug-widget",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "type": "module",
   "main": "./dist/bug-widget.js",
   "module": "./dist/bug-widget.es.js",
@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/add-banner.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

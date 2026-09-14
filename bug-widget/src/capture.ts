@@ -1,4 +1,4 @@
-import { toPng } from 'html-to-image';
+import { toJpeg } from 'html-to-image';
 
 export interface ConsoleError {
   message: string;
@@ -187,8 +187,9 @@ export function installInterceptors(): void {
         });
         if (networkErrors.length > MAX_BUFFER) networkErrors.shift();
 
-        // Notify auto-reporter for 4xx/5xx
-        if (response.status >= 400) {
+        // Notify auto-reporter for 4xx/5xx — except 401s, which are auth
+        // state (expired/missing token), not bugs worth a report
+        if (response.status >= 400 && response.status !== 401) {
           notifyApiError(errorDetail);
         }
       }
@@ -264,8 +265,8 @@ export function installInterceptors(): void {
         networkErrors.push(errorEntry);
         if (networkErrors.length > MAX_BUFFER) networkErrors.shift();
 
-        // Notify auto-reporter for 4xx/5xx
-        if (this.status >= 400) {
+        // Notify auto-reporter for 4xx/5xx — except 401s (auth state, not bugs)
+        if (this.status >= 400 && this.status !== 401) {
           notifyApiError({
             url: meta._bw_url || '',
             method: meta._bw_method || 'GET',
@@ -282,20 +283,48 @@ export function installInterceptors(): void {
   };
 }
 
+// Servers reject oversized screenshots (coassist caps at 500K chars);
+// stay comfortably under so a big capture can't sink the whole report.
+const MAX_SCREENSHOT_CHARS = 450_000;
+
 export async function captureScreenshot(): Promise<string | null> {
+  // Respect the user's data-saver setting: skip the (expensive, large)
+  // screenshot entirely rather than shipping hundreds of KB over a
+  // connection the user has asked to keep light.
+  const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
+  if (nav.connection?.saveData) return null;
+
+  // Exclude the bug widget itself from the screenshot
+  const filter = (node: unknown) => {
+    if (node instanceof HTMLElement) {
+      return !node.className?.toString().includes('bw__');
+    }
+    return true;
+  };
+
   try {
-    const dataUrl = await toPng(document.body, {
-      quality: 0.7,
+    // JPEG, not PNG — PNG ignores `quality`, and data-dense pages easily
+    // exceed the server's screenshot size cap as PNG.
+    // Small viewports start at a lower quality: phone screens do not need
+    // 0.7 and low-end devices pay for the encode.
+    let dataUrl = await toJpeg(document.body, {
+      quality: window.innerWidth <= 480 ? 0.5 : 0.7,
       pixelRatio: 1,
-      filter: (node) => {
-        // Exclude the bug widget itself from the screenshot
-        if (node instanceof HTMLElement) {
-          return !node.className?.toString().includes('bw__');
-        }
-        return true;
-      },
+      backgroundColor: '#ffffff',
+      filter,
     });
-    return dataUrl;
+
+    if (dataUrl.length > MAX_SCREENSHOT_CHARS) {
+      dataUrl = await toJpeg(document.body, {
+        quality: 0.4,
+        pixelRatio: 0.75,
+        backgroundColor: '#ffffff',
+        filter,
+      });
+    }
+
+    // Better a report without a screenshot than no report at all
+    return dataUrl.length > MAX_SCREENSHOT_CHARS ? null : dataUrl;
   } catch (err) {
     console.warn('[BugWidget] Screenshot capture failed:', err);
     return null;

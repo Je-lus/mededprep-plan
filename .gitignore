@@ -1,3 +1,9 @@
 node_modules/
 .env
 .claude/
+
+# Security — never commit keys or secrets
+*.pem
+*.key
+*.p12
+*.pfx

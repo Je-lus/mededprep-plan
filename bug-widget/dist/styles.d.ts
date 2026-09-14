@@ -12,4 +12,4 @@ export declare const CLASS: {
     readonly status: "bw__status";
     readonly spinner: "bw__spinner";
 };
-export declare function injectStyles(position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left', zIndex?: number): void;
+export declare function injectStyles(position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left', zIndex?: number, bottomOffset?: number): void;

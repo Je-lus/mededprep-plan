@@ -7,11 +7,13 @@ import {
   type ApiErrorDetail,
 } from './capture';
 import type { SessionTracker } from './session';
-import { submitReport, type BugReport } from './reporter';
+import { submitReport, captureUserIdentity, type BugReport } from './reporter';
 
 export interface AutoReporterOptions {
   debounceMs: number;
   sanitizeHeaders: string[];
+  /** App-supplied filter — return false to suppress an auto-report */
+  shouldAutoReport?: (error: { url: string; status: number; method?: string }) => boolean;
 }
 
 export class AutoReporter {
@@ -48,6 +50,23 @@ export class AutoReporter {
   }
 
   private async handleApiError(detail: ApiErrorDetail): Promise<void> {
+    // Never auto-report a failure of our own submit endpoint — doing so
+    // creates a self-trigger loop (report fails → report the failure → …).
+    if (this.isOwnEndpoint(detail.url)) {
+      return;
+    }
+
+    if (
+      this.options.shouldAutoReport &&
+      !this.options.shouldAutoReport({
+        url: detail.url,
+        status: detail.status,
+        method: detail.method,
+      })
+    ) {
+      return;
+    }
+
     const now = Date.now();
     if (now - this.lastReportTime < this.options.debounceMs) {
       return; // Debounced
@@ -70,6 +89,7 @@ export class AutoReporter {
         environment: captureEnvironment(),
         timeOnPage: this.sessionTracker ? this.sessionTracker.getTimeOnPage() : 0,
         timestamp: new Date().toISOString(),
+        ...captureUserIdentity(),
         apiErrorContext: {
           url: detail.url,
           method: detail.method,
@@ -84,6 +104,16 @@ export class AutoReporter {
     } catch (err) {
       // Silent fail for auto-reports — don't disrupt the user
       console.warn('[BugWidget] Auto-report failed:', err);
+    }
+  }
+
+  private isOwnEndpoint(url: string): boolean {
+    try {
+      const target = new URL(url, window.location.origin);
+      const own = new URL(this.apiUrl, window.location.origin);
+      return target.pathname === own.pathname;
+    } catch {
+      return url.includes(this.apiUrl);
     }
   }
 

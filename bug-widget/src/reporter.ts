@@ -32,6 +32,19 @@ export interface BugReport {
   timeOnPage: number;
   timestamp: string;
   apiErrorContext?: ApiErrorContext;
+  userIdentity?: Record<string, unknown>;
+}
+
+declare global {
+  interface Window {
+    /** Optional identity blob the host app maintains (see mededprep-ce's
+     *  syncBugWidgetIdentity) — attached to every report when present. */
+    __bw_user_identity?: Record<string, unknown>;
+  }
+}
+
+export function captureUserIdentity(): Partial<Pick<BugReport, 'userIdentity'>> {
+  return window.__bw_user_identity ? { userIdentity: window.__bw_user_identity } : {};
 }
 
 const STORAGE_KEY = 'bw__pending_reports';
@@ -55,7 +68,15 @@ export async function assembleReport(
     environment: captureEnvironment(),
     timeOnPage: sessionTracker ? sessionTracker.getTimeOnPage() : 0,
     timestamp: new Date().toISOString(),
+    ...captureUserIdentity(),
   };
+}
+
+// A non-429 4xx means the server permanently rejected this payload —
+// retrying the identical report can never succeed, so queueing it would
+// retry (and, in older builds, self-report) forever.
+function isRetriable(status: number): boolean {
+  return status === 429 || status >= 500;
 }
 
 export async function submitReport(apiUrl: string, report: BugReport): Promise<boolean> {
@@ -67,7 +88,13 @@ export async function submitReport(apiUrl: string, report: BugReport): Promise<b
     });
 
     if (!response.ok) {
-      throw new Error(`Server responded with ${response.status}`);
+      if (isRetriable(response.status)) {
+        console.warn(`[BugWidget] Report submission failed (${response.status}), saving to localStorage`);
+        saveReportToStorage(report);
+      } else {
+        console.warn(`[BugWidget] Report rejected by server (${response.status}), dropping`);
+      }
+      return false;
     }
 
     // On success, try to send any queued reports
@@ -130,7 +157,7 @@ async function retrySavedReports(apiUrl: string): Promise<void> {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(report),
       });
-      if (!response.ok) {
+      if (!response.ok && isRetriable(response.status)) {
         remaining.push(report);
       }
     } catch {
