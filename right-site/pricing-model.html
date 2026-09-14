@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MedEdPrep × RightSite — Pricing & ROI Model</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --accent: #2563eb;
+    --accent-soft: #dbeafe;
+    --accent-2: #0ea5e9;
+    --ink: #0f172a;
+    --ink-soft: #475569;
+    --ink-faint: #94a3b8;
+    --line: #e2e8f0;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --good: #059669;
+    --good-soft: #d1fae5;
+    --warn: #b45309;
+    --build: #1e3a8a;
+    --rollout: #0ea5e9;
+    --percert: #2563eb;
+    --floor: #93c5fd;
+    --lms: #f97316;
+    --radius: 14px;
+    --shadow: 0 1px 2px rgba(15,23,42,.04), 0 8px 24px rgba(15,23,42,.06);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 28px 24px 80px; }
+
+  header.page {
+    display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+    gap: 16px; margin-bottom: 8px;
+  }
+  header.page h1 { font-size: 1.55rem; margin: 0; letter-spacing: -.02em; }
+  header.page .sub { color: var(--ink-soft); font-size: .92rem; margin-top: 4px; }
+  .brand-chip {
+    display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:.8rem;
+    background: var(--accent-soft); color: var(--accent); padding: 6px 12px; border-radius: 999px;
+  }
+
+  /* Perspective toggle */
+  .persp {
+    display:inline-flex; background:#fff; border:1px solid var(--line); border-radius: 999px;
+    padding: 4px; gap: 2px; box-shadow: var(--shadow);
+  }
+  .persp button {
+    border:0; background:transparent; cursor:pointer; padding: 8px 16px; border-radius: 999px;
+    font-size:.85rem; font-weight:600; color: var(--ink-soft); transition: all .15s;
+  }
+  .persp button.active { background: var(--accent); color:#fff; }
+
+  .layout { display:grid; grid-template-columns: 340px 1fr; gap: 22px; margin-top: 22px; }
+  @media (max-width: 980px){ .layout { grid-template-columns: 1fr; } }
+
+  .panel {
+    background: var(--card); border:1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 20px;
+  }
+  .panel h2 { font-size: .78rem; text-transform: uppercase; letter-spacing:.08em; color: var(--ink-faint);
+    margin: 0 0 14px; font-weight:700; }
+
+  /* Presets */
+  .presets { display:flex; gap:8px; flex-wrap:wrap; margin-bottom: 18px; }
+  .presets button {
+    flex:1; min-width: 84px; border:1px solid var(--line); background:#fff; cursor:pointer;
+    padding: 9px 8px; border-radius: 10px; font-size:.78rem; font-weight:600; color: var(--ink-soft);
+    transition: all .15s;
+  }
+  .presets button:hover { border-color: var(--accent); color: var(--accent); }
+  .presets button.active { background: var(--accent); border-color: var(--accent); color:#fff; }
+
+  .ctrl { margin-bottom: 18px; }
+  .ctrl-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom: 6px; }
+  .ctrl-head label { font-size:.85rem; font-weight:600; color: var(--ink); }
+  .ctrl-head .val {
+    font-variant-numeric: tabular-nums; font-weight:700; font-size:.85rem; color: var(--accent);
+    background: var(--accent-soft); padding: 2px 8px; border-radius: 6px;
+  }
+  .ctrl-head .val input {
+    width: 84px; border:0; background:transparent; color: var(--accent); font-weight:700;
+    font-size:.85rem; text-align:right; font-variant-numeric: tabular-nums; padding:0;
+  }
+  .ctrl-head .val input:focus { outline: 1px solid var(--accent); border-radius:4px; }
+  input[type=range] {
+    width:100%; -webkit-appearance:none; appearance:none; height: 6px; border-radius: 999px;
+    background: var(--line); outline:none; margin: 0;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance:none; appearance:none; width:18px; height:18px; border-radius:50%;
+    background: var(--accent); cursor:pointer; border: 3px solid #fff; box-shadow: 0 1px 4px rgba(37,99,235,.4);
+  }
+  input[type=range]::-moz-range-thumb {
+    width:18px; height:18px; border-radius:50%; background: var(--accent); cursor:pointer;
+    border: 3px solid #fff; box-shadow: 0 1px 4px rgba(37,99,235,.4);
+  }
+  .hint { font-size:.72rem; color: var(--ink-faint); margin-top: 4px; }
+
+  .divider { height:1px; background: var(--line); margin: 20px 0; }
+
+  /* toggle switch */
+  .switch-row { display:flex; align-items:center; justify-content:space-between; margin-bottom: 14px; }
+  .switch-row .sl { font-size:.85rem; font-weight:600; }
+  .switch { position:relative; width:44px; height:24px; }
+  .switch input { display:none; }
+  .switch .track { position:absolute; inset:0; background: var(--line); border-radius:999px; transition:.18s; cursor:pointer; }
+  .switch .track::after { content:""; position:absolute; left:3px; top:3px; width:18px; height:18px; background:#fff;
+    border-radius:50%; transition:.18s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+  .switch input:checked + .track { background: var(--accent); }
+  .switch input:checked + .track::after { transform: translateX(20px); }
+
+  /* departments */
+  .dept { border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-bottom:10px; background:#fcfdfe; }
+  .dept-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+  .dept-head .name { font-weight:700; font-size:.85rem; }
+  .dept-head .rm { border:0; background:#fef2f2; color:#dc2626; cursor:pointer; border-radius:6px;
+    font-size:.72rem; padding:3px 8px; font-weight:600; }
+  .dept-grid { display:grid; grid-template-columns: 1fr 1fr; gap:8px; }
+  .dept-grid .f { display:flex; flex-direction:column; gap:3px; }
+  .dept-grid label { font-size:.68rem; color: var(--ink-faint); text-transform:uppercase; letter-spacing:.04em; }
+  .dept-grid input {
+    border:1px solid var(--line); border-radius:7px; padding:6px 8px; font-size:.82rem; width:100%;
+    font-variant-numeric: tabular-nums;
+  }
+  .dept-grid input:focus { outline:none; border-color: var(--accent); }
+  .add-dept { width:100%; border:1px dashed var(--accent); background: var(--accent-soft); color: var(--accent);
+    border-radius:10px; padding:9px; cursor:pointer; font-weight:600; font-size:.82rem; }
+
+  /* KPI cards */
+  .kpis { display:grid; grid-template-columns: repeat(4,1fr); gap:14px; margin-bottom: 22px; }
+  @media (max-width: 880px){ .kpis { grid-template-columns: repeat(2,1fr); } }
+  .kpi {
+    background: var(--card); border:1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 16px 18px;
+  }
+  .kpi .lab { font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color: var(--ink-faint); font-weight:700; }
+  .kpi .num { font-size:1.6rem; font-weight:800; letter-spacing:-.02em; margin-top:6px; font-variant-numeric: tabular-nums; }
+  .kpi .note { font-size:.72rem; color: var(--ink-soft); margin-top:2px; }
+  .kpi.save { background: linear-gradient(135deg,#ecfdf5,#f0fdfa); border-color: var(--good-soft); }
+  .kpi.save .num { color: var(--good); }
+
+  .grid-charts { display:grid; grid-template-columns: 1fr 1fr; gap:18px; margin-bottom: 22px; }
+  @media (max-width: 980px){ .grid-charts { grid-template-columns: 1fr; } }
+  .chart-card { background: var(--card); border:1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 18px; }
+  .chart-card h3 { margin:0 0 4px; font-size:.95rem; }
+  .chart-card .csub { font-size:.78rem; color: var(--ink-soft); margin-bottom:10px; }
+  .chart-box { position:relative; height: 260px; }
+  .chart-box.tall { height: 300px; }
+  .span2 { grid-column: span 2; }
+  @media (max-width: 980px){ .span2 { grid-column: span 1; } }
+
+  /* table */
+  .table-card { background: var(--card); border:1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 18px; overflow-x:auto; }
+  table { width:100%; border-collapse: collapse; font-size:.83rem; font-variant-numeric: tabular-nums; }
+  th, td { padding: 9px 10px; text-align:right; white-space:nowrap; }
+  th:first-child, td:first-child { text-align:left; }
+  thead th { font-size:.7rem; text-transform:uppercase; letter-spacing:.04em; color: var(--ink-faint);
+    border-bottom: 2px solid var(--line); font-weight:700; }
+  tbody tr { border-bottom: 1px solid var(--line); }
+  tbody tr:hover { background: #f8fafc; }
+  td.total { font-weight:700; color: var(--ink); }
+  td.cum { color: var(--accent); font-weight:600; }
+  td.save { color: var(--good); font-weight:600; }
+  tfoot td { border-top: 2px solid var(--line); font-weight:800; padding-top: 12px; }
+  .colgroup-our { background: rgba(37,99,235,.03); }
+
+  details.notes { margin-top: 24px; background: var(--card); border:1px solid var(--line);
+    border-radius: var(--radius); box-shadow: var(--shadow); padding: 0; overflow:hidden; }
+  details.notes summary { cursor:pointer; padding: 16px 20px; font-weight:700; font-size:.9rem; list-style:none; }
+  details.notes summary::-webkit-details-marker { display:none; }
+  details.notes summary::before { content:"▸ "; color: var(--accent); }
+  details.notes[open] summary::before { content:"▾ "; }
+  details.notes .body { padding: 0 20px 20px; font-size:.85rem; color: var(--ink-soft); }
+  details.notes .body ul { margin: 8px 0; padding-left: 20px; }
+  details.notes .body li { margin-bottom: 6px; }
+  details.notes code { background: var(--accent-soft); color: var(--accent); padding:1px 5px; border-radius:4px;
+    font-size:.82em; }
+  .disclaimer { font-size:.74rem; color: var(--ink-faint); margin-top: 18px; text-align:center; }
+  .perspective-banner {
+    font-size:.8rem; color: var(--ink-soft); margin-bottom: 14px; padding: 10px 14px; border-radius:10px;
+    background:#fff; border:1px solid var(--line); display:flex; gap:10px; align-items:center;
+  }
+  .perspective-banner b { color: var(--ink); }
+  .dot { width:9px;height:9px;border-radius:50%; display:inline-block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="page">
+    <div>
+      <span class="brand-chip">MedEdPrep × RightSite Health</span>
+      <h1>Custom Training-Module Engagement — Pricing &amp; ROI Model</h1>
+      <div class="sub">Same dollars, two perspectives — and what RightSite avoids by not buying a commercial per-seat LMS.</div>
+    </div>
+    <div class="persp" id="perspToggle">
+      <button data-p="med" class="active">MedEdPrep revenue</button>
+      <button data-p="right">RightSite cost</button>
+    </div>
+  </header>
+
+  <div class="perspective-banner" id="perspBanner"></div>
+
+  <div class="layout">
+    <!-- CONTROLS -->
+    <div class="panel" id="controls">
+      <h2>Scenario presets</h2>
+      <div class="presets" id="presets">
+        <button data-preset="anchor">Anchor</button>
+        <button data-preset="likely" class="active">Likely</button>
+        <button data-preset="floor">Floor / walk-away</button>
+      </div>
+
+      <h2>Pricing levers</h2>
+
+      <div class="ctrl">
+        <div class="ctrl-head">
+          <label>One-time build fee</label>
+          <span class="val">$<input type="number" id="buildNum" step="1000" min="0" max="50000"></span>
+        </div>
+        <input type="range" id="build" min="0" max="50000" step="1000">
+        <div class="hint">Charged in Year 1 only.</div>
+      </div>
+
+      <div class="ctrl">
+        <div class="ctrl-head">
+          <label>Per-certificate fee</label>
+          <span class="val">$<input type="number" id="certNum" step="0.5" min="0" max="15"></span>
+        </div>
+        <input type="range" id="cert" min="0" max="15" step="0.5">
+        <div class="hint">Per training certificate issued (per completion), every year.</div>
+      </div>
+
+      <div class="ctrl">
+        <div class="ctrl-head">
+          <label>Annual platform floor</label>
+          <span class="val">$<input type="number" id="floorNum" step="500" min="0" max="20000"></span>
+        </div>
+        <input type="range" id="floor" min="0" max="20000" step="500">
+        <div class="hint">Flat hosting/admin minimum, every active year.</div>
+      </div>
+
+      <div class="ctrl">
+        <div class="ctrl-head">
+          <label>Per-department rollout fee</label>
+          <span class="val">$<input type="number" id="rollout" step="500" min="0" max="15000"></span>
+        </div>
+        <input type="range" id="rolloutR" min="0" max="15000" step="500">
+        <div class="hint">One-time, in the year each <b>new</b> dept comes online (after the first).</div>
+      </div>
+
+      <div class="divider"></div>
+      <h2>Engagement assumptions</h2>
+
+      <div class="ctrl">
+        <div class="ctrl-head">
+          <label>Completion rate</label>
+          <span class="val"><input type="number" id="complNum" step="1" min="50" max="100">%</span>
+        </div>
+        <input type="range" id="compl" min="50" max="100" step="1">
+        <div class="hint">% of eligible personnel who actually complete.</div>
+      </div>
+
+      <div class="ctrl">
+        <div class="ctrl-head">
+          <label>Annual new-hire turnover</label>
+          <span class="val"><input type="number" id="turnNum" step="1" min="0" max="20">%</span>
+        </div>
+        <input type="range" id="turn" min="0" max="20" step="1">
+        <div class="hint">Drives recurring certs from new staff each year.</div>
+      </div>
+
+      <div class="switch-row">
+        <span class="sl">Annual recertification</span>
+        <label class="switch"><input type="checkbox" id="recert"><span class="track"></span></label>
+      </div>
+      <div class="hint" style="margin-top:-8px; margin-bottom:14px;">OFF = onboard once + new hires. ON = full headcount recertifies every year.</div>
+
+      <div class="ctrl">
+        <div class="ctrl-head">
+          <label>LMS comparison rate</label>
+          <span class="val">$<input type="number" id="lmsNum" step="0.5" min="5" max="10">/user/mo</span>
+        </div>
+        <input type="range" id="lms" min="5" max="10" step="0.5">
+        <div class="hint">Commercial per-seat LMS — the savings benchmark.</div>
+      </div>
+
+      <div class="divider"></div>
+      <h2>Departments &amp; rollout</h2>
+      <div id="deptList"></div>
+      <button class="add-dept" id="addDept">+ Add department</button>
+
+      <div class="divider"></div>
+      <div class="switch-row">
+        <span class="sl">Parametric expansion</span>
+        <label class="switch"><input type="checkbox" id="expOn"><span class="track"></span></label>
+      </div>
+      <div id="expControls">
+        <div class="ctrl">
+          <div class="ctrl-head"><label>Avg headcount per new dept</label>
+            <span class="val"><input type="number" id="expHcNum" step="250" min="500" max="8000"></span></div>
+          <input type="range" id="expHc" min="500" max="8000" step="250">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-head"><label>Add one every N years</label>
+            <span class="val"><input type="number" id="expEveryNum" step="1" min="1" max="5"></span></div>
+          <input type="range" id="expEvery" min="1" max="5" step="1">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-head"><label>Starting in year</label>
+            <span class="val"><input type="number" id="expStartNum" step="1" min="2" max="10"></span></div>
+          <input type="range" id="expStart" min="2" max="10" step="1">
+        </div>
+      </div>
+    </div>
+
+    <!-- OUTPUTS -->
+    <div>
+      <div class="kpis" id="kpis">
+        <div class="kpi"><div class="lab" id="kpi1lab">10-yr MedEdPrep revenue</div><div class="num" id="kpiTotal">—</div><div class="note">Across all departments</div></div>
+        <div class="kpi"><div class="lab">Year-1 revenue</div><div class="num" id="kpiY1">—</div><div class="note">Build + first wave</div></div>
+        <div class="kpi"><div class="lab">Avg annual recurring</div><div class="num" id="kpiArr">—</div><div class="note">Years 2–10 average</div></div>
+        <div class="kpi save"><div class="lab">RightSite 10-yr savings</div><div class="num" id="kpiSave">—</div><div class="note">vs commercial LMS</div></div>
+      </div>
+
+      <div class="grid-charts">
+        <div class="chart-card">
+          <h3 id="stackTitle">MedEdPrep revenue by line item</h3>
+          <div class="csub">Build · rollout · per-certificate · platform floor</div>
+          <div class="chart-box"><canvas id="stackChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>RightSite cost vs commercial LMS</h3>
+          <div class="csub">The savings story — same headcount, two vendors</div>
+          <div class="chart-box"><canvas id="cmpChart"></canvas></div>
+        </div>
+        <div class="chart-card span2">
+          <h3>Cumulative revenue / spend</h3>
+          <div class="csub">Running 10-year totals</div>
+          <div class="chart-box"><canvas id="cumChart"></canvas></div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <table id="resultTable">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Active HC</th>
+              <th>Certs</th>
+              <th>Build</th>
+              <th>Rollouts</th>
+              <th>Per-cert</th>
+              <th>Floor</th>
+              <th class="colgroup-our" id="thTotal">MedEdPrep total</th>
+              <th class="colgroup-our" id="thCum">Cumulative</th>
+              <th>LMS alt.</th>
+              <th>Savings</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+          <tfoot id="tfoot"></tfoot>
+        </table>
+      </div>
+
+      <details class="notes">
+        <summary>Assumptions &amp; notes</summary>
+        <div class="body">
+          <ul>
+            <li><b>Build fee</b> is one-time, charged in Year 1 only.</li>
+            <li><b>Per-department rollout fee</b> is charged in the year a department launches — <b>except the first department</b> (Houston), whose initial standup is covered by the build fee. Every <i>later</i> department triggers one rollout fee in its launch year.</li>
+            <li><b>Launch-year certs</b> for a department = headcount × completion rate (the onboarding wave).</li>
+            <li><b>Subsequent-year certs</b> for an active department:
+              <ul>
+                <li>Recert <b>OFF</b> (onboarding model): headcount × turnover% × completion rate — only new hires certify.</li>
+                <li>Recert <b>ON</b>: headcount × completion rate (everyone re-certifies each year). To keep the model clear, recert ON does <i>not</i> add separate new-hire churn on top — the full headcount already captures everyone.</li>
+              </ul>
+            </li>
+            <li><b>Platform floor</b> is charged every year once at least one department is live.</li>
+            <li><b>MedEdPrep revenue = RightSite cost.</b> They are the identical dollar figure shown from two sides. The perspective toggle only changes labels and framing — never the math.</li>
+            <li><b>LMS alternative</b> = cumulative active personnel × LMS rate × 12 months — what RightSite would pay a commercial per-seat LMS to serve the same people. <b>Savings = LMS cost − our cost.</b></li>
+            <li><b>Parametric expansion</b> (optional) adds a new department of the chosen average headcount on the chosen cadence starting in the chosen year, through Year 10.</li>
+          </ul>
+          <p class="disclaimer">These are illustrative planning numbers for internal modeling only — not a quote or commitment.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<script>
+const HORIZON = 10;
+const fmt$ = (n) => '$' + Math.round(n).toLocaleString('en-US');
+const fmt$k = (n) => {
+  if (Math.abs(n) >= 1000000) return '$' + (n/1000000).toFixed(2) + 'M';
+  if (Math.abs(n) >= 1000) return '$' + (n/1000).toFixed(n>=100000?0:1) + 'K';
+  return '$' + Math.round(n);
+};
+const fmtN = (n) => Math.round(n).toLocaleString('en-US');
+
+const PRESETS = {
+  anchor: { build: 45000, cert: 7, floor: 9000 },
+  likely: { build: 33000, cert: 5, floor: 7000 },
+  floor:  { build: 28000, cert: 5, floor: 6000 },
+};
+
+// State
+const state = {
+  build: 35000, cert: 5, floor: 7000, rollout: 8000,
+  compl: 90, turn: 8, recert: false, lms: 7,
+  expOn: false, expHc: 3000, expEvery: 2, expStart: 4,
+  perspective: 'med',
+  depts: [
+    { name: 'Houston', hc: 4000, start: 1 },
+    { name: 'Dallas',  hc: 4000, start: 2 },
+  ],
+};
+
+// ---- linkage helpers for slider + number pairs ----
+function link(rangeId, numId, key, onChange) {
+  const r = document.getElementById(rangeId);
+  const n = document.getElementById(numId);
+  function set(v, from) {
+    v = parseFloat(v);
+    if (isNaN(v)) return;
+    const min = parseFloat(r.min), max = parseFloat(r.max);
+    v = Math.max(min, Math.min(max, v));
+    state[key] = v;
+    if (from !== 'r') r.value = v;
+    if (from !== 'n') n.value = v;
+    onChange && onChange();
+    recompute();
+  }
+  r.addEventListener('input', () => set(r.value, 'r'));
+  n.addEventListener('input', () => set(n.value, 'n'));
+  n.addEventListener('blur', () => { n.value = state[key]; });
+  return { set: (v) => set(v) };
+}
+
+// ---- Department UI ----
+function renderDepts() {
+  const wrap = document.getElementById('deptList');
+  wrap.innerHTML = '';
+  state.depts.forEach((d, i) => {
+    const el = document.createElement('div');
+    el.className = 'dept';
+    el.innerHTML = `
+      <div class="dept-head">
+        <span class="name">Dept ${i+1}${i===0?' · build-covered':''}</span>
+        ${i < 2 ? '' : `<button class="rm" data-i="${i}">remove</button>`}
+      </div>
+      <div class="dept-grid">
+        <div class="f"><label>Name</label><input data-i="${i}" data-k="name" type="text" value="${d.name}"></div>
+        <div class="f"><label>Headcount</label><input data-i="${i}" data-k="hc" type="number" min="0" step="100" value="${d.hc}"></div>
+        <div class="f" style="grid-column:span 2;"><label>Launch year (1–10)</label><input data-i="${i}" data-k="start" type="number" min="1" max="10" step="1" value="${d.start}"></div>
+      </div>`;
+    wrap.appendChild(el);
+  });
+  wrap.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('input', () => {
+      const i = +inp.dataset.i, k = inp.dataset.k;
+      if (k === 'name') state.depts[i].name = inp.value;
+      else { let v = parseFloat(inp.value)||0; if (k==='start') v = Math.max(1,Math.min(10,v)); state.depts[i][k] = v; }
+      recompute();
+    });
+  });
+  wrap.querySelectorAll('.rm').forEach(b => {
+    b.addEventListener('click', () => { state.depts.splice(+b.dataset.i, 1); renderDepts(); recompute(); });
+  });
+}
+document.getElementById('addDept').addEventListener('click', () => {
+  state.depts.push({ name: 'Dept ' + (state.depts.length+1), hc: 3000, start: Math.min(10, state.depts.length+1) });
+  renderDepts(); recompute();
+});
+
+// ---- Core model ----
+function computeDepartments() {
+  // Manual departments + (optional) parametric expansion departments
+  const depts = state.depts.map(d => ({ ...d }));
+  if (state.expOn) {
+    for (let y = state.expStart; y <= HORIZON; y += state.expEvery) {
+      depts.push({ name: 'Expansion (Y' + y + ')', hc: state.expHc, start: y, parametric: true });
+    }
+  }
+  // First-launching department (lowest start year, ties broken by order) is "build-covered" => no rollout fee.
+  let firstIdx = 0, firstStart = Infinity;
+  depts.forEach((d, i) => { if (d.start < firstStart) { firstStart = d.start; firstIdx = i; } });
+  depts.forEach((d, i) => { d.buildCovered = (i === firstIdx); });
+  return depts;
+}
+
+function model() {
+  const depts = computeDepartments();
+  const compl = state.compl / 100;
+  const turn = state.turn / 100;
+  const rows = [];
+  let cumOur = 0, cumLms = 0;
+
+  for (let y = 1; y <= HORIZON; y++) {
+    let certs = 0, rolloutRev = 0, activeHc = 0;
+    depts.forEach(d => {
+      if (y < d.start) return;            // not live yet
+      activeHc += d.hc;
+      if (y === d.start) {
+        certs += d.hc * compl;            // onboarding wave
+        if (!d.buildCovered) rolloutRev += state.rollout; // rollout fee for non-first depts
+      } else {
+        certs += state.recert ? (d.hc * compl) : (d.hc * turn * compl);
+      }
+    });
+    const anyLive = activeHc > 0;
+    const buildRev = (y === 1) ? state.build : 0;
+    const certRev = certs * state.cert;
+    const floorRev = anyLive ? state.floor : 0;
+    const ourTotal = buildRev + rolloutRev + certRev + floorRev;
+    cumOur += ourTotal;
+    const lms = activeHc * state.lms * 12;
+    cumLms += lms;
+    rows.push({ y, activeHc, certs, buildRev, rolloutRev, certRev, floorRev, ourTotal, cumOur, lms, savings: lms - ourTotal, cumSave: cumLms - cumOur });
+  }
+  return rows;
+}
+
+// ---- Rendering ----
+let stackChart, cmpChart, cumChart;
+
+function renderKPIs(rows) {
+  const total = rows[rows.length-1].cumOur;
+  const y1 = rows[0].ourTotal;
+  const recurringYears = rows.slice(1).filter(r => r.ourTotal > 0);
+  const arr = recurringYears.length ? recurringYears.reduce((s,r)=>s+r.ourTotal,0)/recurringYears.length : 0;
+  const save = rows[rows.length-1].cumSave;
+  document.getElementById('kpiTotal').textContent = fmt$k(total);
+  document.getElementById('kpiY1').textContent = fmt$k(y1);
+  document.getElementById('kpiArr').textContent = fmt$k(arr);
+  document.getElementById('kpiSave').textContent = fmt$k(save);
+}
+
+function renderTable(rows) {
+  const tb = document.getElementById('tbody');
+  tb.innerHTML = rows.map(r => `
+    <tr>
+      <td>Year ${r.y}</td>
+      <td>${fmtN(r.activeHc)}</td>
+      <td>${fmtN(r.certs)}</td>
+      <td>${r.buildRev ? fmt$(r.buildRev) : '—'}</td>
+      <td>${r.rolloutRev ? fmt$(r.rolloutRev) : '—'}</td>
+      <td>${r.certRev ? fmt$(r.certRev) : '—'}</td>
+      <td>${r.floorRev ? fmt$(r.floorRev) : '—'}</td>
+      <td class="total colgroup-our">${fmt$(r.ourTotal)}</td>
+      <td class="cum colgroup-our">${fmt$(r.cumOur)}</td>
+      <td>${fmt$(r.lms)}</td>
+      <td class="save">${fmt$(r.savings)}</td>
+    </tr>`).join('');
+  const last = rows[rows.length-1];
+  const sum = (k) => rows.reduce((s,r)=>s+r[k],0);
+  document.getElementById('tfoot').innerHTML = `
+    <tr>
+      <td>10-yr total</td>
+      <td>—</td>
+      <td>${fmtN(sum('certs'))}</td>
+      <td>${fmt$(sum('buildRev'))}</td>
+      <td>${fmt$(sum('rolloutRev'))}</td>
+      <td>${fmt$(sum('certRev'))}</td>
+      <td>${fmt$(sum('floorRev'))}</td>
+      <td class="total colgroup-our">${fmt$(last.cumOur)}</td>
+      <td class="cum colgroup-our">${fmt$(last.cumOur)}</td>
+      <td>${fmt$(last.cumLms ?? sum('lms'))}</td>
+      <td class="save">${fmt$(last.cumSave)}</td>
+    </tr>`;
+}
+
+const baseChartOpts = (extra={}) => ({
+  responsive: true, maintainAspectRatio: false,
+  interaction: { mode: 'index', intersect: false },
+  plugins: {
+    legend: { labels: { boxWidth: 12, boxHeight: 12, font: { size: 11 }, usePointStyle: true } },
+    tooltip: { callbacks: { label: (c) => c.dataset.label + ': ' + fmt$(c.parsed.y) } },
+  },
+  scales: {
+    x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+    y: { grid: { color: '#eef2f7' }, ticks: { font: { size: 11 }, callback: v => fmt$k(v) }, beginAtZero: true },
+  },
+  ...extra,
+});
+
+function renderCharts(rows) {
+  const labels = rows.map(r => 'Y' + r.y);
+  const C = { build:'#1e3a8a', rollout:'#0ea5e9', cert:'#2563eb', floor:'#93c5fd', lms:'#f97316', cum:'#2563eb' };
+
+  // Stacked bar by line item
+  const stackData = {
+    labels,
+    datasets: [
+      { label: 'Build', data: rows.map(r=>r.buildRev), backgroundColor: C.build },
+      { label: 'Rollouts', data: rows.map(r=>r.rolloutRev), backgroundColor: C.rollout },
+      { label: 'Per-certificate', data: rows.map(r=>r.certRev), backgroundColor: C.cert },
+      { label: 'Platform floor', data: rows.map(r=>r.floorRev), backgroundColor: C.floor },
+    ],
+  };
+  const stackOpts = baseChartOpts({ scales: {
+    x: { stacked: true, grid: { display:false }, ticks:{font:{size:11}} },
+    y: { stacked: true, grid:{color:'#eef2f7'}, ticks:{font:{size:11},callback:v=>fmt$k(v)}, beginAtZero:true },
+  }});
+
+  // Comparison
+  const cmpData = {
+    labels,
+    datasets: [
+      { type:'bar', label: 'Commercial LMS', data: rows.map(r=>r.lms), backgroundColor: 'rgba(249,115,22,.85)' },
+      { type:'bar', label: 'With MedEdPrep', data: rows.map(r=>r.ourTotal), backgroundColor: 'rgba(37,99,235,.85)' },
+    ],
+  };
+
+  // Cumulative
+  const cumData = {
+    labels,
+    datasets: [
+      { label: 'Cumulative MedEdPrep revenue', data: rows.map(r=>r.cumOur), borderColor: C.cum,
+        backgroundColor:'rgba(37,99,235,.08)', fill:true, tension:.3, pointRadius:2 },
+      { label: 'Cumulative LMS cost (avoided)', data: rows.map(r=> (r.cumOur + r.cumSave)), borderColor: C.lms,
+        backgroundColor:'rgba(249,115,22,.06)', fill:false, borderDash:[5,4], tension:.3, pointRadius:2 },
+    ],
+  };
+
+  if (!stackChart) {
+    stackChart = new Chart(document.getElementById('stackChart'), { type:'bar', data: stackData, options: stackOpts });
+    cmpChart = new Chart(document.getElementById('cmpChart'), { type:'bar', data: cmpData, options: baseChartOpts() });
+    cumChart = new Chart(document.getElementById('cumChart'), { type:'line', data: cumData, options: baseChartOpts() });
+  } else {
+    stackChart.data = stackData; stackChart.update();
+    cmpChart.data = cmpData; cmpChart.update();
+    cumChart.data = cumData; cumChart.update();
+  }
+}
+
+function renderPerspective() {
+  const isMed = state.perspective === 'med';
+  document.getElementById('kpi1lab').textContent = isMed ? '10-yr MedEdPrep revenue' : '10-yr RightSite spend (us)';
+  document.getElementById('thTotal').textContent = isMed ? 'MedEdPrep total' : 'RightSite pays';
+  document.getElementById('thCum').textContent = isMed ? 'Cumulative' : 'Cumulative paid';
+  document.getElementById('stackTitle').textContent = isMed ? 'MedEdPrep revenue by line item' : 'RightSite cost by line item';
+  const banner = document.getElementById('perspBanner');
+  banner.innerHTML = isMed
+    ? `<span class="dot" style="background:var(--accent)"></span> Viewing as <b>MedEdPrep</b> — this is revenue we earn. The figures are identical from RightSite's side (their cost).`
+    : `<span class="dot" style="background:var(--accent)"></span> Viewing as <b>RightSite</b> — this is what you pay MedEdPrep. Identical dollars to MedEdPrep's revenue — and a fraction of a commercial per-seat LMS.`;
+}
+
+function recompute() {
+  const rows = model();
+  renderKPIs(rows);
+  renderTable(rows);
+  renderCharts(rows);
+}
+
+// ---- Wire pricing/assumption sliders ----
+const L = {};
+L.build = link('build','buildNum','build', markPresetDirty);
+L.cert  = link('cert','certNum','cert', markPresetDirty);
+L.floor = link('floor','floorNum','floor', markPresetDirty);
+link('rolloutR','rollout','rollout');
+link('compl','complNum','compl');
+link('turn','turnNum','turn');
+link('lms','lmsNum','lms');
+link('expHc','expHcNum','expHc');
+link('expEvery','expEveryNum','expEvery');
+link('expStart','expStartNum','expStart');
+
+document.getElementById('recert').addEventListener('change', e => { state.recert = e.target.checked; recompute(); });
+document.getElementById('expOn').addEventListener('change', e => {
+  state.expOn = e.target.checked;
+  document.getElementById('expControls').style.opacity = state.expOn ? '1' : '.45';
+  document.getElementById('expControls').style.pointerEvents = state.expOn ? 'auto' : 'none';
+  recompute();
+});
+
+// presets
+let activePreset = 'likely';
+function markPresetDirty() {
+  // if user moves a price slider away from active preset, clear highlight
+  const p = PRESETS[activePreset];
+  if (!p || state.build !== p.build || state.cert !== p.cert || state.floor !== p.floor) {
+    document.querySelectorAll('#presets button').forEach(b => b.classList.remove('active'));
+    activePreset = null;
+  }
+}
+function applyPreset(name) {
+  const p = PRESETS[name];
+  activePreset = name;
+  L.build.set(p.build); L.cert.set(p.cert); L.floor.set(p.floor);
+  document.querySelectorAll('#presets button').forEach(b => b.classList.toggle('active', b.dataset.preset === name));
+}
+document.querySelectorAll('#presets button').forEach(b => {
+  b.addEventListener('click', () => applyPreset(b.dataset.preset));
+});
+
+// perspective toggle
+document.querySelectorAll('#perspToggle button').forEach(b => {
+  b.addEventListener('click', () => {
+    state.perspective = b.dataset.p;
+    document.querySelectorAll('#perspToggle button').forEach(x => x.classList.toggle('active', x===b));
+    renderPerspective();
+  });
+});
+
+// ---- Init ----
+function initInputs() {
+  const setPair = (rid, nid, v) => { document.getElementById(rid).value = v; document.getElementById(nid).value = v; };
+  setPair('build','buildNum',state.build);
+  setPair('cert','certNum',state.cert);
+  setPair('floor','floorNum',state.floor);
+  setPair('rolloutR','rollout',state.rollout);
+  setPair('compl','complNum',state.compl);
+  setPair('turn','turnNum',state.turn);
+  setPair('lms','lmsNum',state.lms);
+  setPair('expHc','expHcNum',state.expHc);
+  setPair('expEvery','expEveryNum',state.expEvery);
+  setPair('expStart','expStartNum',state.expStart);
+  document.getElementById('expControls').style.opacity = '.45';
+  document.getElementById('expControls').style.pointerEvents = 'none';
+}
+initInputs();
+renderDepts();
+renderPerspective();
+applyPreset('likely'); // default load
+recompute();
+</script>
+</body>
+</html>

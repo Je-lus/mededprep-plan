@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMS EdTech Market Position Analysis</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0f1419;
+    color: #e2e8f0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 48px 40px 64px;
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    margin-bottom: 56px;
+    position: relative;
+  }
+  .header::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #22d3ee, transparent);
+    margin: 24px auto 0;
+  }
+  .header .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #e2e8f0 40%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header .subtitle {
+    font-size: 15px;
+    color: #64748b;
+    margin-top: 8px;
+    font-weight: 400;
+  }
+
+  /* ── Section titles ── */
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: rgba(34,211,238,0.1);
+    border: 1px solid rgba(34,211,238,0.2);
+    color: #22d3ee;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  /* ═══════════════════════════════════════════
+     SECTION 1: QUADRANT CHART
+     ═══════════════════════════════════════════ */
+  .quadrant-section {
+    margin-bottom: 64px;
+  }
+  .quadrant-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    aspect-ratio: 1.35 / 1;
+    background: #141a22;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  /* Axis labels */
+  .axis-label-x {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #475569;
+  }
+  .axis-label-y {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #475569;
+    white-space: nowrap;
+  }
+  .axis-end {
+    position: absolute;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #334155;
+  }
+  .axis-end.left   { bottom: 38px; left: 56px; }
+  .axis-end.right  { bottom: 38px; right: 20px; }
+  .axis-end.top    { top: 14px; left: 56px; }
+  .axis-end.bottom { bottom: 38px; left: 56px; }
+
+  /* Quadrant grid */
+  .quadrant-grid {
+    position: absolute;
+    top: 40px;
+    left: 52px;
+    right: 16px;
+    bottom: 52px;
+  }
+  .quad-line-v {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #1e293b;
+  }
+  .quad-line-h {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #1e293b;
+  }
+
+  /* Quadrant labels */
+  .quad-label {
+    position: absolute;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #1e293b;
+    pointer-events: none;
+  }
+  .quad-label.tl { top: 8px; left: 8px; }
+  .quad-label.tr { top: 8px; right: calc(50% - 140px); right: 8px; }
+  .quad-label.bl { bottom: 8px; left: 8px; }
+  .quad-label.br { bottom: 8px; right: 8px; }
+
+  /* Company dots */
+  .company-dot {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+  .company-dot .dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    position: relative;
+  }
+  .company-dot .dot-label {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    pointer-events: none;
+  }
+
+  /* Color classes */
+  .dot-platinum .dot { background: #f59e0b; box-shadow: 0 0 12px rgba(245,158,11,0.3); }
+  .dot-platinum .dot-label { color: #f59e0b; }
+
+  .dot-fisdap .dot { background: #64748b; box-shadow: 0 0 8px rgba(100,116,139,0.2); }
+  .dot-fisdap .dot-label { color: #94a3b8; }
+
+  .dot-brady .dot { background: #64748b; box-shadow: 0 0 8px rgba(100,116,139,0.2); }
+  .dot-brady .dot-label { color: #94a3b8; }
+
+  .dot-limmer .dot { background: #475569; box-shadow: 0 0 6px rgba(71,85,105,0.2); }
+  .dot-limmer .dot-label { color: #94a3b8; }
+
+  .dot-emtprep .dot { background: #475569; box-shadow: 0 0 6px rgba(71,85,105,0.2); }
+  .dot-emtprep .dot-label { color: #94a3b8; }
+
+  .dot-mededprep .dot {
+    background: #22d3ee;
+    box-shadow: 0 0 18px rgba(34,211,238,0.4), 0 0 40px rgba(34,211,238,0.15);
+    width: 18px;
+    height: 18px;
+  }
+  .dot-mededprep .dot-label { color: #22d3ee; font-weight: 700; }
+
+  /* Trajectory arrow */
+  .trajectory {
+    position: absolute;
+    z-index: 1;
+  }
+  .trajectory-line {
+    position: absolute;
+    background: linear-gradient(135deg, rgba(34,211,238,0.6), rgba(34,211,238,0.15));
+    height: 2px;
+    transform-origin: left center;
+  }
+  .trajectory-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+
+  /* SVG trajectory */
+  .trajectory-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ═══════════════════════════════════════════
+     SECTION 2: FEATURE MATRIX
+     ═══════════════════════════════════════════ */
+  .matrix-section {
+    margin-bottom: 64px;
+  }
+  .matrix-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #141a22;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #1e293b;
+  }
+  .matrix-table thead th {
+    padding: 16px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+    border-bottom: 1px solid #1e293b;
+    background: #0f1419;
+  }
+  .matrix-table thead th:first-child {
+    text-align: left;
+    padding-left: 24px;
+    min-width: 220px;
+    color: #94a3b8;
+  }
+  .matrix-table thead th.col-platinum { color: #f59e0b; }
+  .matrix-table thead th.col-fisdap { color: #94a3b8; }
+  .matrix-table thead th.col-brady { color: #94a3b8; }
+  .matrix-table thead th.col-limmer { color: #94a3b8; }
+  .matrix-table thead th.col-mededprep { color: #22d3ee; }
+
+  .matrix-table tbody tr {
+    transition: background 0.15s;
+  }
+  .matrix-table tbody tr:hover {
+    background: rgba(34,211,238,0.03);
+  }
+  .matrix-table tbody td {
+    padding: 14px 12px;
+    text-align: center;
+    border-bottom: 1px solid rgba(30,41,59,0.5);
+    font-size: 13px;
+  }
+  .matrix-table tbody td:first-child {
+    text-align: left;
+    padding-left: 24px;
+    font-weight: 500;
+    color: #cbd5e1;
+  }
+  .matrix-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* Indicator circles */
+  .ind {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    position: relative;
+  }
+  .ind-yes {
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34,197,94,0.3);
+  }
+  .ind-no {
+    background: #1e293b;
+    border: 2px solid #334155;
+  }
+  .ind-partial {
+    background: #1e293b;
+    border: 2px solid #eab308;
+    overflow: hidden;
+  }
+  .ind-partial::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: #eab308;
+    border-radius: 50% 0 0 50%;
+  }
+
+  /* MedEdPrep column highlight */
+  .col-mededprep-cell {
+    background: rgba(34,211,238,0.04);
+  }
+  .col-mededprep-cell .ind-yes {
+    background: #22d3ee;
+    box-shadow: 0 0 12px rgba(34,211,238,0.35);
+  }
+
+  /* Legend */
+  .matrix-legend {
+    display: flex;
+    gap: 28px;
+    margin-top: 16px;
+    padding-left: 4px;
+  }
+  .matrix-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+  }
+  .matrix-legend-item .ind {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* ═══════════════════════════════════════════
+     SECTION 3: 24 vs 3 CALLOUT
+     ═══════════════════════════════════════════ */
+  .callout-section {
+    margin-bottom: 48px;
+  }
+  .callout-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    background: #141a22;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .callout-card {
+    padding: 40px 36px;
+    position: relative;
+  }
+  .callout-card-platinum {
+    background: linear-gradient(135deg, rgba(245,158,11,0.06) 0%, transparent 60%);
+  }
+  .callout-card-mededprep {
+    background: linear-gradient(135deg, transparent 40%, rgba(34,211,238,0.06) 100%);
+  }
+
+  .callout-divider {
+    width: 1px;
+    background: linear-gradient(180deg, transparent, #334155, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .callout-divider .vs {
+    background: #0f1419;
+    border: 1px solid #334155;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .callout-name {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .callout-card-platinum .callout-name { color: #f59e0b; }
+  .callout-card-mededprep .callout-name { color: #22d3ee; }
+
+  .callout-years {
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .callout-card-platinum .callout-years { color: #f59e0b; opacity: 0.9; }
+  .callout-card-mededprep .callout-years { color: #22d3ee; opacity: 0.9; }
+
+  .callout-years-label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #64748b;
+    margin-bottom: 28px;
+  }
+
+  .callout-stats {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .callout-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .callout-stat .stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e2e8f0;
+    white-space: nowrap;
+  }
+  .callout-stat .stat-desc {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 400;
+  }
+  .callout-card-mededprep .callout-stat .stat-value {
+    color: #e2e8f0;
+  }
+
+  .callout-extra {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(30,41,59,0.6);
+  }
+  .callout-extra .stat-value {
+    font-size: 15px !important;
+  }
+
+  /* Tagline */
+  .tagline {
+    text-align: center;
+    margin-top: 32px;
+    padding: 24px 0;
+    position: relative;
+  }
+  .tagline::before {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #22d3ee, transparent);
+    margin: 0 auto 20px;
+  }
+  .tagline p {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    color: #94a3b8;
+  }
+  .tagline em {
+    font-style: italic;
+    color: #22d3ee;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding-top: 32px;
+    border-top: 1px solid #1e293b;
+    margin-top: 16px;
+  }
+  .footer p {
+    font-size: 11px;
+    color: #334155;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header">
+    <div class="label">Strategic Market Intelligence</div>
+    <h1>EMS Education Technology Landscape</h1>
+    <div class="subtitle">Competitive positioning analysis &mdash; Platinum Educational Group vs. MedEdPrep</div>
+  </header>
+
+  <!-- ═══ SECTION 1: QUADRANT ═══ -->
+  <section class="quadrant-section">
+    <div class="section-title"><span class="num">1</span> Market Landscape Positioning</div>
+    <div class="quadrant-wrapper">
+      <!-- Axis labels -->
+      <div class="axis-label-x">Technology Sophistication &rarr;</div>
+      <div class="axis-label-y">Market Breadth &rarr;</div>
+      <div class="axis-end left" style="bottom:38px;left:56px;">Basic</div>
+      <div class="axis-end right" style="bottom:38px;right:20px;">Advanced</div>
+      <div class="axis-end top" style="top:14px;left:56px;">Broad</div>
+      <div class="axis-end" style="bottom:56px;left:16px;transform:rotate(-90deg);transform-origin:left bottom;">Narrow</div>
+
+      <!-- Quadrant grid area -->
+      <div class="quadrant-grid">
+        <div class="quad-line-v"></div>
+        <div class="quad-line-h"></div>
+
+        <!-- Quadrant background labels -->
+        <div class="quad-label tl">Broad / Basic</div>
+        <div class="quad-label tr">Broad / Advanced</div>
+        <div class="quad-label bl">Narrow / Basic</div>
+        <div class="quad-label br">Narrow / Advanced</div>
+
+        <!-- SVG trajectory arrow -->
+        <svg class="trajectory-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="arrowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:rgba(34,211,238,0.15)" />
+              <stop offset="100%" style="stop-color:rgba(34,211,238,0.6)" />
+            </linearGradient>
+            <marker id="arrowHead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#22d3ee" opacity="0.7" />
+            </marker>
+          </defs>
+          <!-- MedEdPrep trajectory: from current position toward top-right -->
+          <line x1="62" y1="55" x2="80" y2="22"
+                stroke="url(#arrowGrad)" stroke-width="0.4"
+                stroke-dasharray="1.5,1"
+                marker-end="url(#arrowHead)" />
+        </svg>
+
+        <!-- Company dots — positions as % of grid -->
+        <!-- Platinum: high breadth, low-medium tech → x:35%, y:18% from top -->
+        <div class="company-dot dot-platinum" style="left:35%;top:18%;">
+          <div class="dot"></div>
+          <div class="dot-label" style="top:-22px;left:50%;transform:translateX(-50%);">Platinum / EMSTesting</div>
+        </div>
+
+        <!-- Fisdap: medium breadth, medium tech → x:48%, y:42% -->
+        <div class="company-dot dot-fisdap" style="left:48%;top:42%;">
+          <div class="dot"></div>
+          <div class="dot-label" style="top:-22px;left:50%;transform:translateX(-50%);">Fisdap / J&amp;B</div>
+        </div>
+
+        <!-- Brady/Pearson: high breadth, low tech → x:22%, y:16% -->
+        <div class="company-dot dot-brady" style="left:22%;top:16%;">
+          <div class="dot"></div>
+          <div class="dot-label" style="top:18px;left:50%;transform:translateX(-50%);">Brady / Pearson MyLab</div>
+        </div>
+
+        <!-- Limmer: low breadth, low-medium tech → x:30%, y:72% -->
+        <div class="company-dot dot-limmer" style="left:30%;top:72%;">
+          <div class="dot"></div>
+          <div class="dot-label" style="top:-22px;left:50%;transform:translateX(-50%);">Limmer / LC Ready</div>
+        </div>
+
+        <!-- EMTprep: low breadth, low tech → x:18%, y:78% -->
+        <div class="company-dot dot-emtprep" style="left:18%;top:78%;">
+          <div class="dot"></div>
+          <div class="dot-label" style="top:18px;left:50%;transform:translateX(-50%);">EMTprep</div>
+        </div>
+
+        <!-- MedEdPrep: medium breadth (growing), HIGH tech → x:72%, y:45% -->
+        <div class="company-dot dot-mededprep" style="left:72%;top:45%;">
+          <div class="dot"></div>
+          <div class="dot-label" style="top:22px;left:50%;transform:translateX(-50%);font-size:13px;">MedEdPrep</div>
+        </div>
+
+      </div><!-- /quadrant-grid -->
+    </div><!-- /quadrant-wrapper -->
+  </section>
+
+  <!-- ═══ SECTION 2: FEATURE MATRIX ═══ -->
+  <section class="matrix-section">
+    <div class="section-title"><span class="num">2</span> Feature Capability Matrix</div>
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>Capability</th>
+          <th class="col-platinum">Platinum</th>
+          <th class="col-fisdap">Fisdap</th>
+          <th class="col-brady">Brady / Pearson</th>
+          <th class="col-limmer">Limmer</th>
+          <th class="col-mededprep">MedEdPrep</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Online Test Bank</td>
+          <td><span class="ind ind-yes"></span></td>
+          <td><span class="ind ind-yes"></span></td>
+          <td><span class="ind ind-yes"></span></td>
+          <td><span class="ind ind-partial"></span></td>
+          <td class="col-mededprep-cell"><span class="ind ind-yes"></span></td>
+        </tr>
+        <tr>
+          <td>Adaptive Testing (IRT/CAT)</td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td class="col-mededprep-cell"><span class="ind ind-yes"></span></td>
+        </tr>
+        <tr>
+          <td>Diagnostic Reporting</td>
+          <td><span class="ind ind-partial"></span></td>
+          <td><span class="ind ind-partial"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td class="col-mededprep-cell"><span class="ind ind-yes"></span></td>
+        </tr>
+        <tr>
+          <td>Competency / Skills Tracking</td>
+          <td><span class="ind ind-yes"></span></td>
+          <td><span class="ind ind-partial"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-partial"></span></td>
+          <td class="col-mededprep-cell"><span class="ind ind-yes"></span></td>
+        </tr>
+        <tr>
+          <td>Clinical Scheduling</td>
+          <td><span class="ind ind-yes"></span></td>
+          <td><span class="ind ind-yes"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td class="col-mededprep-cell"><span class="ind ind-yes"></span></td>
+        </tr>
+        <tr>
+          <td>Compliance Reporting (CoAEMSP)</td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td class="col-mededprep-cell"><span class="ind ind-yes"></span></td>
+        </tr>
+        <tr>
+          <td>CE / Continuing Education</td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td class="col-mededprep-cell"><span class="ind ind-yes"></span></td>
+        </tr>
+        <tr>
+          <td>Psychometric Validation</td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-partial"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td class="col-mededprep-cell"><span class="ind ind-yes"></span></td>
+        </tr>
+        <tr>
+          <td>Confidence / Metacognition Data</td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td class="col-mededprep-cell"><span class="ind ind-yes"></span></td>
+        </tr>
+        <tr>
+          <td>AI Question Generation</td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td><span class="ind ind-no"></span></td>
+          <td class="col-mededprep-cell"><span class="ind ind-yes"></span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="matrix-legend">
+      <div class="matrix-legend-item"><span class="ind ind-yes"></span> Full capability</div>
+      <div class="matrix-legend-item"><span class="ind ind-partial"></span> Partial / limited</div>
+      <div class="matrix-legend-item"><span class="ind ind-no"></span> Not available</div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 3: 24 vs 3 CALLOUT ═══ -->
+  <section class="callout-section">
+    <div class="section-title"><span class="num">3</span> Velocity Comparison</div>
+    <div class="callout-container">
+
+      <!-- Platinum side -->
+      <div class="callout-card callout-card-platinum">
+        <div class="callout-name">Platinum Educational Group</div>
+        <div class="callout-years">24</div>
+        <div class="callout-years-label">years in market</div>
+        <ul class="callout-stats">
+          <li class="callout-stat">
+            <span class="stat-value">5,500</span>
+            <span class="stat-desc">test items</span>
+          </li>
+          <li class="callout-stat">
+            <span class="stat-value">337M</span>
+            <span class="stat-desc">student responses</span>
+          </li>
+          <li class="callout-stat">
+            <span class="stat-value">~$5M</span>
+            <span class="stat-desc">estimated ARR</span>
+          </li>
+        </ul>
+        <div class="callout-extra">
+          <div class="callout-stat">
+            <span class="stat-value" style="color:#f59e0b;">$20&ndash;40M</span>
+            <span class="stat-desc">estimated valuation</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VS divider -->
+      <div class="callout-divider">
+        <div class="vs">VS</div>
+      </div>
+
+      <!-- MedEdPrep side -->
+      <div class="callout-card callout-card-mededprep">
+        <div class="callout-name">MedEdPrep</div>
+        <div class="callout-years">3</div>
+        <div class="callout-years-label">years in market</div>
+        <ul class="callout-stats">
+          <li class="callout-stat">
+            <span class="stat-value">10,600</span>
+            <span class="stat-desc">test items (1.9x Platinum)</span>
+          </li>
+          <li class="callout-stat">
+            <span class="stat-value">1.55M</span>
+            <span class="stat-desc">student responses</span>
+          </li>
+          <li class="callout-stat">
+            <span class="stat-value">Full</span>
+            <span class="stat-desc">adaptive stack (IRT + CAT + diagnostics)</span>
+          </li>
+        </ul>
+        <div class="callout-extra">
+          <div class="callout-stat">
+            <span class="stat-value" style="color:#22d3ee;">$5.7&ndash;14.7M</span>
+            <span class="stat-desc">IP portfolio value</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /callout-container -->
+
+    <div class="tagline">
+      <p>Building in 3 years what took 24 &mdash; <em>then going further.</em></p>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <p>MedEdPrep &middot; Competitive Intelligence &middot; May 2026 &middot; Internal Use Only</p>
+  </footer>
+
+</div><!-- /page -->
+</body>
+</html>

@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Team Briefing: The JetPack Announcement</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    /* Override theme.css scroll-behavior: smooth — it causes visible
+       animated scroll-to-top during section swaps when page height collapses */
+    html { scroll-behavior: auto; }
+
+    /* ── Step progress bar ── */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--ca-color), var(--accent), var(--jp-color));
+      width: 0%;
+      z-index: 9999;
+      transition: width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* ── Sticky TOC as tab nav ── */
+    .toc-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(22, 22, 26, 0.92);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+      transition: box-shadow 0.3s ease;
+    }
+    .toc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .toc-progress {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--gray-300);
+      font-variant-numeric: tabular-nums;
+    }
+    .toc-progress strong {
+      color: var(--accent);
+      font-size: 0.85rem;
+    }
+    .toc-list a {
+      transition: all 0.25s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .toc-list a.active {
+      background: var(--accent);
+      color: var(--white) !important;
+      border-color: var(--accent);
+    }
+    .toc-list a.visited-section {
+      color: var(--gray-800);
+      border-color: var(--gray-200);
+    }
+
+    /* ── Hero animated gradient ── */
+    .hero {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 30% 50%, rgba(52, 211, 153, 0.06) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 50%, rgba(56, 189, 248, 0.06) 0%, transparent 50%),
+                  radial-gradient(ellipse at 50% 80%, rgba(59, 130, 246, 0.04) 0%, transparent 50%);
+      animation: heroShimmer 12s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero > * { position: relative; z-index: 1; }
+
+    @keyframes heroShimmer {
+      0%   { transform: translate(0, 0) rotate(0deg); }
+      50%  { transform: translate(-3%, 2%) rotate(1deg); }
+      100% { transform: translate(2%, -1%) rotate(-0.5deg); }
+    }
+
+    /* ── Section show/hide ── */
+    .section {
+      display: none;
+      margin-bottom: 32px;
+    }
+    .section.active {
+      display: block;
+      animation: sectionEnter 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    }
+
+    @keyframes sectionEnter {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Staggered children within active section */
+    .section.active .critical,
+    .section.active .quote,
+    .section.active .table-container,
+    .section.active .analogy-grid > *,
+    .section.active .know-grid > *,
+    .section.active .diagram-container,
+    .section.active .opp-panel > *,
+    .section.active .msg-tier,
+    .section.active .resource-grid > *,
+    .section.active .team-callout,
+    .section.active .timeline-item {
+      animation: childEnter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    }
+    .section.active .critical,
+    .section.active .quote:nth-of-type(1) { animation-delay: 0.08s; }
+    .section.active .quote:nth-of-type(2) { animation-delay: 0.14s; }
+    .section.active .quote:nth-of-type(3) { animation-delay: 0.20s; }
+    .section.active .analogy-grid > :nth-child(1),
+    .section.active .know-grid > :nth-child(1),
+    .section.active .resource-grid > :nth-child(1) { animation-delay: 0.10s; }
+    .section.active .analogy-grid > :nth-child(2),
+    .section.active .know-grid > :nth-child(2),
+    .section.active .resource-grid > :nth-child(2) { animation-delay: 0.20s; }
+    .section.active .table-container:nth-of-type(1) { animation-delay: 0.06s; }
+    .section.active .table-container:nth-of-type(2) { animation-delay: 0.12s; }
+    .section.active .table-container:nth-of-type(3) { animation-delay: 0.18s; }
+    .section.active .table-container:nth-of-type(4) { animation-delay: 0.24s; }
+    .section.active .timeline-item:nth-child(1) { animation-delay: 0.08s; }
+    .section.active .timeline-item:nth-child(2) { animation-delay: 0.16s; }
+    .section.active .timeline-item:nth-child(3) { animation-delay: 0.24s; }
+    .section.active .timeline-item:nth-child(4) { animation-delay: 0.32s; }
+
+    @keyframes childEnter {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── Card lift on hover ── */
+    .analogy-card,
+    .know-card,
+    .resource-card,
+    .diagram-card,
+    .msg-tier {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.2s ease;
+    }
+    .analogy-card:hover,
+    .know-card:hover,
+    .resource-card:hover,
+    .msg-tier:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+    .diagram-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    }
+
+    /* ── Critical callout glow pulse ── */
+    .critical {
+      animation: criticalPulse 4s ease-in-out infinite;
+    }
+    @keyframes criticalPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+      50%      { box-shadow: 0 0 20px 0 rgba(245, 158, 11, 0.08); }
+    }
+
+    /* ── Animated number counters ── */
+    .counter {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ── Visual timeline ── */
+    .timeline {
+      position: relative;
+      padding: 20px 0 20px 40px;
+      margin: 28px 0;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 14px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--ca-color), var(--accent), var(--jp-color));
+      border-radius: 2px;
+    }
+    .timeline-item {
+      position: relative;
+      padding: 16px 0 32px;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -33px;
+      top: 20px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--accent), 0 0 12px rgba(59, 130, 246, 0.4);
+      z-index: 1;
+    }
+    .timeline-item:first-child .timeline-dot { background: var(--ca-color); box-shadow: 0 0 0 2px var(--ca-color), 0 0 12px rgba(52, 211, 153, 0.4); }
+    .timeline-item:last-child .timeline-dot { background: var(--jp-color); box-shadow: 0 0 0 2px var(--jp-color), 0 0 12px rgba(56, 189, 248, 0.4); }
+    .timeline-date {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .timeline-item:first-child .timeline-date { color: var(--ca-color); }
+    .timeline-item:last-child .timeline-date { color: var(--jp-color); }
+    .timeline-desc {
+      font-size: 0.95rem;
+      color: var(--gray-800);
+      font-weight: 500;
+    }
+    .timeline-sub {
+      font-size: 0.82rem;
+      color: var(--gray-300);
+      margin-top: 2px;
+    }
+
+    /* ── Before/After dramatic reveal ── */
+    .opp-after {
+      position: relative;
+    }
+    .opp-after::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(52, 211, 153, 0.12), rgba(56, 189, 248, 0.08));
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+    .opp-after:hover::before {
+      opacity: 1;
+    }
+
+    /* ── Table row hover ── */
+    tbody tr {
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    tbody tr:hover {
+      transform: scale(1.005);
+    }
+
+    /* ── Section navigation (prev/next) ── */
+    .section-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 16px;
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--gray-100);
+    }
+    .section-nav-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 16px 20px;
+      background: var(--panel);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius);
+      color: var(--gray-400);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      min-width: 0;
+      flex: 0 1 45%;
+    }
+    .section-nav-btn:hover {
+      border-color: var(--accent);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      text-decoration: none;
+    }
+    .section-nav-btn.next { align-items: flex-end; text-align: right; margin-left: auto; }
+    .section-nav-btn.prev { align-items: flex-start; text-align: left; }
+    .section-nav-dir {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+    }
+    .section-nav-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--gray-800);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .section-nav-btn:hover .section-nav-title { color: var(--white); }
+
+    /* ── Keyboard hint ── */
+    .key-hint {
+      text-align: center;
+      padding: 12px;
+      font-size: 0.72rem;
+      color: var(--gray-300);
+      letter-spacing: 0.02em;
+    }
+    .key-hint kbd {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.72rem;
+      color: var(--gray-400);
+      margin: 0 2px;
+    }
+
+    /* ── Footer visibility ── */
+    .footer { display: none; }
+    .footer.show { display: block; }
+
+    /* ═══════════════════════════════════════
+       VISUAL ENHANCEMENTS — Synthesized
+       ═══════════════════════════════════════ */
+
+    /* ── 1. Section headers: ghost number + gradient underline ── */
+    .section {
+      position: relative;
+    }
+    .section > .section-label {
+      position: relative;
+      z-index: 1;
+    }
+    .section::before {
+      content: attr(data-num);
+      position: absolute;
+      top: -12px;
+      left: -8px;
+      font-size: 7rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.03);
+      line-height: 1;
+      pointer-events: none;
+      z-index: 0;
+      letter-spacing: -0.05em;
+    }
+
+    .section h2 {
+      position: relative;
+      border-bottom: none;
+      padding-bottom: 16px;
+      letter-spacing: -0.03em;
+      font-weight: 800;
+    }
+    .section h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 60%;
+      background: linear-gradient(90deg, var(--accent), var(--ca-color), transparent);
+      border-radius: 2px;
+    }
+    .section.active h2::after {
+      animation: underlineGrow 0.6s 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    }
+    @keyframes underlineGrow {
+      from { width: 0%; opacity: 0; }
+      to   { width: 60%; opacity: 1; }
+    }
+
+    /* ── 2. Quotes: decorative quotation mark + elevated card ── */
+    .quote {
+      position: relative;
+      overflow: hidden;
+      background: var(--panel-raised);
+      border: none;
+      border-left: 4px solid var(--accent);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04);
+      padding: 32px 32px 28px 48px;
+    }
+    .quote::before {
+      content: '\201C';
+      position: absolute;
+      top: 8px;
+      left: 12px;
+      font-size: 5rem;
+      font-weight: 900;
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--accent);
+      opacity: 0.12;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .quote cite {
+      order: 2;
+      display: block;
+      margin-top: 14px;
+      margin-bottom: 0;
+      padding-top: 10px;
+      border-top: 1px solid var(--gray-100);
+    }
+    .quote cite::before {
+      content: '\2014\00a0';
+    }
+    .quote {
+      display: flex;
+      flex-direction: column;
+    }
+    .quote p { order: 1; margin-bottom: 0; }
+
+    /* ── 3. Critical callouts: warning icon + stronger glow + top bar ── */
+    .critical {
+      position: relative;
+      border-left: none;
+      border-top: 3px solid var(--amber-500);
+      border-bottom: 1px solid var(--amber-border);
+      background: linear-gradient(180deg, rgba(245,158,11,0.12) 0%, rgba(245,158,11,0.04) 100%);
+      padding: 28px 28px 28px 52px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+    .critical::before {
+      content: '\26A0';
+      position: absolute;
+      top: 24px;
+      left: 20px;
+      font-size: 1.2rem;
+      color: var(--amber-500);
+      text-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+    }
+    @keyframes criticalPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+      50%      { box-shadow: 0 0 32px 4px rgba(245, 158, 11, 0.12), inset 0 0 20px rgba(245, 158, 11, 0.03); }
+    }
+
+    /* ── 4. Analogy cards: gradient wash + VS divider ── */
+    .analogy-grid {
+      position: relative;
+    }
+    .analogy-grid::after {
+      content: 'VS';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray-300);
+      z-index: 2;
+    }
+    .analogy-card:first-child {
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, var(--panel) 45%);
+    }
+    .analogy-card:last-child {
+      background: linear-gradient(180deg, rgba(52, 211, 153, 0.08) 0%, var(--panel) 45%);
+    }
+    .analogy-card h4 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .analogy-card .section-label {
+      font-size: 0.88rem;
+    }
+    .analogy-card {
+      padding: 28px;
+    }
+    /* Cross-highlight: hover one, dim the other */
+    .analogy-card:hover ~ .analogy-card,
+    .analogy-card:has(~ .analogy-card:hover) {
+      opacity: 0.55;
+      transition: opacity 0.3s ease;
+    }
+
+    /* ── 5. Architecture diagram: ambient glow + animated flow ── */
+    .diagram-container {
+      background: var(--panel);
+      background-image:
+        radial-gradient(ellipse at 30% 100%, rgba(52,211,153,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 0%, rgba(56,189,248,0.04) 0%, transparent 60%);
+    }
+    .diagram-card.ca-card {
+      box-shadow: 0 0 0 1px var(--ca-border), 0 8px 32px rgba(52,211,153,0.06);
+    }
+    .diagram-card.jp-card {
+      box-shadow: 0 0 0 1px var(--jp-border), 0 8px 32px rgba(56,189,248,0.06);
+    }
+    .diagram-arrow {
+      min-height: 56px;
+      position: relative;
+    }
+    .diagram-arrow::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--ca-color), var(--jp-color));
+      opacity: 0.4;
+      transform: translateX(-50%);
+    }
+    .diagram-arrow::after {
+      content: '\2193';
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--gray-200);
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin: 0 auto;
+      animation: flowPulse 2.5s ease-in-out infinite;
+    }
+    @keyframes flowPulse {
+      0%, 100% { transform: translateY(0); box-shadow: 0 0 0 0 rgba(59,130,246,0); }
+      50%      { transform: translateY(4px); box-shadow: 0 0 16px 2px rgba(59,130,246,0.15); }
+    }
+
+    /* ── 6. Before/After panel: dramatic contrast ── */
+    .opp-before {
+      opacity: 0.75;
+      padding: 18px 24px;
+      border-left: 3px solid var(--gray-200);
+      background: var(--panel);
+    }
+    .opp-before .opp-label { color: var(--gray-300); font-size: 0.7rem; }
+    .opp-before .opp-label::before { content: '\2014\00a0'; }
+
+    .opp-after {
+      padding: 36px 32px;
+      background: linear-gradient(135deg, rgba(52,211,153,0.14) 0%, rgba(56,189,248,0.09) 100%);
+      border: 1px solid var(--ca-border);
+      border-top: 3px solid var(--ca-color);
+      box-shadow: inset 0 0 60px rgba(52,211,153,0.04), 0 8px 40px rgba(0,0,0,0.4);
+    }
+    .opp-after .opp-label {
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--ca-color);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .opp-after .opp-label::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--ca-color);
+      box-shadow: 0 0 8px var(--ca-color);
+    }
+    /* Glow activates on section enter, not just hover */
+    .section.active .opp-after::before {
+      opacity: 1;
+      transition-delay: 0.6s;
+    }
+
+    /* ── 7. Messaging ladder: progressive sizing + color escalation ── */
+    .msg-tier:nth-of-type(1) {
+      padding: 18px 22px;
+      border-left: 3px solid var(--accent);
+      border-left-color: rgba(59,130,246,0.5);
+    }
+    .msg-tier:nth-of-type(1) .msg-tier-label {
+      background: rgba(59,130,246,0.12);
+      color: var(--accent);
+      border: 1px solid rgba(59,130,246,0.25);
+    }
+    .msg-tier:nth-of-type(1) p { font-size: 1.02rem; font-weight: 600; }
+
+    .msg-tier:nth-of-type(2) {
+      padding: 22px 26px;
+      border-left: 4px solid rgba(245,158,11,0.5);
+    }
+    .msg-tier:nth-of-type(2) .msg-tier-label {
+      background: var(--amber-bg);
+      color: var(--amber-500);
+      border: 1px solid var(--amber-border);
+    }
+    .msg-tier:nth-of-type(2) p { font-size: 1rem; }
+
+    .msg-tier:nth-of-type(3) {
+      padding: 28px 32px;
+      border-left: 5px solid rgba(52,211,153,0.5);
+      background: linear-gradient(135deg, var(--panel-raised), var(--panel));
+    }
+    .msg-tier:nth-of-type(3) .msg-tier-label {
+      background: var(--ca-bg);
+      color: var(--ca-color);
+      border: 1px solid var(--ca-border);
+    }
+    .msg-tier:nth-of-type(3) p { font-size: 1.05rem; }
+
+    /* ── 8. Risk table: row-level severity tinting ── */
+    tr:has(.tag-risk-high) td {
+      background: linear-gradient(90deg, rgba(244,63,94,0.06) 0%, transparent 50%);
+    }
+    tr:has(.tag-risk-high) td:first-child {
+      border-left: 3px solid var(--red-color);
+    }
+    tr:has(.tag-risk-high) td.feat {
+      font-weight: 600;
+    }
+    tr:has(.tag-risk-high):hover td {
+      background: rgba(244,63,94,0.08) !important;
+    }
+    .tag-risk-high {
+      box-shadow: 0 0 8px rgba(244,63,94,0.25);
+    }
+
+    tr:has(.tag-risk-med) td {
+      background: linear-gradient(90deg, rgba(245,158,11,0.04) 0%, transparent 50%);
+    }
+    tr:has(.tag-risk-med) td:first-child {
+      border-left: 3px solid rgba(245,158,11,0.4);
+    }
+
+    /* ── 9. Say This / Don't Say This: column theming ── */
+    /* Target the guardrails table specifically via section context */
+    #use-this-moment .table-container:last-of-type th:first-child {
+      background: rgba(52,211,153,0.12);
+      border-bottom: 3px solid var(--ca-color);
+    }
+    #use-this-moment .table-container:last-of-type th:last-child {
+      background: rgba(244,63,94,0.12);
+      border-bottom: 3px solid var(--red-color);
+    }
+    #use-this-moment .table-container:last-of-type td:first-child {
+      background: rgba(52,211,153,0.04);
+    }
+    #use-this-moment .table-container:last-of-type td:first-child::before {
+      content: '\2713\00a0';
+      color: var(--ca-color);
+      font-weight: 700;
+    }
+    #use-this-moment .table-container:last-of-type td:last-child {
+      background: rgba(244,63,94,0.04);
+      text-decoration: line-through;
+      text-decoration-color: rgba(244,63,94,0.35);
+      text-decoration-thickness: 2px;
+      color: var(--gray-300);
+    }
+    #use-this-moment .table-container:last-of-type td:last-child::before {
+      content: '\2717\00a0';
+      color: var(--red-color);
+      font-weight: 700;
+      text-decoration: none;
+      display: inline;
+    }
+    #use-this-moment .table-container:last-of-type tr:hover td:first-child {
+      background: rgba(52,211,153,0.10);
+    }
+    #use-this-moment .table-container:last-of-type tr:hover td:last-child {
+      background: rgba(244,63,94,0.10);
+    }
+
+    /* ── 10. Feature matrix tables: faded N/A cells + column tints ── */
+    .pill.dim {
+      opacity: 0.3;
+    }
+    /* "Where Both Operate" table: column color coding */
+    #features .table-container:nth-of-type(3) td:nth-child(2) {
+      border-left: 2px solid var(--jp-border);
+      background: rgba(56,189,248,0.03);
+    }
+    #features .table-container:nth-of-type(3) td:nth-child(3) {
+      border-left: 2px solid var(--ca-border);
+      background: rgba(52,211,153,0.03);
+    }
+    /* Alternating rows for matrix tables */
+    #features tbody tr:nth-child(even) td {
+      background-color: rgba(255,255,255,0.012);
+    }
+
+    /* ── 11. Status-live pulse ── */
+    .status-live::before {
+      animation: livePulse 2s ease-in-out infinite;
+    }
+    @keyframes livePulse {
+      0%, 100% { box-shadow: 0 0 6px var(--ca-color); }
+      50%      { box-shadow: 0 0 14px var(--ca-color), 0 0 4px var(--ca-color); }
+    }
+
+    /* ── 12. Cross-cutting: table row hover fix ── */
+    tbody tr:hover {
+      transform: none;
+    }
+    tbody tr:hover td:first-child {
+      box-shadow: inset 4px 0 0 var(--accent);
+    }
+
+    /* ── 13. Know/Don't Know cards: header icons ── */
+    .know-card.confirmed h4::before {
+      content: '\2713\00a0';
+      color: var(--ca-color);
+    }
+    .know-card.unconfirmed h4::before {
+      content: '?\00a0';
+      color: var(--amber-500);
+    }
+
+    /* ── 14. Depth / inner glow borders on key components ── */
+    .table-container,
+    .know-card,
+    .analogy-card,
+    .resource-card {
+      box-shadow: inset 0 0 0 1px var(--gray-100), 0 4px 16px rgba(0,0,0,0.25);
+      border: none;
+    }
+
+    /* ── Print: show everything ── */
+    @media print {
+      .scroll-progress, .section-nav, .key-hint { display: none !important; }
+      .toc-bar { position: static; display: none; }
+      .section { display: block !important; animation: none !important; margin-bottom: 40px; }
+      .section.active { animation: none !important; }
+      .section * { animation: none !important; opacity: 1 !important; transform: none !important; }
+      .footer { display: block !important; }
+    }
+
+    /* ── Mobile adjustments ── */
+    @media (max-width: 768px) {
+      .section-nav { flex-direction: column; }
+      .section-nav-btn.next { align-items: flex-start; text-align: left; }
+      .toc-list { gap: 4px; }
+      .toc-list a { padding: 5px 10px; font-size: 0.78rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="page-shell">
+
+    <!-- ═══ HERO ═══ -->
+    <header class="hero">
+      <div class="hero-badge">Internal &mdash; Read Fully Before Responding Externally</div>
+      <h1>The JetPack Announcement</h1>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Date</span>
+          <span class="hero-meta-value">June 1, 2026</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Prepared By</span>
+          <span class="hero-meta-value">Jeramey</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">To</span>
+          <span class="hero-meta-value">Full Team</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Classification</span>
+          <span class="hero-meta-value">Strategic Analysis</span>
+        </div>
+      </div>
+
+      <!-- Bottom Line Up Front -->
+      <div class="bluf">
+        <div class="bluf-label">Bottom Line</div>
+        <p>CoAEMSP's JetPack announcement does not replace CoAssist. It validates the need for a program-side preparation layer. JetPack will become the submission and review portal for CoAEMSP; CoAssist should become the workspace programs use to prepare, organize, audit, and improve their accreditation materials before submission. Our job now is to position CoAssist as the easiest, free, EMS-native way for programs to get ready for the JetPack transition.</p>
+      </div>
+    </header>
+
+    <!-- ═══ TOC ═══ -->
+    <nav class="toc-bar" aria-label="Table of contents">
+      <div class="toc-header">
+        <div class="section-label">Navigate</div>
+        <div class="toc-progress" id="tocProgress"><strong>1</strong> of 12</div>
+      </div>
+      <ol class="toc-list">
+        <li><a href="#background">Background</a></li>
+        <li><a href="#announcement">The News</a></li>
+        <li><a href="#core-strategy">Core Strategy</a></li>
+        <li><a href="#evidence">Market Evidence</a></li>
+        <li><a href="#features">Feature Matrix</a></li>
+        <li><a href="#knowledge-gaps">What We Know &amp; Don't</a></li>
+        <li><a href="#opportunity">The Opportunity</a></li>
+        <li><a href="#position">Our Position</a></li>
+        <li><a href="#risks">Risks</a></li>
+        <li><a href="#use-this-moment">How We Use This</a></li>
+        <li><a href="#next-steps">Action Items</a></li>
+        <li><a href="#reference">Reference</a></li>
+      </ol>
+    </nav>
+
+    <!-- ═══ 01. BACKGROUND ═══ -->
+    <section class="section" id="background">
+      <span class="section-label">01. Background</span>
+      <h2>What Is JetPack?</h2>
+      <p><a class="ext" href="https://vainc.com" target="_blank" rel="noopener">JetPack</a> is an accreditation management platform built by Virtual Atlantic, a company that has spent the better part of the last decade building software exclusively for accrediting bodies. Their tagline: <em>"The Only Accreditation Management Platform Designed Exclusively for Accreditors by the Experts Who Understand Your World."</em></p>
+
+      <p>Key facts about Virtual Atlantic and JetPack:</p>
+      <ul>
+        <li><strong>Website:</strong> <a class="ext" href="https://vainc.com" target="_blank" rel="noopener">vainc.com</a> | <a class="ext" href="https://vainc.com/meet-jetpack/" target="_blank" rel="noopener">Meet JetPack features page</a></li>
+        <li><strong>Existing clients</strong> (all accrediting bodies, not programs):
+          <ul>
+            <li>AACP (American Association of Colleges of Pharmacy)</li>
+            <li>ACPE (Accreditation Council for Pharmacy Education)</li>
+            <li>IACBE (International Accreditation Council for Business Education)</li>
+            <li>CSI (Christian Schools International) &mdash; <a class="ext" href="https://csionline.org/csi-accreditation-introduces-new-accreditation-management-software/" target="_blank" rel="noopener">adoption case study</a></li>
+            <li>NAAB (National Architectural Accrediting Board)</li>
+            <li>ACEP (American College of Emergency Physicians)</li>
+            <li>LCMS (Lutheran Church &ndash; Missouri Synod)</li>
+            <li>ODHE (Ohio Department of Higher Education)</li>
+            <li>BBB (Better Business Bureau)</li>
+          </ul>
+        </li>
+        <li><strong>Reviews:</strong> Only <a class="ext" href="https://www.capterra.com/p/174191/Jetpack/" target="_blank" rel="noopener">4 reviews on Capterra</a> &mdash; all 5.0/5.0, all from accreditor-side organizations. Also listed on <a class="ext" href="https://www.getapp.com/education-childcare-software/a/jetpack/" target="_blank" rel="noopener">GetApp</a> and <a class="ext" href="https://www.softwareadvice.com/accreditation-management/jetpack-accreditation-management-profile/" target="_blank" rel="noopener">Software Advice</a>.</li>
+        <li><strong>Pricing:</strong> Not publicly listed. Enterprise, quote-only. One reviewer noted "the cost may seem prohibitive up front." A comparable competitor (ARMATURE) lists at $24,000/month.</li>
+        <li><strong>EMS experience:</strong> None. Their current verticals are pharmacy, business education, architecture, Christian schools, and regulatory bodies.</li>
+      </ul>
+
+      <div class="critical">
+        <strong>The critical detail every team member needs to understand:</strong> JetPack is built for accreditors, not for programs. Every single one of their clients is an accrediting body or regulatory organization. They serve the people who <em>run</em> accreditation, not the people who <em>go through</em> it.
+      </div>
+
+      <blockquote class="quote">
+        <cite>From JetPack's Website</cite>
+        <p>"Accreditors and the end users they accredit are completely different types of entities with very different needs; VA knows that."</p>
+      </blockquote>
+
+      <p>JetPack is likely a positive development for EMS accreditation. CoAEMSP has been operating with outdated tools, spreadsheets, file naming conventions, and manual processes. A modern AMS should improve consistency, reviewer coordination, reporting, and transparency. Our position is not that JetPack is bad or insufficient. Our position is that a better accreditor portal increases the need for better program preparation.</p>
+    </section>
+
+    <!-- ═══ 02. THE NEWS ═══ -->
+    <section class="section" id="announcement">
+      <span class="section-label">02. The News</span>
+      <h2>The CoAEMSP Announcement</h2>
+      <p>On June 1, 2026, CoAEMSP sent an official email newsletter announcing JetPack as their mandatory AMS. Three people were quoted:</p>
+
+      <blockquote class="quote">
+        <cite>Dr. Michael J. Souter, CoAEMSP Board Chair</cite>
+        <p>"The AMS is being developed to simplify a process that can be cumbersome, and which currently relies on technology that is outdated."</p>
+      </blockquote>
+
+      <blockquote class="quote">
+        <cite>Austin Farshi, Virtual Atlantic President</cite>
+        <p>"The rollout will be iterative and carefully evaluated before full implementation, which is anticipated in summer 2027."</p>
+      </blockquote>
+
+      <blockquote class="quote">
+        <cite>Dr. George Hatch, CoAEMSP Executive Director</cite>
+        <p>"CoAEMSP is excited to take this important step to create a comprehensive data management strategy that improves efficiency and value for programs and accreditation teams alike."</p>
+      </blockquote>
+
+      <p>The email referenced <strong>IACBE</strong> (the business education accreditor) as the success story &mdash; IACBE implemented JetPack in September 2025.</p>
+
+      <p>Benefits were framed to programs as:</p>
+      <ol>
+        <li><strong>Streamlined Workflows</strong> &mdash; a "one-stop shop" guiding programs through steps, timelines, and documentation</li>
+        <li><strong>Centralized Digital Integration</strong> &mdash; all accreditation data in one secure system</li>
+        <li><strong>Real-Time Collaboration</strong> &mdash; secure portals for programs, reviewers, and staff</li>
+        <li><strong>Dynamic Reporting Tools</strong> &mdash; customized, data-driven reports</li>
+      </ol>
+
+      <p>The announcement also revealed what CoAEMSP's <em>current</em> system looks like: manual processes, downloading spreadsheets, and managing file naming conventions. JetPack replaces that &mdash; on the CoAEMSP side.</p>
+    </section>
+
+    <!-- ═══ 03. CORE STRATEGY ═══ -->
+    <section class="section" id="core-strategy">
+      <span class="section-label">03. Core Concept</span>
+      <h2>Accreditor vs. Program</h2>
+      <p>This is the single most important thing in this entire document. Read it twice if you need to.</p>
+
+      <div class="critical">
+        <strong>JetPack serves the ACCREDITOR. CoAssist serves the PROGRAM.</strong> These are fundamentally different products serving different sides of the same process.
+      </div>
+
+      <h3>The TurboTax / IRS Analogy</h3>
+
+      <div class="analogy-grid">
+        <div class="analogy-card" style="border-top: 4px solid var(--jp-color)">
+          <span class="section-label" style="color: var(--jp-color)">JetPack = The IRS</span>
+          <h4>Where you submit</h4>
+          <p>The system that receives your forms, processes them, tracks your compliance, and issues official decisions.</p>
+        </div>
+        <div class="analogy-card" style="border-top: 4px solid var(--ca-color)">
+          <span class="section-label" style="color: var(--ca-color)">CoAssist = TurboTax</span>
+          <h4>Where you prepare</h4>
+          <p>The tool that organizes your data, identifies what you owe, flags problems before you file, and generates the documents you submit.</p>
+        </div>
+      </div>
+
+      <p>The IRS building a better filing portal does not put TurboTax out of business. It makes TurboTax <em>more necessary</em> &mdash; because now there is a specific, structured system you need to prepare for.</p>
+
+      <h3>The Architecture</h3>
+
+      <div class="diagram-container">
+        <div class="diagram-card ca-card">
+          <h4>CoAssist <span class="badge">Program Workspace</span></h4>
+          <ul>
+            <li>Personnel credentials &amp; expiration alerts (8+ roles)</li>
+            <li>Student outcomes (NREMT, retention, placement)</li>
+            <li>Clinical sites, preceptors, agreements</li>
+            <li>Advisory committee meetings &amp; QR check-in</li>
+            <li>Graduate &amp; employer surveys</li>
+            <li>Self-study drafting (AI-assisted)</li>
+            <li>Gap analysis against 80+ CoAEMSP standards</li>
+            <li>Site visit preparation (40+ item checklist)</li>
+            <li>Appendices E, F, G, H auto-generation</li>
+          </ul>
+        </div>
+
+        <div class="diagram-arrow">Export / Data Handoff</div>
+
+        <div class="diagram-card jp-card">
+          <h4>JetPack <span class="badge">Accreditor Portal</span></h4>
+          <ul>
+            <li>Receiving &amp; organizing submissions</li>
+            <li>Assigning peer reviewers &amp; site visitors</li>
+            <li>Coordinating review workflows</li>
+            <li>Commission/board deliberations &amp; decisions</li>
+            <li>Cross-program benchmarking &amp; compliance monitoring</li>
+            <li>Reaccreditation cycle management</li>
+            <li>Automated notifications &amp; reporting</li>
+          </ul>
+        </div>
+
+        <div class="diagram-footer">
+          <div class="diagram-footer-col ca-col">
+            CoAssist &mdash; Program Side
+            <span>Where you PREPARE &bull; Where you do the WORK &bull; Free</span>
+          </div>
+          <div class="diagram-footer-col jp-col">
+            JetPack &mdash; Accreditor Side
+            <span>Where you SUBMIT &bull; Where you get the DECISION &bull; Enterprise-priced</span>
+          </div>
+        </div>
+      </div>
+
+      <p>Programs will interact with JetPack as end-users of a submission portal &mdash; uploading documents, checking status, receiving decisions. They will NOT use JetPack to run their day-to-day program operations, track their students, manage their clinical sites, or prepare their self-studies.</p>
+
+      <div class="critical">
+        <strong>CoAssist is where programs do the work. JetPack is where they submit the results.</strong>
+      </div>
+    </section>
+
+    <!-- ═══ 04. MARKET EVIDENCE ═══ -->
+    <section class="section" id="evidence">
+      <span class="section-label">04. Market Evidence</span>
+      <h2>Evidence from Other Verticals</h2>
+      <p>We are not guessing about this distinction. It already exists in other accreditation ecosystems:</p>
+
+      <h3>IACBE (Business Education) &mdash; JetPack + Kramah Ki</h3>
+      <p>IACBE implemented JetPack in September 2025. It is the reference implementation CoAEMSP cited in their announcement. Here is what the ecosystem actually looks like:</p>
+      <ul>
+        <li><strong>JetPack</strong> handles the accreditor side: submissions, review coordination, compliance tracking</li>
+        <li><strong><a class="ext" href="https://www.kramah.com/iacbe-software/" target="_blank" rel="noopener">Kramah Ki-IACBE</a></strong> is a third-party, program-side tool that helps business schools prepare for IACBE accreditation &mdash; Assurance of Learning reporting, evidence management, faculty credential tracking, gap analysis, and self-study preparation</li>
+        <li>Kramah Ki costs an estimated <strong>$5,000&ndash;$15,000/year</strong> per program</li>
+        <li>JetPack and Kramah Ki are not integrated. They are separate tools serving separate sides. Schools prepare in Kramah Ki, then submit through JetPack</li>
+      </ul>
+
+      <div class="critical">
+        <strong>The existence of Kramah Ki proves the market pattern:</strong> accreditor portals do not eliminate the need for program-side prep tools. They create demand for them.
+      </div>
+
+      <h3>ACPE (Pharmacy Education) &mdash; PHARMS</h3>
+      <p>ACPE uses <strong>PHARMS</strong> (Pharmacy Accreditation Report Management System) for pharmacy school accreditation submissions. ACPE explicitly states:</p>
+
+      <blockquote class="quote">
+        <cite>ACPE Official Position</cite>
+        <p>PHARMS <strong>"is not meant to be used for data collection."</strong> It is designed for creation and submission of the final report only.</p>
+      </blockquote>
+
+      <p>Programs still need their own tools to collect data, run assessments, and prepare evidence. The official portal is the endpoint, not the workspace.</p>
+
+      <h3>AACP (Pharmacy Education) &mdash; Three Concurrent Systems</h3>
+      <p>AACP is currently running <strong>three systems simultaneously</strong> during their JetPack transition: AAMS (legacy), Survey System 1.0, and Jetpack Survey System 2.0. AAMS does not sunset until December 31, 2026. Even for an established accreditor, the JetPack transition takes 1&ndash;2 years of parallel systems. Programs using AACP's systems must export data manually between them.</p>
+
+      <h3>Enflux (Pharmacy Prep Layer)</h3>
+      <p><strong><a class="ext" href="https://enflux.com" target="_blank" rel="noopener">Enflux</a></strong> functions as the program-side analytics and prep layer for pharmacy schools facing accreditation. It pulls data from testing platforms and clinical management systems into accreditation-ready dashboards. It is widely considered essential for pharmacy programs facing "Standards 2025" requirements &mdash; even though ACPE has its own mandatory submission portal.</p>
+
+      <h3>The Pattern</h3>
+      <p>In every vertical where JetPack (or a similar accreditor AMS) exists, program-side tools also exist &mdash; and they charge thousands of dollars per year. The accreditor portal handles receiving. The prep tool handles preparing. These are separate markets serving separate customers.</p>
+
+      <p><strong>CoAssist is the EMS version of this pattern.</strong></p>
+    </section>
+
+    <!-- ═══ 05. FEATURE MATRIX ═══ -->
+    <section class="section" id="features">
+      <span class="section-label">05. Comparison</span>
+      <h2>Feature Matrix</h2>
+      <p>Based on publicly available information, these products appear to serve non-overlapping functions.</p>
+
+      <h3>What JetPack Does (Accreditor Side)</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th class="col-jp" style="text-align:center">JetPack</th>
+              <th class="col-ca" style="text-align:center">CoAssist</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="feat">Standards framework configuration</td><td style="text-align:center"><span class="pill jp">Yes (accreditor defines)</span></td><td style="text-align:center"><span class="pill dim">&mdash;</span></td></tr>
+            <tr><td class="feat">Receive &amp; manage program submissions</td><td style="text-align:center"><span class="pill jp">Yes</span></td><td style="text-align:center"><span class="pill dim">&mdash;</span></td></tr>
+            <tr><td class="feat">Assign &amp; coordinate peer reviewers</td><td style="text-align:center"><span class="pill jp">Yes</span></td><td style="text-align:center"><span class="pill dim">&mdash;</span></td></tr>
+            <tr><td class="feat">Schedule &amp; manage site visits</td><td style="text-align:center"><span class="pill jp">Yes</span></td><td style="text-align:center"><span class="pill dim">&mdash;</span></td></tr>
+            <tr><td class="feat">Commission/board decision workflows</td><td style="text-align:center"><span class="pill jp">Yes</span></td><td style="text-align:center"><span class="pill dim">&mdash;</span></td></tr>
+            <tr><td class="feat">Cross-program benchmarking &amp; reporting</td><td style="text-align:center"><span class="pill jp">Yes</span></td><td style="text-align:center"><span class="pill dim">&mdash;</span></td></tr>
+            <tr><td class="feat">Compliance monitoring (all programs)</td><td style="text-align:center"><span class="pill jp">Yes</span></td><td style="text-align:center"><span class="pill dim">&mdash;</span></td></tr>
+            <tr><td class="feat">Reaccreditation cycle management</td><td style="text-align:center"><span class="pill jp">Yes</span></td><td style="text-align:center"><span class="pill dim">&mdash;</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>What CoAssist Does (Program Side)</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th class="col-jp" style="text-align:center">JetPack</th>
+              <th class="col-ca" style="text-align:center">CoAssist</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="feat">80+ CoAEMSP standards pre-loaded</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">AI-powered gap analysis</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">AI-assisted narrative/self-study drafting</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">Personnel &amp; credential management (8+ roles)</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">Credential expiration alerts</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">Student outcome tracking (NREMT, retention, placement)</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">70% threshold alerts</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">Clinical site &amp; affiliate management</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">Preceptor management &amp; credentials</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">Agreement expiration tracking</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">Advisory committee management &amp; QR check-in</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">Meeting minutes &amp; action items</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">Graduate &amp; employer surveys (automated)</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">RAM surveys (11 domains)</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">Site visit prep checklist (40+ items)</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">Appendices auto-generation (E, F, G, H)</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">Cohort management, Outcome Action Plans</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">Substantive change tracking</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">Medical director engagement tracking</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">Physical document location mapping</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+            <tr><td class="feat">CSV bulk import</td><td style="text-align:center"><span class="pill dim">&mdash;</span></td><td style="text-align:center"><span class="pill ca">Yes</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Where Both Operate (Different Perspectives)</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th class="col-jp">JetPack</th>
+              <th class="col-ca">CoAssist</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="feat">Self-study workflow</td><td>Receives submissions</td><td>Creates &amp; drafts submissions</td></tr>
+            <tr><td class="feat">Annual reports</td><td>Receives reports</td><td>Prepares report data</td></tr>
+            <tr><td class="feat">Compliance dashboard</td><td>Bird's eye across all programs</td><td>Deep dive per program, weighted scoring</td></tr>
+            <tr><td class="feat">Site visit management</td><td>Sends site visitors</td><td>Prepares programs for site visitors</td></tr>
+            <tr><td class="feat">Document management</td><td>Centralized accreditor storage</td><td>Program-side evidence organization</td></tr>
+            <tr><td class="feat">Role-based access</td><td>Yes</td><td>Yes (18-role RBAC)</td></tr>
+            <tr><td class="feat">Audit trail</td><td>Yes</td><td>Yes (dual audit system, append-only)</td></tr>
+            <tr><td class="feat">API</td><td>Yes (listed)</td><td>Yes (REST, SSE)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Platform Details</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th class="col-jp">JetPack</th>
+              <th class="col-ca">CoAssist</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="feat">Cost</td><td>Enterprise, quote-only &mdash; estimated ~$10K+/month based on <a class="ext" href="https://www.capterra.com/p/143217/ARMATURE/" target="_blank" rel="noopener">competitor pricing</a></td><td>Free &mdash; no fees, no tiers</td></tr>
+            <tr><td class="feat">Target user</td><td>Accrediting bodies</td><td>EMS education programs</td></tr>
+            <tr><td class="feat">EMS experience</td><td>None &mdash; pharmacy, business, architecture, Christian schools</td><td>Purpose-built for CoAEMSP standards</td></tr>
+            <tr><td class="feat">Maturity</td><td>~10 years in accreditation tech</td><td>Newer, single-vertical focus</td></tr>
+            <tr><td class="feat">Mobile</td><td>Android/iOS</td><td>PWA</td></tr>
+            <tr><td class="feat">Data ownership</td><td>Through accreditor</td><td>Full export, non-proprietary formats</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ═══ 06. WHAT WE KNOW / DON'T KNOW ═══ -->
+    <section class="section" id="knowledge-gaps">
+      <span class="section-label">06. Honest Assessment</span>
+      <h2>What We Know &amp; What We Don't Know Yet</h2>
+      <p>Our strategic confidence is based on public research and market precedent. But several critical questions remain open &mdash; many of which the July meeting with Dr. Hatch should help resolve.</p>
+
+      <div class="know-grid">
+        <div class="know-card confirmed">
+          <h4>What We Know</h4>
+          <ul>
+            <li>CoAEMSP has selected JetPack as its accreditation management system</li>
+            <li>Full implementation is anticipated for summer 2027</li>
+            <li>JetPack is built primarily for accreditors (based on all public materials, client list, and their own positioning)</li>
+            <li>CoAssist is built for EMS programs</li>
+            <li>Programs will need help organizing, preparing, and validating their materials before submission</li>
+            <li>In every other vertical where JetPack operates, third-party program-side tools exist alongside it</li>
+          </ul>
+        </div>
+        <div class="know-card unconfirmed">
+          <h4>What We Don't Know Yet</h4>
+          <ul>
+            <li>What the program-facing JetPack portal will actually include</li>
+            <li>Whether JetPack will support outside data imports or API integration</li>
+            <li>Whether programs will have any direct cost</li>
+            <li>Whether CoAEMSP will permit, recommend, or stay neutral on complementary tools</li>
+            <li>Whether JetPack will include any program-side prep features beyond submission workflow</li>
+            <li>How much historical program data will need to be migrated</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>Items marked for resolution in the <strong>July meeting</strong>: portal capabilities, API access, program cost, CoAEMSP's stance on complementary tools, and rollout timeline details. Items that may take longer: JetPack's full feature scope for EMS, data migration requirements, and whether Virtual Atlantic is open to integrations.</p>
+    </section>
+
+    <!-- ═══ 07. THE OPPORTUNITY ═══ -->
+    <section class="section" id="opportunity">
+      <span class="section-label">07. Strategy</span>
+      <h2>What This Means for Us &mdash; The Opportunity</h2>
+      <p>Here is the honest strategic picture:</p>
+
+      <div class="opp-panel">
+        <div class="opp-before">
+          <div class="opp-label">Before this announcement</div>
+          <p>EMS programs had no mandatory digital submission system. Accreditation was spreadsheets, emails, and Word documents. Programs could get through the process &mdash; painfully &mdash; without any specialized software. CoAssist made their lives easier, but the urgency was diffuse.</p>
+        </div>
+        <div class="opp-after">
+          <div class="opp-label">After this announcement</div>
+          <p><strong>Every single EMS education program in the country is about to face a mandatory new digital system they have never used before.</strong> Summer 2027 is not far away. Program directors are going to need to:</p>
+          <ol>
+            <li>Organize all their program data in a way that maps to the new system</li>
+            <li>Prepare submissions in whatever format JetPack expects</li>
+            <li>Transition from their current (manual, messy) workflows to a structured digital process</li>
+            <li>Do all of this while still running their programs day-to-day</li>
+          </ol>
+          <p><strong>CoAssist is designed to help with every one of those problems.</strong></p>
+        </div>
+      </div>
+
+      <p>JetPack being mandatory creates urgency that did not exist before. Every program director who reads that CoAEMSP email is now thinking about how they are going to manage this transition. The ones who find CoAssist will have their data organized, their standards mapped, their self-study drafted, and their gaps identified before JetPack goes live.</p>
+
+      <div class="critical">
+        This is a <strong>growth catalyst</strong>, not a threat. The addressable market just got a deadline attached to it.
+      </div>
+    </section>
+
+    <!-- ═══ 08. OUR POSITION ═══ -->
+    <section class="section" id="position">
+      <span class="section-label">08. Position</span>
+      <h2>Our Position</h2>
+      <p>Here is where we stand:</p>
+
+      <div class="table-container">
+        <table class="position-table">
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="feat">The only free, EMS-native accreditation prep tool</td><td><span class="status-live">Live and production-ready</span></td></tr>
+            <tr><td class="feat">80+ CoAEMSP standards</td><td>Pre-loaded and mapped</td></tr>
+            <tr><td class="feat">AI-powered features</td><td>Gap analysis, narrative drafting, compliance scoring</td></tr>
+            <tr><td class="feat">ACCREDITCON 2026</td><td>Busiest booth, keynote sponsor, 55 leads collected</td></tr>
+            <tr><td class="feat">July meeting with Dr. George Hatch</td><td>CoAEMSP Executive Director &mdash; the person leading the JetPack rollout</td></tr>
+            <tr><td class="feat">EMS-native from day one</td><td>JetPack has never served EMS. We have 80+ standards built for it</td></tr>
+            <tr><td class="feat">Free</td><td>Competitors in other verticals charge $5K&ndash;$15K/year. We charge nothing</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <blockquote class="quote">
+        <cite>JetPack Philosophy (from their website)</cite>
+        <p>"VA won't: A la carte every feature. Implementation should be all-encompassing, not piecemeal."</p>
+      </blockquote>
+      <p>They are building a comprehensive accreditor platform. They are not building program-side operational tools. That is our lane.</p>
+    </section>
+
+    <!-- ═══ 09. RISKS ═══ -->
+    <section class="section" id="risks">
+      <span class="section-label">09. Risk Assessment</span>
+      <h2>Risks and How We Respond</h2>
+      <p>Our position is strong, but not without risk. Here is what could go wrong and how we plan to respond.</p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Risk</th>
+              <th style="width:90px;text-align:center">Severity</th>
+              <th>Why It Matters</th>
+              <th>Our Response</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="feat">Programs assume JetPack replaces CoAssist</td>
+              <td style="text-align:center"><span class="tag tag-risk-high">High</span></td>
+              <td>May delay adoption &mdash; "why use CoAssist if CoAEMSP has a system?"</td>
+              <td>Lead with the TurboTax/IRS analogy. Use the ACCREDITCON leads as proof-of-concept conversations. Publish clear positioning materials.</td>
+            </tr>
+            <tr>
+              <td class="feat">JetPack adds more program-side tools than expected</td>
+              <td style="text-align:center"><span class="tag tag-risk-med">Medium</span></td>
+              <td>Could reduce perceived need for CoAssist</td>
+              <td>Focus on what no accreditor portal has incentive to build: AI gap analysis, narrative drafting, daily credential management, clinical site tracking. Monitor JetPack's program portal closely post-July meeting.</td>
+            </tr>
+            <tr>
+              <td class="feat">CoAEMSP stays neutral on outside tools</td>
+              <td style="text-align:center"><span class="tag tag-risk-med">Medium</span></td>
+              <td>Limits official endorsement pathway</td>
+              <td>Grow through program directors directly: demos, ACCREDITCON leads, word of mouth, free adoption. An endorsement would be great; it is not required.</td>
+            </tr>
+            <tr>
+              <td class="feat">Virtual Atlantic not interested in integration</td>
+              <td style="text-align:center"><span class="tag tag-risk-low">Low</span></td>
+              <td>Limits automated data flow between tools</td>
+              <td>Build export formats, CSV/PDF evidence packages, and "JetPack-ready" bundles. Kramah Ki operates without integration in the IACBE ecosystem.</td>
+            </tr>
+            <tr>
+              <td class="feat">Team overstates the CoAEMSP relationship</td>
+              <td style="text-align:center"><span class="tag tag-risk-high">High</span></td>
+              <td>Could damage credibility if it reaches CoAEMSP or Virtual Atlantic</td>
+              <td>Use precise language: "complementary," "not affiliated," "designed to prepare programs." Never imply partnership, endorsement, or integration that does not exist. See language guardrails below.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ═══ 10. HOW WE USE THIS MOMENT ═══ -->
+    <section class="section" id="use-this-moment">
+      <span class="section-label">10. Execution</span>
+      <h2>How We Use This Moment</h2>
+      <p>This announcement gives us a reason to re-engage every ACCREDITCON lead, every program director who showed interest, and every program that knows accreditation is painful but has not yet adopted CoAssist. The message is simple: <strong>CoAEMSP is modernizing the submission side. CoAssist helps you modernize your preparation side before the new system goes live.</strong></p>
+
+      <h3>Messaging Ladder</h3>
+      <p>Use the version that fits the conversation:</p>
+
+      <div class="msg-tier">
+        <span class="msg-tier-label">10 Seconds</span>
+        <p>"JetPack is CoAEMSP's accreditation management portal. CoAssist is the EMS program workspace that helps programs prepare before they submit."</p>
+      </div>
+
+      <div class="msg-tier">
+        <span class="msg-tier-label">30 Seconds</span>
+        <p>"JetPack helps CoAEMSP manage accreditation submissions, reviewers, decisions, and reporting. CoAssist helps programs organize their evidence, track compliance, identify gaps, draft self-study materials, and prepare for site visits. They solve different sides of the same problem."</p>
+      </div>
+
+      <div class="msg-tier">
+        <span class="msg-tier-label">2 Minutes</span>
+        <p>"Think of it like TurboTax and the IRS. The IRS provides the official filing system, but people still use TurboTax because they need help preparing the return correctly. JetPack is the official portal where programs will submit their accreditation materials. CoAssist is the preparation layer &mdash; where programs organize their outcomes data, track personnel credentials, manage clinical sites, run gap analysis against all 80+ standards, and draft their self-study narratives. As CoAEMSP moves to JetPack, programs will need to get their data organized for a system they have never used before. That is exactly what CoAssist is built to do &mdash; and it is free."</p>
+      </div>
+
+      <h3>External Language Guardrails</h3>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:50%"><span style="color:var(--ca-color)">Say This</span></th>
+              <th><span style="color:var(--red-color)">Do Not Say This</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>"CoAssist is designed to help programs prepare for accreditation"</td><td>"JetPack cannot do what we do"</td></tr>
+            <tr><td>"JetPack appears to be the accreditor-side management system"</td><td>"CoAEMSP needs us"</td></tr>
+            <tr><td>"We are watching the rollout closely"</td><td>"We are partnered with CoAEMSP"</td></tr>
+            <tr><td>"We want to make the transition easier for programs"</td><td>"We integrate with JetPack"</td></tr>
+            <tr><td>"We are interested in exploring whether CoAssist can complement the new workflow"</td><td>"Programs will have to use CoAssist"</td></tr>
+            <tr><td>"Based on what is publicly available, JetPack appears primarily accreditor-side"</td><td>"JetPack is only a submission portal" (unless confirmed)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Operational Resources</h3>
+      <p>Two supporting documents are being developed separately from this briefing:</p>
+
+      <div class="resource-grid">
+        <div class="resource-card" style="border-top: 4px solid var(--accent)">
+          <h4>30/60/90-Day Operational Plan</h4>
+          <p>Specific deliverables, owners, and timelines for capitalizing on the JetPack announcement &mdash; from ACCREDITCON lead follow-up through public-facing readiness guides.</p>
+          <a class="ext" href="operational-plan-30-60-90.html">View plan &rarr;</a>
+        </div>
+        <div class="resource-card" style="border-top: 4px solid var(--ca-color)">
+          <h4>JetPack Readiness Checklist</h4>
+          <p>A program-facing checklist: "Is your program ready for the JetPack transition?" Doubles as internal strategy clarity and external marketing collateral.</p>
+          <a class="ext" href="jetpack-readiness-checklist.html">View checklist &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 11. ACTION ITEMS ═══ -->
+    <section class="section" id="next-steps">
+      <span class="section-label">11. Action Items</span>
+      <h2>Next Steps</h2>
+
+      <h3>July Meeting with Dr. George Hatch and JD</h3>
+      <p>This is the most important meeting on our calendar. The strategy:</p>
+
+      <ol>
+        <li><strong>Lead with curiosity, not pitch.</strong> Spend the first half understanding JetPack's rollout plan, timeline, program portal capabilities, and CoAEMSP's vision.</li>
+        <li><strong>Position CoAssist as the complement.</strong> "JetPack gives CoAEMSP a modern way to manage accreditation. CoAssist gives programs a modern way to prepare for it."</li>
+        <li><strong>Propose a pilot.</strong> Ask if a small group of programs could use CoAssist alongside JetPack during the rollout.</li>
+        <li><strong>Ask for the VA introduction.</strong> Request that CoAEMSP facilitate a connection with Virtual Atlantic to explore integration possibilities.</li>
+      </ol>
+
+      <p>Key questions we need answered:</p>
+      <ul>
+        <li>What does JetPack's program-facing portal actually look like?</li>
+        <li>Does JetPack have an API for external systems to push data?</li>
+        <li>What is the exact rollout timeline? Pilot cohort or big bang?</li>
+        <li>Will programs bear any cost?</li>
+        <li>Is CoAEMSP open to recommending complementary tools?</li>
+        <li>How has CoAEMSP ensured JetPack will accommodate EMS-specific needs?</li>
+      </ul>
+
+      <h3>Before the July Meeting</h3>
+      <ul>
+        <li>Finalize the one-pager: "How CoAssist Complements JetPack" (draft complete)</li>
+        <li>Prepare a live demo showing how CoAssist data could flow into an AMS portal</li>
+        <li>Research JetPack's API capabilities further</li>
+        <li>Follow up with all 55 ACCREDITCON leads &mdash; the JetPack announcement is the perfect conversation starter</li>
+      </ul>
+
+      <div class="team-callout">
+        <h3>Team Reminder</h3>
+        <ul>
+          <li>
+            <span class="tag tag-if">Default</span>
+            <div>Use the <strong>10-second or 30-second message</strong> from the messaging ladder above. Escalate to the 2-minute version only if the listener is engaged and asking follow-up questions.</div>
+          </li>
+          <li>
+            <span class="tag tag-dont">Watch for</span>
+            <div>Any language that implies partnership, endorsement, or integration with CoAEMSP or Virtual Atlantic. See the language guardrails table above. When in doubt, understate.</div>
+          </li>
+          <li>
+            <span class="tag tag-do">Remember</span>
+            <div>Our position is honest: we believe CoAssist and JetPack are complementary. We are meeting with CoAEMSP to explore that. Until then, we speak carefully and let the product speak for itself.</div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ 12. REFERENCE ═══ -->
+    <section class="section" id="reference">
+      <span class="section-label">12. Reference</span>
+      <h2>Key Dates</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">May 28, 2026</div>
+          <div class="timeline-desc">ACCREDITCON 2026</div>
+          <div class="timeline-sub">Busiest booth, <span class="counter" data-target="55">0</span> leads collected, keynote sponsor</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">June 1, 2026</div>
+          <div class="timeline-desc">CoAEMSP Official JetPack Announcement</div>
+          <div class="timeline-sub">Email sent to all programs &mdash; mandatory AMS transition begins</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">July 2026</div>
+          <div class="timeline-desc">Meeting with Dr. George Hatch &amp; JD</div>
+          <div class="timeline-sub">CoAEMSP Executive Director &mdash; the person leading the JetPack rollout</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">Summer 2027</div>
+          <div class="timeline-desc">JetPack Full Implementation</div>
+          <div class="timeline-sub">Anticipated go-live per Austin Farshi, Virtual Atlantic President</div>
+        </div>
+      </div>
+
+      <h2 style="margin-top: 40px;">Key People</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr><th>Name</th><th>Role</th><th>Relevance</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="feat">Dr. George Hatch</td><td>CoAEMSP Executive Director</td><td>Our July meeting contact. Leading the JetPack rollout. Quoted in the announcement.</td></tr>
+            <tr><td class="feat">Dr. Michael J. Souter</td><td>CoAEMSP Board Chair</td><td>Quoted in the announcement. Decision-maker on the AMS.</td></tr>
+            <tr><td class="feat">Austin Farshi</td><td>President, Virtual Atlantic</td><td>Built JetPack. Opened ACCREDITCON before the keynote MedEdPrep sponsored.</td></tr>
+            <tr><td class="feat">JD</td><td>CoAEMSP (role TBD)</td><td>Attending July meeting alongside Dr. Hatch.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 style="margin-top: 40px;">Key Links</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr><th>Resource</th><th>URL</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="feat">Virtual Atlantic / JetPack</td><td><a class="ext" href="https://vainc.com" target="_blank" rel="noopener">vainc.com</a></td></tr>
+            <tr><td class="feat">JetPack Features</td><td><a class="ext" href="https://vainc.com/meet-jetpack/" target="_blank" rel="noopener">vainc.com/meet-jetpack</a></td></tr>
+            <tr><td class="feat">JetPack Reviews (Capterra)</td><td><a class="ext" href="https://www.capterra.com/p/174191/Jetpack/" target="_blank" rel="noopener">capterra.com/p/174191/Jetpack</a></td></tr>
+            <tr><td class="feat">JetPack Reviews (GetApp)</td><td><a class="ext" href="https://www.getapp.com/education-childcare-software/a/jetpack/" target="_blank" rel="noopener">getapp.com/.../jetpack</a></td></tr>
+            <tr><td class="feat">JetPack Reviews (Software Advice)</td><td><a class="ext" href="https://www.softwareadvice.com/accreditation-management/jetpack-accreditation-management-profile/" target="_blank" rel="noopener">softwareadvice.com/.../jetpack</a></td></tr>
+            <tr><td class="feat">CSI JetPack Adoption</td><td><a class="ext" href="https://csionline.org/csi-accreditation-introduces-new-accreditation-management-software/" target="_blank" rel="noopener">csionline.org/...</a></td></tr>
+            <tr><td class="feat">Kramah Ki-IACBE</td><td><a class="ext" href="https://www.kramah.com/iacbe-software/" target="_blank" rel="noopener">kramah.com/iacbe-software</a></td></tr>
+            <tr><td class="feat">Enflux (pharmacy prep layer)</td><td><a class="ext" href="https://enflux.com" target="_blank" rel="noopener">enflux.com</a></td></tr>
+            <tr><td class="feat">IACBE JetPack Webinar</td><td><a class="ext" href="https://www.youtube.com/watch?v=tqGtiFdnA8k" target="_blank" rel="noopener">YouTube</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="footer">
+      This briefing is based on research conducted June 1, 2026, including competitive audits of JetPack, feature parity analysis, IACBE rollout research, accreditation prep tool landscape analysis across multiple verticals, and review of all publicly available JetPack documentation and reviews. Full research files are available in the coassist planning directory.
+    </footer>
+
+  </div>
+  <script>
+  (function () {
+    var progressBar = document.getElementById('scrollProgress');
+    var tocProgress = document.getElementById('tocProgress');
+    var tocLinks = Array.from(document.querySelectorAll('.toc-list a'));
+    var sections = Array.from(document.querySelectorAll('.page-shell > .section'));
+    var footer = document.querySelector('.footer');
+    var total = sections.length;
+    var currentIndex = 0;
+    var visited = new Set();
+
+    // ── Build section titles map for nav buttons ──
+    var titles = tocLinks.map(function (a) { return a.textContent; });
+
+    // ── Stamp section numbers as data attributes (CSS counters break with display:none) ──
+    sections.forEach(function (sec, i) {
+      sec.setAttribute('data-num', ('0' + (i + 1)).slice(-2));
+    });
+
+    // ── Inject prev/next nav into each section ──
+    sections.forEach(function (sec, i) {
+      var nav = document.createElement('div');
+      nav.className = 'section-nav';
+      var html = '';
+      if (i > 0) {
+        html += '<a class="section-nav-btn prev" data-go="' + (i - 1) + '">' +
+          '<span class="section-nav-dir">Previous</span>' +
+          '<span class="section-nav-title">' + titles[i - 1] + '</span></a>';
+      }
+      if (i < total - 1) {
+        html += '<a class="section-nav-btn next" data-go="' + (i + 1) + '">' +
+          '<span class="section-nav-dir">Next</span>' +
+          '<span class="section-nav-title">' + titles[i + 1] + '</span></a>';
+      }
+      nav.innerHTML = html;
+      sec.appendChild(nav);
+    });
+
+    // ── Add keyboard hint after last section ──
+    var hint = document.createElement('div');
+    hint.className = 'key-hint';
+    hint.innerHTML = 'Use <kbd>&larr;</kbd> <kbd>&rarr;</kbd> arrow keys to navigate sections';
+    sections[0].parentNode.insertBefore(hint, footer);
+
+    // ── Switch to section ──
+    function goTo(index, pushState) {
+      if (index < 0 || index >= total) return;
+
+      // Save scroll position BEFORE any DOM changes — when the old section
+      // goes display:none, the page height collapses and the browser resets
+      // scroll to 0. We restore it immediately after the new section appears.
+      var savedScroll = window.scrollY;
+
+      // Hide current
+      sections[currentIndex].classList.remove('active');
+      // Show target
+      currentIndex = index;
+      visited.add(index);
+      sections[currentIndex].classList.remove('active'); // force re-trigger animation
+      void sections[currentIndex].offsetWidth; // reflow
+      sections[currentIndex].classList.add('active');
+
+      // Restore scroll position instantly (prevents jump-to-top from height collapse)
+      window.scrollTo(0, savedScroll);
+
+      // Now smooth-scroll to the section header, just below the sticky TOC
+      requestAnimationFrame(function () {
+        var tocBar = document.querySelector('.toc-bar');
+        var tocHeight = tocBar.offsetHeight;
+        var sectionRect = sections[currentIndex].getBoundingClientRect();
+        var targetScroll = window.scrollY + sectionRect.top - tocHeight - 16;
+        // Only scroll if we're not already near the target
+        if (Math.abs(window.scrollY - targetScroll) > 10) {
+          window.scrollTo({ top: Math.max(0, targetScroll), behavior: 'smooth' });
+        }
+      });
+
+      // Update TOC
+      tocLinks.forEach(function (a, j) {
+        a.classList.toggle('active', j === currentIndex);
+        if (visited.has(j) && j !== currentIndex) {
+          a.classList.add('visited-section');
+        }
+      });
+
+      // Update progress
+      progressBar.style.width = ((currentIndex + 1) / total * 100) + '%';
+      tocProgress.innerHTML = '<strong>' + (currentIndex + 1) + '</strong> of ' + total;
+
+      // Show/hide footer on last section
+      if (footer) footer.classList.toggle('show', currentIndex === total - 1);
+
+      // Animate counters in this section
+      animateCounters(sections[currentIndex]);
+
+      // Push URL hash
+      if (pushState !== false) {
+        history.replaceState(null, '', '#' + sections[currentIndex].id);
+      }
+    }
+
+    // ── Counter animation ──
+    function animateCounters(container) {
+      var counters = container.querySelectorAll('.counter:not(.counted)');
+      counters.forEach(function (el) {
+        el.classList.add('counted');
+        var target = parseInt(el.getAttribute('data-target'), 10);
+        if (isNaN(target)) return;
+        var duration = 1200;
+        var start = performance.now();
+        function tick(now) {
+          var elapsed = now - start;
+          var progress = Math.min(elapsed / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(eased * target);
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    }
+
+    // ── TOC clicks — remove hrefs so browser can't anchor-jump ──
+    tocLinks.forEach(function (a, i) {
+      a.removeAttribute('href');
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        goTo(i);
+      });
+    });
+
+    // ── Prev/next button clicks (delegated) ──
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.section-nav-btn');
+      if (btn) {
+        e.preventDefault();
+        goTo(parseInt(btn.getAttribute('data-go'), 10));
+      }
+    });
+
+    // ── Keyboard navigation ──
+    document.addEventListener('keydown', function (e) {
+      // Don't intercept if user is typing in an input
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        goTo(currentIndex + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        goTo(currentIndex - 1);
+      }
+    });
+
+    // ── Init: show first section (or hash target) ──
+    var startIndex = 0;
+    if (window.location.hash) {
+      var hashId = window.location.hash.slice(1);
+      sections.forEach(function (sec, i) {
+        if (sec.id === hashId) startIndex = i;
+      });
+    }
+    goTo(startIndex, false);
+  })();
+  </script>
+</body>
+</html>

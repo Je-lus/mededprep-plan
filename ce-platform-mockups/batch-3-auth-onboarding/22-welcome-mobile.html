@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pulse CE - Welcome Wizard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background: linear-gradient(135deg, #0A0A0A 0%, #0D1A12 50%, #0F3D26 75%, #36C98D 100%);
+            /* Simulate film grain noise overlay */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E"), linear-gradient(135deg, #0A0A0A 0%, #0D1A12 50%, #0F3D26 75%, #36C98D 100%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#36C98D',
+                            hover: '#2DB87E'
+                        },
+                        background: '#0A0A0A',
+                        surface: {
+                            DEFAULT: '#111111',
+                            elevated: '#1A1A1A',
+                            hover: '#1F1F1F'
+                        },
+                        border: {
+                            subtle: 'rgba(255,255,255,0.08)',
+                            DEFAULT: 'rgba(255,255,255,0.12)',
+                            strong: 'rgba(255,255,255,0.2)'
+                        },
+                        text: {
+                            primary: '#FFFFFF',
+                            secondary: 'rgba(255,255,255,0.7)',
+                            tertiary: 'rgba(255,255,255,0.45)'
+                        },
+                        error: '#E5484D',
+                        warning: '#F5A623'
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "card": "12px",
+                        "button": "8px"
+                    },
+                    fontFamily: {
+                        headline: ["Inter", "sans-serif"],
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"]
+                    },
+                    boxShadow: {
+                        glow: '0 0 20px rgba(54,201,141,0.15)'
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-text-primary font-body antialiased min-h-screen flex items-center justify-center p-4 sm:p-8">
+<!-- Mobile Container (Max 480px per layout rules, centering the 390px content conceptually) -->
+<main class="w-full max-w-[480px] mx-auto bg-background rounded-card border border-border overflow-hidden shadow-2xl flex flex-col relative" style="width: 100%; max-width: 390px; height: 844px;">
+<!-- Top App Bar Replacement for Wizard Flow -->
+<header class="pt-8 pb-4 px-4 flex flex-col items-center justify-center shrink-0">
+<!-- Logo -->
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">shield</span>
+<div class="flex flex-col">
+<span class="font-headline font-extrabold tracking-tight text-white leading-none text-xl">PULSE</span>
+<span class="text-[10px] font-semibold tracking-widest text-primary uppercase mt-0.5">BY MEDEDPREP</span>
+</div>
+</div>
+<!-- 3-Step Indicator -->
+<div class="flex items-center gap-2 mb-2">
+<div class="w-8 h-1 rounded-full bg-primary"></div>
+<div class="w-8 h-1 rounded-full bg-border-subtle"></div>
+<div class="w-8 h-1 rounded-full bg-border-subtle"></div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto px-4 pb-24 scrollbar-hide">
+<!-- Headers -->
+<div class="text-center mb-8">
+<h1 class="text-2xl font-bold font-headline mb-2 text-white">Welcome to Pulse CE, Sarah!</h1>
+<p class="text-sm text-text-secondary">Let's personalize your learning</p>
+</div>
+<!-- Certification Card -->
+<div class="bg-surface border border-border rounded-card p-4 mb-8">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[11px] uppercase tracking-wider text-text-tertiary font-semibold">YOUR CERTIFICATION</span>
+<button class="text-primary text-sm font-medium hover:text-primary-hover transition-colors">Edit</button>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">shield</span>
+<div>
+<div class="text-lg font-bold text-white leading-tight">Paramedic</div>
+<div class="text-sm text-text-secondary">Texas</div>
+</div>
+</div>
+</div>
+<!-- Goals Section -->
+<div class="mb-8">
+<h2 class="text-base font-semibold mb-4 text-white">What are your goals?</h2>
+<div class="flex flex-col gap-3">
+<!-- Goal Card 1 (Selected) -->
+<button class="w-full flex items-center p-4 bg-surface-elevated border-2 border-primary rounded-card text-left relative overflow-hidden group">
+<div class="absolute inset-0 bg-primary opacity-5 group-hover:opacity-10 transition-opacity"></div>
+<span class="material-symbols-outlined text-primary mr-4" style="font-variation-settings: 'FILL' 0;">my_location</span>
+<span class="text-sm font-medium text-white flex-1 relative z-10">Complete recertification requirements</span>
+<span class="material-symbols-outlined text-primary relative z-10">check_circle</span>
+</button>
+<!-- Goal Card 2 (Selected) -->
+<button class="w-full flex items-center p-4 bg-surface-elevated border-2 border-primary rounded-card text-left relative overflow-hidden group">
+<div class="absolute inset-0 bg-primary opacity-5 group-hover:opacity-10 transition-opacity"></div>
+<span class="material-symbols-outlined text-primary mr-4" style="font-variation-settings: 'FILL' 0;">show_chart</span>
+<span class="text-sm font-medium text-white flex-1 relative z-10">Strengthen weak clinical areas</span>
+<span class="material-symbols-outlined text-primary relative z-10">check_circle</span>
+</button>
+<!-- Goal Card 3 (Unselected) -->
+<button class="w-full flex items-center p-4 bg-surface-elevated border border-border rounded-card text-left hover:bg-surface-hover transition-colors group">
+<span class="material-symbols-outlined text-text-secondary mr-4 group-hover:text-white transition-colors" style="font-variation-settings: 'FILL' 0;">autorenew</span>
+<span class="text-sm font-medium text-text-secondary group-hover:text-white transition-colors flex-1">Stay current with protocols</span>
+<span class="material-symbols-outlined text-transparent border border-border rounded-full w-6 h-6 flex items-center justify-center text-[16px]"></span>
+</button>
+</div>
+</div>
+<!-- Daily Knowledge Check -->
+<div class="border border-border rounded-card p-5 relative overflow-hidden">
+<!-- Tint Background -->
+<div class="absolute inset-0" style="background-color: rgba(54,201,141,0.06);"></div>
+<div class="relative z-10 flex gap-4">
+<div class="shrink-0 pt-1">
+<span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 0;">psychology</span>
+</div>
+<div>
+<h3 class="text-sm font-bold text-white mb-2">Daily Knowledge Check</h3>
+<p class="text-sm text-text-secondary mb-3 leading-relaxed">Each time you log in, you'll answer one quick clinical question tailored to your level.</p>
+<div class="flex items-center gap-1.5 text-xs text-primary font-medium">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Takes less than 30 seconds</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Fixed Bottom Actions -->
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-background border-t border-border-subtle shrink-0">
+<button class="w-full h-12 bg-primary hover:bg-primary-hover text-[#0A0A0A] font-semibold rounded-button shadow-glow transition-all active:scale-95 mb-4 flex items-center justify-center" onclick="window.location='23-checkout-mobile.html'">
+                Continue
+            </button>
+<a href="../dashboard-variant-h-pulse.html" class="w-full text-center text-sm text-text-secondary hover:text-white transition-colors font-medium" style="text-decoration:none;display:block;">
+                Skip for now
+            </a>
+</div>
+</main>
+</body></html>

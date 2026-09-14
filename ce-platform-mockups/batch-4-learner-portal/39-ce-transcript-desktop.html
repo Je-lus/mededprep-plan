@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CE Transcript | Pulse CE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#201f1f",
+                        "surface-variant": "#353534",
+                        "surface-dim": "#131313",
+                        "secondary-fixed-dim": "#bbcabd",
+                        "outline": "#86948a",
+                        "primary-container": "#36c98d",
+                        "surface": "#131313",
+                        "secondary": "#bbcabd",
+                        "primary": "#5ae6a7",
+                        "surface-tint": "#51dea0",
+                        "surface-container-highest": "#353534",
+                        "tertiary-fixed": "#ffddb4",
+                        "outline-variant": "#3d4a41",
+                        "on-tertiary-fixed": "#291800",
+                        "on-error": "#690005",
+                        "inverse-surface": "#e5e2e1",
+                        "secondary-fixed": "#d7e7d9",
+                        "on-background": "#e5e2e1",
+                        "surface-container-low": "#1c1b1b",
+                        "on-surface": "#e5e2e1",
+                        "tertiary": "#ffc370",
+                        "secondary-container": "#3c4a40",
+                        "on-tertiary-container": "#603d00",
+                        "on-primary-container": "#004f33",
+                        "inverse-primary": "#006c47",
+                        "tertiary-container": "#f0a21e",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary": "#26332a",
+                        "inverse-on-surface": "#313030",
+                        "primary-fixed": "#71fbbb",
+                        "surface-bright": "#3a3939",
+                        "background": "#131313",
+                        "on-secondary-container": "#aab9ac",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#ffb955",
+                        "on-primary": "#003823",
+                        "primary-fixed-dim": "#51dea0",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#3c4a40",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#2a2a2a",
+                        "on-surface-variant": "#bbcabf",
+                        "on-tertiary": "#452b00",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "on-secondary-fixed": "#111e16",
+                        "on-primary-fixed": "#002113",
+                        "on-primary-fixed-variant": "#005235"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "max-width": "1280px",
+                        "margin-desktop": "24px",
+                        "touch-target": "44px",
+                        "margin-mobile": "16px",
+                        "nav-height": "60px",
+                        "gap-default": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-xl": ["30px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                        "headline-lg": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.5px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0A0A;
+            background-image: linear-gradient(to bottom, transparent 0%, rgba(54, 201, 141, 0.02) 100%);
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: #111111;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #36C98D;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+        .pulse-glow {
+            box-shadow: 0 0 20px rgba(54, 201, 141, 0.15);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filter-chip-active {
+            background: rgba(54, 201, 141, 0.15);
+            border-color: #36C98D;
+            color: #5ae6a7;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+<!-- TopNavBar Shell -->
+<nav class="bg-surface/85 backdrop-blur-md border-b border-outline-variant/30 shadow-sm docked full-width top-0 sticky z-[100]">
+<div class="flex justify-between items-center h-nav-height max-w-max-width mx-auto px-margin-desktop w-full">
+<div class="text-headline-lg font-headline-lg font-extrabold text-primary dark:text-primary tracking-tighter">
+                Pulse CE
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="../dashboard-variant-h-pulse.html">Home</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="40-compliance-tracker-desktop.html">Learn</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="45-extended-practice-desktop.html">Practice</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="40-compliance-tracker-desktop.html">Compliance</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-all duration-200">notifications</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User profile avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdVzzJL_mxWhE51WbGveeeY67m4H5peE09t6CDNDKYHg8ObggsJCI707-yj44mkEvJUVKDR7OQxNyajJLyzmIzDJwiL7d7mmBsXHeWYxZWOU1LHL6DnWGlIZZXifAqCQt7X8EVdkwyWg3Krj7M3gJRQNFbmCGj7eE_GUP396sPRlLUo3NqRTR96YKrirP5jIe1yXQkJ2_k2zNa5AQYDJIsMAasIMbQizwuhxmoR3dm2ZjCZQ9ibkGHLrMDiVFUy98coGvqc9pqLEw"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-max-width mx-auto px-margin-desktop py-12">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+<div>
+<nav class="flex items-center gap-2 mb-3">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Compliance</span>
+<span class="material-symbols-outlined text-[12px] text-outline">chevron_right</span>
+<span class="font-label-caps text-label-caps text-primary">CE Transcript</span>
+</nav>
+<h1 class="font-headline-xl text-headline-xl mb-2 text-on-surface">CE Transcript</h1>
+<p class="font-body-md text-on-surface-variant max-w-xl">Complete record of all continuing education hours earned, organized by NCCP domain. Export your transcript for recertification or employer records.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-5 h-11 flex items-center gap-2 border border-primary/40 text-primary rounded-full hover:bg-primary/5 transition-all font-bold text-sm">
+<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+                    Export PDF
+                </button>
+<button class="px-5 h-11 flex items-center gap-2 border border-outline-variant/40 text-on-surface-variant rounded-full hover:bg-surface-variant/20 transition-all font-bold text-sm">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                    Export CSV
+                </button>
+</div>
+</header>
+
+<!-- Profile Summary Bar -->
+<section class="glass-card p-6 rounded-2xl mb-8 flex flex-col md:flex-row items-center gap-6">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full border-2 border-primary/30 overflow-hidden">
+<img alt="Sarah Mitchell" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWV-CLbqIpoqLD-F590um1sopWBdHYQYwHfDSJ9N02oz955i8eVKwg09v5glugJ1hOeRIf6UOFjR538vuk1jk32BuyVC9o0ufY5pvDgQHuwpTAUMBJhrgmYIqVhdDFVTQ0h-rywAjbKcsYJsUBXxkDx6x_KYPfK6xwShQcaPAgdbqboxJKfRc72L-AkLEaJ8SZeE6FcVB9sXBlSMaXgA_IAjclcP8noUmpnECbkdQjcy-x6A3UnmP4nWBoEioNXonQIumpLiLzHzM"/>
+</div>
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Sarah Mitchell</h2>
+<p class="font-body-md text-on-surface-variant">EMT-P (Paramedic) &middot; Certification #1928374</p>
+</div>
+</div>
+<div class="flex-1"></div>
+<div class="flex items-center gap-8">
+<div class="text-center">
+<p class="font-headline-lg text-headline-lg text-primary">26.5 <span class="text-on-surface-variant font-body-md">/ 40</span></p>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">CEH EARNED</p>
+</div>
+<div class="w-px h-12 bg-outline-variant/30"></div>
+<div class="text-center">
+<p class="font-headline-lg text-headline-lg text-primary">12</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">COURSES</p>
+</div>
+<div class="w-px h-12 bg-outline-variant/30"></div>
+<div class="text-center">
+<p class="font-headline-lg text-headline-lg text-primary">78%</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">RETENTION</p>
+</div>
+</div>
+</section>
+
+<!-- Bento Grid Content -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- NCCP Domain Breakdown (Left) -->
+<section class="md:col-span-5 glass-card p-6 rounded-2xl">
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">donut_large</span>
+                    NCCP Domains
+                </h3>
+<div class="space-y-5">
+<!-- Airway -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="font-body-md font-bold text-on-surface">Airway, Respiration & Ventilation</span>
+<span class="font-label-caps text-label-caps text-primary">6.5 / 8.0</span>
+</div>
+<div class="w-full h-2 bg-surface-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-primary pulse-glow rounded-full" style="width: 81%"></div>
+</div>
+</div>
+<!-- Cardiology -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="font-body-md font-bold text-on-surface">Cardiovascular</span>
+<span class="font-label-caps text-label-caps text-primary">5.0 / 8.0</span>
+</div>
+<div class="w-full h-2 bg-surface-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-primary pulse-glow rounded-full" style="width: 62.5%"></div>
+</div>
+</div>
+<!-- Trauma -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="font-body-md font-bold text-on-surface">Trauma</span>
+<span class="font-label-caps text-label-caps text-primary">4.5 / 6.0</span>
+</div>
+<div class="w-full h-2 bg-surface-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 75%"></div>
+</div>
+</div>
+<!-- Medical -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="font-body-md font-bold text-on-surface">Medical</span>
+<span class="font-label-caps text-label-caps text-primary">4.0 / 6.0</span>
+</div>
+<div class="w-full h-2 bg-surface-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 66%"></div>
+</div>
+</div>
+<!-- Operations -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="font-body-md font-bold text-on-surface">Operations</span>
+<span class="font-label-caps text-label-caps text-tertiary-container">3.5 / 6.0</span>
+</div>
+<div class="w-full h-2 bg-surface-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container rounded-full" style="width: 58%"></div>
+</div>
+</div>
+<!-- Pediatrics -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="font-body-md font-bold text-on-surface">Pediatrics</span>
+<span class="font-label-caps text-label-caps text-tertiary-container">3.0 / 6.0</span>
+</div>
+<div class="w-full h-2 bg-surface-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container rounded-full" style="width: 50%"></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Completed Activities Table (Right) -->
+<section class="md:col-span-7 glass-card p-6 rounded-2xl">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-lg text-headline-lg text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">history</span>
+                        Completed Activities
+                    </h3>
+<span class="font-label-caps text-label-caps text-on-surface-variant">12 total</span>
+</div>
+<!-- Filter Chips -->
+<div class="flex flex-wrap gap-2 mb-6">
+<button class="px-3 py-1.5 rounded-full font-label-caps text-label-caps border transition-all filter-chip-active" onclick="filterActivities(this, 'all')">All Domains</button>
+<button class="px-3 py-1.5 rounded-full font-label-caps text-label-caps border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all" onclick="filterActivities(this, 'airway')">Airway</button>
+<button class="px-3 py-1.5 rounded-full font-label-caps text-label-caps border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all" onclick="filterActivities(this, 'cardiology')">Cardiology</button>
+<button class="px-3 py-1.5 rounded-full font-label-caps text-label-caps border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all" onclick="filterActivities(this, 'trauma')">Trauma</button>
+<button class="px-3 py-1.5 rounded-full font-label-caps text-label-caps border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all" onclick="filterActivities(this, 'medical')">Medical</button>
+<button class="px-3 py-1.5 rounded-full font-label-caps text-label-caps border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all" onclick="filterActivities(this, 'operations')">Operations</button>
+</div>
+<!-- Activity Table -->
+<div class="overflow-hidden rounded-xl border border-outline-variant/10">
+<table class="w-full">
+<thead>
+<tr class="bg-surface-container/50 border-b border-outline-variant/10">
+<th class="text-left px-4 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase">Course</th>
+<th class="text-left px-4 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase">Domain</th>
+<th class="text-center px-4 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase">CEH</th>
+<th class="text-left px-4 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase">Date</th>
+<th class="text-center px-4 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase">Cert</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="px-4 py-3 font-body-md text-on-surface font-semibold">Advanced Airway Mgmt</td>
+<td class="px-4 py-3"><span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">Airway</span></td>
+<td class="px-4 py-3 text-center font-body-md text-primary font-bold">1.5</td>
+<td class="px-4 py-3 font-body-md text-on-surface-variant">May 14, 2026</td>
+<td class="px-4 py-3 text-center"><a href="38-certificate-view-desktop.html" class="material-symbols-outlined text-primary-container text-[20px] hover:text-primary transition-colors">verified</a></td>
+</tr>
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="px-4 py-3 font-body-md text-on-surface font-semibold">Cardiac Emergencies</td>
+<td class="px-4 py-3"><span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">Cardiology</span></td>
+<td class="px-4 py-3 text-center font-body-md text-primary font-bold">2.0</td>
+<td class="px-4 py-3 font-body-md text-on-surface-variant">May 8, 2026</td>
+<td class="px-4 py-3 text-center"><a href="38-certificate-view-desktop.html" class="material-symbols-outlined text-primary-container text-[20px] hover:text-primary transition-colors">verified</a></td>
+</tr>
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="px-4 py-3 font-body-md text-on-surface font-semibold">Trauma Assessment</td>
+<td class="px-4 py-3"><span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">Trauma</span></td>
+<td class="px-4 py-3 text-center font-body-md text-primary font-bold">1.5</td>
+<td class="px-4 py-3 font-body-md text-on-surface-variant">Apr 28, 2026</td>
+<td class="px-4 py-3 text-center"><a href="38-certificate-view-desktop.html" class="material-symbols-outlined text-primary-container text-[20px] hover:text-primary transition-colors">verified</a></td>
+</tr>
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="px-4 py-3 font-body-md text-on-surface font-semibold">Pediatric Resuscitation</td>
+<td class="px-4 py-3"><span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">Pediatrics</span></td>
+<td class="px-4 py-3 text-center font-body-md text-primary font-bold">2.0</td>
+<td class="px-4 py-3 font-body-md text-on-surface-variant">Apr 15, 2026</td>
+<td class="px-4 py-3 text-center"><a href="38-certificate-view-desktop.html" class="material-symbols-outlined text-primary-container text-[20px] hover:text-primary transition-colors">verified</a></td>
+</tr>
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="px-4 py-3 font-body-md text-on-surface font-semibold">EMS Operations Review</td>
+<td class="px-4 py-3"><span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">Operations</span></td>
+<td class="px-4 py-3 text-center font-body-md text-primary font-bold">1.5</td>
+<td class="px-4 py-3 font-body-md text-on-surface-variant">Apr 5, 2026</td>
+<td class="px-4 py-3 text-center"><a href="38-certificate-view-desktop.html" class="material-symbols-outlined text-primary-container text-[20px] hover:text-primary transition-colors">verified</a></td>
+</tr>
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="px-4 py-3 font-body-md text-on-surface font-semibold">Pharmacology Update</td>
+<td class="px-4 py-3"><span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">Medical</span></td>
+<td class="px-4 py-3 text-center font-body-md text-primary font-bold">2.0</td>
+<td class="px-4 py-3 font-body-md text-on-surface-variant">Mar 22, 2026</td>
+<td class="px-4 py-3 text-center"><a href="38-certificate-view-desktop.html" class="material-symbols-outlined text-primary-container text-[20px] hover:text-primary transition-colors">verified</a></td>
+</tr>
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="px-4 py-3 font-body-md text-on-surface font-semibold">12-Lead Interpretation</td>
+<td class="px-4 py-3"><span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">Cardiology</span></td>
+<td class="px-4 py-3 text-center font-body-md text-primary font-bold">3.0</td>
+<td class="px-4 py-3 font-body-md text-on-surface-variant">Mar 10, 2026</td>
+<td class="px-4 py-3 text-center"><a href="38-certificate-view-desktop.html" class="material-symbols-outlined text-primary-container text-[20px] hover:text-primary transition-colors">verified</a></td>
+</tr>
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="px-4 py-3 font-body-md text-on-surface font-semibold">Ventilator Management</td>
+<td class="px-4 py-3"><span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-container px-2 py-1 rounded">Airway</span></td>
+<td class="px-4 py-3 text-center font-body-md text-primary font-bold">2.5</td>
+<td class="px-4 py-3 font-body-md text-on-surface-variant">Feb 28, 2026</td>
+<td class="px-4 py-3 text-center"><a href="38-certificate-view-desktop.html" class="material-symbols-outlined text-primary-container text-[20px] hover:text-primary transition-colors">verified</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<p class="font-body-md text-on-surface-variant text-sm">Showing 8 of 12 activities</p>
+<button class="text-primary font-label-caps text-label-caps uppercase tracking-widest hover:underline flex items-center gap-1">
+                        Show All <span class="material-symbols-outlined text-[14px]">expand_more</span>
+                    </button>
+</div>
+</section>
+</div>
+
+<!-- Footer -->
+<footer class="mt-16 flex flex-col items-center gap-4">
+<p class="text-on-surface-variant font-label-caps text-label-caps opacity-50">Last synced with CAPCE: May 19, 2026 at 2:15 PM</p>
+</footer>
+</main>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 md:hidden bg-surface-container/90 backdrop-blur-lg border-t border-outline-variant/20 rounded-t-xl" style="box-shadow: 0 0 20px rgba(54, 201, 141, 0.15);">
+<a href="../dashboard-variant-h-pulse.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none"><span class="material-symbols-outlined">home</span><span class="font-label-caps text-label-caps mt-1">Home</span></a>
+<a href="40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none"><span class="material-symbols-outlined">school</span><span class="font-label-caps text-label-caps mt-1">Learn</span></a>
+<a href="45-extended-practice-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none"><span class="material-symbols-outlined">fitness_center</span><span class="font-label-caps text-label-caps mt-1">Practice</span></a>
+<a href="40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center bg-secondary-container text-primary rounded-2xl p-2 shadow-[0_0_10px_rgba(54,201,141,0.2)] active:scale-90 transition-transform duration-200" style="text-decoration:none">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-label-caps text-label-caps mt-1">Compliance</span>
+</a>
+<a href="41-settings-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps mt-1">Profile</span>
+</a>
+</nav>
+<script>
+        function filterActivities(chip, domain) {
+            document.querySelectorAll('.flex.flex-wrap.gap-2 button').forEach(c => {
+                c.classList.remove('filter-chip-active');
+                c.classList.add('border-outline-variant/30', 'text-on-surface-variant');
+            });
+            chip.classList.add('filter-chip-active');
+            chip.classList.remove('border-outline-variant/30', 'text-on-surface-variant');
+        }
+
+        // Hover effects for cards
+        const cards = document.querySelectorAll('.glass-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.borderColor = 'rgba(54, 201, 141, 0.3)';
+                card.style.boxShadow = '0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(54, 201, 141, 0.05)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                card.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body></html>

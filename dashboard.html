@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research &amp; Roadmap Dashboard &mdash; MedEdPrep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0e14;
+    --bg-surface: #111820;
+    --bg-card: #151c25;
+    --bg-card-hover: #1a2331;
+    --bg-elevated: #1e2733;
+    --border: #243040;
+    --border-subtle: #1c2535;
+    --text-primary: #e8edf4;
+    --text-secondary: #8899aa;
+    --text-muted: #5a6a7a;
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+    --teal-glow: rgba(45,212,191,0.06);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.12);
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.12);
+    --orange: #fb923c;
+    --orange-dim: rgba(251,146,60,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.12);
+    --nav-width: 240px;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg-base);
+    background-image: radial-gradient(circle at 1px 1px, rgba(45,212,191,0.02) 1px, transparent 0);
+    background-size: 40px 40px;
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--purple), var(--blue), var(--teal));
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+    z-index: 200;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    width: var(--nav-width);
+    min-width: var(--nav-width);
+    background: rgba(17,24,32,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  nav::-webkit-scrollbar { width: 0; }
+
+  .nav-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .nav-brand-name {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--teal), #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-brand-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links { flex: 1; padding: 4px 0; }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    position: relative;
+  }
+  nav a:hover {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.04);
+    border-left-color: var(--teal);
+  }
+  nav a.active {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.06);
+    border-left-color: var(--teal);
+  }
+  nav a .nav-icon {
+    font-size: 15px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .nav-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 8px 16px;
+  }
+  .nav-footer {
+    padding: 20px 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .nav-footer-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .nav-footer-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    margin-left: var(--nav-width);
+    padding: 64px 56px 48px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #080c12 0%, #0d1520 30%, #0a1420 60%, #080e18 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: 10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(45,212,191,0.07) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: 20%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(167,139,250,0.05) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--teal);
+    vertical-align: middle;
+    margin-left: 12px;
+    opacity: 0.4;
+  }
+  .hero-headline {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f0f4f8 25%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .hero-narrative {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.7;
+    font-weight: 400;
+    max-width: 760px;
+    position: relative;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+    position: relative;
+  }
+  .hero-stat {
+    background: rgba(17,24,32,0.6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 20px;
+    min-width: 130px;
+    transition: border-color 0.2s;
+  }
+  .hero-stat:hover { border-color: #344050; }
+  .hero-stat-value {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .c-teal { color: var(--teal); }
+  .c-purple { color: var(--purple); }
+  .c-blue { color: var(--blue); }
+  .c-green { color: var(--green); }
+  .c-amber { color: var(--amber); }
+  .c-pink { color: var(--pink); }
+  .hero-stat-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* ── MAIN ── */
+  .main-inner {
+    margin-left: var(--nav-width);
+    padding: 40px 56px 80px;
+    max-width: 1300px;
+  }
+
+  .controls {
+    display: flex; gap: 8px;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+  }
+  .controls button {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .controls button:hover { color: var(--teal); border-color: var(--teal); background: var(--teal-dim); }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .section[id] { scroll-margin-top: 24px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+    padding: 16px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .section-header::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: transparent;
+    transition: background 0.2s;
+    border-radius: 3px 0 0 3px;
+  }
+  .section-header:hover { background: var(--bg-card-hover); }
+  .section-header.active::before {
+    background: linear-gradient(180deg, var(--teal), var(--purple));
+  }
+  .section-header.active {
+    border-color: rgba(45,212,191,0.15);
+    background: linear-gradient(135deg, rgba(45,212,191,0.03) 0%, var(--bg-card) 40%);
+  }
+
+  .section-icon { font-size: 20px; width: 24px; text-align: center; flex-shrink: 0; color: var(--teal); }
+  .section-title { font-size: 16px; font-weight: 700; color: var(--text-primary); flex: 1; }
+  .section-subtitle { font-size: 12px; font-weight: 500; color: var(--text-muted); margin-left: 10px; }
+  .section-chevron {
+    color: var(--text-muted);
+    font-size: 11px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+  .section-chevron.open { transform: rotate(180deg); }
+
+  .section-body {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    opacity: 0;
+  }
+  .section-body.open { max-height: 99999px; opacity: 1; }
+  .section-inner { padding: 24px 0 0; }
+
+  /* ── DETAIL TABLES / LISTS ── */
+  .detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .detail-table th {
+    text-align: left;
+    color: var(--text-muted);
+    padding: 5px 10px 5px 0;
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .detail-table td {
+    padding: 6px 10px 6px 0;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border-subtle);
+  }
+  .detail-table td:first-child { color: var(--text-primary); }
+
+  .detail-block { min-width: 0; }
+  .detail-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .detail-list {
+    list-style: none;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .detail-list li {
+    padding: 4px 0;
+    color: var(--text-secondary);
+    display: flex; align-items: baseline; gap: 8px; line-height: 1.5;
+  }
+  .detail-list li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+  .detail-list.teal li::before { background: var(--teal); }
+  .detail-list.amber li::before { background: var(--amber); }
+  .detail-list.accent li::before { background: var(--blue); }
+  .detail-list.red li::before { background: var(--red); }
+
+  /* ── ENTITY CARDS (collapsible) ── */
+  .entity-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .entity-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .entity-card:hover { border-color: #344050; }
+  .entity-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 22px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .entity-icon {
+    width: 38px; height: 38px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .entity-card-info { flex: 1; min-width: 0; }
+  .entity-card-name { font-size: 14px; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+  .entity-card-desc { font-size: 12px; color: var(--text-muted); margin-top: 3px; font-weight: 500; }
+  .entity-chevron {
+    color: var(--text-muted);
+    font-size: 11px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+  .entity-chevron.open { transform: rotate(180deg); }
+  .entity-card-body {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    opacity: 0;
+  }
+  .entity-card-body.open { max-height: 2000px; opacity: 1; }
+  .entity-card-inner { padding: 0 22px 22px; }
+  .entity-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+  .entity-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  @media (min-width: 1000px) { .entity-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ── ENTITY STATUS BADGES ── */
+  .entity-status {
+    font-size: 10px; font-weight: 700;
+    padding: 5px 12px; border-radius: 20px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 5px;
+    flex-shrink: 0;
+  }
+  .entity-status .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .es-exec { background: var(--green-dim); color: var(--green); }
+  .es-exec .dot { background: var(--green); }
+  .es-planning { background: var(--amber-dim); color: var(--amber); }
+  .es-planning .dot { background: var(--amber); }
+
+  /* ── PARTNER CARDS ── */
+  .partners-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 1000px) { .partners-grid { grid-template-columns: 1fr; } }
+
+  .partner-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+  .partner-card:hover { border-color: rgba(45,212,191,0.2); }
+  .partner-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+  .partner-icon { font-size: 26px; line-height: 1; flex-shrink: 0; }
+  .partner-name { font-size: 15px; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+  .partner-affil { font-size: 12px; color: var(--text-muted); margin-top: 3px; font-weight: 500; }
+  .partner-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  .partner-text strong { color: var(--text-primary); }
+  .partner-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .partner-stat {
+    background: var(--bg-elevated);
+    border-radius: var(--radius-xs);
+    padding: 8px 12px;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .partner-stat strong {
+    display: block;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--teal);
+    letter-spacing: -0.02em;
+  }
+  .partner-feeds {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .feed-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.03em;
+  }
+  .ft-a { background: var(--teal-dim); color: var(--teal); }
+  .ft-c { background: var(--blue-dim); color: var(--blue); }
+  .ft-e { background: var(--green-dim); color: var(--green); }
+  .ft-501 { background: var(--pink-dim); color: var(--pink); }
+
+  .research-moat-callout {
+    background: linear-gradient(135deg, rgba(45,212,191,0.08) 0%, var(--bg-card) 60%);
+    border: 1px solid rgba(45,212,191,0.2);
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    margin-top: 18px;
+  }
+  .callout-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .callout-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-text strong { color: var(--text-primary); }
+
+  /* ── RESEARCH STATUS ── */
+  .status-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .status-tag {
+    font-size: 10px; font-weight: 700;
+    padding: 4px 10px; border-radius: 20px;
+    letter-spacing: 0.03em;
+    display: inline-flex; align-items: center; gap: 6px;
+    white-space: nowrap;
+  }
+  .status-tag .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .st-deep { background: var(--purple-dim); color: var(--purple); }
+  .st-deep .dot { background: var(--purple); }
+  .st-exec { background: var(--green-dim); color: var(--green); }
+  .st-exec .dot { background: var(--green); }
+  .st-res { background: var(--blue-dim); color: var(--blue); }
+  .st-res .dot { background: var(--blue); }
+  .st-needs { background: var(--amber-dim); color: var(--amber); }
+  .st-needs .dot { background: var(--amber); }
+
+  .priority-group { margin-bottom: 28px; }
+  .priority-group:last-child { margin-bottom: 0; }
+  .priority-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .research-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .research-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    transition: border-color 0.2s;
+  }
+  .research-item:hover { border-color: #344050; }
+  .research-item > .status-tag { margin-top: 2px; }
+  .research-info { flex: 1; min-width: 0; }
+  .research-title { font-size: 13px; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+  .research-finding { font-size: 12px; color: var(--text-secondary); line-height: 1.55; margin-top: 5px; }
+  .research-progress {
+    height: 4px;
+    background: var(--bg-elevated);
+    border-radius: 2px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+  .research-progress-fill { height: 100%; border-radius: 2px; }
+  .rpf-deep { width: 100%; background: var(--purple); }
+  .rpf-exec { width: 95%; background: var(--green); }
+  .rpf-res  { width: 70%; background: var(--blue); }
+  .rpf-needs { width: 40%; background: var(--amber); }
+
+  .entity-tag {
+    font-size: 10px; font-weight: 700;
+    padding: 3px 9px; border-radius: 20px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .tag-v   { background: var(--teal-dim); color: var(--teal); }
+  .tag-501 { background: var(--pink-dim); color: var(--pink); }
+  .tag-a   { background: var(--teal-dim); color: var(--teal); }
+  .tag-b   { background: var(--orange-dim); color: var(--orange); }
+  .tag-c   { background: var(--blue-dim); color: var(--blue); }
+  .tag-e   { background: var(--green-dim); color: var(--green); }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 14px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--teal), var(--blue), var(--purple), var(--amber));
+    border-radius: 1px;
+  }
+  .timeline-phase {
+    position: relative;
+    margin-bottom: 32px;
+  }
+  .timeline-phase:last-child { margin-bottom: 0; }
+  .timeline-dot {
+    position: absolute;
+    left: -30px; top: 3px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2.5px solid;
+    background: var(--bg-base);
+    z-index: 1;
+  }
+  .phase-name { font-size: 15px; font-weight: 700; }
+  .phase-period { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+  .phase-desc {
+    font-size: 13px; color: var(--text-secondary);
+    margin-top: 4px; line-height: 1.6;
+  }
+  .phase-desc strong { color: var(--text-primary); }
+  .phase-items {
+    list-style: none;
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 12px;
+  }
+  .phase-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    padding: 5px 12px;
+    font-size: 12px; color: var(--text-secondary); font-weight: 500;
+  }
+
+  /* ── PAGE FOOTER ── */
+  .page-footer {
+    font-size: 11px; color: var(--text-muted);
+    text-align: right;
+    margin-top: 48px; padding-top: 20px;
+    border-top: 1px solid var(--border-subtle);
+    font-weight: 500;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { display: none; }
+    .hero { margin-left: 0; padding: 40px 24px 32px; }
+    .main-inner { margin-left: 0; padding: 24px 20px 60px; }
+    .hero-headline { font-size: 26px; }
+    .entity-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-base); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a4a5a; }
+
+  /* ── PRINT ── */
+  @media print {
+    nav { display: none; }
+    body { background: white; color: #111; }
+    body::before { display: none; }
+    .hero, .main-inner { margin-left: 0; }
+    .section { opacity: 1 !important; transform: none !important; }
+    .section-body, .entity-card-body { max-height: none !important; opacity: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAVIGATION ═══════ -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-name">MedEdPrep</div>
+    <div class="nav-brand-sub">Founder Command Center</div>
+  </div>
+  <div class="nav-links">
+    <a href="hub.html"><span class="nav-icon">&#9670;</span> Hub</a>
+    <a href="entity-company-a.html"><span class="nav-icon">&#9671;</span> Co. A &mdash; Education</a>
+    <a href="entity-company-c.html"><span class="nav-icon">&#9671;</span> Co. C &mdash; Certification</a>
+    <a href="entity-nonprofit.html"><span class="nav-icon">&#9671;</span> Foundation (501c3)</a>
+    <a href="entity-ip-vault.html"><span class="nav-icon">&#9671;</span> IP &amp; The Vault</a>
+    <a href="entity-market.html"><span class="nav-icon">&#9671;</span> Market Landscape</a>
+    <a href="entity-psychometric.html"><span class="nav-icon">&#9671;</span> Psychometric &amp; Data</a>
+    <div class="nav-divider"></div>
+    <a href="dashboard.html" class="active"><span class="nav-icon">&#9670;</span> Dashboard</a>
+    <a href="action-center.html"><span class="nav-icon">&#9671;</span> Action Center</a>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-footer-label">Last updated</div>
+    <div class="nav-footer-date">April 13, 2026</div>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<div class="hero">
+  <div class="hero-eyebrow">Research &amp; Roadmap</div>
+  <h1 class="hero-headline">Research &amp; Roadmap Dashboard</h1>
+  <p class="hero-narrative">The full research picture behind MedEdPrep&rsquo;s multi-entity future: entity dependencies, the 501(c)(3) grant pipeline, academic research partnerships, and the status of every item in the research queue. Current state is one Georgia LLC. The architecture below is what gets built as revenue scales.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-value c-teal">14</div>
+      <div class="hero-stat-label">Research items tracked</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value c-purple">7</div>
+      <div class="hero-stat-label">Deep dives complete</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value c-blue">1.45M</div>
+      <div class="hero-stat-label">Responses shared with UIUC</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value c-amber">2</div>
+      <div class="hero-stat-label">Academic partnerships</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value c-green">4</div>
+      <div class="hero-stat-label">Implementation phases</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ MAIN CONTENT ═══════ -->
+<div class="main-inner">
+
+  <div class="controls">
+    <button onclick="toggleAll(true)">Expand All</button>
+    <button onclick="toggleAll(false)">Collapse All</button>
+  </div>
+
+  <!-- ── ENTITY DEPENDENCIES ── -->
+  <div class="section visible" id="entities">
+    <div class="section-header active" onclick="toggleSection(this)" aria-expanded="true" tabindex="0" role="button">
+      <span class="section-icon">&#9671;</span>
+      <span class="section-title">Entity Dependencies &amp; Next Steps<span class="section-subtitle">Company D (hospice) &amp; the 501(c)(3)</span></span>
+      <span class="section-chevron open">&#9662;</span>
+    </div>
+    <div class="section-body open">
+      <div class="section-inner">
+        <div class="entity-cards">
+
+          <!-- Company D -->
+          <div class="entity-card">
+            <div class="entity-card-header" onclick="toggleCard(this)">
+              <div class="entity-icon" style="background:var(--orange-dim);color:var(--orange)">D</div>
+              <div class="entity-card-info">
+                <div class="entity-card-name">Company D &mdash; Hospice Operational Software</div>
+                <div class="entity-card-desc">In development &middot; Feeds Company E &middot; Connected to 501(c)(3) end-of-life mission</div>
+              </div>
+              <span class="entity-status es-planning"><span class="dot"></span> In Development</span>
+              <span class="entity-chevron">&#9662;</span>
+            </div>
+            <div class="entity-card-body">
+              <div class="entity-card-inner">
+                <p class="entity-desc">Hospice operational software, in development. Will serve end-of-life care facilities. Feeds operational data into Company E. Connected to the 501(c)(3) mission (hospice/end-of-life care education access).</p>
+                <div class="entity-grid">
+                  <div class="detail-block">
+                    <div class="detail-label">Dependencies</div>
+                    <ul class="detail-list">
+                      <li>Foundation through 501(c)(3) (shared end-of-life mission)</li>
+                      <li>Company E receives operational data at maturity</li>
+                      <li>Bryan Rothkin (Trinity Hospice ED) is an advisory board candidate</li>
+                    </ul>
+                  </div>
+                  <div class="detail-block">
+                    <div class="detail-label">Critical Next Steps</div>
+                    <ul class="detail-list amber">
+                      <li>Define product scope and initial feature set</li>
+                      <li>Assess Trinity Hospice as pilot partner</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 501(c)(3) -->
+          <div class="entity-card">
+            <div class="entity-card-header" onclick="toggleCard(this)">
+              <div class="entity-icon" style="background:var(--pink-dim);color:var(--pink)">F</div>
+              <div class="entity-card-info">
+                <div class="entity-card-name">501(c)(3) Foundation &mdash; [TBD Name]</div>
+                <div class="entity-card-desc">Georgia nonprofit &middot; Full filing package produced &middot; Blocker: board recruitment</div>
+              </div>
+              <span class="entity-status es-exec"><span class="dot"></span> Exec-Ready</span>
+              <span class="entity-chevron">&#9662;</span>
+            </div>
+            <div class="entity-card-body">
+              <div class="entity-card-inner">
+                <p class="entity-desc">Healthcare education access + end-of-life care. Purchases software from Company A and Company D at FMV (funded by grants. Maintains arm's length, public charity status). Provides free EMS education tools to high school programs (60&#8211;100 GA Perkins V programs). Serves as grant credibility anchor for the whole ecosystem.</p>
+                <div class="entity-grid">
+                  <div class="detail-block">
+                    <div class="detail-label">Grant Pipeline (Year 1 Priority)</div>
+                    <table class="detail-table">
+                      <tr><th>Source</th><th>Amount</th><th>Probability</th></tr>
+                      <tr><td>Firehouse Subs Foundation</td><td>$15&#8211;25K</td><td>High</td></tr>
+                      <tr><td>HRSA RHNDP (planning grant)</td><td>$100K</td><td>High</td></tr>
+                      <tr><td>Kaiser Permanente Georgia</td><td>$5&#8211;25K</td><td>Mod-High</td></tr>
+                      <tr><td>Comm. Foundation Atl.</td><td>$5&#8211;50K</td><td>Moderate</td></tr>
+                      <tr><td>Hero Fund America</td><td>$1,500</td><td>High</td></tr>
+                    </table>
+                  </div>
+                  <div class="detail-block">
+                    <div class="detail-label">3 Program Areas</div>
+                    <ul class="detail-list accent">
+                      <li>EMS Education Access (free tools for HS programs)</li>
+                      <li>Out-of-Hospital Workforce Development (research + CE)</li>
+                      <li>End-of-Life Care Education &amp; Access (hospice tools)</li>
+                    </ul>
+                    <div class="detail-label" style="margin-top:16px;">Board Requirements</div>
+                    <ul class="detail-list">
+                      <li>5-seat board, 80%+ independent directors</li>
+                      <li>IRS 4-part independence test</li>
+                      <li>Rebuttable presumption protocol for FMV transactions</li>
+                    </ul>
+                  </div>
+                  <div class="detail-block">
+                    <div class="detail-label">Key Research Docs</div>
+                    <ul class="detail-list">
+                      <li>501c3-formation-design.md</li>
+                      <li>501c3-articles-of-incorporation-draft.md</li>
+                      <li>501c3-bylaws-outline.md</li>
+                      <li>501c3-coi-policy.md</li>
+                      <li>501c3-30-day-action-plan.md</li>
+                      <li>grant-strategy-comprehensive.md</li>
+                    </ul>
+                  </div>
+                  <div class="detail-block">
+                    <div class="detail-label">Critical Path (30-Day)</div>
+                    <ul class="detail-list amber">
+                      <li>Recruit 3 independent directors (hard blocker)</li>
+                      <li>File Articles of Incorporation (Georgia)</li>
+                      <li>SAM.gov registration (start day of EIN. Takes 4&#8211;8 weeks)</li>
+                      <li>Grants.gov account (can register 1 day after SAM)</li>
+                      <li>Apply: Firehouse Subs (Q4 2026 window: July 9)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RESEARCH PARTNERSHIPS ── -->
+  <div class="section" id="research-partnerships">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9672;</span>
+      <span class="section-title">Academic Research Partnerships<span class="section-subtitle">UIUC &amp; Reading Skills Validation</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div class="partners-grid">
+
+          <!-- UIUC -->
+          <div class="partner-card">
+            <div class="partner-header">
+              <div class="partner-icon">&#x1F52C;</div>
+              <div>
+                <div class="partner-name">UIUC Metacognition Study</div>
+                <div class="partner-affil">University of Illinois Urbana-Champaign &middot; Since Feb 2025</div>
+              </div>
+            </div>
+            <p class="partner-text"><strong>PIs:</strong> Brad Yang (PhD), Aaron Benjamin (PI/advisor. Leading metacognition researcher).</p>
+            <p class="partner-text"><strong>Focus:</strong> Confidence calibration, metacognitive monitoring &amp; control in EMS prep. TQZ as a metacognitive control signal. Separate question banks ruling out item memorization. Calibration trajectories predicting NREMT pass/fail.</p>
+
+            <div class="partner-stats">
+              <div class="partner-stat"><strong>1,454,042</strong> Total responses</div>
+              <div class="partner-stat"><strong>1,117,604</strong> With confidence data</div>
+              <div class="partner-stat"><strong>3,030</strong> Students</div>
+              <div class="partner-stat"><strong>239</strong> Programs</div>
+              <div class="partner-stat"><strong>1,208</strong> 10+ quizzes</div>
+              <div class="partner-stat"><strong>505</strong> 20+ quizzes</div>
+              <div class="partner-stat"><strong>83</strong> 50+ quizzes</div>
+            </div>
+
+            <div class="detail-label" style="margin-top:16px;">Data Sharing Timeline</div>
+            <p class="partner-text">Initial dataset (~429K rows) shared Dec 2025. Expanded dataset (1.45M rows) shared Apr 2026.</p>
+
+            <div class="detail-label">Feeds Into</div>
+            <div class="partner-feeds">
+              <span class="feed-tag ft-a">Co. A Product</span>
+              <span class="feed-tag ft-c">Co. C Cert Design</span>
+              <span class="feed-tag ft-e">Co. E Research Data</span>
+              <span class="feed-tag ft-501">501c3 Grant Cred.</span>
+            </div>
+          </div>
+
+          <!-- Reading Skills -->
+          <div class="partner-card">
+            <div class="partner-header">
+              <div class="partner-icon">&#x1F4D6;</div>
+              <div>
+                <div class="partner-name">Reading Skills Validation &mdash; Justin Kern</div>
+                <div class="partner-affil">EMS Reading Skills Assessment &middot; Awaiting updates</div>
+              </div>
+            </div>
+            <p class="partner-text"><strong>Focus:</strong> Validating an EMS reading skills assessment. Test developed by founder, handed off to Kern's team for psychometric validation.</p>
+            <p class="partner-text"><strong>Status:</strong> Development complete. Validation in progress with Kern's team. No updates received yet.</p>
+            <p class="partner-text"><strong>Potential:</strong> Correlate reading comprehension scores with metacognitive calibration data from UIUC study. Reading comprehension may be a mediating variable between domain knowledge and calibration quality. Poorly calibrated students may struggle with reading complex EMS scenarios, not just content gaps.</p>
+
+            <div class="detail-label" style="margin-top:16px;">Why It Matters</div>
+            <ul class="detail-list accent" style="font-size:12px;">
+              <li>If reading skills predict calibration, it opens an intervention pathway (remediate reading, improve calibration, improve NREMT outcomes)</li>
+              <li>Adds a second peer-reviewed data thread to support grant applications</li>
+              <li>Supports Company C's diagnostic reporting (cognitive process level L1-L2 may confound with reading skill)</li>
+            </ul>
+
+            <div class="detail-label" style="margin-top:14px;">Feeds Into</div>
+            <div class="partner-feeds">
+              <span class="feed-tag ft-a">Co. A Product</span>
+              <span class="feed-tag ft-c">Co. C Item Design</span>
+              <span class="feed-tag ft-501">501c3 Grant Cred.</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="research-moat-callout">
+          <div class="callout-label">Research Moat</div>
+          <p class="callout-text">MedEdPrep is the <strong>only EMS education platform</strong> with peer-reviewed academic research derived from platform data. 1.45M responses represents the <strong>largest ecological metacognition dataset in EMS education</strong>. Possibly in all of healthcare education. This dataset is impossible for competitors to replicate without years of operation and the confidence-tracking infrastructure MedEdPrep already has.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RESEARCH STATUS ── -->
+  <div class="section" id="research-status">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9672;</span>
+      <span class="section-title">Research Status Dashboard<span class="section-subtitle">All items from RESEARCH-QUEUE.md</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="status-legend">
+          <span class="status-tag st-deep"><span class="dot"></span> Deep Dive Complete</span>
+          <span class="status-tag st-exec"><span class="dot"></span> Execution-Ready</span>
+          <span class="status-tag st-res"><span class="dot"></span> Researched</span>
+          <span class="status-tag st-needs"><span class="dot"></span> Needs Input</span>
+        </div>
+
+        <!-- Priority 1 -->
+        <div class="priority-group">
+          <div class="priority-label">Priority 1 &mdash; Foundation Phase</div>
+          <div class="research-list">
+
+            <div class="research-item">
+              <span class="status-tag st-res"><span class="dot"></span> Researched</span>
+              <div class="research-info">
+                <div class="research-title">1.1 Entity Selection &amp; State Domicile Analysis</div>
+                <div class="research-finding">Wyoming LLC for The Vault ($60/yr, strongest charging order). Georgia for all operating companies. CRITICAL: Georgia addback statute neutralizes state tax benefit of intercompany royalties.</div>
+                <div class="research-progress"><div class="research-progress-fill rpf-res"></div></div>
+              </div>
+              <span class="entity-tag tag-v">Vault</span>
+            </div>
+
+            <div class="research-item">
+              <span class="status-tag st-exec"><span class="dot"></span> Exec-Ready</span>
+              <div class="research-info">
+                <div class="research-title">1.2 501(c)(3) Formation Design</div>
+                <div class="research-finding">Full filing package: Articles of Incorporation draft, bylaws, COI policy, 30-day action plan, 17 additional artifacts identified. Blocker: recruit 3 independent directors.</div>
+                <div class="research-progress"><div class="research-progress-fill rpf-exec"></div></div>
+              </div>
+              <span class="entity-tag tag-501">501c3</span>
+            </div>
+
+            <div class="research-item">
+              <span class="status-tag st-res"><span class="dot"></span> Researched</span>
+              <div class="research-info">
+                <div class="research-title">1.3 IP Inventory &amp; Assignment Strategy</div>
+                <div class="research-finding">~95% of software dependencies MIT/Apache/BSD. HIGH RISK: JpGraph (commercial), SurveyJS (commercial), mpdf (GPL). Physical asset inventory and trademark registration still pending.</div>
+                <div class="research-progress"><div class="research-progress-fill rpf-res"></div></div>
+              </div>
+              <span class="entity-tag tag-v">Vault</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Priority 2 -->
+        <div class="priority-group">
+          <div class="priority-label">Priority 2 &mdash; Entity Separation Phase</div>
+          <div class="research-list">
+
+            <div class="research-item">
+              <span class="status-tag st-deep"><span class="dot"></span> Deep Dive</span>
+              <div class="research-info">
+                <div class="research-title">2.1 NASEMSO / Accreditation Landscape + Company B Market</div>
+                <div class="research-finding">No integrated CoAEMSP compliance tool exists. 57% cite cost, 50% cite time. AEMT expansion doubles market. CoAssist 58% full / 26% partial / 16% gap coverage. Customer interviews needed.</div>
+                <div class="research-progress"><div class="research-progress-fill rpf-deep"></div></div>
+              </div>
+              <span class="entity-tag tag-b">Co. B</span>
+            </div>
+
+            <div class="research-item">
+              <span class="status-tag st-deep"><span class="dot"></span> Deep Dive</span>
+              <div class="research-info">
+                <div class="research-title">2.2 Certification Body Regulatory Path</div>
+                <div class="research-finding">For-profit NCCA confirmed (NASM/CompTIA precedent). ISO 17024 dual accreditation Year 4&#8211;5. PSI for initial launch. Self-host at 2,000 tests/yr. Own CAT engine is allowed.</div>
+                <div class="research-progress"><div class="research-progress-fill rpf-deep"></div></div>
+              </div>
+              <span class="entity-tag tag-c">Co. C</span>
+            </div>
+
+            <div class="research-item">
+              <span class="status-tag st-deep"><span class="dot"></span> Deep Dive</span>
+              <div class="research-info">
+                <div class="research-title">2.3 Paramedic Practitioner Credential Design</div>
+                <div class="research-finding">IBSC IS NCCA-accredited (corrected). Gap is unified credential vs. fragmented specialties. I-CAPP natural ally (Suwanee, GA). Kentucky first state target. 3 eligibility pathways, no IBSC gatekeeper. 12 items before JTA readiness.</div>
+                <div class="research-progress"><div class="research-progress-fill rpf-deep"></div></div>
+              </div>
+              <span class="entity-tag tag-c">Co. C</span>
+            </div>
+
+            <div class="research-item">
+              <span class="status-tag st-res"><span class="dot"></span> Researched</span>
+              <div class="research-info">
+                <div class="research-title">2.4 Company C Question Bank Separation</div>
+                <div class="research-finding">Separate databases (not row-level security). 25&#8211;40 SMEs for initial development, dual panels mandatory. CAT needs 600&#8211;1,000 items. Start linear (300&#8211;500), transition to CAT at 600+. Min viable security: $2&#8211;5K.</div>
+                <div class="research-progress"><div class="research-progress-fill rpf-res"></div></div>
+              </div>
+              <span class="entity-tag tag-c">Co. C</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Priority 3 -->
+        <div class="priority-group">
+          <div class="priority-label">Priority 3 &mdash; Certification Launch Phase</div>
+          <div class="research-list">
+
+            <div class="research-item">
+              <span class="status-tag st-deep"><span class="dot"></span> Deep Dive</span>
+              <div class="research-info">
+                <div class="research-title">3.1 Psychometric Framework Formalization</div>
+                <div class="research-finding">No certification body uses bifactor (inertia, not technical). No validated EMS cognitive taxonomy exists. Database has sufficient volume. ECV target 0.60&#8211;0.80. Bottleneck: SME tagging of 500&#8211;1,000 items. SQL query ready.</div>
+                <div class="research-progress"><div class="research-progress-fill rpf-deep"></div></div>
+              </div>
+              <span class="entity-tag tag-c">Co. C</span>
+            </div>
+
+            <div class="research-item">
+              <span class="status-tag st-res"><span class="dot"></span> Researched</span>
+              <div class="research-info">
+                <div class="research-title">3.2 Transfer Pricing Implementation</div>
+                <div class="research-finding">8&#8211;15% royalty defensible. Three-phase ramp. "Lite" TP study now; formal at $500K. Trust: revocable at $100&#8211;250K revenue, irrevocable dynasty at $1&#8211;2M value.</div>
+                <div class="research-progress"><div class="research-progress-fill rpf-res"></div></div>
+              </div>
+              <span class="entity-tag tag-v">Vault</span>
+            </div>
+
+            <div class="research-item">
+              <span class="status-tag st-deep"><span class="dot"></span> Deep Dive</span>
+              <div class="research-info">
+                <div class="research-title">3.3 Grant Landscape for 501(c)(3)</div>
+                <div class="research-finding">HRSA RHNDP ($100K) is top federal entry. Firehouse Subs is top private foundation target. Perkins V is highest-probability state revenue. Remaining: GTC Open Records Request, Georgia Perkins V district list.</div>
+                <div class="research-progress"><div class="research-progress-fill rpf-deep"></div></div>
+              </div>
+              <span class="entity-tag tag-501">501c3</span>
+            </div>
+
+            <div class="research-item">
+              <span class="status-tag st-res"><span class="dot"></span> Researched</span>
+              <div class="research-info">
+                <div class="research-title">3.4 All-Level Certification Competency Frameworks</div>
+                <div class="research-finding">5 frameworks complete: EMR (46 fns, 85 items), EMT (48 fns, 110 items), AEMT (46 fns, 115 items), Paramedic (52 fns, 130 items), PP (60 fns, 125 items). Next: SME review, JTA scoping.</div>
+                <div class="research-progress"><div class="research-progress-fill rpf-res"></div></div>
+              </div>
+              <span class="entity-tag tag-c">Co. C</span>
+            </div>
+
+            <div class="research-item">
+              <span class="status-tag st-deep"><span class="dot"></span> Deep Dive</span>
+              <div class="research-info">
+                <div class="research-title">3.5 CE-to-Certification Item Pipeline</div>
+                <div class="research-finding">Company C can hold both NCCA + CAPCE (NASM/ACE/ACSM precedent). 620K clinicians = 14M CE hours/yr. At 0.5% penetration = 5.2M item responses/yr. 7 Pulse types cert-viable now. CE pipeline: 90&#8211;150 items calibrated/yr. EMT launch-ready in 3&#8211;4 years.</div>
+                <div class="research-progress"><div class="research-progress-fill rpf-deep"></div></div>
+              </div>
+              <span class="entity-tag tag-c">Co. C</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Priority 4 -->
+        <div class="priority-group">
+          <div class="priority-label">Priority 4 &mdash; Optimization Phase</div>
+          <div class="research-list">
+
+            <div class="research-item">
+              <span class="status-tag st-res"><span class="dot"></span> Researched</span>
+              <div class="research-info">
+                <div class="research-title">4.1 Trust Structure Implementation</div>
+                <div class="research-finding">Wyoming DAPT. Phased: revocable at $100&#8211;250K revenue. Irrevocable at $1&#8211;2M value.</div>
+                <div class="research-progress"><div class="research-progress-fill rpf-res"></div></div>
+              </div>
+              <span class="entity-tag tag-v">Vault</span>
+            </div>
+
+            <div class="research-item">
+              <span class="status-tag st-res"><span class="dot"></span> Researched</span>
+              <div class="research-info">
+                <div class="research-title">4.2 Competitive Positioning Analysis</div>
+                <div class="research-finding">Company A diagnostic reporting validated as industry-leading. Company B has clearest market vacuum. Company E market does not yet exist. Pearson consolidation (Limmer/Fisdap/JBL/Navigate/AccredAssist) is biggest long-term risk.</div>
+                <div class="research-progress"><div class="research-progress-fill rpf-res"></div></div>
+              </div>
+              <span class="entity-tag tag-a">Co. A</span>
+            </div>
+
+            <div class="research-item">
+              <span class="status-tag st-deep"><span class="dot"></span> Deep Dive</span>
+              <div class="research-info">
+                <div class="research-title">4.3 Company E Data Product Design</div>
+                <div class="research-finding">EMS data vacuum confirmed (NEMSIS = transport data, not education data). ATI Nursing (~$750M) is the model. $215&#8211;430/mo Phase 1 infrastructure. Revenue gated by Co. A market penetration.</div>
+                <div class="research-progress"><div class="research-progress-fill rpf-deep"></div></div>
+              </div>
+              <span class="entity-tag tag-e">Co. E</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TIMELINE ── -->
+  <div class="section" id="timeline">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9672;</span>
+      <span class="section-title">Implementation Roadmap<span class="section-subtitle">4 Phases over 8+ years</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div class="timeline">
+
+          <div class="timeline-phase">
+            <div class="timeline-dot" style="border-color:var(--teal);"></div>
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px;">
+              <span class="phase-name" style="color:var(--teal);">Phase 1 &mdash; Foundation</span>
+              <span class="phase-period">Now (2026)</span>
+            </div>
+            <p class="phase-desc">Everything is MedEdPrep, LLC today. Resolve entity domicile, stand up the 501(c)(3), and complete the IP inventory while sales drive recurring revenue. Entity separation is downstream of revenue growth.</p>
+            <ul class="phase-items">
+              <li class="phase-item">Wyoming domicile decided for The Vault</li>
+              <li class="phase-item">501(c)(3) filing package &mdash; recruit 3 directors</li>
+              <li class="phase-item">IP inventory &amp; license cleanup</li>
+              <li class="phase-item">Year 1 grant pipeline activation</li>
+            </ul>
+          </div>
+
+          <div class="timeline-phase">
+            <div class="timeline-dot" style="border-color:var(--blue);"></div>
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px;">
+              <span class="phase-name" style="color:var(--blue);">Phase 2 &mdash; Entity Separation</span>
+              <span class="phase-period">Year 1&ndash;2</span>
+            </div>
+            <p class="phase-desc">Form Company B (CoAssist) and begin Company C build-out. Separate the certification question bank into its own database. Confirm the for-profit NCCA regulatory path and run customer interviews.</p>
+            <ul class="phase-items">
+              <li class="phase-item">Company B formed at CoAssist commercial launch</li>
+              <li class="phase-item">Company C certification body + independent board</li>
+              <li class="phase-item">Separate cert question database</li>
+              <li class="phase-item">Paramedic Practitioner credential design</li>
+            </ul>
+          </div>
+
+          <div class="timeline-phase">
+            <div class="timeline-dot" style="border-color:var(--purple);"></div>
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px;">
+              <span class="phase-name" style="color:var(--purple);">Phase 3 &mdash; Certification Launch</span>
+              <span class="phase-period">Year 2&ndash;4</span>
+            </div>
+            <p class="phase-desc">Formalize the bifactor psychometric framework, implement transfer pricing, and launch certification levels. The CE-to-certification item pipeline calibrates items at industrial scale. EMT launch-ready in 3&ndash;4 years.</p>
+            <ul class="phase-items">
+              <li class="phase-item">Bifactor framework formalized (ECV 0.60&ndash;0.80)</li>
+              <li class="phase-item">Transfer pricing (8&ndash;15% royalty, phased)</li>
+              <li class="phase-item">All-level competency frameworks &rarr; JTA</li>
+              <li class="phase-item">CE-to-cert calibration pipeline live</li>
+            </ul>
+          </div>
+
+          <div class="timeline-phase">
+            <div class="timeline-dot" style="border-color:var(--amber);"></div>
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px;">
+              <span class="phase-name" style="color:var(--amber);">Phase 4 &mdash; Optimization</span>
+              <span class="phase-period">Year 4&ndash;8+</span>
+            </div>
+            <p class="phase-desc">Stand up the Trust as the ownership layer above The Vault, launch Company E as the cross-entity data product, and harden competitive positioning against Pearson/Ascend consolidation.</p>
+            <ul class="phase-items">
+              <li class="phase-item">Wyoming DAPT trust (revocable &rarr; irrevocable)</li>
+              <li class="phase-item">Company E data product (ATI Nursing model)</li>
+              <li class="phase-item">Competitive positioning hardening</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">Research &amp; Roadmap Dashboard &middot; Sourced from RESEARCH-QUEUE.md &amp; 00-overview/STATE-OF-PLAY.md &middot; Last updated: 2026-04-13</div>
+
+</div><!-- /main-inner -->
+
+<!-- ═══════ JAVASCRIPT ═══════ -->
+<script>
+  function toggleSection(header) {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.section-chevron');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    if (chevron) chevron.classList.toggle('open', !isOpen);
+    header.setAttribute('aria-expanded', String(!isOpen));
+    header.classList.toggle('active', !isOpen);
+  }
+
+  function toggleCard(header) {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.entity-chevron');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    if (chevron) chevron.classList.toggle('open', !isOpen);
+  }
+
+  function toggleAll(open) {
+    document.querySelectorAll('.section-body').forEach(body => {
+      const header = body.previousElementSibling;
+      const chevron = header.querySelector('.section-chevron');
+      body.classList.toggle('open', open);
+      if (chevron) chevron.classList.toggle('open', open);
+      header.setAttribute('aria-expanded', String(open));
+      header.classList.toggle('active', open);
+    });
+    document.querySelectorAll('.entity-card-body').forEach(body => {
+      const header = body.previousElementSibling;
+      const chevron = header.querySelector('.entity-chevron');
+      body.classList.toggle('open', open);
+      if (chevron) chevron.classList.toggle('open', open);
+    });
+  }
+
+  // Scroll-triggered section reveal
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -60px 0px', threshold: 0.05 });
+
+  document.querySelectorAll('.section').forEach(s => revealObserver.observe(s));
+
+  // Keyboard accessibility
+  document.querySelectorAll('.section-header').forEach(el => {
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

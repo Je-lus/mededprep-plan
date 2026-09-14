@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Compliance Tracker | Pulse CE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#201f1f",
+                        "surface-variant": "#353534",
+                        "surface-dim": "#131313",
+                        "secondary-fixed-dim": "#bbcabd",
+                        "outline": "#86948a",
+                        "primary-container": "#36c98d",
+                        "surface": "#131313",
+                        "secondary": "#bbcabd",
+                        "primary": "#5ae6a7",
+                        "surface-tint": "#51dea0",
+                        "surface-container-highest": "#353534",
+                        "tertiary-fixed": "#ffddb4",
+                        "outline-variant": "#3d4a41",
+                        "on-tertiary-fixed": "#291800",
+                        "on-error": "#690005",
+                        "inverse-surface": "#e5e2e1",
+                        "secondary-fixed": "#d7e7d9",
+                        "on-background": "#e5e2e1",
+                        "surface-container-low": "#1c1b1b",
+                        "on-surface": "#e5e2e1",
+                        "tertiary": "#ffc370",
+                        "secondary-container": "#3c4a40",
+                        "on-tertiary-container": "#603d00",
+                        "on-primary-container": "#004f33",
+                        "inverse-primary": "#006c47",
+                        "tertiary-container": "#f0a21e",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary": "#26332a",
+                        "inverse-on-surface": "#313030",
+                        "primary-fixed": "#71fbbb",
+                        "surface-bright": "#3a3939",
+                        "background": "#131313",
+                        "on-secondary-container": "#aab9ac",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#ffb955",
+                        "on-primary": "#003823",
+                        "primary-fixed-dim": "#51dea0",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#3c4a40",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#2a2a2a",
+                        "on-surface-variant": "#bbcabf",
+                        "on-tertiary": "#452b00",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "on-secondary-fixed": "#111e16",
+                        "on-primary-fixed": "#002113",
+                        "on-primary-fixed-variant": "#005235"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "max-width": "1280px",
+                        "margin-desktop": "24px",
+                        "touch-target": "44px",
+                        "margin-mobile": "16px",
+                        "nav-height": "60px",
+                        "gap-default": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-xl": ["30px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                        "headline-lg": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.5px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0A0A;
+            background-image: linear-gradient(to bottom, transparent 0%, rgba(54, 201, 141, 0.02) 100%);
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: #111111;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #36C98D;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+        .glow-ring {
+            filter: drop-shadow(0 0 8px rgba(54, 201, 141, 0.3));
+        }
+        .compliance-active {
+            box-shadow: 0 0 20px rgba(54, 201, 141, 0.15);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+<!-- TopNavBar Shell -->
+<nav class="bg-surface/85 backdrop-blur-md border-b border-outline-variant/30 shadow-sm docked full-width top-0 sticky z-[100]">
+<div class="flex justify-between items-center h-nav-height max-w-max-width mx-auto px-margin-desktop w-full">
+<div class="text-headline-lg font-headline-lg font-extrabold text-primary dark:text-primary tracking-tighter">
+                Pulse CE
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="../dashboard-variant-h-pulse.html">Home</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="40-compliance-tracker-desktop.html">Learn</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="45-extended-practice-desktop.html">Practice</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="40-compliance-tracker-desktop.html">Compliance</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-all duration-200">notifications</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="A professional medical headshot of a paramedic in a clean uniform, set against a blurred modern clinical background. The lighting is soft and professional, emphasizing a friendly but authoritative expression. The image maintains the high-contrast, deep-toned aesthetic of a modern medical professional profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdVzzJL_mxWhE51WbGveeeY67m4H5peE09t6CDNDKYHg8ObggsJCI707-yj44mkEvJUVKDR7OQxNyajJLyzmIzDJwiL7d7mmBsXHeWYxZWOU1LHL6DnWGlIZZXifAqCQt7X8EVdkwyWg3Krj7M3gJRQNFbmCGj7eE_GUP396sPRlLUo3NqRTR96YKrirP5jIe1yXQkJ2_k2zNa5AQYDJIsMAasIMbQizwuhxmoR3dm2ZjCZQ9ibkGHLrMDiVFUy98coGvqc9pqLEw"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-max-width mx-auto px-margin-desktop py-12">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+<div>
+<h1 class="font-headline-xl text-headline-xl mb-2 text-on-surface">Compliance Tracker</h1>
+<p class="font-body-md text-on-surface-variant max-w-xl">Keep your National Continued Competency Program (NCCP) certification current. Track your progress across all mandatory domains.</p>
+</div>
+<div class="bg-primary-container/10 border border-primary-container/30 px-4 py-2 rounded-xl flex items-center gap-3 compliance-active">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">timer</span>
+<span class="font-label-caps text-label-caps text-primary uppercase tracking-widest">218 days remaining</span>
+</div>
+</header>
+<!-- Bento Grid Content -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Dual Rings Section (Left/Center Top) -->
+<section class="md:col-span-8 glass-card p-8 rounded-2xl flex flex-col md:flex-row items-center justify-around gap-12">
+<div class="flex flex-col items-center gap-4">
+<div class="relative w-48 h-48 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-variant/30" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary glow-ring" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-dasharray="502.4" stroke-dashoffset="170.8" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-headline-lg text-headline-lg text-on-surface">26.5/40</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">CE HOURS</span>
+</div>
+</div>
+<p class="font-body-md text-on-surface-variant">66% Complete</p>
+</div>
+<div class="flex flex-col items-center gap-4">
+<div class="relative w-48 h-48 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-variant/30" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary glow-ring" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-dasharray="502.4" stroke-dashoffset="110.5" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-headline-lg text-headline-lg text-on-surface">78%</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">RETENTION</span>
+</div>
+</div>
+<p class="font-body-md text-on-surface-variant">National Avg: 72%</p>
+</div>
+</section>
+<!-- Gap Analysis Card (Right Top) -->
+<aside class="md:col-span-4 glass-card p-6 rounded-2xl">
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">warning</span>
+                    Gaps to Close
+                </h3>
+<div class="space-y-6">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">OPERATIONS</p>
+<p class="font-body-md text-on-surface">Need 2.5 more hours</p>
+</div>
+<a class="text-primary font-label-caps text-label-caps hover:underline flex items-center" href="../dashboard-variant-h-pulse.html">FIND COURSES <span class="material-symbols-outlined text-[14px] ml-1">chevron_right</span></a>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">PEDIATRICS</p>
+<p class="font-body-md text-on-surface">Need 3.0 more hours</p>
+</div>
+<a class="text-primary font-label-caps text-label-caps hover:underline flex items-center" href="../dashboard-variant-h-pulse.html">FIND COURSES <span class="material-symbols-outlined text-[14px] ml-1">chevron_right</span></a>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">CARDIOLOGY</p>
+<p class="font-body-md text-on-surface">Need 3.0 more hours</p>
+</div>
+<a class="text-primary font-label-caps text-label-caps hover:underline flex items-center" href="../dashboard-variant-h-pulse.html">FIND COURSES <span class="material-symbols-outlined text-[14px] ml-1">chevron_right</span></a>
+</div>
+</div>
+</aside>
+<!-- NCCP Requirements Card (Left/Center Bottom) -->
+<section class="md:col-span-8 glass-card p-6 rounded-2xl">
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-8">NCCP Domain Requirements</h3>
+<div class="space-y-6">
+<!-- Airway -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="font-body-md font-bold text-on-surface">Airway, Respiration &amp; Ventilation</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">6.5 / 8 HRS</span>
+</div>
+<div class="w-full h-2 bg-surface-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 81%"></div>
+</div>
+</div>
+<!-- Cardiology -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="font-body-md font-bold text-on-surface">Cardiovascular</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">5.0 / 8 HRS</span>
+</div>
+<div class="w-full h-2 bg-surface-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 63%"></div>
+</div>
+</div>
+<!-- Trauma -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="font-body-md font-bold text-on-surface">Trauma</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">4.5 / 6 HRS</span>
+</div>
+<div class="w-full h-2 bg-surface-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container" style="width: 75%"></div>
+</div>
+</div>
+<!-- Medical -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="font-body-md font-bold text-on-surface">Medical</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">4.0 / 6 HRS</span>
+</div>
+<div class="w-full h-2 bg-surface-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 67%"></div>
+</div>
+</div>
+<!-- Operations -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="font-body-md font-bold text-on-surface">Operations</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">3.5 / 6 HRS</span>
+</div>
+<div class="w-full h-2 bg-surface-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container" style="width: 58%"></div>
+</div>
+</div>
+<!-- Pediatrics -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="font-body-md font-bold text-on-surface">Pediatrics</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">3.0 / 6 HRS</span>
+</div>
+<div class="w-full h-2 bg-surface-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container" style="width: 50%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Deadline Timeline Card (Right Bottom) -->
+<aside class="md:col-span-4 glass-card p-6 rounded-2xl">
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-8">Certification Timeline</h3>
+<div class="relative pl-8 space-y-12">
+<!-- Timeline Line -->
+<div class="absolute left-[15px] top-2 bottom-2 w-[2px] bg-surface-variant/50"></div>
+<!-- Point 1: Now -->
+<div class="relative">
+<div class="absolute -left-[24px] w-4 h-4 rounded-full bg-primary border-4 border-surface shadow-[0_0_10px_rgba(54,201,141,0.5)]"></div>
+<div>
+<p class="font-body-md font-bold text-on-surface">Now</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Current Status: Active</p>
+</div>
+</div>
+<!-- Point 2: 6-month check -->
+<div class="relative">
+<div class="absolute -left-[24px] w-4 h-4 rounded-full bg-tertiary-container border-4 border-surface"></div>
+<div>
+<p class="font-body-md font-bold text-on-surface">6-month Review</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant">June 22, 2026</p>
+</div>
+</div>
+<!-- Point 3: Deadline -->
+<div class="relative">
+<div class="absolute -left-[24px] w-4 h-4 rounded-full bg-surface-variant border-4 border-surface"></div>
+<div>
+<p class="font-body-md font-bold text-on-surface">Recertification Due</p>
+<p class="font-label-caps text-label-caps text-error">Dec 22, 2026</p>
+</div>
+</div>
+</div>
+<div class="mt-12 rounded-xl bg-surface-container overflow-hidden">
+<img alt="Medical Certification Placeholder" class="w-full h-32 object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-500" data-alt="A macro photograph of an official medical certification document with holographic security seals. The lighting is dramatic and moody, with high-contrast shadows and sharp focus on the professional typography. The overall color palette matches a dark interface with subtle green lighting accents reflecting off the paper's surface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAU5R69slq0OlbVghEUS6ssPLSF2P2OEBArNHqVyGc_WyzYTOyqDMwzHEZFIaKMS00i2hC6bA3SRJYUQgUsVkh_IE8czOPapbr5K2w-aIRHMlWsAjPDY4892zlP3qxwJHM4EGWXeMgQmJEqbmfrpGpNNsYl9jVkrNqrEH_Dpz0BMI3VX0z4g9xpVH69hscK2SY80QMc6SW6X-1dQxmfqrmc276mA2Oggriunow8eEvOZQIbiRnJU-cNMnotaAOIID10MUFX9TxgsLI"/>
+</div>
+</aside>
+</div>
+<!-- Bottom Action -->
+<footer class="mt-16 flex flex-col items-center gap-6">
+<a class="group flex items-center gap-2 text-primary font-body-md font-bold transition-all hover:gap-4" href="../dashboard-variant-h-pulse.html">
+                View Full Transcript
+                <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+<p class="text-on-surface-variant font-label-caps text-label-caps opacity-50">Last updated: 2 hours ago from NREMT Database</p>
+</footer>
+</main>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 md:hidden bg-surface-container/90 backdrop-blur-lg border-t border-outline-variant/20 rounded-t-xl" style="box-shadow: 0 0 20px rgba(54, 201, 141, 0.15);">
+<a href="../dashboard-variant-h-pulse.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none"><span class="material-symbols-outlined">home</span><span class="font-label-caps text-label-caps mt-1">Home</span></a>
+<a href="40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none"><span class="material-symbols-outlined">school</span><span class="font-label-caps text-label-caps mt-1">Learn</span></a>
+<a href="45-extended-practice-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none"><span class="material-symbols-outlined">fitness_center</span><span class="font-label-caps text-label-caps mt-1">Practice</span></a>
+<a href="40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center bg-secondary-container text-primary rounded-2xl p-2 shadow-[0_0_10px_rgba(54,201,141,0.2)] active:scale-90 transition-transform duration-200" style="text-decoration:none">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-label-caps text-label-caps mt-1">Compliance</span>
+</a>
+<a href="41-settings-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps mt-1">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for progress rings on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const rings = document.querySelectorAll('.glow-ring');
+            rings.forEach(ring => {
+                const finalOffset = ring.getAttribute('stroke-dashoffset');
+                ring.style.strokeDashoffset = '502.4';
+                setTimeout(() => {
+                    ring.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1)';
+                    ring.style.strokeDashoffset = finalOffset;
+                }, 100);
+            });
+
+            // Hover effects for cards
+            const cards = document.querySelectorAll('.glass-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.borderColor = 'rgba(54, 201, 141, 0.3)';
+                    card.style.boxShadow = '0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(54, 201, 141, 0.05)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                    card.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
+</body></html>

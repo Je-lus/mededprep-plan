@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Company A &mdash; MedEdPrep Education | MedEdPrep Ecosystem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0e14;
+    --bg-surface: #111820;
+    --bg-card: #151c25;
+    --bg-card-hover: #1a2331;
+    --bg-elevated: #1e2733;
+    --border: #243040;
+    --border-subtle: #1c2535;
+    --text-primary: #e8edf4;
+    --text-secondary: #8899aa;
+    --text-muted: #5a6a7a;
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+    --teal-glow: rgba(45,212,191,0.06);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.12);
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.12);
+    --orange: #fb923c;
+    --orange-dim: rgba(251,146,60,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.12);
+    --nav-width: 240px;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg-base);
+    background-image: radial-gradient(circle at 1px 1px, rgba(45,212,191,0.02) 1px, transparent 0);
+    background-size: 40px 40px;
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--purple), var(--blue), var(--teal));
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+    z-index: 200;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    width: var(--nav-width);
+    min-width: var(--nav-width);
+    background: rgba(17,24,32,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  nav::-webkit-scrollbar { width: 0; }
+
+  .nav-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .nav-brand-name {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--teal), #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-brand-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links { flex: 1; padding: 4px 0; }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    position: relative;
+  }
+  nav a:hover {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.04);
+    border-left-color: var(--teal);
+  }
+  nav a.active {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.06);
+    border-left-color: var(--teal);
+  }
+  nav a .nav-icon {
+    font-size: 15px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .nav-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 8px 16px;
+  }
+  .nav-footer {
+    padding: 20px 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .nav-footer-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .nav-footer-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    margin-left: var(--nav-width);
+    padding: 64px 56px 48px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #080c12 0%, #0d1520 30%, #0a1420 60%, #080e18 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: 10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(45,212,191,0.07) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: 20%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(167,139,250,0.05) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--teal);
+    vertical-align: middle;
+    margin-left: 12px;
+    opacity: 0.4;
+  }
+
+  .hero-headline {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f0f4f8 25%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  .hero-narrative {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-top: 16px;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+  .hero-narrative strong { color: var(--text-primary); }
+
+  .hero-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 22px;
+  }
+  .hero-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 13px;
+    border-radius: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+  .hero-chip .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    align-self: start;
+  }
+  .hero-metric {
+    background: var(--bg-surface);
+    padding: 20px 22px;
+    transition: background 0.2s;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .hero-metric:nth-child(1) { animation-delay: 0.05s; }
+  .hero-metric:nth-child(2) { animation-delay: 0.1s; }
+  .hero-metric:nth-child(3) { animation-delay: 0.15s; }
+  .hero-metric:nth-child(4) { animation-delay: 0.2s; }
+  .hero-metric:hover { background: var(--bg-card); }
+  .hero-metric-value {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .c-teal { color: var(--teal); }
+  .c-purple { color: var(--purple); }
+  .c-blue { color: var(--blue); }
+  .c-green { color: var(--green); }
+  .c-amber { color: var(--amber); }
+  .c-pink { color: var(--pink); }
+  .c-orange { color: var(--orange); }
+  .hero-metric-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .hero-metric-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── MAIN ── */
+  .main-inner {
+    margin-left: var(--nav-width);
+    padding: 40px 56px 80px;
+    max-width: 1300px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .section[id] { scroll-margin-top: 24px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+    padding: 16px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .section-header::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: transparent;
+    transition: background 0.2s;
+    border-radius: 3px 0 0 3px;
+  }
+  .section-header:hover { background: var(--bg-card-hover); }
+  .section-header.active::before {
+    background: linear-gradient(180deg, var(--teal), var(--purple));
+  }
+  .section-header.active {
+    border-color: rgba(45,212,191,0.15);
+    background: linear-gradient(135deg, rgba(45,212,191,0.03) 0%, var(--bg-card) 40%);
+  }
+
+  .section-icon { font-size: 20px; width: 24px; text-align: center; flex-shrink: 0; }
+  .section-title { font-size: 16px; font-weight: 700; color: var(--text-primary); flex: 1; }
+  .section-subtitle { font-size: 12px; font-weight: 500; color: var(--text-muted); margin-left: 10px; }
+  .section-chevron {
+    color: var(--text-muted);
+    font-size: 11px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+  .section-chevron.open { transform: rotate(180deg); }
+
+  .section-body {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    opacity: 0;
+  }
+  .section-body.open { max-height: 99999px; opacity: 1; }
+  .section-inner { padding: 24px 0 0; }
+
+  /* ── CALLOUTS ── */
+  .callout-warning {
+    background: linear-gradient(135deg, rgba(251,191,36,0.06) 0%, var(--bg-card) 60%);
+    border: 1px solid rgba(251,191,36,0.25);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-warning-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--amber);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .callout-warning-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-warning-body strong { color: var(--text-primary); }
+
+  .callout-info {
+    background: linear-gradient(135deg, rgba(45,212,191,0.06) 0%, var(--bg-card) 60%);
+    border: 1px solid rgba(45,212,191,0.2);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-info-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .callout-info-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-info-body strong { color: var(--text-primary); }
+
+  .callout-green {
+    background: linear-gradient(135deg, rgba(74,222,128,0.05) 0%, var(--bg-card) 55%);
+    border: 1px solid rgba(74,222,128,0.22);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-green-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--green);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .callout-green-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-green-body strong { color: var(--text-primary); }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: #344050; }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .card-label {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+  }
+  .card-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .card-body strong { color: var(--text-primary); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+  /* ── IP / PRODUCT ASSET CARDS ── */
+  .ip-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .ip-card:hover { border-color: rgba(45,212,191,0.2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .ip-card-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .ip-card-icon { font-size: 18px; flex-shrink: 0; line-height: 1.3; }
+  .ip-card-title { font-size: 13px; font-weight: 700; color: var(--text-primary); line-height: 1.4; }
+  .ip-card-body { font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
+  .ip-card-body strong { color: var(--text-primary); }
+  .ip-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  /* ── TABLES ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .data-table th {
+    text-align: left;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table td {
+    padding: 10px 12px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .data-table td:first-child { color: var(--text-primary); font-weight: 500; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+  .table-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .table-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-muted);
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  /* ── ENTITY TREE ── */
+  .entity-tree {
+    font-family: 'Inter', 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--text-secondary);
+    background: var(--bg-elevated);
+    border-radius: var(--radius-sm);
+    padding: 20px 24px;
+    line-height: 2.2;
+    margin-bottom: 24px;
+    overflow-x: auto;
+  }
+  .tree-trust { color: var(--purple); font-weight: 700; }
+  .tree-vault { color: var(--teal); font-weight: 700; }
+  .tree-opco { color: var(--blue); }
+  .tree-active { color: var(--green); font-weight: 700; }
+  .tree-indent { padding-left: 20px; }
+  .tree-indent2 { padding-left: 40px; }
+  .tree-muted { color: var(--text-muted); font-size: 11px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 14px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--green), var(--teal), var(--blue), var(--purple), var(--amber));
+    border-radius: 1px;
+  }
+  .timeline-phase {
+    position: relative;
+    margin-bottom: 32px;
+  }
+  .timeline-phase:last-child { margin-bottom: 0; }
+  .timeline-dot {
+    position: absolute;
+    left: -30px; top: 3px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2.5px solid;
+    background: var(--bg-base);
+    z-index: 1;
+  }
+  .dot-green { border-color: var(--green); }
+  .dot-teal { border-color: var(--teal); }
+  .dot-blue { border-color: var(--blue); }
+  .dot-purple { border-color: var(--purple); }
+  .dot-amber { border-color: var(--amber); }
+  .phase-name { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+  .phase-period { font-size: 12px; color: var(--text-muted); font-weight: 600; margin-left: 10px; }
+  .phase-desc {
+    font-size: 13px; color: var(--text-secondary);
+    margin-top: 8px; line-height: 1.6;
+  }
+  .phase-desc strong { color: var(--text-primary); }
+  .phase-items {
+    list-style: none;
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 10px;
+  }
+  .phase-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    padding: 5px 12px;
+    font-size: 12px; color: var(--text-secondary); font-weight: 500;
+  }
+
+  .detail-list {
+    list-style: none;
+    font-size: 13px;
+    margin-top: 8px;
+  }
+  .detail-list li {
+    padding: 4px 0;
+    color: var(--text-secondary);
+    display: flex; align-items: baseline; gap: 8px; line-height: 1.55;
+  }
+  .detail-list li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+  .detail-list.teal li::before { background: var(--teal); }
+  .detail-list.green li::before { background: var(--green); }
+  .detail-list.amber li::before { background: var(--amber); }
+  .detail-list li strong { color: var(--text-primary); }
+
+  /* ── STATUS TAGS ── */
+  .status-complete { background: var(--green-dim); color: var(--green); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+  .status-future { background: var(--blue-dim); color: var(--blue); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+
+  /* ── CONTROLS ── */
+  .controls {
+    display: flex; gap: 8px;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+  }
+  .controls button {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .controls button:hover { color: var(--teal); border-color: var(--teal); background: var(--teal-dim); }
+
+  /* ── PAGE FOOTER ── */
+  .page-footer {
+    font-size: 11px; color: var(--text-muted);
+    text-align: right;
+    margin-top: 48px; padding-top: 20px;
+    border-top: 1px solid var(--border-subtle);
+    font-weight: 500;
+  }
+
+  /* ── ENTITY STATUS ── */
+  .entity-status {
+    font-size: 10px; font-weight: 700;
+    padding: 5px 12px; border-radius: 20px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .entity-status .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .es-active { background: var(--green-dim); color: var(--green); }
+  .es-active .dot { background: var(--green); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .hero-content { grid-template-columns: 1fr; gap: 32px; }
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 900px) {
+    nav { display: none; }
+    .hero { margin-left: 0; padding: 40px 24px 32px; }
+    .main-inner { margin-left: 0; padding: 24px 20px 60px; }
+    .hero-headline { font-size: 26px; }
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .grid-auto { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .hero-metrics { grid-template-columns: 1fr; }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-base); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a4a5a; }
+
+  /* ── PRINT ── */
+  @media print {
+    nav { display: none; }
+    body { background: white; color: #111; }
+    body::before { display: none; }
+    .hero, .main-inner { margin-left: 0; }
+    .section { opacity: 1 !important; transform: none !important; }
+    .section-body { max-height: none !important; opacity: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAVIGATION ═══════ -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-name">MedEdPrep</div>
+    <div class="nav-brand-sub">Founder Command Center</div>
+  </div>
+  <div class="nav-links">
+    <a href="hub.html"><span class="nav-icon">&#9670;</span> Hub</a>
+    <a href="entity-company-a.html" class="active"><span class="nav-icon">&#9670;</span> Co. A &mdash; Education</a>
+    <a href="entity-company-c.html"><span class="nav-icon">&#9671;</span> Co. C &mdash; Certification</a>
+    <a href="entity-nonprofit.html"><span class="nav-icon">&#9671;</span> Foundation (501c3)</a>
+    <a href="entity-ip-vault.html"><span class="nav-icon">&#9671;</span> IP &amp; The Vault</a>
+    <a href="entity-market.html"><span class="nav-icon">&#9671;</span> Market Landscape</a>
+    <a href="entity-psychometric.html"><span class="nav-icon">&#9671;</span> Psychometric &amp; Data</a>
+    <div class="nav-divider"></div>
+    <a href="dashboard.html"><span class="nav-icon">&#9671;</span> Dashboard</a>
+    <a href="action-center.html"><span class="nav-icon">&#9671;</span> Action Center</a>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-footer-label">Last updated</div>
+    <div class="nav-footer-date">June 18, 2026</div>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Operating Company &middot; The Present-Day Reality</div>
+      <h1 class="hero-headline">Company A &mdash; MedEdPrep Education</h1>
+      <div>
+        <span class="entity-status es-active"><span class="dot"></span> This Is Us Today &middot; Georgia LLC</span>
+      </div>
+      <p class="hero-narrative"><strong>This is us today &mdash; everything, under one roof.</strong> One Georgia LLC holds all products, all IP, all platforms, the CAPCE accreditation, and all revenue. CoAssist, Pulse, adaptive testing, unit and exit exams, and the CE line all live here right now. Company A is the parent everything else spins out of: The Vault, Company C, the Foundation, and the future analytics and accreditation entities are the <em>target architecture</em> carved out of Company A as revenue grows. Entity separation is downstream of revenue, not a prerequisite for it.</p>
+      <div class="hero-chips">
+        <span class="hero-chip"><span class="dot" style="background:var(--teal);"></span> CoAssist</span>
+        <span class="hero-chip"><span class="dot" style="background:var(--purple);"></span> Pulse</span>
+        <span class="hero-chip"><span class="dot" style="background:var(--blue);"></span> Adaptive Testing</span>
+        <span class="hero-chip"><span class="dot" style="background:var(--amber);"></span> CE / CAPCE</span>
+        <span class="hero-chip"><span class="dot" style="background:var(--green);"></span> Unit &amp; Exit Exams</span>
+      </div>
+    </div>
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="hero-metric-value c-teal">10,600</div>
+        <div class="hero-metric-label">Calibrated items</div>
+        <div class="hero-metric-note">EMR / EMT / AEMT / Paramedic</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-purple">1.55M</div>
+        <div class="hero-metric-label">Student responses</div>
+        <div class="hero-metric-note">Production MySQL, 120+ tables</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-blue">200+</div>
+        <div class="hero-metric-label">EMS programs served</div>
+        <div class="hero-metric-note">Across 30+ states</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-green">GTC</div>
+        <div class="hero-metric-label">Approved Georgia vendor</div>
+        <div class="hero-metric-note">Mandated for grant-funded testing</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ MAIN CONTENT ═══════ -->
+<div class="main-inner">
+
+  <div class="controls">
+    <button onclick="toggleAll(true)">Expand All</button>
+    <button onclick="toggleAll(false)">Collapse All</button>
+  </div>
+
+  <!-- ── SECTION 1: WHAT LIVES HERE TODAY ── -->
+  <div class="section visible" id="today">
+    <div class="section-header active" onclick="toggleSection(this)" aria-expanded="true" tabindex="0" role="button">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">What Lives Under This Entity Today<span class="section-subtitle">One LLC, every product, all the IP</span></span>
+      <span class="section-chevron open">&#9662;</span>
+    </div>
+    <div class="section-body open">
+      <div class="section-inner">
+
+        <div class="callout-green">
+          <div class="callout-green-title">&#9670; Today, Everything Is MedEdPrep, LLC</div>
+          <div class="callout-green-body">One Georgia LLC. <strong>All products, IP, platforms, CAPCE accreditation, CoAssist, Pulse, adaptive testing, and revenue &mdash; all under one roof.</strong> The five other entities on this dashboard (The Vault, Company C, Company B, Company E, and the 501(c)(3) Foundation) are the future architecture that gets built over time as the business scales. Entity separation is downstream of revenue growth, not a precondition for it.</div>
+        </div>
+
+        <div class="grid-3" style="margin-bottom:24px;">
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x1F6E1;</span>
+              <span class="ip-card-title">CoAssist</span>
+            </div>
+            <div class="ip-card-body">Accreditation compliance platform &mdash; built and operational inside Company A. No competitor offers an integrated compliance tool. Launched at ACCREDITCON, end of May 2026. Free for programs as a loss-leader; the future Company B carve-out.</div>
+            <span class="ip-tag" style="background:var(--teal-dim);color:var(--teal);">Live Product</span>
+          </div>
+
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x1F49C;</span>
+              <span class="ip-card-title">Pulse CE</span>
+            </div>
+            <div class="ip-card-body">The unified CE platform &mdash; free core forever, premium tier targeted Q4 2026 / Q1 2027. Independent question bank from MedEdPrep's main 10,600 items. The free Trojan horse that funnels users to MedEdPrep paid offerings.</div>
+            <span class="ip-tag" style="background:var(--purple-dim);color:var(--purple);">Live Product</span>
+          </div>
+
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#9889;</span>
+              <span class="ip-card-title">Adaptive Testing</span>
+            </div>
+            <div class="ip-card-body">The adaptive engine: IRT calibration, CAT delivery, and bifactor diagnostic architecture sitting on 1.55M responses. The internal psychometric moat &mdash; not marketed externally, but the foundation of every assessment product.</div>
+            <span class="ip-tag" style="background:var(--blue-dim);color:var(--blue);">Core Engine</span>
+          </div>
+
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x1F4DD;</span>
+              <span class="ip-card-title">Unit &amp; Exit Exams</span>
+            </div>
+            <div class="ip-card-body">Program-level unit exams and the End-of-Pathway Assessment (EOPA, ~$30/student). State-approved through OEMS (clinical/content) and GaDOE CTAE (pathway compliance). The recurring per-student revenue line.</div>
+            <span class="ip-tag" style="background:var(--green-dim);color:var(--green);">Live Product</span>
+          </div>
+
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x1F393;</span>
+              <span class="ip-card-title">CE &amp; CAPCE Accreditation</span>
+            </div>
+            <div class="ip-card-body">The continuing-education line and the CAPCE accreditation itself live under Company A. Three-pathway model (exam / content / both), dual format, four-standard mapping, 0.25 CEH minimum, auto-reporting. Built-in B2B through agency relationships.</div>
+            <span class="ip-tag" style="background:var(--amber-dim);color:var(--amber);">Live + Accreditation</span>
+          </div>
+
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x1F512;</span>
+              <span class="ip-card-title">All IP &amp; Trade Secrets</span>
+            </div>
+            <div class="ip-card-body">Question banks, analytics algorithms, software codebases, trademarks, the 6-level EMS cognitive taxonomy and measurement framework &mdash; <strong>every asset currently lives in Company A.</strong> These transfer to The Vault later via a Section 351 tax-free transfer.</div>
+            <span class="ip-tag" style="background:var(--pink-dim);color:var(--pink);">Held Here Now</span>
+          </div>
+        </div>
+
+        <div class="callout-info">
+          <div class="callout-info-title">Why It All Sits Here</div>
+          <div class="callout-info-body">MedEdPrep LLC has been operating in Georgia for years. There is no IP licensing structure, no intercompany agreements, and no entity proliferation &mdash; development, IP, and operations are intentionally commingled because the business has not yet reached the revenue scale that justifies the administrative cost of separation. Spinning out entities prematurely adds registered-agent fees, foreign-qualification filings, and a separate compliance calendar for a solo operator, with no offsetting benefit. <strong>Build the revenue first; carve out the entities as each one earns its keep.</strong></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2: PLATFORM SCALE ── -->
+  <div class="section" id="scale">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">Platform Scale<span class="section-subtitle">The data asset is the moat</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="grid-auto" style="margin-bottom:24px;">
+          <div class="card">
+            <div class="card-title c-teal" style="font-size:26px;font-weight:800;letter-spacing:-0.03em;">10,600</div>
+            <div class="card-body">Calibrated items spanning EMR, EMT, AEMT, and Paramedic levels &mdash; the most valuable single data asset in the portfolio.</div>
+          </div>
+          <div class="card">
+            <div class="card-title c-purple" style="font-size:26px;font-weight:800;letter-spacing:-0.03em;">1.55M</div>
+            <div class="card-body">Student responses in the production MySQL database (120+ tables). This response history is what powers IRT calibration and the adaptive engine.</div>
+          </div>
+          <div class="card">
+            <div class="card-title c-blue" style="font-size:26px;font-weight:800;letter-spacing:-0.03em;">200+</div>
+            <div class="card-body">EMS education programs actively served &mdash; the installed base that the entire entity roadmap is gated against.</div>
+          </div>
+          <div class="card">
+            <div class="card-title c-green" style="font-size:26px;font-weight:800;letter-spacing:-0.03em;">30+</div>
+            <div class="card-body">States with programs on the platform. Georgia is home base, but the footprint is national &mdash; which matters for the long-term multi-state IP strategy.</div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <div class="table-label">Software &amp; Platform Inventory &mdash; Held Inside Company A</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>Asset</th><th>What It Is</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>mededprep-c</td>
+                <td>Laravel/PHP legacy production application &mdash; the primary student-facing test-prep platform on the 10,600-item bank.</td>
+                <td><span class="status-complete">Live</span></td>
+              </tr>
+              <tr>
+                <td>mededprep-ecosystem</td>
+                <td>20+ Node.js / React microservices &mdash; the modern services layer around the legacy core.</td>
+                <td><span class="status-complete">Live</span></td>
+              </tr>
+              <tr>
+                <td>CoAssist</td>
+                <td>Accreditation / compliance platform for EMS programs. No competitor has an integrated equivalent.</td>
+                <td><span class="status-complete">Live</span></td>
+              </tr>
+              <tr>
+                <td>Pulse CE</td>
+                <td>Gamified CE learning platform with its own independent question bank. Free core; premium tier later.</td>
+                <td><span class="status-complete">Live</span></td>
+              </tr>
+              <tr>
+                <td>Adaptive / IRT engine</td>
+                <td>CAT delivery, item calibration, bifactor diagnostic architecture, cognitive process taxonomy.</td>
+                <td><span class="status-complete">Live</span></td>
+              </tr>
+              <tr>
+                <td>EOPA &amp; unit exams</td>
+                <td>End-of-Pathway Assessment (~$30/student) and program unit exams. State-approved exam pathway.</td>
+                <td><span class="status-complete">Live</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout-info">
+          <div class="callout-info-title">The Moat Is Internal</div>
+          <div class="callout-info-body">The 1.55M-response history, the IRT calibration, and the bifactor measurement framework are the defensible edge &mdash; but they are <strong>internal infrastructure, not a marketing message.</strong> Customers buy outcomes (pass rates, compliance, CE credit), not psychometrics. The data asset is what makes Company E (the future analytics entity) viable and what gives Company C's certification arm validated items at industrial scale.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 3: GEORGIA LLC / GTC VENDOR / DOMICILE ── -->
+  <div class="section" id="georgia">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">Georgia LLC &amp; GTC-Approved Vendor<span class="section-subtitle">Why it stays in Georgia</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-green">
+          <div class="callout-green-title">&#9670; State-Mandated Testing Tool</div>
+          <div class="callout-green-body"><strong>MedEdPrep is already a Georgia Trauma Commission (GTC) vendor for testing.</strong> Grant-funded EMS programs in Georgia are <strong>mandated to use MedEdPrep</strong> for testing. This is more than a revenue line &mdash; it is credibility evidence for every other grant application ("state-mandated testing tool"), and it establishes a documented fair-market price for the future 501(c)(3)'s arm's-length software purchases.</div>
+        </div>
+
+        <div class="grid-2" style="margin-bottom:24px;">
+          <div class="card">
+            <div class="card-label">Why Company A Stays in Georgia</div>
+            <ul class="detail-list green">
+              <li>Already operating as MedEdPrep LLC &mdash; no reason to redomicile</li>
+              <li>GTC vendor relationship is valuable and <strong>state-specific</strong></li>
+              <li>Customers (Georgia schools, EMS programs) are in-state</li>
+              <li>EOPA approved through OEMS + GaDOE CTAE &mdash; Georgia pathways</li>
+              <li>Redomiciling would force vendor re-registration and customer confusion</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-label">Georgia LLC Economics</div>
+            <ul class="detail-list teal">
+              <li>Annual registration: <strong>$50/year</strong></li>
+              <li>State income tax: 5.49% flat (2026) on GA-apportioned income</li>
+              <li>No franchise tax</li>
+              <li>Pass-through taxation; LLC liability protection</li>
+              <li>S-Corp election (Form 2553) available later if net income exceeds ~$80K&ndash;$100K</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <div class="table-label">Georgia Funding &amp; Approval Surface</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>Channel</th><th>Relevance to Company A</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Georgia Trauma Commission (GTC)</td>
+                <td>Existing testing vendor. Grant-funded EMS programs mandated to use MedEdPrep. Strongest credibility anchor.</td>
+              </tr>
+              <tr>
+                <td>Office of EMS &amp; Trauma (OEMS)</td>
+                <td>Approves the EOPA exam used by CTAE high-school programs (clinical / content side).</td>
+              </tr>
+              <tr>
+                <td>GaDOE &mdash; CTAE / Perkins V</td>
+                <td>~$51.2M/yr federal Perkins funds to Georgia; districts can buy MedEdPrep tools as Perkins-eligible CTE vendor.</td>
+              </tr>
+              <tr>
+                <td>Health Science cluster</td>
+                <td>61,420 HS students, 922 teachers statewide; est. 60&ndash;100 high schools with EMR/EMT pathways.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout-warning">
+          <div class="callout-warning-title">&#9888; The Vault's Domicile Doesn't Change Company A's</div>
+          <div class="callout-warning-body">When The Vault forms in Wyoming and licenses IP back to Company A, Georgia's <strong>intangible-expense addback statute (O.C.G.A. &sect;48-7-28.3)</strong> disallows the royalty deduction on Company A's Georgia return &mdash; so there is <strong>no Georgia state-tax benefit</strong> from the IP licensing structure while operations stay in-state. The Vault is for asset protection and clean IP architecture, not Georgia tax arbitrage. Company A's correct answer either way: <strong>stay a Georgia LLC.</strong></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 4: PARENT OF THE ROADMAP ── -->
+  <div class="section" id="roadmap">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">The Parent Everything Spins Out Of<span class="section-subtitle">Company A &rarr; future entity architecture</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="entity-tree">
+          <div><span class="tree-trust">Trust</span> <span class="tree-muted">(Wyoming DAPT &mdash; Phase 4, future)</span></div>
+          <div class="tree-indent">&#9492;&#9472; <span class="tree-vault">The Vault</span> <span class="tree-muted">(Wyoming LLC &mdash; owns all IP, future)</span></div>
+          <div class="tree-indent2">&#9500;&#9472; <span class="tree-active">Company A &mdash; Education</span> <span class="tree-muted">(Georgia LLC &mdash; THIS IS US TODAY)</span></div>
+          <div class="tree-indent2">&#9500;&#9472; <span class="tree-opco">Company B &mdash; Accreditation</span> <span class="tree-muted">(CoAssist carve-out, future)</span></div>
+          <div class="tree-indent2">&#9500;&#9472; <span class="tree-opco">Company C &mdash; Certification</span> <span class="tree-muted">(separate brand + board, future)</span></div>
+          <div class="tree-indent2">&#9500;&#9472; <span class="tree-opco">Company E &mdash; Data Analytics</span> <span class="tree-muted">(future)</span></div>
+          <div class="tree-indent2">&#9492;&#9472; <span class="tree-opco">Company D &mdash; Hospice Software</span> <span class="tree-muted">(future)</span></div>
+          <div style="margin-top:10px;"><span class="tree-muted">501(c)(3) Foundation &mdash; independent Georgia nonprofit, NOT a subsidiary; buys software from Company A at FMV</span></div>
+        </div>
+
+        <div class="callout-info">
+          <div class="callout-info-title">How to Read This Tree</div>
+          <div class="callout-info-body">Everything below The Vault is a future operating company. <strong>Today there is exactly one box that exists: Company A.</strong> It currently holds the IP that will eventually sit in The Vault, runs the products that will eventually become Companies B, C, and the CE line, and generates the data that justifies Company E. Each spin-out happens only when its own revenue and risk profile justifies the formation and compliance cost.</div>
+        </div>
+
+        <div class="timeline" style="margin-top:8px;">
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-green"></div>
+            <div>
+              <span class="phase-name">Phase 1 &mdash; Foundation</span>
+              <span class="phase-period">Now</span>
+            </div>
+            <div class="phase-desc">Company A keeps running in Georgia, unchanged. The Vault forms in Wyoming and IP transfers in via Section 351; the 501(c)(3) forms in Georgia. <strong>Companies B, C, D, and E are deliberately NOT formed yet</strong> &mdash; avoid entity proliferation before revenue justifies it.</div>
+            <ul class="phase-items">
+              <li>Keep Company A as-is</li>
+              <li>Form The Vault (WY)</li>
+              <li>Form 501(c)(3) (GA)</li>
+              <li>Execute IP license &rarr; Company A</li>
+            </ul>
+          </div>
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-teal"></div>
+            <div>
+              <span class="phase-name">Phase 2 &mdash; Entity Separation</span>
+              <span class="phase-period">As revenue scales</span>
+            </div>
+            <div class="phase-desc">Carve out the operating companies as each product line matures. <strong>Company B</strong> when CoAssist runs as a standalone product, <strong>Company C</strong> when certification development begins (independent board immediately), <strong>Company E</strong> when data aggregation becomes a distinct operation.</div>
+            <ul class="phase-items">
+              <li>Form Company B (GA)</li>
+              <li>Form Company C (GA, separate brand)</li>
+              <li>Form Company E (GA)</li>
+            </ul>
+          </div>
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-blue"></div>
+            <div>
+              <span class="phase-name">Phase 3 &mdash; Certification Launch</span>
+              <span class="phase-period">~2.5&ndash;3 yr process</span>
+            </div>
+            <div class="phase-desc">Company C pursues NCCA accreditation. The firewall NCCA Standard 3 requires &mdash; staff separation, SME separation, independent governance, data separation &mdash; is satisfied by a separate Georgia LLC with proper governance. <strong>Different-state formation is not required.</strong></div>
+            <ul class="phase-items">
+              <li>NCCA Standard 3 firewall</li>
+              <li>Independent board + public member</li>
+              <li>Bifactor dual-validation certs</li>
+            </ul>
+          </div>
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-purple"></div>
+            <div>
+              <span class="phase-name">Phase 4 &mdash; Optimization</span>
+              <span class="phase-period">Future</span>
+            </div>
+            <div class="phase-desc">Establish the Wyoming DAPT trust above The Vault, implement full transfer-pricing documentation, evaluate S-Corp elections for entities above ~$100K net income, and form Company D (hospice software) when that product begins.</div>
+            <ul class="phase-items">
+              <li>WY DAPT trust</li>
+              <li>Transfer-pricing docs</li>
+              <li>S-Corp elections</li>
+              <li>Form Company D (GA)</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 5: SOURCE FILES ── -->
+  <div class="section" id="sources">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">Source Documents<span class="section-subtitle">01-corporate-structure/</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div class="table-wrap">
+          <div class="table-label">01-corporate-structure/ &mdash; Files Relevant to Company A</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>File</th><th>Description</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>entity-domicile-analysis.md</td>
+                <td>Recommends Company A stay a Georgia LLC (already operating, GTC vendor, in-state customers). Full Georgia addback-statute analysis showing The Vault produces no GA tax benefit while operations stay in-state. NCCA firewall does not require different-state formation.</td>
+                <td><span class="status-complete">Complete</span></td>
+              </tr>
+              <tr>
+                <td>georgia-state-funding.md</td>
+                <td>Confirms MedEdPrep is a GTC testing vendor with mandated usage for grant-funded programs. Maps GTC, OEMS, GaDOE CTAE / Perkins V ($51.2M/yr), and adjacent state channels.</td>
+                <td><span class="status-complete">Complete</span></td>
+              </tr>
+              <tr>
+                <td>dual-entity-framework.md</td>
+                <td>The for-profit / 501(c)(3) tandem structure: inurement, private benefit, arm's-length transactions, FMV software donations, UBIT, and shared-service transfer pricing &mdash; the rules governing how the Foundation transacts with Company A.</td>
+                <td><span class="status-complete">Complete</span></td>
+              </tr>
+              <tr>
+                <td>trust-ownership.md</td>
+                <td>Wyoming DAPT analysis for the Phase 4 trust layer that will eventually sit above The Vault, which in turn sits above Company A.</td>
+                <td><span class="status-future">Future</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">Company A &mdash; MedEdPrep Education &middot; Georgia LLC &middot; This is us today &middot; Last updated: 2026-06-18</div>
+
+</div><!-- /main-inner -->
+
+<!-- ═══════ JAVASCRIPT ═══════ -->
+<script>
+  function toggleSection(header) {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.section-chevron');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    if (chevron) chevron.classList.toggle('open', !isOpen);
+    header.setAttribute('aria-expanded', String(!isOpen));
+    header.classList.toggle('active', !isOpen);
+  }
+
+  function toggleAll(open) {
+    document.querySelectorAll('.section-body').forEach(body => {
+      const header = body.previousElementSibling;
+      const chevron = header.querySelector('.section-chevron');
+      body.classList.toggle('open', open);
+      if (chevron) chevron.classList.toggle('open', open);
+      header.setAttribute('aria-expanded', String(open));
+      header.classList.toggle('active', open);
+    });
+  }
+
+  // Scroll-triggered section reveal
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -60px 0px', threshold: 0.05 });
+
+  document.querySelectorAll('.section').forEach(s => revealObserver.observe(s));
+
+  // Keyboard accessibility
+  document.querySelectorAll('.section-header').forEach(el => {
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

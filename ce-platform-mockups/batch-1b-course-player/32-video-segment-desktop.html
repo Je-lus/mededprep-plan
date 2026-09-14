@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pulse CE - Cardiac Emergencies: Advanced Assessment</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#36C98D",
+                        "primary-hover": "#2DB87E",
+                        "primary-active": "#28A572",
+                        "primary-subtle": "rgba(54, 201, 141, 0.12)",
+                        background: "#0A0A0A",
+                        surface: "#111111",
+                        "surface-elevated": "#1A1A1A",
+                        "surface-hover": "#1F1F1F",
+                        border: "rgba(255, 255, 255, 0.12)",
+                        "border-subtle": "rgba(255, 255, 255, 0.08)",
+                        "border-strong": "rgba(255, 255, 255, 0.2)",
+                        tertiary: "rgba(255, 255, 255, 0.45)",
+                        secondary: "rgba(255, 255, 255, 0.7)",
+                        error: "#E5484D",
+                        warning: "#F5A623",
+                    },
+                    fontFamily: {
+                        headline: ["Inter", "sans-serif"],
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        sm: "6px",
+                        DEFAULT: "8px",
+                        lg: "12px",
+                        xl: "16px",
+                        full: "9999px",
+                    },
+                },
+            },
+        };
+    </script>
+<style>body {
+    font-family: "Inter", sans-serif;
+    background-color: #0A0A0A;
+    color: white;
+    overflow: hidden
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.grain-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuAcnoupxcmYUxc2ClJZBsrwJ8gHjAMwqUUKg_Z0GKv7m125h97Lg2Q9PhS__C9UK60cMEtuT56W5W1TYTb_k5Q45xn4DPhjpM1B1bDJN7FhiasdPq5LBhNkKbOL-SUu3xKuYTRHwM7J-PqzWWUBhofOJh4Uk5xb50FVL750Fz2Skuk6XjP1_2j1yVFvsNo8mkBzajb4FyCCv2r9gM1rsfqHIbOX2OQFJbrTX_TkuN1VgNYsOaYUVMW0rojl7LO3QA-gK2hkadtq-83J);
+    opacity: 0.04;
+    pointer-events: none
+    }
+.green-glow {
+    box-shadow: 0 0 20px rgba(54, 201, 141, 0.15)
+    }
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px
+    }
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent
+    }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px
+    }</style>
+</head>
+<body class="bg-background text-white selection:bg-primary/30">
+<div class="fixed inset-0 grain-overlay z-[100]"></div>
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-white/12 shadow-[0_0_20px_rgba(54,201,141,0.15)] h-16 flex justify-between items-center px-4 md:px-6">
+<div class="flex items-center gap-4">
+<button class="text-secondary hover:text-white transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-background">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
+</div>
+<div class="flex flex-col">
+<span class="text-primary font-display font-bold tracking-tight text-sm md:text-base leading-none">Pulse CE</span>
+<span class="text-[8px] uppercase tracking-widest text-tertiary font-bold">By MedEdPrep</span>
+</div>
+</div>
+<div class="h-6 w-[1px] bg-white/12 mx-2 hidden md:block"></div>
+<h1 class="font-headline font-semibold text-sm md:text-base text-primary truncate max-w-[200px] md:max-w-none">Cardiac Emergencies: Advanced Assessment</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center gap-4">
+<span class="px-2 py-0.5 bg-primary/20 text-primary border border-primary/30 rounded-sm text-[10px] font-bold tracking-tight">1.0 CEH</span>
+<div class="flex flex-col gap-1 w-32">
+<div class="flex justify-between text-[10px] font-bold text-tertiary uppercase tracking-tighter">
+<span>Progress</span>
+<span>40%</span>
+</div>
+<div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[40%] shadow-[0_0_8px_#36C98D]"></div>
+</div>
+</div>
+</div>
+<button class="text-secondary hover:text-primary-hover transition-colors font-headline font-semibold text-sm cursor-pointer active:opacity-80">Exit Course</button>
+</div>
+</header>
+<div class="flex pt-16 h-screen">
+<!-- Side Navigation Bar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-16 bg-surface border-r border-white/12 flex flex-col items-center py-6 gap-8 z-40 hidden md:flex">
+<!-- Item 1: Completed -->
+<div class="group relative cursor-pointer">
+<div class="w-10 h-10 flex items-center justify-center text-primary transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="absolute left-16 top-1/2 -translate-y-1/2 px-3 py-1 bg-surface-elevated border border-white/12 text-[10px] font-bold uppercase tracking-widest text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity rounded-sm pointer-events-none z-50">Pre-Assessment</div>
+</div>
+<!-- Item 2: Active -->
+<div class="group relative cursor-pointer border-l-4 border-primary bg-primary-subtle w-full flex justify-center py-2">
+<div class="w-10 h-10 flex items-center justify-center text-primary transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">radio_button_checked</span>
+</div>
+<div class="absolute left-16 top-1/2 -translate-y-1/2 px-3 py-1 bg-surface-elevated border border-white/12 text-[10px] font-bold uppercase tracking-widest text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity rounded-sm pointer-events-none z-50">Segment 1</div>
+</div>
+<!-- Item 3: Upcoming -->
+<div class="group relative cursor-pointer">
+<div class="w-10 h-10 flex items-center justify-center text-tertiary hover:text-secondary transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined text-xl">radio_button_unchecked</span>
+</div>
+<div class="absolute left-16 top-1/2 -translate-y-1/2 px-3 py-1 bg-surface-elevated border border-white/12 text-[10px] font-bold uppercase tracking-widest text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity rounded-sm pointer-events-none z-50">Segment 2</div>
+</div>
+<!-- Item 4: Upcoming -->
+<div class="group relative cursor-pointer">
+<div class="w-10 h-10 flex items-center justify-center text-tertiary hover:text-secondary transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined text-xl">radio_button_unchecked</span>
+</div>
+<div class="absolute left-16 top-1/2 -translate-y-1/2 px-3 py-1 bg-surface-elevated border border-white/12 text-[10px] font-bold uppercase tracking-widest text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity rounded-sm pointer-events-none z-50">Segment 3</div>
+</div>
+<!-- Item 5: Upcoming -->
+<div class="group relative cursor-pointer">
+<div class="w-10 h-10 flex items-center justify-center text-tertiary hover:text-secondary transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined text-xl">radio_button_unchecked</span>
+</div>
+<div class="absolute left-16 top-1/2 -translate-y-1/2 px-3 py-1 bg-surface-elevated border border-white/12 text-[10px] font-bold uppercase tracking-widest text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity rounded-sm pointer-events-none z-50">Segment 4</div>
+</div>
+<!-- Item 6: Post-Test -->
+<div class="group relative cursor-pointer">
+<div class="w-10 h-10 flex items-center justify-center text-tertiary hover:text-secondary transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined text-xl">quiz</span>
+</div>
+<div class="absolute left-16 top-1/2 -translate-y-1/2 px-3 py-1 bg-surface-elevated border border-white/12 text-[10px] font-bold uppercase tracking-widest text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity rounded-sm pointer-events-none z-50">Post-Test</div>
+</div>
+<div class="mt-auto mb-4">
+<div class="w-8 h-8 rounded-full bg-surface-elevated border border-white/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-lg">person</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Layout -->
+<main class="flex-1 ml-0 md:ml-16 grid grid-cols-1 lg:grid-cols-[65%_35%] h-full overflow-hidden">
+<!-- 65% Left Pane (Main content) -->
+<section class="flex flex-col h-full overflow-y-auto custom-scrollbar bg-background">
+<div class="p-4 md:p-8 flex flex-col gap-6 max-w-6xl mx-auto w-full">
+<!-- Video Player Container -->
+<div class="relative group aspect-video bg-black rounded-lg overflow-hidden shadow-2xl border border-white/5">
+<img alt="Clinical Training Simulation" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500" src="https://lh3.googleusercontent.com/aida/ADBb0uhv1fm1P4I_56txKKUk2ExCwryng6QMsWDB1cSACSzjR15-ZzlLq-d1ftGvvB3w1dAUrPKWMGqlhRHr72oQhvqavUkgHmEOyrhylzYKxYigru65eb5BQFE3K7HVtEy2sg7I2qfJiWEhrJ39eO2f7AcXP1tNNiFdpoICVqXkz7grA_3DH2bil2LV8Zds_u-XZxgjchwSDYq2BNJM9AESbAZCuxkUi8KubVh7RpeVWq6NuIwWkcplTdmgn9op"/>
+<!-- Video Overlays & Controls -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-6">
+<!-- Progress Bar -->
+<div class="relative w-full h-1 bg-white/20 rounded-full mb-4 cursor-pointer">
+<div class="absolute h-full bg-primary w-[36%] rounded-full shadow-[0_0_8px_#36C98D]"></div>
+<div class="absolute left-[36%] top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg scale-0 group-hover:scale-100 transition-transform"></div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<button class="text-white hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+<div class="flex items-center gap-2 text-xs font-medium text-secondary">
+<span class="text-white">4:32</span>
+<span class="text-tertiary">/</span>
+<span>12:15</span>
+</div>
+<div class="flex items-center gap-2 group/vol">
+<span class="material-symbols-outlined text-xl text-secondary hover:text-white cursor-pointer">volume_up</span>
+<div class="w-16 h-1 bg-white/20 rounded-full overflow-hidden hidden sm:block">
+<div class="bg-white/60 h-full w-[70%]"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-2 py-0.5 rounded border border-white/20 text-[10px] font-bold text-secondary hover:border-white hover:text-white transition-all">1x</button>
+<button class="text-secondary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-xl">settings</span>
+</button>
+<button class="text-secondary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-xl">fullscreen</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Big Play Button Center (Always visible if paused, or hidden on hover) -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-0">
+<div class="w-16 h-16 bg-primary/20 backdrop-blur-md border border-primary/40 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<!-- Content Details -->
+<div class="flex flex-col gap-4">
+<div class="flex items-start justify-between flex-wrap gap-4">
+<div>
+<h2 class="text-2xl font-headline font-bold text-white mb-2">Segment 1: Initial Assessment</h2>
+<div class="flex items-center gap-3">
+<img alt="Dr. Sarah Chen" class="w-8 h-8 rounded-full border border-primary/30 object-cover" data-alt="A professional headshot of a middle-aged female medical professional wearing dark scrubs. She has a confident, kind expression, dark hair pulled back, and is set against a blurred medical background. The lighting is soft and professional with clinical highlights that emphasize the premium dark-mode aesthetic of the Pulse CE platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0mUcuyMEENJV3jREHdLC5jBZCC5Uq8xdYdFxrnqIgNgIvo_npkbrdUjnso2feHHHgT95cPXN6Pj88HSf2-wg7NfRcRXio0GpU3TtGWyn67y07AIwusvynXK5OLzhEGiwKxeCXuFFTKR6kqjUKhRJTlvbW5ImeEKHwChLj99UAT43m83U-BwJVCWAAqf7TqEgL8EqgFokakatX7E-_kapadJJ-vQr4QxjxeiUR8bmmtnG_FUd61F2YcJpeE7ZDhY6JeNfu6fYP5Fqp"/>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-white">Dr. Sarah Chen, MD, FACEP</span>
+<span class="text-[10px] uppercase tracking-widest text-tertiary font-bold">Clinical Instructor • EMS Specialist</span>
+</div>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg bg-surface border border-white/12 text-secondary hover:text-white hover:border-primary/50 transition-all">
+<span class="material-symbols-outlined text-xl">share</span>
+</button>
+<button class="p-2 rounded-lg bg-surface border border-white/12 text-secondary hover:text-white hover:border-primary/50 transition-all">
+<span class="material-symbols-outlined text-xl">playlist_add</span>
+</button>
+</div>
+</div>
+<div class="space-y-4 max-w-3xl">
+<p class="text-secondary leading-relaxed text-sm md:text-base">
+                                In this opening segment, we dive deep into the first critical moments of contact with a potential cardiac patient. We will explore the nuances of the visual assessment, primary survey prioritization, and the clinical indicators that differentiate stable angina from acute myocardial infarction (AMI). 
+                            </p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+<div class="p-4 bg-surface rounded-lg border-l-4 border-primary">
+<h4 class="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">Learning Objective</h4>
+<p class="text-sm text-white font-medium">Identify early subtle cues of cardiogenic shock during initial patient survey.</p>
+</div>
+<div class="p-4 bg-surface rounded-lg border-l-4 border-primary">
+<h4 class="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">Key Focus</h4>
+<p class="text-sm text-white font-medium">Integration of subjective pain history with objective vital trend analysis.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 35% Right Pane (Contextual Notes) -->
+<section class="hidden lg:flex flex-col h-full bg-surface border-l border-white/12">
+<!-- Notes Header -->
+<div class="p-6 border-b border-white/12 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">sticky_note_2</span>
+<h3 class="font-headline font-bold text-white uppercase tracking-wider text-sm">Notes &amp; Key Points</h3>
+</div>
+<div class="flex items-center bg-background p-1 rounded-full border border-white/12">
+<button class="px-3 py-1 text-[10px] font-bold rounded-full bg-primary text-background transition-all">AUTO</button>
+<button class="px-3 py-1 text-[10px] font-bold rounded-full text-tertiary hover:text-white transition-all">MY NOTES</button>
+</div>
+</div>
+</div>
+<!-- Notes Scrollable List -->
+<div class="flex-1 overflow-y-auto p-4 custom-scrollbar flex flex-col gap-4">
+<!-- Note 1 -->
+<div class="p-4 bg-surface-elevated rounded-lg border-l-4 border-primary group hover:bg-surface-hover transition-colors shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-bold text-primary">2:15</span>
+<span class="px-2 py-0.5 bg-error/10 text-error border border-error/20 rounded-sm text-[9px] font-black uppercase tracking-widest">High Yield</span>
+</div>
+<p class="text-sm text-secondary group-hover:text-white transition-colors leading-snug">
+                            STEMI recognition criteria: <span class="text-white font-semibold">ST elevation ≥1mm in 2+ contiguous leads</span>. Correlate with clinical presentation immediately.
+                        </p>
+</div>
+<!-- Note 2 -->
+<div class="p-4 bg-surface-elevated rounded-lg border-l-4 border-primary group hover:bg-surface-hover transition-colors shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-bold text-primary">4:30</span>
+<span class="px-2 py-0.5 bg-primary/20 text-primary border border-primary/30 rounded-sm text-[9px] font-black uppercase tracking-widest">Key Concept</span>
+</div>
+<p class="text-sm text-secondary group-hover:text-white transition-colors leading-snug">
+                            Right-sided ECG leads (V4R) <span class="text-white font-semibold">essential when inferior STEMI suspected</span>. Avoid nitrates if right ventricular involvement is confirmed.
+                        </p>
+</div>
+<!-- Note 3 -->
+<div class="p-4 bg-surface-elevated rounded-lg border-l-4 border-primary group hover:bg-surface-hover transition-colors shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-bold text-primary">7:45</span>
+<span class="px-2 py-0.5 bg-warning/20 text-warning border border-warning/30 rounded-sm text-[9px] font-black uppercase tracking-widest">Clinical Pearl</span>
+</div>
+<p class="text-sm text-secondary group-hover:text-white transition-colors leading-snug">
+                            Door-to-balloon time target: <span class="text-white font-semibold">&lt;90 minutes</span> for primary PCI. EMS notification of receiving facility "STEMI Alert" reduces this interval significantly.
+                        </p>
+</div>
+</div>
+<!-- Add Note Action -->
+<div class="p-6 bg-surface">
+<button class="w-full py-3 px-4 rounded-lg border-2 border-dashed border-primary/30 text-primary text-sm font-bold flex items-center justify-center gap-2 hover:bg-primary/5 hover:border-primary transition-all group">
+<span class="material-symbols-outlined text-lg group-hover:scale-110 transition-transform">add_circle</span>
+                        ADD NOTE
+                    </button>
+</div>
+</section>
+</main>
+</div>
+<!-- Mobile Navigation Bar -->
+<nav class="fixed bottom-0 w-full md:hidden z-50 bg-surface border-t border-white/12 shadow-2xl flex justify-around items-center h-16 pb-safe">
+<a href="../dashboard-variant-h-pulse.html" class="flex flex-col items-center gap-1 text-tertiary" style="text-decoration:none">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-medium font-label">Home</span>
+</a>
+<a href="../batch-4-learner-portal/40-compliance-tracker-mobile.html" class="flex flex-col items-center gap-1 text-primary" style="text-decoration:none">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">school</span>
+<span class="text-[10px] font-medium font-label">Courses</span>
+</a>
+<a href="../batch-4-learner-portal/38-certificate-view-mobile.html" class="flex flex-col items-center gap-1 text-tertiary" style="text-decoration:none">
+<span class="material-symbols-outlined">verified</span>
+<span class="text-[10px] font-medium font-label">Certs</span>
+</a>
+<a href="../batch-4-learner-portal/41-settings-mobile.html" class="flex flex-col items-center gap-1 text-tertiary" style="text-decoration:none">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium font-label">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple Interaction logic
+        document.querySelectorAll('.cursor-pointer').forEach(el => {
+            el.addEventListener('mousedown', () => el.style.opacity = '0.7');
+            el.addEventListener('mouseup', () => el.style.opacity = '1');
+            el.addEventListener('mouseleave', () => el.style.opacity = '1');
+        });
+
+        // Toggle Switch Logic
+        const toggleBtns = document.querySelectorAll('.flex.items-center.bg-background button');
+        toggleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                toggleBtns.forEach(b => {
+                    b.classList.remove('bg-primary', 'text-background');
+                    b.classList.add('text-tertiary');
+                });
+                btn.classList.add('bg-primary', 'text-background');
+                btn.classList.remove('text-tertiary');
+            });
+        });
+    </script>
+</body></html>

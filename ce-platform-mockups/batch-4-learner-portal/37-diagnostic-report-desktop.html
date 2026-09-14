@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Diagnostic Report | Pulse CE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#71fbbb",
+                        "surface-container-high": "#2a2a2a",
+                        "primary": "#5ae6a7",
+                        "surface-bright": "#3a3939",
+                        "secondary-container": "#3c4a40",
+                        "primary-container": "#36c98d",
+                        "tertiary": "#ffc370",
+                        "background": "#131313",
+                        "surface-variant": "#353534",
+                        "surface-dim": "#131313",
+                        "inverse-primary": "#006c47",
+                        "secondary": "#bbcabd",
+                        "on-surface-variant": "#bbcabf",
+                        "secondary-fixed-dim": "#bbcabd",
+                        "on-secondary-container": "#aab9ac",
+                        "on-tertiary-container": "#603d00",
+                        "on-surface": "#e5e2e1",
+                        "outline-variant": "#3d4a41",
+                        "on-background": "#e5e2e1",
+                        "inverse-on-surface": "#313030",
+                        "on-primary-container": "#004f33",
+                        "tertiary-fixed": "#ffddb4",
+                        "error": "#ffb4ab",
+                        "secondary-fixed": "#d7e7d9",
+                        "error-container": "#93000a",
+                        "surface-container-highest": "#353534",
+                        "on-tertiary": "#452b00",
+                        "surface": "#131313",
+                        "surface-container": "#201f1f",
+                        "primary-fixed-dim": "#51dea0",
+                        "on-tertiary-fixed": "#291800",
+                        "on-primary-fixed-variant": "#005235",
+                        "on-primary": "#003823",
+                        "tertiary-fixed-dim": "#ffb955",
+                        "on-error": "#690005",
+                        "tertiary-container": "#f0a21e",
+                        "surface-container-low": "#1c1b1b",
+                        "on-primary-fixed": "#002113",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "on-secondary": "#26332a",
+                        "surface-container-lowest": "#0e0e0e",
+                        "inverse-surface": "#e5e2e1",
+                        "on-secondary-fixed-variant": "#3c4a40",
+                        "outline": "#86948a",
+                        "on-secondary-fixed": "#111e16",
+                        "surface-tint": "#51dea0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "touch-target": "44px",
+                        "margin-mobile": "16px",
+                        "max-width": "1280px",
+                        "margin-desktop": "24px",
+                        "nav-height": "60px",
+                        "gap-default": "16px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                        "headline-lg": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "headline-xl": ["30px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0A0A;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+            background-image: linear-gradient(to bottom right, rgba(54, 201, 141, 0.03), transparent);
+        }
+        .glass-card {
+            background-color: #111111;
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-right: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .glass-card:hover {
+            border-left-color: #36C98D;
+            box-shadow: 0 0 20px rgba(54, 201, 141, 0.08);
+        }
+        .progress-bar-fill {
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .pulse-glow {
+            box-shadow: 0 0 15px rgba(90, 230, 167, 0.2);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .nav-link-active {
+            color: #5ae6a7;
+            font-weight: 700;
+            position: relative;
+        }
+        .nav-link-active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #5ae6a7;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-32">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-background/85 backdrop-blur-md border-b border-white/10 shadow-[0_0_20px_rgba(54,201,141,0.05)]">
+<div class="flex justify-between items-center h-nav-height px-margin-desktop max-w-max-width mx-auto">
+<div class="flex items-center gap-8">
+<span class="font-headline-lg text-headline-lg font-black text-primary tracking-tighter">Pulse CE</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="font-body-md text-body-md text-secondary-fixed-dim hover:text-primary transition-colors" href="../dashboard-variant-h-pulse.html">Dashboard</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="40-compliance-tracker-desktop.html">Learn</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="45-extended-practice-desktop.html">Practice</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="40-compliance-tracker-desktop.html">Compliance</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant/20 rounded-lg transition-all active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-primary/30">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="A professional close-up profile avatar of an EMS worker with a clean, modern aesthetic. The lighting is focused and cinematic with a hint of Pulse Green rim lighting. The background is a soft-focus medical laboratory setting in dark tones. The style is crisp, high-resolution digital photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3ZnNRWMJbBX1BF2_nOeu6oT3XC2qTFk68lQa2tNMdZfT7HuWLIIDWnY_MyrcJkBuEAnMAO4axk-S2etxLgUSXO4KGEefr9ZaavU0Sue8aSbmuPCYlu4PT6I7LI9CB30kWzdp_InwaqSIAqC3nOFFPLqR_4Y1Qq0kOsPczl4_0dpNBwifRaeOnukSwf_rgBaMDgtnKs7W4ATFM3Q3dCMWk2dUEZAgj3xo9F6UJOrwCJMElWw73ouoRS93Nz1sr8OhI_r2SNtikBUc"/>
+</div>
+</div>
+</div>
+</header>
+<main class="mt-24 px-margin-mobile md:px-margin-desktop max-w-max-width mx-auto">
+<!-- Breadcrumb & Header -->
+<div class="mb-8">
+<nav class="flex items-center gap-2 mb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Learn</span>
+<span class="material-symbols-outlined text-[12px] text-outline">chevron_right</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Airway Management</span>
+<span class="material-symbols-outlined text-[12px] text-outline">chevron_right</span>
+<span class="font-label-caps text-label-caps text-primary">Diagnostic Report</span>
+</nav>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<h1 class="font-headline-xl text-headline-xl text-on-surface">Diagnostic Report</h1>
+<div class="inline-flex items-center px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary font-label-caps text-label-caps pulse-glow">
+<span class="material-symbols-outlined text-[16px] mr-2" style="font-variation-settings: 'FILL' 1;">verified</span>
+                    1.5 CEH Earned
+                </div>
+</div>
+</div>
+<!-- Top Row: Bento Stats -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gap-default mb-gap-default">
+<!-- Score Growth -->
+<div class="glass-card p-6 rounded-xl">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-1">Score Growth</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Performance Delta</p>
+</div>
+<span class="px-3 py-1 rounded bg-primary/20 text-primary font-bold text-sm">+27 pts</span>
+</div>
+<div class="space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between font-label-caps text-label-caps">
+<span class="text-on-surface-variant">PRE-TEST</span>
+<span class="text-on-surface">62%</span>
+</div>
+<div class="h-3 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="progress-bar-fill h-full bg-secondary-container" style="width: 62%;"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-caps text-label-caps">
+<span class="text-primary">POST-TEST</span>
+<span class="text-primary">89%</span>
+</div>
+<div class="h-3 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="progress-bar-fill h-full bg-primary shadow-[0_0_10px_#36c98d44]" style="width: 89%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Peer Comparison -->
+<div class="glass-card p-6 rounded-xl">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-1">Peer Comparison</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Pulse Network Ranking</p>
+</div>
+<div class="text-right">
+<span class="block font-headline-lg text-headline-lg text-primary">82nd</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Percentile</span>
+</div>
+</div>
+<div class="space-y-5">
+<div class="flex items-center gap-4">
+<span class="w-16 font-label-caps text-label-caps text-on-surface-variant">TOP 10%</span>
+<div class="flex-1 h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container/40" style="width: 93%;"></div>
+</div>
+<span class="w-10 text-right font-body-md text-body-md">93%</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-16 font-label-caps text-label-caps text-primary">YOU</span>
+<div class="flex-1 h-4 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary pulse-glow" style="width: 89%;"></div>
+</div>
+<span class="w-10 text-right font-headline-lg text-headline-lg text-primary">89%</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-16 font-label-caps text-label-caps text-on-surface-variant">AVERAGE</span>
+<div class="flex-1 h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-surface-variant" style="width: 74%;"></div>
+</div>
+<span class="w-10 text-right font-body-md text-body-md">74%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Middle Row: Domain Performance -->
+<div class="glass-card p-8 rounded-xl mb-gap-default">
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-8">Domain Performance</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+<!-- Airway -->
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="font-headline-lg text-headline-lg text-on-surface">Airway</span>
+<span class="font-headline-lg text-headline-lg text-primary">92%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 92%;"></div>
+</div>
+</div>
+<!-- Cardiology -->
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="font-headline-lg text-headline-lg text-on-surface">Cardiology</span>
+<span class="font-headline-lg text-headline-lg text-primary">88%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 88%;"></div>
+</div>
+</div>
+<!-- Trauma -->
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="font-headline-lg text-headline-lg text-on-surface">Trauma</span>
+<span class="font-headline-lg text-headline-lg text-primary">85%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 85%;"></div>
+</div>
+</div>
+<!-- Medical -->
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="font-headline-lg text-headline-lg text-on-surface">Medical</span>
+<span class="font-headline-lg text-headline-lg text-primary">91%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 91%;"></div>
+</div>
+</div>
+<!-- Operations -->
+<div class="space-y-3 md:col-span-2">
+<div class="flex justify-between items-end">
+<span class="font-headline-lg text-headline-lg text-on-surface">Operations</span>
+<span class="font-headline-lg text-headline-lg text-primary">82%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 82%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Row: Question Analysis -->
+<div class="glass-card p-8 rounded-xl">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface">Question Analysis</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Detailed assessment breakdown</p>
+</div>
+<div class="text-right">
+<span class="font-headline-xl text-headline-xl text-primary">18/20</span>
+<span class="font-body-md text-body-md text-on-surface-variant ml-2">Correct</span>
+</div>
+</div>
+<div class="grid grid-cols-5 sm:grid-cols-10 gap-4">
+<!-- Loop for circles -->
+<script>
+                    const wrongIndices = [7, 14];
+                    for(let i=1; i<=20; i++) {
+                        const isWrong = wrongIndices.includes(i);
+                        const baseClass = "h-12 w-12 rounded-full flex items-center justify-center font-bold text-sm transition-all cursor-default border-2";
+                        const activeClass = isWrong 
+                            ? "bg-error/10 border-error text-error" 
+                            : "bg-primary/10 border-primary text-primary";
+                        document.write(`
+                            <div class="${baseClass} ${activeClass} hover:scale-110">
+                                ${i}
+                            </div>
+                        `);
+                    }
+                </script>
+</div>
+<div class="mt-8 pt-8 border-t border-white/5 flex flex-wrap gap-6">
+<div class="flex items-center gap-2">
+<div class="h-3 w-3 rounded-full bg-primary"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">CORRECT RESPONSE</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="h-3 w-3 rounded-full bg-error"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">INCORRECT RESPONSE</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Actions Bar -->
+<div class="fixed bottom-0 left-0 w-full bg-background/90 backdrop-blur-xl border-t border-white/10 z-40 py-6">
+<div class="max-w-max-width mx-auto px-margin-desktop flex flex-col md:flex-row justify-end items-center gap-4">
+<button class="w-full md:w-auto px-6 h-12 flex items-center justify-center gap-2 text-on-surface-variant hover:bg-surface-variant/20 rounded-lg transition-all font-bold">
+<span class="material-symbols-outlined">download</span>
+                Download PDF Report
+            </button>
+<button class="w-full md:w-auto px-6 h-12 flex items-center justify-center gap-2 border-2 border-primary/30 text-primary hover:bg-primary/5 rounded-full transition-all font-bold">
+                Retake Assessment
+            </button>
+<button class="w-full md:w-auto px-8 h-12 flex items-center justify-center gap-2 bg-primary text-on-primary rounded-full hover:bg-primary/90 transition-all font-bold pulse-glow active:scale-95 duration-200">
+                Continue Learning
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Mobile Bottom NavBar (Hidden on desktop) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center h-[72px] pb-safe bg-surface-container-lowest/90 backdrop-blur-lg z-50 border-t border-white/5 shadow-[0_-4px_12px_rgba(0,0,0,0.5)]">
+<a href="../dashboard-variant-h-pulse.html" class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-variant/30 transition-transform duration-150 active:scale-90" style="text-decoration:none">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-label-caps uppercase mt-1">Home</span>
+</a>
+<a href="40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center text-primary fill shadow-[0_0_15px_rgba(90,230,167,0.2)] active:bg-surface-variant/30 transition-transform duration-150 active:scale-90" style="text-decoration:none">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">school</span>
+<span class="font-label-caps text-label-caps uppercase mt-1">Learn</span>
+</a>
+<a href="45-extended-practice-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-variant/30 transition-transform duration-150 active:scale-90" style="text-decoration:none">
+<span class="material-symbols-outlined">fitness_center</span>
+<span class="font-label-caps text-label-caps uppercase mt-1">Practice</span>
+</a>
+<a href="40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-variant/30 transition-transform duration-150 active:scale-90" style="text-decoration:none">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="font-label-caps text-label-caps uppercase mt-1">Compliance</span>
+</a>
+<a href="41-settings-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant active:bg-surface-variant/30 transition-transform duration-150 active:scale-90" style="text-decoration:none">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps uppercase mt-1">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction: Animated number count up for percentages
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start) + "%";
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Apply animations after page load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Delay slightly for effect
+            setTimeout(() => {
+                const bars = document.querySelectorAll('.progress-bar-fill');
+                bars.forEach(bar => {
+                    // Logic already handled by CSS transition + width style
+                });
+            }, 100);
+        });
+    </script>
+</body></html>

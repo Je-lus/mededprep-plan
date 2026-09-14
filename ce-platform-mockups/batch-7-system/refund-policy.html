@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulse CE — Refund Policy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #0A0A0A;
+      --bg-surface: #111111;
+      --bg-surface-elevated: #1A1A1A;
+      --bg-surface-hover: #1F1F1F;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-default: rgba(255, 255, 255, 0.12);
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-tertiary: rgba(255, 255, 255, 0.45);
+      --green: #36C98D;
+      --green-dim: rgba(54, 201, 141, 0.12);
+      --amber: #F5A623;
+      --amber-dim: rgba(245, 166, 35, 0.15);
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-pill: 9999px;
+      --transition: 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background: linear-gradient(135deg, #0A0A0A 0%, #0D1A12 50%, #0F3D26 75%, #36C98D 100%);
+      opacity: 0.12; pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat; pointer-events: none; mix-blend-mode: overlay; opacity: 0.5; z-index: 0;
+    }
+
+    /* NAV */
+    .top-nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 60px; background: rgba(10,10,10,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; }
+    .brand-wordmark { display: flex; flex-direction: column; }
+    .brand-pulse { font-size: 17px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.02em; line-height: 1; }
+    .brand-sub { font-size: 11px; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; line-height: 1; margin-top: 2px; }
+    .pill-nav { display: flex; align-items: center; gap: 4px; background: var(--bg-surface); border-radius: var(--radius-pill); padding: 4px; border: 1px solid var(--border-subtle); }
+    .pill-nav a { text-decoration: none; font-size: 13px; font-weight: 500; color: var(--text-secondary); padding: 7px 18px; border-radius: var(--radius-pill); transition: all 0.2s; }
+    .pill-nav a:hover { color: var(--text-primary); background: var(--bg-surface-hover); }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .nav-icon-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-subtle); background: var(--bg-surface); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); }
+    .nav-icon-btn svg { width: 18px; height: 18px; }
+    .avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--green), #2ba876); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #0A0A0A; cursor: pointer; }
+
+    /* LAYOUT */
+    .page-wrap { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 48px 32px 80px; display: flex; gap: 48px; }
+
+    /* TOC */
+    .toc { width: 240px; flex-shrink: 0; position: sticky; top: 108px; align-self: flex-start; }
+    .toc-title { font-size: 11px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+    .toc-list { list-style: none; }
+    .toc-list li { margin-bottom: 2px; }
+    .toc-list a { display: block; font-size: 13px; color: var(--text-secondary); text-decoration: none; padding: 6px 0 6px 12px; border-left: 2px solid transparent; transition: all 0.2s; }
+    .toc-list a:hover { color: var(--text-primary); }
+    .toc-list a.active { color: var(--green); font-weight: 500; border-left-color: var(--green); background: var(--green-dim); }
+
+    /* CONTENT */
+    .legal-content { flex: 1; min-width: 0; max-width: 720px; }
+    .legal-header { margin-bottom: 32px; }
+    .legal-header h1 { font-size: 30px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .legal-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .updated-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--green); background: var(--green-dim); padding: 4px 12px; border-radius: var(--radius-pill); }
+    .updated-badge svg { width: 14px; height: 14px; }
+    .effective-date { font-size: 13px; color: var(--text-tertiary); }
+    .legal-intro { font-size: 16px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border-subtle); }
+
+    .legal-section { margin-bottom: 40px; }
+    .legal-section h2 { font-size: 20px; font-weight: 600; margin-bottom: 16px; padding-top: 8px; }
+    .legal-section p { font-size: 15px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 12px; }
+    .legal-section ul { list-style: none; margin: 12px 0; }
+    .legal-section ul li { font-size: 15px; color: var(--text-secondary); line-height: 1.65; padding-left: 20px; margin-bottom: 8px; position: relative; }
+    .legal-section ul li::before { content: ''; position: absolute; left: 0; top: 10px; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+    .legal-section strong { color: var(--text-primary); font-weight: 600; }
+    .legal-section .divider { border: none; border-top: 1px solid var(--border-subtle); margin: 32px 0; }
+
+    /* Callout boxes */
+    .callout {
+      padding: 20px 24px;
+      border-radius: var(--radius-lg);
+      margin: 20px 0;
+    }
+    .callout-green {
+      background: var(--green-dim);
+      border: 1px solid rgba(54, 201, 141, 0.2);
+    }
+    .callout-amber {
+      background: var(--amber-dim);
+      border: 1px solid rgba(245, 166, 35, 0.2);
+    }
+    .callout-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .callout-green .callout-title { color: var(--green); }
+    .callout-amber .callout-title { color: var(--amber); }
+    .callout p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0; }
+
+    /* Summary table */
+    .summary-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    .summary-table th { font-size: 12px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em; text-align: left; padding: 10px 16px; border-bottom: 1px solid var(--border-default); background: var(--bg-surface); }
+    .summary-table td { font-size: 14px; color: var(--text-secondary); padding: 12px 16px; border-bottom: 1px solid var(--border-subtle); }
+    .summary-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .badge-eligible { display: inline-block; padding: 2px 8px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 600; background: var(--green-dim); color: var(--green); }
+    .badge-ineligible { display: inline-block; padding: 2px 8px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 600; background: rgba(229, 72, 77, 0.15); color: #f87171; }
+    .badge-partial { display: inline-block; padding: 2px 8px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 600; background: var(--amber-dim); color: var(--amber); }
+
+    .reading-progress { position: fixed; top: 60px; right: 0; width: 3px; height: 0%; background: var(--green); z-index: 99; }
+    .footer { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 40px 32px; border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; }
+    .footer-left { font-size: 12px; color: var(--text-tertiary); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: var(--text-tertiary); text-decoration: none; }
+    .footer-links a:hover { color: var(--green); }
+
+    @media (max-width: 900px) {
+      .toc { display: none; }
+      .page-wrap { padding: 32px 16px 60px; }
+      .legal-header h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="reading-progress" id="progressBar"></div>
+
+  <nav class="top-nav">
+    <a href="../batch-2a-public-individual/01-landing-desktop.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 36 36" fill="none">
+        <path d="M18 2C10 2 4 7 4 14v8c0 4 6 12 14 12s14-8 14-12v-8c0-7-6-12-14-12z" fill="#36C98D" opacity="0.15"/>
+        <path d="M18 4C11 4 6 8.5 6 14v7c0 3.5 5.5 11 12 11s12-7.5 12-11v-7c0-5.5-5-10-12-10z" stroke="#36C98D" stroke-width="1.5" fill="none"/>
+        <polyline points="8,20 12,20 14,14 17,26 20,17 22,20 28,20" stroke="#36C98D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="brand-wordmark"><span class="brand-pulse">PULSE</span><span class="brand-sub">BY MEDEDPREP</span></div>
+    </a>
+    <div class="pill-nav">
+      <a href="../batch-2a-public-individual/01-landing-desktop.html">Home</a><a href="../batch-2a-public-individual/04-catalog-desktop.html">Courses</a><a href="../batch-2a-public-individual/03-pricing-desktop.html">Pricing</a><a href="help-faq.html">Help</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <div class="avatar">JD</div>
+    </div>
+  </nav>
+
+  <div class="page-wrap">
+    <aside class="toc">
+      <div class="toc-title">Table of Contents</div>
+      <ul class="toc-list">
+        <li><a href="#overview" class="active">1. Overview</a></li>
+        <li><a href="#subscriptions">2. Subscription Plans</a></li>
+        <li><a href="#individual">3. Individual Courses</a></li>
+        <li><a href="#agency">4. Agency & Group Plans</a></li>
+        <li><a href="#ce-credits">5. Earned CE Credits</a></li>
+        <li><a href="#how-to">6. How to Request a Refund</a></li>
+        <li><a href="#processing">7. Processing & Timing</a></li>
+        <li><a href="#exceptions">8. Exceptions</a></li>
+        <li><a href="#contact">9. Contact Us</a></li>
+      </ul>
+    </aside>
+
+    <article class="legal-content">
+      <div class="legal-header">
+        <h1>Refund Policy</h1>
+        <div class="legal-meta">
+          <span class="updated-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Last updated: May 15, 2026
+          </span>
+          <span class="effective-date">Effective Date: May 15, 2026</span>
+        </div>
+      </div>
+
+      <p class="legal-intro">At Pulse CE, we want every EMS professional to feel confident investing in their continuing education. This Refund Policy outlines when and how refunds are issued for our subscription plans and individual course purchases.</p>
+
+      <div class="callout callout-green">
+        <div class="callout-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+          30-Day Money-Back Guarantee
+        </div>
+        <p>All new subscription plans include a 30-day money-back guarantee. If you're not satisfied, request a full refund within 30 days of your initial purchase — no questions asked.</p>
+      </div>
+
+      <section class="legal-section" id="overview">
+        <h2>1. Refund Eligibility at a Glance</h2>
+
+        <table class="summary-table">
+          <thead>
+            <tr>
+              <th>Purchase Type</th>
+              <th>Refund Window</th>
+              <th>Conditions</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>New subscription (first purchase)</td>
+              <td>30 days</td>
+              <td>Fewer than 3 courses completed</td>
+              <td><span class="badge-eligible">Full Refund</span></td>
+            </tr>
+            <tr>
+              <td>Subscription renewal</td>
+              <td>7 days</td>
+              <td>No courses started in new period</td>
+              <td><span class="badge-eligible">Full Refund</span></td>
+            </tr>
+            <tr>
+              <td>Individual course (not started)</td>
+              <td>14 days</td>
+              <td>Course not accessed</td>
+              <td><span class="badge-eligible">Full Refund</span></td>
+            </tr>
+            <tr>
+              <td>Individual course (in progress)</td>
+              <td>14 days</td>
+              <td>Less than 30% completed</td>
+              <td><span class="badge-partial">Partial Refund</span></td>
+            </tr>
+            <tr>
+              <td>Individual course (completed)</td>
+              <td>N/A</td>
+              <td>CE credits issued</td>
+              <td><span class="badge-ineligible">Non-Refundable</span></td>
+            </tr>
+            <tr>
+              <td>Agency/group plan</td>
+              <td>14 days</td>
+              <td>Custom terms apply</td>
+              <td><span class="badge-partial">See Agreement</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="divider">
+
+      <section class="legal-section" id="subscriptions">
+        <h2>2. Subscription Plans</h2>
+        <p><strong>New Subscribers</strong> — If you are a first-time subscriber, you have 30 calendar days from the date of your initial payment to request a full refund, provided you have completed fewer than 3 courses during that period.</p>
+        <p><strong>Renewal Refunds</strong> — For automatic renewal charges, you may request a full refund within 7 days of the renewal date, provided you have not started any new courses during the renewed billing period.</p>
+        <p><strong>Mid-Cycle Cancellation</strong> — If you cancel your subscription mid-billing-cycle, your access continues until the end of the current paid period. No partial refunds are issued for unused time within a billing cycle.</p>
+
+        <div class="callout callout-amber">
+          <div class="callout-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+            Tip: Manage your subscription
+          </div>
+          <p>To avoid unwanted renewal charges, cancel your subscription at least 48 hours before your billing date via Settings > Billing > Manage Plan.</p>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <section class="legal-section" id="individual">
+        <h2>3. Individual Course Purchases</h2>
+        <ul>
+          <li><strong>Not Started:</strong> Full refund available within 14 days of purchase if the course has not been accessed</li>
+          <li><strong>In Progress (under 30%):</strong> A 70% refund is available within 14 days of purchase if you have completed less than 30% of the course content</li>
+          <li><strong>Completed or Credits Issued:</strong> No refund is available once the course is completed or CE credits have been issued to your account</li>
+        </ul>
+      </section>
+
+      <hr class="divider">
+
+      <section class="legal-section" id="ce-credits">
+        <h2>5. Earned CE Credits</h2>
+        <p>Once CE credits have been issued and reported to CAPCE, the associated course purchase is <strong>non-refundable</strong>. This is because:</p>
+        <ul>
+          <li>CAPCE accreditation fees are incurred per certification issued ($0.31 per credit hour)</li>
+          <li>Credits cannot be "unissued" once reported to CAPCE</li>
+          <li>Your completion record is part of the permanent accreditation record</li>
+        </ul>
+      </section>
+
+      <hr class="divider">
+
+      <section class="legal-section" id="how-to">
+        <h2>6. How to Request a Refund</h2>
+        <p>To request a refund, use one of the following methods:</p>
+        <ul>
+          <li><strong>Self-Service:</strong> Go to Settings > Billing > Request Refund (available for eligible purchases)</li>
+          <li><strong>Email:</strong> Send your request to billing@pulsece.com with your account email and order/transaction ID</li>
+          <li><strong>Live Chat:</strong> Contact our support team via the Help Center during business hours (Mon-Fri, 8am-8pm EST)</li>
+        </ul>
+      </section>
+
+      <hr class="divider">
+
+      <section class="legal-section" id="processing">
+        <h2>7. Processing & Timing</h2>
+        <p>Approved refunds are processed within <strong>5-10 business days</strong>. Refunds are returned to the original payment method used for the purchase. If your original payment method is no longer available, we will work with you to arrange an alternative.</p>
+      </section>
+
+      <hr class="divider">
+
+      <section class="legal-section" id="contact">
+        <h2>9. Contact Us</h2>
+        <p>For questions about this Refund Policy or to request a refund:</p>
+        <ul>
+          <li><strong>Email:</strong> billing@pulsece.com</li>
+          <li><strong>Help Center:</strong> <a href="help-faq.html" style="color: var(--green); text-decoration: none;">pulsece.com/help</a></li>
+          <li><strong>Live Chat:</strong> Available Mon-Fri, 8am-8pm EST</li>
+        </ul>
+      </section>
+    </article>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-left">&copy; 2026 MedEdPrep. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="terms-of-service.html">Terms of Service</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="refund-policy.html">Refund Policy</a>
+      <a href="help-faq.html">Help Center</a>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      const bar = document.getElementById('progressBar');
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.height = (scrollTop / docHeight) * 100 + '%';
+    });
+  </script>
+</body>
+</html>

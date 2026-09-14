@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RightSite Health — Negotiation Brief</title>
+<style>
+  :root {
+    --bg: #0a0c10;
+    --bg-2: #0f1218;
+    --ink: #f4f6fb;
+    --muted: #8a93a6;
+    --line: rgba(255, 255, 255, 0.08);
+    --accent: #ff7a45;
+    --accent-soft: rgba(255, 122, 69, 0.14);
+    --good: #5fd6a4;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+  body {
+    background:
+      radial-gradient(1200px 700px at 50% -10%, #16202e 0%, rgba(22,32,46,0) 60%),
+      radial-gradient(900px 600px at 85% 110%, rgba(255,122,69,0.10) 0%, rgba(255,122,69,0) 55%),
+      var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(28px, 5vw, 64px) clamp(20px, 5vw, 56px) 80px;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 18px;
+    margin-bottom: clamp(40px, 7vw, 88px);
+  }
+  .brand {
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .brand .dot { color: var(--accent); }
+  .situation {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .situation b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    text-align: center;
+    margin-bottom: clamp(56px, 9vw, 120px);
+  }
+  .hero .eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: clamp(18px, 3vw, 34px);
+  }
+  .hero .eyebrow span { color: var(--accent); }
+  .number {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: clamp(84px, 22vw, 280px);
+    line-height: 0.86;
+    letter-spacing: -0.04em;
+    background: linear-gradient(180deg, #ffffff 0%, #c6cede 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.3s ease;
+    font-variant-numeric: tabular-nums;
+  }
+  .number .cur { -webkit-text-fill-color: var(--accent); color: var(--accent); }
+  .hero .sub {
+    margin-top: clamp(16px, 2.5vw, 28px);
+    font-size: clamp(15px, 2vw, 21px);
+    color: var(--muted);
+    letter-spacing: 0.01em;
+  }
+  .hero .sub b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Headline strip ---------- */
+  .headline {
+    border-left: 3px solid var(--accent);
+    padding: clamp(18px, 3vw, 26px) clamp(22px, 4vw, 38px);
+    background: linear-gradient(90deg, var(--accent-soft), rgba(255,122,69,0));
+    border-radius: 4px;
+    margin-bottom: clamp(56px, 9vw, 110px);
+    font-family: var(--serif);
+    font-size: clamp(18px, 2.6vw, 28px);
+    line-height: 1.45;
+    color: #e7ebf4;
+    max-width: 920px;
+  }
+  .headline em { color: var(--accent); font-style: normal; font-weight: 600; }
+
+  /* ---------- Section label ---------- */
+  .seclabel {
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: clamp(20px, 3vw, 34px);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .seclabel::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* ---------- Scenarios ---------- */
+  .scenarios {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(14px, 2vw, 22px);
+    margin-bottom: clamp(60px, 9vw, 120px);
+    align-items: stretch;
+  }
+  .card {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: clamp(22px, 3vw, 34px) clamp(20px, 2.6vw, 30px);
+    background: var(--bg-2);
+    cursor: pointer;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.18); }
+  .card .tag {
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .card .role {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: clamp(18px, 3vw, 28px);
+    min-height: 1.3em;
+  }
+  .card .y1label {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .card .y1 {
+    font-size: clamp(34px, 5vw, 52px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 2px 0 clamp(18px, 3vw, 26px);
+    font-variant-numeric: tabular-nums;
+  }
+  .terms { margin-top: auto; border-top: 1px solid var(--line); padding-top: 16px; }
+  .term {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13.5px;
+    padding: 4px 0;
+    color: var(--muted);
+  }
+  .term span:last-child { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .card .savings {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--good);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  /* Likely = elevated */
+  .card.likely {
+    border-color: rgba(255,122,69,0.55);
+    background: linear-gradient(180deg, rgba(255,122,69,0.10), rgba(255,122,69,0.02)), var(--bg-2);
+    box-shadow: 0 18px 60px -28px rgba(255,122,69,0.55);
+    transform: translateY(-12px);
+  }
+  .card.likely:hover { transform: translateY(-16px); }
+  .card.likely .y1 {
+    background: linear-gradient(180deg, #ffffff, #ffcaaf);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: #1a0d06;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  /* selected (spotlight) */
+  .card.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent), 0 22px 70px -30px rgba(255,122,69,0.7);
+  }
+
+  /* ---------- Playbook ---------- */
+  .play-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(28px, 5vw, 64px);
+    margin-bottom: 40px;
+  }
+  .play-col h3 {
+    font-size: 13px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: clamp(18px, 3vw, 28px);
+    font-weight: 700;
+  }
+  .line {
+    font-family: var(--serif);
+    font-size: clamp(17px, 2.1vw, 23px);
+    line-height: 1.42;
+    color: #e7ebf4;
+    padding: clamp(14px, 2vw, 20px) 0;
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 16px;
+  }
+  .play-col .line:first-of-type { border-top: none; }
+  .line .n {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--accent);
+    flex: 0 0 auto;
+    line-height: 2.4;
+    letter-spacing: 0.05em;
+  }
+  .line .if {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 600;
+  }
+  .line.framing { font-size: clamp(15px, 1.7vw, 18.5px); line-height: 1.55; }
+  .line.framing strong { color: #fff; font-weight: 700; font-style: normal; }
+
+  /* ---------- footer ---------- */
+  .foot {
+    margin-top: clamp(48px, 8vw, 90px);
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .foot .hint { color: var(--muted); }
+  .foot .hint kbd {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 11px;
+    color: var(--ink);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 760px) {
+    .scenarios { grid-template-columns: 1fr; }
+    .card.likely, .card.likely:hover { transform: none; }
+    .badge { left: 20px; transform: none; }
+    .play-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Fade-in motion ---------- */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .card, .card.likely { transition: none; }
+  }
+
+  /* ---------- Print ---------- */
+  @media print {
+    body { background: #fff; color: #000; }
+    .wrap { max-width: none; padding: 18px; }
+    .number { -webkit-text-fill-color: #000; color: #000; background: none; font-size: 80px; }
+    .number .cur { color: #b3490f; -webkit-text-fill-color: #b3490f; }
+    .hero, .headline, .scenarios, .play-grid { margin-bottom: 22px; }
+    .headline { background: none; border-left: 3px solid #b3490f; color: #111; }
+    .headline em { color: #b3490f; }
+    .card { background: #fff; border: 1px solid #bbb; box-shadow: none; transform: none !important; break-inside: avoid; }
+    .card.likely { box-shadow: none; border: 2px solid #b3490f; }
+    .card .y1 { color: #000 !important; -webkit-text-fill-color: #000 !important; background: none; }
+    .card .savings { color: #1a7a52; }
+    .line { color: #111; break-inside: avoid; }
+    .line .if, .line .n, .play-col h3, .badge { color: #b3490f; }
+    .badge { background: none; border: 1px solid #b3490f; }
+    .seclabel::after { background: #ccc; }
+    .foot .hint { display: none; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="brand">MedEdPrep <span class="dot">&times;</span> RightSite Health</div>
+    <div class="situation">Pricing the RightSite Health training build &mdash; call prep, <b>Tue Jun 23</b>.</div>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="eyebrow">The one number that wins the room <span>&mdash;</span> <span id="heroLabel">RightSite saves over 10 years</span></div>
+    <div class="number" id="heroNum"><span class="cur">$</span><span id="count">0</span>M</div>
+    <div class="sub">vs. a commercial LMS. <b id="heroNote">~$6.2M saved</b>, whatever you settle on.</div>
+  </section>
+
+  <!-- Headline strip -->
+  <div class="headline reveal">
+    Open at <em>$45K</em>. They'll push. Settle around <em>$33K + $5/cert</em>. Don't go below <em>$28K</em>.
+    Whatever you land on, you save RightSite <em>~$6.2M</em> over 10 years vs a commercial LMS.
+  </div>
+
+  <!-- Scenarios -->
+  <div class="seclabel reveal">Three numbers &mdash; click to spotlight</div>
+  <section class="scenarios">
+
+    <!-- ANCHOR -->
+    <div class="card reveal" data-num="6.16" data-label="RightSite saves over 10 years" data-note="~$6.16M saved · open high">
+      <div class="tag">Anchor</div>
+      <div class="role">Open here</div>
+      <div class="y1label">Year-1 total</div>
+      <div class="y1">$79,200</div>
+      <div class="terms">
+        <div class="term"><span>Build</span><span>$45,000</span></div>
+        <div class="term"><span>Per cert</span><span>$7</span></div>
+        <div class="term"><span>Platform floor</span><span>$9,000/yr</span></div>
+        <div class="term"><span>10-yr revenue</span><span>~$228K</span></div>
+      </div>
+      <div class="savings">RightSite saves ~$6.16M</div>
+    </div>
+
+    <!-- LIKELY -->
+    <div class="card likely reveal active" data-num="6.21" data-label="RightSite saves over 10 years" data-note="~$6.21M saved · the target">
+      <div class="badge">The Target</div>
+      <div class="tag">Likely</div>
+      <div class="role">Where it lands</div>
+      <div class="y1label">Year-1 total</div>
+      <div class="y1">$58,000</div>
+      <div class="terms">
+        <div class="term"><span>Build</span><span>$33,000</span></div>
+        <div class="term"><span>Per cert</span><span>$5</span></div>
+        <div class="term"><span>Platform floor</span><span>$7,000/yr</span></div>
+        <div class="term"><span>10-yr revenue</span><span>~$171K</span></div>
+      </div>
+      <div class="savings">RightSite saves ~$6.21M</div>
+    </div>
+
+    <!-- FLOOR -->
+    <div class="card reveal" data-num="6.23" data-label="RightSite saves over 10 years" data-note="~$6.23M saved · walk-away line">
+      <div class="tag">Floor</div>
+      <div class="role">Walk-away</div>
+      <div class="y1label">Year-1 total</div>
+      <div class="y1">$52,000</div>
+      <div class="terms">
+        <div class="term"><span>Build</span><span>$28,000</span></div>
+        <div class="term"><span>Per cert</span><span>$5</span></div>
+        <div class="term"><span>Platform floor</span><span>$6,000/yr</span></div>
+        <div class="term"><span>10-yr revenue</span><span>~$156K</span></div>
+      </div>
+      <div class="savings">RightSite saves ~$6.23M</div>
+    </div>
+  </section>
+
+  <!-- Playbook -->
+  <div class="seclabel reveal">The Playbook</div>
+  <div class="play-grid">
+
+    <div class="play-col reveal">
+      <h3>Concession moves &mdash; trade everything</h3>
+      <div class="line"><span class="n">01</span><span>"I can come down to <strong style="color:#fff">$32K</strong> on the build &mdash; <span class="if">if</span> we lock Dallas in at signing."</span></div>
+      <div class="line"><span class="n">02</span><span>"I'll hold <strong style="color:#fff">$5 a cert</strong> &mdash; <span class="if">if</span> we commit to a 2-year platform term."</span></div>
+      <div class="line"><span class="n">03</span><span>"<strong style="color:#fff">$30K build</strong> works &mdash; <span class="if">if</span> you can do 50% up front."</span></div>
+    </div>
+
+    <div class="play-col reveal">
+      <h3>Talking lines &mdash; the framing that wins</h3>
+      <div class="line framing"><span>A commercial LMS runs <strong>$5&ndash;10 per user per month</strong> &mdash; <strong>$240K to $480K a year</strong> for Houston alone. We charge <strong>$5 per certificate issued</strong>. You only pay when someone actually finishes.</span></div>
+      <div class="line framing"><span>The build is a small one-time cost. What you're really buying is the <strong>hosted platform</strong> &mdash; and every department after the first is just a <strong>re-skin</strong> of what we've already built.</span></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>MedEdPrep &mdash; confidential call prep</div>
+    <div class="hint">Click any scenario to spotlight it &nbsp;&middot;&nbsp; <kbd>P</kbd> to print</div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Hero count-up ---- */
+  var countEl = document.getElementById('count');
+  var target = 6.2;
+
+  function animateTo(value, duration) {
+    if (prefersReduced) { countEl.textContent = value.toFixed(2); return; }
+    var start = parseFloat(countEl.textContent) || 0;
+    var t0 = null;
+    function step(ts) {
+      if (t0 === null) t0 = ts;
+      var p = Math.min((ts - t0) / duration, 1);
+      var eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+      countEl.textContent = (start + (value - start) * eased).toFixed(2);
+      if (p < 1) requestAnimationFrame(step);
+      else countEl.textContent = value.toFixed(2);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // initial count-up on load
+  window.addEventListener('load', function () {
+    setTimeout(function () { animateTo(target, 1700); }, 250);
+  });
+
+  /* ---- Spotlight on click ---- */
+  var cards = document.querySelectorAll('.card');
+  var heroNote = document.getElementById('heroNote');
+  var heroLabel = document.getElementById('heroLabel');
+
+  cards.forEach(function (card) {
+    card.addEventListener('click', function () {
+      cards.forEach(function (c) { c.classList.remove('active'); });
+      card.classList.add('active');
+      var num = parseFloat(card.getAttribute('data-num'));
+      animateTo(num, 700);
+      heroNote.textContent = card.getAttribute('data-note');
+      heroLabel.textContent = card.getAttribute('data-label');
+    });
+  });
+
+  /* ---- Reveal on scroll ---- */
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !prefersReduced) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(function (r, i) {
+      r.style.transitionDelay = (Math.min(i, 6) * 0.06) + 's';
+      io.observe(r);
+    });
+  } else {
+    reveals.forEach(function (r) { r.classList.add('in'); });
+  }
+
+  /* ---- Press P to print ---- */
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'p' || e.key === 'P') && !e.metaKey && !e.ctrlKey) {
+      e.preventDefault();
+      window.print();
+    }
+  });
+})();
+</script>
+</body>
+</html>

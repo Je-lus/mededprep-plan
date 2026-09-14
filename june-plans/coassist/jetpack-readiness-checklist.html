@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JetPack Readiness Checklist: Is Your Program Ready?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px;
+    }
+
+    .checklist li {
+      margin: 0;
+      padding: 0;
+    }
+
+    .checklist label {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      font-size: 0.95rem;
+      color: var(--gray-400);
+      line-height: 1.5;
+    }
+
+    .checklist label:hover {
+      background: var(--gray-100);
+      color: var(--gray-800);
+    }
+
+    .checklist input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      min-height: 20px;
+      border: 2px solid var(--gray-200);
+      border-radius: 5px;
+      background: var(--gray-100);
+      cursor: pointer;
+      position: relative;
+      margin-top: 1px;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .checklist input[type="checkbox"]:hover {
+      border-color: var(--gray-300);
+    }
+
+    .checklist input[type="checkbox"]:checked {
+      background: var(--ca-color);
+      border-color: var(--ca-color);
+    }
+
+    .checklist input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 6px;
+      width: 5px;
+      height: 10px;
+      border: solid var(--panel-deep);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .checklist input[type="checkbox"]:checked + span {
+      color: var(--ca-color);
+      text-decoration: line-through;
+      text-decoration-color: var(--ca-border);
+    }
+
+    .checklist-section {
+      background: var(--panel);
+      border: var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    .checklist-section h3 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .checklist-section .section-label {
+      margin-bottom: 6px;
+    }
+
+    .score-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: var(--panel-deep);
+      border: var(--border);
+      border-radius: 8px;
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: var(--gray-300);
+    }
+
+    .score-bar strong {
+      font-size: 1.1rem;
+      color: var(--ca-color);
+    }
+
+    .cta-callout {
+      background: var(--ca-bg);
+      border: 1px solid var(--ca-border);
+      border-left: 4px solid var(--ca-color);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 28px 0;
+      color: var(--gray-800);
+      font-size: 1.02rem;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .cta-callout strong {
+      color: var(--ca-color);
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-badge">Program Readiness Assessment</div>
+      <h1>Is Your Program Ready for the JetPack Transition?</h1>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Updated</span>
+          <span class="hero-meta-value">June 2026</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Purpose</span>
+          <span class="hero-meta-value">Self-Assessment + Marketing Asset</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Audience</span>
+          <span class="hero-meta-value">EMS Program Directors</span>
+        </div>
+      </div>
+
+      <!-- BLUF -->
+      <div class="bluf">
+        <div class="bluf-label">Bottom Line</div>
+        <p>CoAEMSP is transitioning to JetPack, a new digital accreditation management system, with full implementation anticipated by summer 2027. Every EMS education program will need to submit accreditation materials through this new system. This checklist helps programs assess whether their data, documentation, and processes are organized and ready.</p>
+      </div>
+    </header>
+
+    <!-- 01. PERSONNEL & CREDENTIALS -->
+    <section class="section">
+      <div class="checklist-section">
+        <span class="section-label">01</span>
+        <h3>Personnel &amp; Credentials</h3>
+        <ul class="checklist">
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are all personnel credentials current and documented?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are credential expiration dates tracked with advance alerts?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Is medical director engagement documented (meetings, reviews, signatures)?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are all 8+ required personnel roles filled and credential files complete?</span>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 02. STUDENT OUTCOMES -->
+    <section class="section">
+      <div class="checklist-section">
+        <span class="section-label">02</span>
+        <h3>Student Outcomes</h3>
+        <ul class="checklist">
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are NREMT pass rates current and tracked by cohort?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are retention rates calculated and documented?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are positive placement rates tracked?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are you monitoring the 70% threshold for all three outcome measures?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Do you have Outcome Action Plans for any measures below threshold?</span>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 03. CLINICAL OPERATIONS -->
+    <section class="section">
+      <div class="checklist-section">
+        <span class="section-label">03</span>
+        <h3>Clinical Operations</h3>
+        <ul class="checklist">
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are all clinical affiliate agreements stored and accessible?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are agreement expiration dates tracked?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are preceptor credentials organized and current?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are clinical site evaluations documented?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Is field internship tracking complete for all active students?</span>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 04. GOVERNANCE & COMMITTEES -->
+    <section class="section">
+      <div class="checklist-section">
+        <span class="section-label">04</span>
+        <h3>Governance &amp; Committees</h3>
+        <ul class="checklist">
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are advisory committee meeting minutes complete and filed?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are action items from committee meetings documented with follow-up?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are advisory committee member credentials and terms tracked?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are Resource Assessment Matrix (RAM) surveys collected across all 11 domains?</span>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 05. SURVEYS & FEEDBACK -->
+    <section class="section">
+      <div class="checklist-section">
+        <span class="section-label">05</span>
+        <h3>Surveys &amp; Feedback</h3>
+        <ul class="checklist">
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are graduate surveys collected and analyzed?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are employer surveys collected and analyzed?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Is survey data mapped to relevant CoAEMSP standards?</span>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 06. SELF-STUDY & EVIDENCE -->
+    <section class="section">
+      <div class="checklist-section">
+        <span class="section-label">06</span>
+        <h3>Self-Study &amp; Evidence</h3>
+        <ul class="checklist">
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are self-study narratives drafted or in progress?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are all evidence files named, organized, and easy to locate?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Can you generate Appendices E, F, G, and H from your current data?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Have you conducted a gap analysis against all 80+ CoAEMSP standards?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Do you know your compliance score across all standard areas?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Is your physical document location map current?</span>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 07. TRANSITION READINESS -->
+    <section class="section">
+      <div class="checklist-section">
+        <span class="section-label">07</span>
+        <h3>Transition Readiness</h3>
+        <ul class="checklist">
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Can you export your program data in structured formats (CSV, PDF)?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Are your records digital, or will migration from paper be required?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Do you have a plan for organizing data before the JetPack portal goes live?</span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox">
+              <span>Have you identified which team members will manage the JetPack submission process?</span>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CTA CALLOUT -->
+    <div class="cta-callout">
+      <p><strong>CoAssist helps programs answer "yes" to every question on this list &mdash; for free.</strong> It is the only EMS-native accreditation preparation platform, with 80+ CoAEMSP standards pre-loaded, AI-powered gap analysis, automated surveys, credential tracking, and self-study drafting built in.</p>
+      <p>CoAssist is not affiliated with CoAEMSP or Virtual Atlantic. It is an independent, free tool designed to help EMS education programs prepare for accreditation &mdash; whether they submit through JetPack, the current manual process, or any future system.</p>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>This checklist supports the <a href="team-briefing-jetpack.html">Team Briefing: The JetPack Announcement</a>.</p>
+      <p>For the operational plan, see the <a href="operational-plan-30-60-90.html">30/60/90-Day Plan</a>.</p>
+    </footer>
+
+  </div>
+</body>
+</html>

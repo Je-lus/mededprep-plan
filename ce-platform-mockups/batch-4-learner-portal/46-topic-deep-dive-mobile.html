@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Topic Deep Dive - Cardiovascular | Pulse CE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#201f1f",
+                        "surface-variant": "#353534",
+                        "surface-dim": "#131313",
+                        "secondary-fixed-dim": "#bbcabd",
+                        "outline": "#86948a",
+                        "primary-container": "#36c98d",
+                        "surface": "#131313",
+                        "secondary": "#bbcabd",
+                        "primary": "#5ae6a7",
+                        "surface-tint": "#51dea0",
+                        "surface-container-highest": "#353534",
+                        "tertiary-fixed": "#ffddb4",
+                        "outline-variant": "#3d4a41",
+                        "on-tertiary-fixed": "#291800",
+                        "on-error": "#690005",
+                        "inverse-surface": "#e5e2e1",
+                        "secondary-fixed": "#d7e7d9",
+                        "on-background": "#e5e2e1",
+                        "surface-container-low": "#1c1b1b",
+                        "on-surface": "#e5e2e1",
+                        "tertiary": "#ffc370",
+                        "secondary-container": "#3c4a40",
+                        "on-tertiary-container": "#603d00",
+                        "on-primary-container": "#004f33",
+                        "inverse-primary": "#006c47",
+                        "tertiary-container": "#f0a21e",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary": "#26332a",
+                        "inverse-on-surface": "#313030",
+                        "primary-fixed": "#71fbbb",
+                        "surface-bright": "#3a3939",
+                        "background": "#0A0A0A",
+                        "on-secondary-container": "#aab9ac",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#ffb955",
+                        "on-primary": "#003823",
+                        "primary-fixed-dim": "#51dea0",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#3c4a40",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#2a2a2a",
+                        "on-surface-variant": "#bbcabf",
+                        "on-tertiary": "#452b00",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "on-secondary-fixed": "#111e16",
+                        "on-primary-fixed": "#002113",
+                        "on-primary-fixed-variant": "#005235"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "touch-target": "44px",
+                        "max-width": "1280px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "24px",
+                        "nav-height": "60px",
+                        "gap-default": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "headline-xl": ["30px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                        "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0A0A;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: #111111;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .pulse-glow {
+            box-shadow: 0 0 20px rgba(54, 201, 141, 0.15);
+        }
+        .stability-high { color: #5ae6a7; }
+        .stability-med { color: #ffc370; }
+        .stability-low { color: #ffb4ab; }
+        .stability-bar-high { background: #36C98D; }
+        .stability-bar-med { background: #f0a21e; }
+        .stability-bar-low { background: #ff6b6b; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-md border-b border-white/10 shadow-[0_0_20px_rgba(54,201,141,0.15)] flex items-center h-[60px] px-margin-mobile">
+<button class="active:scale-95 transition-transform p-2 mr-2">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-lg text-[20px] font-bold text-primary flex-1">Cardiovascular</h1>
+<button class="active:scale-95 transition-transform p-2">
+<span class="material-symbols-outlined text-primary">fitness_center</span>
+</button>
+</header>
+
+<main class="mt-[60px] px-margin-mobile pt-6 space-y-6">
+<!-- Retention Hero -->
+<section class="flex flex-col items-center">
+<div class="relative w-32 h-32 flex items-center justify-center mb-3">
+<svg class="w-full h-full" viewBox="0 0 100 100">
+<circle class="text-surface-container-high" cx="50" cy="50" fill="transparent" r="42" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary drop-shadow-[0_0_8px_rgba(54,201,141,0.4)]" cx="50" cy="50" fill="transparent" r="42" stroke="currentColor" stroke-dasharray="264" stroke-dashoffset="92" stroke-linecap="round" stroke-width="8" style="transform: rotate(-90deg); transform-origin: 50% 50%; transition: stroke-dashoffset 0.35s;"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-headline-lg text-headline-lg text-white">65%</span>
+<span class="text-[10px] text-on-surface-variant font-semibold uppercase tracking-wider">Retention</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-tertiary-container text-[16px]">trending_down</span>
+<span class="text-[12px] text-tertiary-container font-semibold">-4% since last week</span>
+</div>
+</section>
+
+<!-- Stat Pills Row -->
+<section class="grid grid-cols-3 gap-3">
+<div class="glass-card p-3 rounded-xl text-center">
+<p class="font-headline-lg text-[18px] text-primary">42</p>
+<p class="font-label-caps text-[10px] text-on-surface-variant mt-1">STUDIED</p>
+</div>
+<div class="glass-card p-3 rounded-xl text-center">
+<p class="font-headline-lg text-[18px] text-error">10</p>
+<p class="font-label-caps text-[10px] text-on-surface-variant mt-1">LOW</p>
+</div>
+<div class="glass-card p-3 rounded-xl text-center">
+<p class="font-headline-lg text-[18px] text-primary">5.0<span class="text-on-surface-variant text-[12px]">/8</span></p>
+<p class="font-label-caps text-[10px] text-on-surface-variant mt-1">CE HRS</p>
+</div>
+</section>
+
+<!-- Stability Breakdown -->
+<section class="glass-card rounded-xl p-5 space-y-4">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant/10 pb-2">STABILITY BREAKDOWN</h2>
+<div class="flex items-center gap-3">
+<div class="flex-1 h-3 bg-surface-container-high rounded-full overflow-hidden flex">
+<div class="h-full stability-bar-high" style="width: 43%"></div>
+<div class="h-full stability-bar-med" style="width: 33%"></div>
+<div class="h-full stability-bar-low" style="width: 24%"></div>
+</div>
+</div>
+<div class="flex justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full stability-bar-high"></div>
+<span class="text-[12px] text-on-surface-variant">High (18)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full stability-bar-med"></div>
+<span class="text-[12px] text-on-surface-variant">Med (14)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full stability-bar-low"></div>
+<span class="text-[12px] text-on-surface-variant">Low (10)</span>
+</div>
+</div>
+</section>
+
+<!-- Filter Chips -->
+<section>
+<div class="flex space-x-2 overflow-x-auto hide-scrollbar pb-2">
+<button class="px-4 py-2 bg-primary text-on-primary rounded-full font-label-caps whitespace-nowrap">All Items</button>
+<button class="px-4 py-2 bg-surface-container text-on-surface-variant rounded-full font-label-caps whitespace-nowrap border border-white/5">Low Stability</button>
+<button class="px-4 py-2 bg-surface-container text-on-surface-variant rounded-full font-label-caps whitespace-nowrap border border-white/5">Medium</button>
+<button class="px-4 py-2 bg-surface-container text-on-surface-variant rounded-full font-label-caps whitespace-nowrap border border-white/5">High</button>
+</div>
+</section>
+
+<!-- Item List -->
+<section class="space-y-3">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant px-1">ITEMS NEEDING REVIEW</h2>
+
+<!-- Item Card: Low -->
+<div class="glass-card rounded-xl p-4 border-l-4 border-l-error/50 active:bg-white/5 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<div class="flex-1">
+<h4 class="font-body-md text-on-surface font-semibold">12-Lead ST Elevation Patterns</h4>
+<p class="text-[12px] text-on-surface-variant">ECG Interpretation</p>
+</div>
+<span class="font-label-caps text-[10px] stability-low bg-error/10 px-2 py-1 rounded">LOW</span>
+</div>
+<div class="flex items-center justify-between mt-3">
+<div class="flex items-center gap-4">
+<span class="text-[12px] text-on-surface-variant">Accuracy: <span class="text-error font-bold">40%</span></span>
+<span class="text-[12px] text-on-surface-variant">Last: 18d ago</span>
+</div>
+<button class="text-primary font-label-caps text-[11px] uppercase font-bold">Practice</button>
+</div>
+</div>
+
+<!-- Item Card: Low -->
+<div class="glass-card rounded-xl p-4 border-l-4 border-l-error/50 active:bg-white/5 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<div class="flex-1">
+<h4 class="font-body-md text-on-surface font-semibold">Antiarrhythmic Drug Classes</h4>
+<p class="text-[12px] text-on-surface-variant">Pharmacology</p>
+</div>
+<span class="font-label-caps text-[10px] stability-low bg-error/10 px-2 py-1 rounded">LOW</span>
+</div>
+<div class="flex items-center justify-between mt-3">
+<div class="flex items-center gap-4">
+<span class="text-[12px] text-on-surface-variant">Accuracy: <span class="text-error font-bold">50%</span></span>
+<span class="text-[12px] text-on-surface-variant">Last: 14d ago</span>
+</div>
+<button class="text-primary font-label-caps text-[11px] uppercase font-bold">Practice</button>
+</div>
+</div>
+
+<!-- Item Card: Low -->
+<div class="glass-card rounded-xl p-4 border-l-4 border-l-error/50 active:bg-white/5 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<div class="flex-1">
+<h4 class="font-body-md text-on-surface font-semibold">Acute Coronary Syndrome Mgmt</h4>
+<p class="text-[12px] text-on-surface-variant">Assessment & Treatment</p>
+</div>
+<span class="font-label-caps text-[10px] stability-low bg-error/10 px-2 py-1 rounded">LOW</span>
+</div>
+<div class="flex items-center justify-between mt-3">
+<div class="flex items-center gap-4">
+<span class="text-[12px] text-on-surface-variant">Accuracy: <span class="text-tertiary font-bold">60%</span></span>
+<span class="text-[12px] text-on-surface-variant">Last: 10d ago</span>
+</div>
+<button class="text-primary font-label-caps text-[11px] uppercase font-bold">Practice</button>
+</div>
+</div>
+
+<!-- Item Card: Med -->
+<div class="glass-card rounded-xl p-4 border-l-4 border-l-tertiary-container/50 active:bg-white/5 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<div class="flex-1">
+<h4 class="font-body-md text-on-surface font-semibold">Heart Failure Pathophysiology</h4>
+<p class="text-[12px] text-on-surface-variant">Medical Knowledge</p>
+</div>
+<span class="font-label-caps text-[10px] stability-med bg-tertiary-container/10 px-2 py-1 rounded">MED</span>
+</div>
+<div class="flex items-center justify-between mt-3">
+<div class="flex items-center gap-4">
+<span class="text-[12px] text-on-surface-variant">Accuracy: <span class="text-tertiary font-bold">70%</span></span>
+<span class="text-[12px] text-on-surface-variant">Last: 7d ago</span>
+</div>
+<button class="text-primary font-label-caps text-[11px] uppercase font-bold">Practice</button>
+</div>
+</div>
+
+<!-- Item Card: Med -->
+<div class="glass-card rounded-xl p-4 border-l-4 border-l-tertiary-container/50 active:bg-white/5 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<div class="flex-1">
+<h4 class="font-body-md text-on-surface font-semibold">Pacing & Defibrillation</h4>
+<p class="text-[12px] text-on-surface-variant">Skills & Procedures</p>
+</div>
+<span class="font-label-caps text-[10px] stability-med bg-tertiary-container/10 px-2 py-1 rounded">MED</span>
+</div>
+<div class="flex items-center justify-between mt-3">
+<div class="flex items-center gap-4">
+<span class="text-[12px] text-on-surface-variant">Accuracy: <span class="text-primary font-bold">75%</span></span>
+<span class="text-[12px] text-on-surface-variant">Last: 5d ago</span>
+</div>
+<button class="text-on-surface-variant font-label-caps text-[11px] uppercase font-bold">Review</button>
+</div>
+</div>
+
+<!-- Item Card: High -->
+<div class="glass-card rounded-xl p-4 border-l-4 border-l-primary/30 active:bg-white/5 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<div class="flex-1">
+<h4 class="font-body-md text-on-surface font-semibold">STEMI Recognition Criteria</h4>
+<p class="text-[12px] text-on-surface-variant">ECG Interpretation</p>
+</div>
+<span class="font-label-caps text-[10px] stability-high bg-primary/10 px-2 py-1 rounded">HIGH</span>
+</div>
+<div class="flex items-center justify-between mt-3">
+<div class="flex items-center gap-4">
+<span class="text-[12px] text-on-surface-variant">Accuracy: <span class="text-primary font-bold">95%</span></span>
+<span class="text-[12px] text-on-surface-variant">Last: 2d ago</span>
+</div>
+<span class="material-symbols-outlined text-primary-container text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+
+<div class="pt-2 text-center">
+<button class="text-primary font-label-caps text-label-caps uppercase tracking-widest">Show All 42 Items</button>
+</div>
+</section>
+
+<!-- Other Domains -->
+<section class="space-y-3">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant px-1">OTHER DOMAINS</h2>
+<div class="flex space-x-3 overflow-x-auto hide-scrollbar pb-2">
+<a href="46-topic-deep-dive-mobile.html" class="glass-card rounded-xl p-4 min-w-[120px] text-center shrink-0 active:bg-white/5">
+<p class="font-body-md text-on-surface font-semibold">Airway</p>
+<p class="font-headline-lg text-[18px] text-primary mt-1">82%</p>
+</a>
+<a href="46-topic-deep-dive-mobile.html" class="glass-card rounded-xl p-4 min-w-[120px] text-center shrink-0 active:bg-white/5">
+<p class="font-body-md text-on-surface font-semibold">Trauma</p>
+<p class="font-headline-lg text-[18px] text-primary mt-1">75%</p>
+</a>
+<a href="46-topic-deep-dive-mobile.html" class="glass-card rounded-xl p-4 min-w-[120px] text-center shrink-0 active:bg-white/5">
+<p class="font-body-md text-on-surface font-semibold">Medical</p>
+<p class="font-headline-lg text-[18px] text-primary mt-1">71%</p>
+</a>
+<a href="46-topic-deep-dive-mobile.html" class="glass-card rounded-xl p-4 min-w-[120px] text-center shrink-0 active:bg-white/5">
+<p class="font-body-md text-on-surface font-semibold">Ops</p>
+<p class="font-headline-lg text-[18px] text-tertiary-container mt-1">58%</p>
+</a>
+<a href="46-topic-deep-dive-mobile.html" class="glass-card rounded-xl p-4 min-w-[120px] text-center shrink-0 active:bg-white/5">
+<p class="font-body-md text-on-surface font-semibold">Peds</p>
+<p class="font-headline-lg text-[18px] text-tertiary-container mt-1">54%</p>
+</a>
+</div>
+</section>
+
+<!-- Practice CTA -->
+<section class="pt-2">
+<button class="w-full h-[52px] bg-primary text-on-primary font-bold rounded-full pulse-glow active:scale-95 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">fitness_center</span>
+                Practice Weak Items
+            </button>
+</section>
+</main>
+
+<!-- Bottom Nav Bar -->
+<nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-lg shadow-[0_-4px_20px_rgba(54,201,141,0.05)] border-t border-outline-variant/10 flex justify-around items-center h-nav-height px-2">
+<a href="../dashboard-variant-h-pulse.html" class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 transition-transform hover:text-primary/80 transition-colors" style="text-decoration:none">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-label-caps">Home</span>
+</a>
+<a href="40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center text-primary drop-shadow-[0_0_8px_rgba(54,201,141,0.4)] active:scale-90 transition-transform" style="text-decoration:none">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">school</span>
+<span class="font-label-caps text-label-caps">Learn</span>
+</a>
+<a href="45-extended-practice-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 transition-transform hover:text-primary/80 transition-colors" style="text-decoration:none">
+<span class="material-symbols-outlined">fitness_center</span>
+<span class="font-label-caps text-label-caps">Practice</span>
+</a>
+<a href="40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 transition-transform hover:text-primary/80 transition-colors" style="text-decoration:none">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="font-label-caps text-label-caps">Compliance</span>
+</a>
+<a href="41-settings-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 transition-transform hover:text-primary/80 transition-colors" style="text-decoration:none">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps">Profile</span>
+</a>
+</nav>
+<script>
+        // Filter chip interaction
+        const filterChips = document.querySelectorAll('.hide-scrollbar button');
+        filterChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                filterChips.forEach(c => {
+                    c.classList.remove('bg-primary', 'text-on-primary');
+                    c.classList.add('bg-surface-container', 'text-on-surface-variant');
+                });
+                chip.classList.remove('bg-surface-container', 'text-on-surface-variant');
+                chip.classList.add('bg-primary', 'text-on-primary');
+            });
+        });
+
+        // Touch feedback for item cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'scale(0.98)';
+                card.style.transition = 'transform 0.1s ease';
+            });
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

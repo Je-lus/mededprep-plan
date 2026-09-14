@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Agency Management | Pulse CE Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+    body { background-color: #0A0A0A; color: rgba(255,255,255,0.87); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .pulse-glow { box-shadow: 0 0 15px rgba(54, 201, 141, 0.15); }
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 10px; }
+</style>
+<script>
+    tailwind.config = { darkMode: "class", theme: { extend: { fontFamily: { "sans": ["Inter"], "mono": ["JetBrains Mono"] } } } }
+</script>
+</head>
+<body class="flex min-h-screen overflow-hidden">
+
+<!-- ====== SIDEBAR ====== -->
+<aside class="fixed left-0 top-0 h-full w-[240px] bg-[#0e0e0e] border-r border-[rgba(255,255,255,0.06)] flex flex-col z-50">
+    <div class="p-5 pb-4">
+        <div class="flex items-center gap-2.5 mb-6">
+            <div class="w-8 h-8 rounded-lg bg-[#36C98D] flex items-center justify-center"><span class="material-symbols-outlined text-[18px] text-[#0A0A0A]">favorite</span></div>
+            <div><div class="text-[15px] font-bold text-[rgba(255,255,255,0.87)] leading-none">Pulse CE</div><div class="text-[9px] font-semibold text-[#36C98D] uppercase tracking-[0.1em] mt-0.5">Platform Admin</div></div>
+        </div>
+        <nav class="space-y-0.5">
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="58-platform-dashboard.html"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="59-course-management.html"><span class="material-symbols-outlined text-[20px]">school</span>Courses</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="60-course-editor.html"><span class="material-symbols-outlined text-[20px]">edit_note</span>Course Editor</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="61-item-bank.html"><span class="material-symbols-outlined text-[20px]">database</span>Item Bank</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="62-user-management.html"><span class="material-symbols-outlined text-[20px]">group</span>Users</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#36C98D] bg-[rgba(54,201,141,0.08)] border-l-2 border-[#36C98D] text-[13px] font-medium transition-colors" href="63-agency-management.html"><span class="material-symbols-outlined text-[20px]">corporate_fare</span>Agencies</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="64-analytics-dashboard.html"><span class="material-symbols-outlined text-[20px]">analytics</span>Analytics</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="65-capce-reporting.html"><span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>CAPCE</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="66-content-pipeline.html"><span class="material-symbols-outlined text-[20px]">account_tree</span>Content Pipeline</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="67-financial-reports.html"><span class="material-symbols-outlined text-[20px]">payments</span>Financial</a>
+        </nav>
+    </div>
+    <div class="mt-auto p-4 border-t border-[rgba(255,255,255,0.06)]">
+        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="../batch-3-auth-onboarding/16-login-desktop.html"><span class="material-symbols-outlined text-[20px]">logout</span>Logout</a>
+        <div class="flex items-center gap-3 mt-3 p-2 rounded-[12px] bg-[#111111]">
+            <div class="w-8 h-8 rounded-full bg-[rgba(54,201,141,0.15)] flex items-center justify-center text-[#36C98D] text-[11px] font-bold flex-shrink-0">PA</div>
+            <div class="overflow-hidden"><p class="text-[12px] font-medium text-[rgba(255,255,255,0.87)] truncate">Admin User</p><p class="text-[10px] text-[rgba(255,255,255,0.4)] truncate">admin@pulsece.com</p></div>
+        </div>
+    </div>
+</aside>
+
+<!-- ====== MAIN ====== -->
+<main class="ml-[240px] w-[calc(100%-240px)] flex flex-col h-screen overflow-y-auto custom-scrollbar">
+    <header class="flex justify-between items-center w-full px-8 h-14 bg-[#111111] border-b border-[rgba(255,255,255,0.06)] sticky top-0 z-40">
+        <div class="flex items-center gap-3">
+            <h1 class="text-[15px] font-semibold text-[rgba(255,255,255,0.87)]">Agency Management</h1>
+            <span class="text-[12px] text-[rgba(255,255,255,0.4)]">/</span>
+            <span class="text-[12px] text-[rgba(255,255,255,0.4)]">All Agencies</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="relative">
+                <span class="material-symbols-outlined text-[rgba(255,255,255,0.6)] text-[20px] cursor-pointer hover:text-[rgba(255,255,255,0.87)] transition-colors">notifications</span>
+                <span class="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#36C98D] rounded-full border border-[#111111]"></span>
+            </div>
+            <button class="bg-[#36C98D] text-[#0A0A0A] px-4 py-1.5 rounded-lg text-[12px] font-bold flex items-center gap-1.5 pulse-glow hover:brightness-110 transition-all">
+                <span class="material-symbols-outlined text-[16px]">add</span>Add Agency
+            </button>
+        </div>
+    </header>
+
+    <div class="p-8 space-y-6 max-w-[1600px] mx-auto w-full">
+        <div class="flex justify-between items-end">
+            <div>
+                <h2 class="text-[24px] font-extrabold tracking-tight text-[rgba(255,255,255,0.87)] mb-1">Agency Management</h2>
+                <p class="text-[rgba(255,255,255,0.6)] text-[14px]">18 active agencies &middot; 1,892 affiliated providers</p>
+            </div>
+            <div class="flex gap-2">
+                <button class="px-4 py-1.5 border border-[rgba(255,255,255,0.1)] rounded-lg text-[13px] font-medium text-[rgba(255,255,255,0.87)] hover:bg-[rgba(255,255,255,0.04)] transition-colors flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">file_download</span>Export Report</button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-5 gap-4">
+            <div class="bg-[#111111] p-4 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <p class="text-[rgba(255,255,255,0.4)] text-[10px] font-medium uppercase tracking-wider mb-1">Total Agencies</p>
+                <h3 class="text-[22px] font-bold">18</h3>
+                <span class="text-[#36C98D] text-[10px] font-bold">+3 <span class="text-[rgba(255,255,255,0.4)]">this quarter</span></span>
+            </div>
+            <div class="bg-[#111111] p-4 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <p class="text-[rgba(255,255,255,0.4)] text-[10px] font-medium uppercase tracking-wider mb-1">Total Providers</p>
+                <h3 class="text-[22px] font-bold">1,892</h3>
+                <span class="text-[10px] text-[rgba(255,255,255,0.4)]">Across all agencies</span>
+            </div>
+            <div class="bg-[#111111] p-4 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <p class="text-[rgba(255,255,255,0.4)] text-[10px] font-medium uppercase tracking-wider mb-1">Avg Compliance</p>
+                <h3 class="text-[22px] font-bold text-[#36C98D]">87.3%</h3>
+                <span class="text-[#36C98D] text-[10px] font-bold">+4.2% <span class="text-[rgba(255,255,255,0.4)]">vs last mo</span></span>
+            </div>
+            <div class="bg-[#111111] p-4 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <p class="text-[rgba(255,255,255,0.4)] text-[10px] font-medium uppercase tracking-wider mb-1">Agency MRR</p>
+                <h3 class="text-[22px] font-bold">$34,200</h3>
+                <span class="text-[10px] text-[rgba(255,255,255,0.4)]">71% of total MRR</span>
+            </div>
+            <div class="bg-[#111111] p-4 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <p class="text-[rgba(255,255,255,0.4)] text-[10px] font-medium uppercase tracking-wider mb-1">At Risk</p>
+                <h3 class="text-[22px] font-bold text-[#ffb4ab]">2</h3>
+                <span class="text-[10px] text-[rgba(255,255,255,0.4)]">Below 70% compliance</span>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="border-b border-[rgba(255,255,255,0.06)] flex gap-0">
+            <button class="px-5 py-3 text-[#36C98D] border-b-2 border-[#36C98D] font-medium text-[12px]">All Agencies</button>
+            <button class="px-5 py-3 text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] text-[12px] transition-colors">Active Contracts</button>
+            <button class="px-5 py-3 text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] text-[12px] transition-colors">Billing</button>
+            <button class="px-5 py-3 text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] text-[12px] transition-colors">Compliance</button>
+            <button class="px-5 py-3 text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] text-[12px] transition-colors relative">At Risk<span class="absolute -top-0.5 -right-1 w-4 h-4 bg-[#ffb4ab] text-[8px] text-[#0A0A0A] rounded-full flex items-center justify-center font-bold">2</span></button>
+        </div>
+
+        <!-- Agencies Table -->
+        <div class="bg-[#111111] rounded-[12px] border border-[rgba(255,255,255,0.06)] overflow-hidden">
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="border-b border-[rgba(255,255,255,0.06)] text-[10px] uppercase tracking-wider text-[rgba(255,255,255,0.4)]">
+                        <th class="px-4 py-3 font-medium">Agency</th>
+                        <th class="px-4 py-3 font-medium w-[80px] text-center">Providers</th>
+                        <th class="px-4 py-3 font-medium w-[70px] text-center">Active</th>
+                        <th class="px-4 py-3 font-medium w-[100px] text-center">Compliance</th>
+                        <th class="px-4 py-3 font-medium w-[80px]">Plan</th>
+                        <th class="px-4 py-3 font-medium w-[80px] text-right">MRR</th>
+                        <th class="px-4 py-3 font-medium w-[70px]">Billing</th>
+                        <th class="px-4 py-3 font-medium w-[80px]">Contract</th>
+                        <th class="px-4 py-3 font-medium w-[40px]"></th>
+                    </tr>
+                </thead>
+                <tbody class="text-[12px]">
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-[rgba(54,201,141,0.1)] flex items-center justify-center text-[#36C98D] flex-shrink-0"><span class="material-symbols-outlined text-[16px]">local_fire_department</span></div><div><p class="font-medium">Metro Fire Rescue</p><p class="text-[10px] text-[rgba(255,255,255,0.4)]">Phoenix, AZ &middot; Since Jan 2026</p></div></div></td>
+                        <td class="px-4 py-3 text-center font-mono text-[11px]">342</td>
+                        <td class="px-4 py-3 text-center font-mono text-[11px] text-[#36C98D]">298</td>
+                        <td class="px-4 py-3 text-center"><div class="flex items-center gap-1.5 justify-center"><div class="w-14 h-1.5 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#36C98D] rounded-full" style="width:94%"></div></div><span class="font-mono text-[10px] text-[#36C98D]">94%</span></div></td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full">Enterprise</span></td>
+                        <td class="px-4 py-3 text-right font-mono text-[11px]">$6,840</td>
+                        <td class="px-4 py-3"><span class="text-[9px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full font-bold">CURRENT</span></td>
+                        <td class="px-4 py-3 text-[10px] text-[rgba(255,255,255,0.4)]">Dec 2026</td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 flex-shrink-0"><span class="material-symbols-outlined text-[16px]">emergency</span></div><div><p class="font-medium">Valley EMS</p><p class="text-[10px] text-[rgba(255,255,255,0.4)]">Scottsdale, AZ &middot; Since Mar 2026</p></div></div></td>
+                        <td class="px-4 py-3 text-center font-mono text-[11px]">256</td>
+                        <td class="px-4 py-3 text-center font-mono text-[11px] text-[#36C98D]">210</td>
+                        <td class="px-4 py-3 text-center"><div class="flex items-center gap-1.5 justify-center"><div class="w-14 h-1.5 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#36C98D] rounded-full" style="width:91%"></div></div><span class="font-mono text-[10px] text-[#36C98D]">91%</span></div></td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full">Enterprise</span></td>
+                        <td class="px-4 py-3 text-right font-mono text-[11px]">$5,120</td>
+                        <td class="px-4 py-3"><span class="text-[9px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full font-bold">CURRENT</span></td>
+                        <td class="px-4 py-3 text-[10px] text-[rgba(255,255,255,0.4)]">Feb 2027</td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 flex-shrink-0"><span class="material-symbols-outlined text-[16px]">directions_car</span></div><div><p class="font-medium">Coastal Ambulance</p><p class="text-[10px] text-[rgba(255,255,255,0.4)]">San Diego, CA &middot; Since Feb 2026</p></div></div></td>
+                        <td class="px-4 py-3 text-center font-mono text-[11px]">189</td>
+                        <td class="px-4 py-3 text-center font-mono text-[11px] text-[#36C98D]">156</td>
+                        <td class="px-4 py-3 text-center"><div class="flex items-center gap-1.5 justify-center"><div class="w-14 h-1.5 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#36C98D] rounded-full" style="width:88%"></div></div><span class="font-mono text-[10px]">88%</span></div></td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded-full">Pro</span></td>
+                        <td class="px-4 py-3 text-right font-mono text-[11px]">$3,780</td>
+                        <td class="px-4 py-3"><span class="text-[9px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full font-bold">CURRENT</span></td>
+                        <td class="px-4 py-3 text-[10px] text-[rgba(255,255,255,0.4)]">Nov 2026</td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 flex-shrink-0"><span class="material-symbols-outlined text-[16px]">health_and_safety</span></div><div><p class="font-medium">Summit Health Services</p><p class="text-[10px] text-[rgba(255,255,255,0.4)]">Denver, CO &middot; Since Apr 2026</p></div></div></td>
+                        <td class="px-4 py-3 text-center font-mono text-[11px]">145</td>
+                        <td class="px-4 py-3 text-center font-mono text-[11px] text-[#36C98D]">112</td>
+                        <td class="px-4 py-3 text-center"><div class="flex items-center gap-1.5 justify-center"><div class="w-14 h-1.5 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#36C98D] rounded-full" style="width:82%"></div></div><span class="font-mono text-[10px]">82%</span></div></td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded-full">Pro</span></td>
+                        <td class="px-4 py-3 text-right font-mono text-[11px]">$2,900</td>
+                        <td class="px-4 py-3"><span class="text-[9px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full font-bold">CURRENT</span></td>
+                        <td class="px-4 py-3 text-[10px] text-[rgba(255,255,255,0.4)]">Mar 2027</td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors bg-[rgba(255,180,171,0.02)]">
+                        <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-[rgba(255,180,171,0.1)] flex items-center justify-center text-[#ffb4ab] flex-shrink-0"><span class="material-symbols-outlined text-[16px]">local_hospital</span></div><div><p class="font-medium">Riverside Medics</p><p class="text-[10px] text-[rgba(255,255,255,0.4)]">Riverside, CA &middot; Since Jan 2026</p></div></div></td>
+                        <td class="px-4 py-3 text-center font-mono text-[11px]">98</td>
+                        <td class="px-4 py-3 text-center font-mono text-[11px] text-[#ffb4ab]">41</td>
+                        <td class="px-4 py-3 text-center"><div class="flex items-center gap-1.5 justify-center"><div class="w-14 h-1.5 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#ffb4ab] rounded-full" style="width:62%"></div></div><span class="font-mono text-[10px] text-[#ffb4ab]">62%</span></div></td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-[rgba(255,255,255,0.06)] text-[rgba(255,255,255,0.6)] px-2 py-0.5 rounded-full">Starter</span></td>
+                        <td class="px-4 py-3 text-right font-mono text-[11px]">$1,470</td>
+                        <td class="px-4 py-3"><span class="text-[9px] bg-[rgba(255,180,171,0.1)] text-[#ffb4ab] px-2 py-0.5 rounded-full font-bold">OVERDUE</span></td>
+                        <td class="px-4 py-3 text-[10px] text-[#ffb4ab]">Expired</td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-[rgba(54,201,141,0.1)] flex items-center justify-center text-[#36C98D] flex-shrink-0"><span class="material-symbols-outlined text-[16px]">flight</span></div><div><p class="font-medium">AirMed Transport</p><p class="text-[10px] text-[rgba(255,255,255,0.4)]">Las Vegas, NV &middot; Since May 2026</p></div></div></td>
+                        <td class="px-4 py-3 text-center font-mono text-[11px]">87</td>
+                        <td class="px-4 py-3 text-center font-mono text-[11px] text-[#36C98D]">74</td>
+                        <td class="px-4 py-3 text-center"><div class="flex items-center gap-1.5 justify-center"><div class="w-14 h-1.5 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#36C98D] rounded-full" style="width:90%"></div></div><span class="font-mono text-[10px] text-[#36C98D]">90%</span></div></td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded-full">Pro</span></td>
+                        <td class="px-4 py-3 text-right font-mono text-[11px]">$1,740</td>
+                        <td class="px-4 py-3"><span class="text-[9px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full font-bold">CURRENT</span></td>
+                        <td class="px-4 py-3 text-[10px] text-[rgba(255,255,255,0.4)]">Apr 2027</td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="hover:bg-[rgba(255,255,255,0.02)] transition-colors bg-[rgba(255,180,171,0.02)]">
+                        <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-[rgba(255,180,171,0.1)] flex items-center justify-center text-[#ffb4ab] flex-shrink-0"><span class="material-symbols-outlined text-[16px]">apartment</span></div><div><p class="font-medium">Capital District EMS</p><p class="text-[10px] text-[rgba(255,255,255,0.4)]">Austin, TX &middot; Since Dec 2025</p></div></div></td>
+                        <td class="px-4 py-3 text-center font-mono text-[11px]">134</td>
+                        <td class="px-4 py-3 text-center font-mono text-[11px] text-[#ffb4ab]">52</td>
+                        <td class="px-4 py-3 text-center"><div class="flex items-center gap-1.5 justify-center"><div class="w-14 h-1.5 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#ffb4ab] rounded-full" style="width:58%"></div></div><span class="font-mono text-[10px] text-[#ffb4ab]">58%</span></div></td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full">Enterprise</span></td>
+                        <td class="px-4 py-3 text-right font-mono text-[11px]">$2,680</td>
+                        <td class="px-4 py-3"><span class="text-[9px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded-full font-bold">DUE SOON</span></td>
+                        <td class="px-4 py-3 text-[10px] text-amber-400">Jun 2026</td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Bottom Cards -->
+        <div class="grid grid-cols-3 gap-5">
+            <div class="bg-[#111111] p-6 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <h4 class="text-[16px] font-semibold mb-4">Plan Distribution</h4>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 bg-[#36C98D] rounded-full"></span><span class="text-[11px] text-[rgba(255,255,255,0.6)]">Enterprise</span></div><span class="font-mono text-[11px] font-medium">6 agencies</span></div>
+                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 bg-amber-400 rounded-full"></span><span class="text-[11px] text-[rgba(255,255,255,0.6)]">Pro</span></div><span class="font-mono text-[11px] font-medium">8 agencies</span></div>
+                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 bg-[rgba(255,255,255,0.4)] rounded-full"></span><span class="text-[11px] text-[rgba(255,255,255,0.6)]">Starter</span></div><span class="font-mono text-[11px] font-medium">4 agencies</span></div>
+                </div>
+            </div>
+            <div class="bg-[#111111] p-6 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <h4 class="text-[16px] font-semibold mb-4">Top Revenue</h4>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3"><span class="text-[10px] text-[rgba(255,255,255,0.4)] w-24 truncate">Metro Fire</span><div class="flex-1 h-2 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#36C98D] rounded-full" style="width:100%"></div></div><span class="font-mono text-[10px] w-14 text-right">$6,840</span></div>
+                    <div class="flex items-center gap-3"><span class="text-[10px] text-[rgba(255,255,255,0.4)] w-24 truncate">Valley EMS</span><div class="flex-1 h-2 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#36C98D] rounded-full" style="width:75%"></div></div><span class="font-mono text-[10px] w-14 text-right">$5,120</span></div>
+                    <div class="flex items-center gap-3"><span class="text-[10px] text-[rgba(255,255,255,0.4)] w-24 truncate">Coastal Amb.</span><div class="flex-1 h-2 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#36C98D] rounded-full" style="width:55%"></div></div><span class="font-mono text-[10px] w-14 text-right">$3,780</span></div>
+                    <div class="flex items-center gap-3"><span class="text-[10px] text-[rgba(255,255,255,0.4)] w-24 truncate">Summit Health</span><div class="flex-1 h-2 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#36C98D] rounded-full" style="width:42%"></div></div><span class="font-mono text-[10px] w-14 text-right">$2,900</span></div>
+                </div>
+            </div>
+            <div class="bg-[#111111] p-6 rounded-[12px] border border-[rgba(255,180,171,0.2)]">
+                <h4 class="text-[16px] font-semibold text-[#ffb4ab] mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">warning</span>Compliance Alerts
+                </h4>
+                <div class="space-y-3">
+                    <div class="p-3 rounded-lg bg-[rgba(255,180,171,0.04)] border border-[rgba(255,180,171,0.1)]">
+                        <div class="flex items-center justify-between mb-1">
+                            <p class="text-[11px] font-medium">Riverside Medics</p>
+                            <span class="font-mono text-[10px] text-[#ffb4ab]">62%</span>
+                        </div>
+                        <p class="text-[10px] text-[rgba(255,255,255,0.4)]">57 providers behind on CE requirements. Contract expired.</p>
+                    </div>
+                    <div class="p-3 rounded-lg bg-[rgba(255,180,171,0.04)] border border-[rgba(255,180,171,0.1)]">
+                        <div class="flex items-center justify-between mb-1">
+                            <p class="text-[11px] font-medium">Capital District EMS</p>
+                            <span class="font-mono text-[10px] text-[#ffb4ab]">58%</span>
+                        </div>
+                        <p class="text-[10px] text-[rgba(255,255,255,0.4)]">82 providers behind. Contract renewal due Jun 2026.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

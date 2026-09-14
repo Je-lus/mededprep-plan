@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batch 1A: Daily Check Flow — Pulse CE Mockups</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0A0A0A;
+      color: #FFFFFF;
+      min-height: 100vh;
+      padding: 40px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 40px;
+    }
+    .subtitle strong { color: #36C98D; font-weight: 600; }
+    .flow-section {
+      margin-bottom: 48px;
+    }
+    .flow-section h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #36C98D;
+      margin-bottom: 6px;
+    }
+    .flow-section p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 16px;
+    }
+    .variants {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .variants a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .variants a.mobile {
+      background: rgba(54, 201, 141, 0.12);
+      color: #36C98D;
+      border: 1px solid rgba(54, 201, 141, 0.3);
+    }
+    .variants a.mobile:hover {
+      background: rgba(54, 201, 141, 0.2);
+    }
+    .variants a.desktop {
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .variants a.desktop:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #FFFFFF;
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      margin: 32px 0;
+    }
+    .meta {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      margin-top: 48px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Batch 1A: Daily Check Flow</h1>
+  <p class="subtitle">4 screens showing the <strong>Daily Check</strong> as a connected single-page state progression at <code>/daily</code>. Mobile-first with desktop variants.</p>
+
+  <div class="flow-section">
+    <h2>DC-1: Daily Check Entry</h2>
+    <p>Today's question card, domain tag, confidence buttons before reveal. All neutral/unselected state.</p>
+    <div class="variants">
+      <a href="dc-1-entry-mobile.html" class="mobile">Mobile (390px)</a>
+      <a href="dc-1-entry-desktop.html" class="desktop">Desktop (1280px)</a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="flow-section">
+    <h2>DC-2: Answer & Confidence Locked In</h2>
+    <p>Selected answer (B) + confidence (Somewhat Sure) locked in, "Show Result" CTA prominent.</p>
+    <div class="variants">
+      <a href="dc-2-answer-mobile.html" class="mobile">Mobile (390px)</a>
+      <a href="dc-2-answer-desktop.html" class="desktop">Desktop (1280px)</a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="flow-section">
+    <h2>DC-3: Feedback & Rationale</h2>
+    <p>Correct/incorrect reveal, clinical rationale card, retention stability indicator, "Not now" for optional deep-dive.</p>
+    <div class="variants">
+      <a href="dc-3-feedback-mobile.html" class="mobile">Mobile (390px)</a>
+      <a href="dc-3-feedback-desktop.html" class="desktop">Desktop (1280px)</a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="flow-section">
+    <h2>DC-4: Session Complete</h2>
+    <p>Active days this month updated (not streaks), encouragement, next review countdown, quick link to extended practice.</p>
+    <div class="variants">
+      <a href="dc-4-complete-mobile.html" class="mobile">Mobile (390px)</a>
+      <a href="dc-4-complete-desktop.html" class="desktop">Desktop (1280px)</a>
+    </div>
+  </div>
+
+  <p class="meta">
+    Generated 2026-05-19 via Google Stitch with Pulse CE Design System.<br>
+    Stitch Project: projects/18220296553674401364 | Design System: assets/6e39138c05de48abb94ccfa64be4dea9
+  </p>
+</body>
+</html>

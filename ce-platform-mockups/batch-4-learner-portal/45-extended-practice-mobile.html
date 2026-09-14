@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Pulse CE - Practice Session</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#aab9ac",
+                        "error-container": "#93000a",
+                        "surface-tint": "#51dea0",
+                        "primary-fixed": "#71fbbb",
+                        "on-secondary-fixed": "#111e16",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container": "#201f1f",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#ffddb4",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#353534",
+                        "on-primary": "#003823",
+                        "primary-fixed-dim": "#51dea0",
+                        "on-primary-fixed": "#002113",
+                        "tertiary": "#ffc370",
+                        "on-surface": "#e5e2e1",
+                        "on-primary-container": "#004f33",
+                        "primary": "#5ae6a7",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-container-highest": "#353534",
+                        "on-surface-variant": "#bbcabf",
+                        "background": "#0A0A0A",
+                        "on-secondary-fixed-variant": "#3c4a40",
+                        "on-tertiary-fixed": "#291800",
+                        "on-error": "#690005",
+                        "on-tertiary": "#452b00",
+                        "on-secondary": "#26332a",
+                        "on-primary-fixed-variant": "#005235",
+                        "outline": "#86948a",
+                        "secondary-fixed-dim": "#bbcabd",
+                        "surface": "#131313",
+                        "on-background": "#e5e2e1",
+                        "surface-dim": "#131313",
+                        "on-tertiary-container": "#603d00",
+                        "tertiary-fixed-dim": "#ffb955",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-container": "#36c98d",
+                        "secondary-fixed": "#d7e7d9",
+                        "secondary": "#bbcabd",
+                        "inverse-on-surface": "#313030",
+                        "secondary-container": "#3c4a40",
+                        "outline-variant": "#3d4a41",
+                        "tertiary-container": "#f0a21e",
+                        "surface-container-low": "#1c1b1b",
+                        "inverse-primary": "#006c47",
+                        "surface-bright": "#3a3939"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "max-width": "1280px",
+                        "touch-target": "44px",
+                        "margin-mobile": "16px",
+                        "nav-height": "60px",
+                        "gap-default": "16px",
+                        "margin-desktop": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["30px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                        "headline-lg": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["20px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0A0A;
+            background-image: radial-gradient(circle at 50% 0%, rgba(54, 201, 141, 0.08) 0%, transparent 70%);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-card {
+            background: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .option-active {
+            border-color: #36C98D !important;
+            background: rgba(54, 201, 141, 0.05) !important;
+            box-shadow: 0 0 15px rgba(54, 201, 141, 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface min-h-screen flex flex-col items-center overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/10 shadow-sm flex justify-between items-center px-margin-mobile h-nav-height">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-primary active:scale-95 transition-transform" data-icon="arrow_back">arrow_back</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Practice</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-label-caps text-primary bg-primary/10 px-2 py-1 rounded-full">Session 3/15</span>
+<button class="material-symbols-outlined text-on-surface-variant active:scale-95 transition-transform" data-icon="more_vert">more_vert</button>
+</div>
+</header>
+<!-- Progress Indicator -->
+<div class="fixed top-[60px] w-full h-1 bg-surface-container z-40">
+<div class="h-full bg-primary-container shadow-[0_0_8px_#36c98d]" style="width: 20%"></div>
+</div>
+<!-- Main Content Canvas -->
+<main class="w-full max-w-[390px] px-margin-mobile pt-24 pb-32 flex flex-col gap-6">
+<!-- Question Card -->
+<section class="glass-card rounded-xl p-5 border-l-4 border-l-primary-container relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl" data-icon="medical_services">medical_services</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="clinical_notes">clinical_notes</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Clinical Vignette</span>
+</div>
+<p class="font-headline-lg-mobile text-headline-lg-mobile leading-relaxed text-on-surface">
+                    A 68-year-old male presents with sudden onset substernal chest pain described as "tearing" that radiates to his back. Initial BP is 190/110. What is your primary clinical suspicion?
+                </p>
+</div>
+</section>
+<!-- Multiple Choice Options -->
+<section class="flex flex-col gap-3">
+<!-- Option A -->
+<button class="glass-card flex items-center p-4 rounded-xl text-left hover:bg-surface-container-high transition-colors active:scale-[0.98] transition-transform duration-200" onclick="selectOption(this)">
+<div class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center mr-4 shrink-0 font-bold text-on-surface-variant">A</div>
+<span class="text-on-surface font-semibold">Acute Myocardial Infarction</span>
+</button>
+<!-- Option B -->
+<button class="glass-card flex items-center p-4 rounded-xl text-left hover:bg-surface-container-high transition-colors active:scale-[0.98] transition-transform duration-200" onclick="selectOption(this)">
+<div class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center mr-4 shrink-0 font-bold text-on-surface-variant">B</div>
+<span class="text-on-surface font-semibold">Pulmonary Embolism</span>
+</button>
+<!-- Option C -->
+<button class="glass-card flex items-center p-4 rounded-xl text-left hover:bg-surface-container-high transition-colors active:scale-[0.98] transition-transform duration-200" onclick="selectOption(this)">
+<div class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center mr-4 shrink-0 font-bold text-on-surface-variant">C</div>
+<span class="text-on-surface font-semibold">Aortic Dissection</span>
+</button>
+<!-- Option D -->
+<button class="glass-card flex items-center p-4 rounded-xl text-left hover:bg-surface-container-high transition-colors active:scale-[0.98] transition-transform duration-200" onclick="selectOption(this)">
+<div class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center mr-4 shrink-0 font-bold text-on-surface-variant">D</div>
+<span class="text-on-surface font-semibold">Tension Pneumothorax</span>
+</button>
+</section>
+<!-- Confidence Indicators -->
+<section class="mt-2">
+<h3 class="font-label-caps text-label-caps uppercase text-center text-on-surface-variant mb-4">How confident are you?</h3>
+<div class="flex justify-between gap-3">
+<button class="flex-1 glass-card py-3 px-4 rounded-full font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors active:scale-95">GUESS</button>
+<button class="flex-1 glass-card py-3 px-4 rounded-full font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors active:scale-95">MAYBE</button>
+<button class="flex-1 glass-card py-3 px-4 rounded-full font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors active:scale-95">SURE</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 dark:bg-surface/90 backdrop-blur-xl border-t border-outline-variant/10 shadow-[0_-4px_20px_rgba(54,201,141,0.05)] flex justify-around items-center h-nav-height px-2">
+<a class="flex flex-col items-center justify-center text-on-secondary-container opacity-60 hover:text-primary/80 active:scale-90 transition-all duration-200" href="../dashboard-variant-h-pulse.html"><span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-label-caps">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container opacity-60 hover:text-primary/80 active:scale-90 transition-all duration-200" href="40-compliance-tracker-mobile.html"><span class="material-symbols-outlined">school</span>
+<span class="font-label-caps text-label-caps">Learn</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-primary after:rounded-full shadow-[0_0_15px_rgba(54,201,141,0.3)] active:scale-90 transition-all duration-200" href="45-extended-practice-mobile.html">
+<span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+<span class="font-label-caps text-label-caps">Practice</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container opacity-60 hover:text-primary/80 active:scale-90 transition-all duration-200" href="40-compliance-tracker-mobile.html">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span class="font-label-caps text-label-caps">Compliance</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container opacity-60 hover:text-primary/80 active:scale-90 transition-all duration-200" href="41-settings-mobile.html"><span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps">Profile</span>
+</a>
+</nav>
+<script>
+        function selectOption(element) {
+            // Remove active state from all options
+            document.querySelectorAll('section button.glass-card').forEach(btn => {
+                btn.classList.remove('option-active');
+                const indicator = btn.querySelector('.shrink-0');
+                if(indicator) {
+                    indicator.classList.remove('border-primary', 'text-primary');
+                    indicator.classList.add('border-outline-variant', 'text-on-surface-variant');
+                }
+            });
+
+            // Add active state to clicked option
+            element.classList.add('option-active');
+            const activeIndicator = element.querySelector('.shrink-0');
+            if(activeIndicator) {
+                activeIndicator.classList.remove('border-outline-variant', 'text-on-surface-variant');
+                activeIndicator.classList.add('border-primary', 'text-primary');
+            }
+
+            // Haptic feedback simulation
+            if ('vibrate' in navigator) {
+                navigator.vibrate(10);
+            }
+        }
+    </script>
+</body></html>

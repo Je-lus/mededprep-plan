@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Company C &mdash; Certification &mdash; MedEdPrep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0e14;
+    --bg-surface: #111820;
+    --bg-card: #151c25;
+    --bg-card-hover: #1a2331;
+    --bg-elevated: #1e2733;
+    --border: #243040;
+    --border-subtle: #1c2535;
+    --text-primary: #e8edf4;
+    --text-secondary: #8899aa;
+    --text-muted: #5a6a7a;
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+    --teal-glow: rgba(45,212,191,0.06);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.12);
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.12);
+    --orange: #fb923c;
+    --orange-dim: rgba(251,146,60,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.12);
+    --nav-width: 240px;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg-base);
+    background-image: radial-gradient(circle at 1px 1px, rgba(45,212,191,0.02) 1px, transparent 0);
+    background-size: 40px 40px;
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--purple), var(--blue), var(--teal));
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+    z-index: 200;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    width: var(--nav-width);
+    min-width: var(--nav-width);
+    background: rgba(17,24,32,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  nav::-webkit-scrollbar { width: 0; }
+
+  .nav-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .nav-brand-name {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--teal), #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-brand-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links { flex: 1; padding: 4px 0; }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    position: relative;
+  }
+  nav a:hover {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.04);
+    border-left-color: var(--teal);
+  }
+  nav a.active {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.06);
+    border-left-color: var(--teal);
+  }
+  nav a .nav-icon {
+    font-size: 15px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .nav-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 8px 16px;
+  }
+  .nav-footer {
+    padding: 20px 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .nav-footer-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .nav-footer-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    margin-left: var(--nav-width);
+    padding: 64px 56px 48px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #080c12 0%, #0d1520 30%, #0a1420 60%, #080e18 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: 10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(96,165,250,0.07) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: 20%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(167,139,250,0.05) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--blue);
+    vertical-align: middle;
+    margin-left: 12px;
+    opacity: 0.4;
+  }
+
+  .hero-headline {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f0f4f8 25%, var(--blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  .hero-narrative {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-top: 16px;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    align-self: start;
+  }
+  .hero-metric {
+    background: var(--bg-surface);
+    padding: 20px 22px;
+    transition: background 0.2s;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .hero-metric:nth-child(1) { animation-delay: 0.05s; }
+  .hero-metric:nth-child(2) { animation-delay: 0.1s; }
+  .hero-metric:nth-child(3) { animation-delay: 0.15s; }
+  .hero-metric:nth-child(4) { animation-delay: 0.2s; }
+  .hero-metric:hover { background: var(--bg-card); }
+  .hero-metric-value {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .c-teal { color: var(--teal); }
+  .c-purple { color: var(--purple); }
+  .c-blue { color: var(--blue); }
+  .c-green { color: var(--green); }
+  .c-amber { color: var(--amber); }
+  .c-pink { color: var(--pink); }
+  .c-orange { color: var(--orange); }
+  .hero-metric-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .hero-metric-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── MAIN ── */
+  .main-inner {
+    margin-left: var(--nav-width);
+    padding: 40px 56px 80px;
+    max-width: 1300px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .section[id] { scroll-margin-top: 24px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+    padding: 16px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .section-header::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: transparent;
+    transition: background 0.2s;
+    border-radius: 3px 0 0 3px;
+  }
+  .section-header:hover { background: var(--bg-card-hover); }
+  .section-header.active::before {
+    background: linear-gradient(180deg, var(--blue), var(--purple));
+  }
+  .section-header.active {
+    border-color: rgba(96,165,250,0.15);
+    background: linear-gradient(135deg, rgba(96,165,250,0.03) 0%, var(--bg-card) 40%);
+  }
+
+  .section-icon { font-size: 20px; width: 24px; text-align: center; flex-shrink: 0; }
+  .section-title { font-size: 16px; font-weight: 700; color: var(--text-primary); flex: 1; }
+  .section-subtitle { font-size: 12px; font-weight: 500; color: var(--text-muted); margin-left: 10px; }
+  .section-chevron {
+    color: var(--text-muted);
+    font-size: 11px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+  .section-chevron.open { transform: rotate(180deg); }
+
+  .section-body {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    opacity: 0;
+  }
+  .section-body.open { max-height: 99999px; opacity: 1; }
+  .section-inner { padding: 24px 0 0; }
+
+  /* ── CALLOUTS ── */
+  .callout-warning {
+    background: linear-gradient(135deg, rgba(251,191,36,0.06) 0%, var(--bg-card) 60%);
+    border: 1px solid rgba(251,191,36,0.25);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-warning-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--amber);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .callout-warning-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-warning-body strong { color: var(--text-primary); }
+
+  .callout-info {
+    background: linear-gradient(135deg, rgba(96,165,250,0.06) 0%, var(--bg-card) 60%);
+    border: 1px solid rgba(96,165,250,0.2);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-info-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+  .callout-info-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-info-body strong { color: var(--text-primary); }
+
+  .callout-purple {
+    background: linear-gradient(135deg, rgba(167,139,250,0.06) 0%, var(--bg-card) 60%);
+    border: 1px solid rgba(167,139,250,0.22);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-purple-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--purple);
+    margin-bottom: 8px;
+  }
+  .callout-purple-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-purple-body strong { color: var(--text-primary); }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: #344050; }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .card-label {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+  }
+  .card-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .card-body strong { color: var(--text-primary); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+  /* ── IP-STYLE FEATURE CARDS ── */
+  .ip-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .ip-card:hover { border-color: rgba(96,165,250,0.2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .ip-card-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .ip-card-icon { font-size: 18px; flex-shrink: 0; line-height: 1.3; }
+  .ip-card-title { font-size: 13px; font-weight: 700; color: var(--text-primary); line-height: 1.4; }
+  .ip-card-body { font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
+  .ip-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  /* ── CREDENTIAL LADDER ── */
+  .ladder {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .ladder-rung {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px 16px;
+    position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .ladder-rung:hover { transform: translateY(-2px); }
+  .ladder-rung.l1 { border-top: 3px solid var(--green); }
+  .ladder-rung.l2 { border-top: 3px solid var(--teal); }
+  .ladder-rung.l3 { border-top: 3px solid var(--blue); }
+  .ladder-rung.l4 { border-top: 3px solid var(--purple); }
+  .ladder-rung.l5 { border-top: 3px solid var(--amber); }
+  .ladder-code { font-size: 20px; font-weight: 900; letter-spacing: -0.02em; }
+  .ladder-name { font-size: 12px; color: var(--text-secondary); font-weight: 600; margin-top: 4px; line-height: 1.3; }
+  .ladder-meta { font-size: 11px; color: var(--text-muted); margin-top: 8px; line-height: 1.5; }
+
+  /* ── TABLES ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .data-table th {
+    text-align: left;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table td {
+    padding: 10px 12px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .data-table td:first-child { color: var(--text-primary); font-weight: 500; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+  .table-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .table-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-muted);
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  /* ── STEP CARDS ── */
+  .step-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    display: flex; gap: 14px; align-items: flex-start;
+    transition: border-color 0.2s;
+    margin-bottom: 12px;
+  }
+  .step-card:hover { border-color: #344050; }
+  .step-num {
+    width: 32px; height: 32px;
+    border-radius: var(--radius-xs);
+    background: var(--blue-dim);
+    color: var(--blue);
+    font-size: 13px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-content { flex: 1; min-width: 0; }
+  .step-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .step-body { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+  .step-body strong { color: var(--text-primary); }
+
+  /* ── DETAIL LIST ── */
+  .detail-list {
+    list-style: none;
+    font-size: 12px;
+    margin-top: 8px;
+  }
+  .detail-list li {
+    padding: 4px 0;
+    color: var(--text-secondary);
+    display: flex; align-items: baseline; gap: 8px; line-height: 1.5;
+  }
+  .detail-list li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+  .detail-list.teal li::before { background: var(--teal); }
+  .detail-list.blue li::before { background: var(--blue); }
+  .detail-list.amber li::before { background: var(--amber); }
+  .detail-list.red li::before { background: var(--red); }
+  .detail-list.green li::before { background: var(--green); }
+  .detail-list strong { color: var(--text-primary); }
+
+  /* ── PIPELINE ── */
+  .pipeline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 24px;
+  }
+  .pipe-step {
+    flex: 1 1 0;
+    min-width: 150px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px 16px;
+    position: relative;
+    margin: 0 8px 16px 0;
+  }
+  .pipe-step-num { font-size: 10px; font-weight: 700; color: var(--blue); letter-spacing: 0.08em; text-transform: uppercase; }
+  .pipe-step-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-top: 4px; }
+  .pipe-step-body { font-size: 11px; color: var(--text-secondary); margin-top: 6px; line-height: 1.5; }
+
+  /* ── STATUS TAGS ── */
+  .status-complete { background: var(--green-dim); color: var(--green); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+
+  /* ── CONTROLS ── */
+  .controls {
+    display: flex; gap: 8px;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+  }
+  .controls button {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .controls button:hover { color: var(--blue); border-color: var(--blue); background: var(--blue-dim); }
+
+  /* ── PAGE FOOTER ── */
+  .page-footer {
+    font-size: 11px; color: var(--text-muted);
+    text-align: right;
+    margin-top: 48px; padding-top: 20px;
+    border-top: 1px solid var(--border-subtle);
+    font-weight: 500;
+  }
+
+  /* ── ENTITY STATUS ── */
+  .entity-status {
+    font-size: 10px; font-weight: 700;
+    padding: 5px 12px; border-radius: 20px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .entity-status .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .es-future { background: var(--blue-dim); color: var(--blue); }
+  .es-future .dot { background: var(--blue); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .hero-content { grid-template-columns: 1fr; gap: 32px; }
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: 1fr 1fr; }
+    .ladder { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 900px) {
+    nav { display: none; }
+    .hero { margin-left: 0; padding: 40px 24px 32px; }
+    .main-inner { margin-left: 0; padding: 24px 20px 60px; }
+    .hero-headline { font-size: 26px; }
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .ladder { grid-template-columns: 1fr 1fr; }
+    .grid-auto { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .hero-metrics { grid-template-columns: 1fr; }
+    .ladder { grid-template-columns: 1fr; }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-base); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a4a5a; }
+
+  /* ── PRINT ── */
+  @media print {
+    nav { display: none; }
+    body { background: white; color: #111; }
+    body::before { display: none; }
+    .hero, .main-inner { margin-left: 0; }
+    .section { opacity: 1 !important; transform: none !important; }
+    .section-body { max-height: none !important; opacity: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAVIGATION ═══════ -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-name">MedEdPrep</div>
+    <div class="nav-brand-sub">Founder Command Center</div>
+  </div>
+  <div class="nav-links">
+    <a href="hub.html"><span class="nav-icon">&#9670;</span> Hub</a>
+    <a href="entity-company-a.html"><span class="nav-icon">&#9671;</span> Co. A &mdash; Education</a>
+    <a href="entity-company-c.html" class="active"><span class="nav-icon">&#9670;</span> Co. C &mdash; Certification</a>
+    <a href="entity-nonprofit.html"><span class="nav-icon">&#9671;</span> Foundation (501c3)</a>
+    <a href="entity-ip-vault.html"><span class="nav-icon">&#9671;</span> IP &amp; The Vault</a>
+    <a href="entity-market.html"><span class="nav-icon">&#9671;</span> Market Landscape</a>
+    <a href="entity-psychometric.html"><span class="nav-icon">&#9671;</span> Psychometric &amp; Data</a>
+    <div class="nav-divider"></div>
+    <a href="dashboard.html"><span class="nav-icon">&#9671;</span> Dashboard</a>
+    <a href="action-center.html"><span class="nav-icon">&#9671;</span> Action Center</a>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-footer-label">Last updated</div>
+    <div class="nav-footer-date">June 18, 2026</div>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Future Entity &middot; Operating Company</div>
+      <h1 class="hero-headline">Company C &mdash; Certification</h1>
+      <div>
+        <span class="entity-status es-future"><span class="dot"></span> Future State &mdash; Georgia LLC</span>
+      </div>
+      <p class="hero-narrative">An independent EMS certification agency issuing its own credentials across a five-level ladder &mdash; <strong style="color:var(--text-primary);">EMR &rarr; EMT &rarr; AEMT &rarr; Paramedic &rarr; Paramedic Practitioner</strong>. Its differentiator is <strong style="color:var(--text-primary);">bifactor dual-validation</strong>: one item set yields both a defensible pass/fail decision and a diagnostic profile. It runs a separate, secured question database, pursues NCCA accreditation (which permits for-profit certification bodies), and uses CE &ldquo;recert by exam&rdquo; to calibrate items at industrial scale.</p>
+    </div>
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="hero-metric-value c-blue">5 levels</div>
+        <div class="hero-metric-label">Credential ladder</div>
+        <div class="hero-metric-note">EMR through Paramedic Practitioner</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-teal">21</div>
+        <div class="hero-metric-label">NCCA standards to meet</div>
+        <div class="hero-metric-note">2021 revision &middot; for-profit allowed</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-purple">620K+</div>
+        <div class="hero-metric-label">NREMT-certified clinicians</div>
+        <div class="hero-metric-note">Recert-by-exam calibration pool</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-amber">~2.5&ndash;3 yr</div>
+        <div class="hero-metric-label">Zero to NCCA-accredited</div>
+        <div class="hero-metric-note">Launch first, accredit second</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ MAIN CONTENT ═══════ -->
+<div class="main-inner">
+
+  <div class="controls">
+    <button onclick="toggleAll(true)">Expand All</button>
+    <button onclick="toggleAll(false)">Collapse All</button>
+  </div>
+
+  <!-- ── SECTION 1: THE CERTIFICATION THESIS ── -->
+  <div class="section visible" id="thesis">
+    <div class="section-header active" onclick="toggleSection(this)" aria-expanded="true" tabindex="0" role="button">
+      <span class="section-icon">&#127919;</span>
+      <span class="section-title">The Certification Thesis<span class="section-subtitle">Own the credential, not just the prep</span></span>
+      <span class="section-chevron open">&#9662;</span>
+    </div>
+    <div class="section-body open">
+      <div class="section-inner">
+
+        <div class="callout-info">
+          <div class="callout-info-title">The Strategic Position</div>
+          <div class="callout-info-body">Company A (MedEdPrep) prepares candidates to <em>pass someone else&rsquo;s exam</em>. Company C <strong>issues the credential itself</strong> &mdash; a structurally separate Georgia LLC with its own brand, independent governance board, and a question database that never touches the education side. NCCA explicitly <strong>permits for-profit certification bodies</strong>; the constraint is not corporate form, it is the firewall between education and certification. That firewall is exactly why A and C must be separate entities.</div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-label">Why a Separate Entity</div>
+            <ul class="detail-list blue">
+              <li>NCCA &amp; ISO/IEC 17024 require structural separation between certification and any affiliated education/training entity</li>
+              <li>Prevents the &ldquo;diploma mill&rdquo; conflict &mdash; the body that teaches cannot be the body that judges</li>
+              <li>Independent oversight board with a public member &mdash; a 501(c)(3)-style governance requirement</li>
+              <li>Separate brand needed for NCCA credibility and market positioning distinct from MedEdPrep</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-label">The Differentiators</div>
+            <ul class="detail-list teal">
+              <li><strong>Bifactor dual-validation</strong> &mdash; pass/fail + diagnostic from the same items</li>
+              <li><strong>Unified Paramedic Practitioner</strong> capstone &mdash; nobody offers it; IBSC does narrow specialties only</li>
+              <li><strong>Recert-by-exam calibration</strong> &mdash; CE volume that pretests items at industrial scale</li>
+              <li><strong>Psychometric rigor</strong> built on infrastructure NREMT removed in its 2025 CAT redesign</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout-warning" style="margin-top:24px;margin-bottom:0;">
+          <div class="callout-warning-title">&#9888; Future State &mdash; Not Yet Formed</div>
+          <div class="callout-warning-body">Company C does not exist yet. It is a <strong>Year&nbsp;2&ndash;4 build</strong>. The sequence is deliberate: stand up a defensible program with full psychometric rigor &rarr; launch and collect operational data &rarr; <em>then</em> apply for NCCA accreditation. You cannot accredit a proposal &mdash; NCCA only accredits programs that are already issuing certifications with at least one administration cycle of statistical data.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2: CREDENTIAL LADDER ── -->
+  <div class="section" id="ladder">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#129352;</span>
+      <span class="section-title">The 5-Level Credential Ladder<span class="section-subtitle">EMR &rarr; EMT &rarr; AEMT &rarr; Paramedic &rarr; PP</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="ladder">
+          <div class="ladder-rung l1">
+            <div class="ladder-code c-green">EMR</div>
+            <div class="ladder-name">Emergency Medical Responder</div>
+            <div class="ladder-meta">Entry tier. 16 CE hrs / 2-yr cycle.</div>
+          </div>
+          <div class="ladder-rung l2">
+            <div class="ladder-code c-teal">EMT</div>
+            <div class="ladder-name">Emergency Medical Technician</div>
+            <div class="ladder-meta">First launch target. 40 CE hrs / cycle.</div>
+          </div>
+          <div class="ladder-rung l3">
+            <div class="ladder-code c-blue">AEMT</div>
+            <div class="ladder-name">Advanced EMT</div>
+            <div class="ladder-meta">50 CE hrs / 2-yr cycle.</div>
+          </div>
+          <div class="ladder-rung l4">
+            <div class="ladder-code c-purple">Paramedic</div>
+            <div class="ladder-name">Paramedic (NRP-level)</div>
+            <div class="ladder-meta">60 CE hrs / 2-yr cycle.</div>
+          </div>
+          <div class="ladder-rung l5">
+            <div class="ladder-code c-amber">PP</div>
+            <div class="ladder-name">Paramedic Practitioner</div>
+            <div class="ladder-meta">Capstone above paramedic. The wedge.</div>
+          </div>
+        </div>
+
+        <div class="callout-purple">
+          <div class="callout-purple-title">Where the Paramedic Practitioner Fits</div>
+          <div class="callout-purple-body">The advanced-practice space already exists &mdash; and that is validating, not threatening. <strong>IBSC</strong> (formerly BCCTPC) certifies <em>narrow specialties</em>: FP-C (flight), CCP-C (critical care), CP-C (community), WP-C (wilderness), TP-C (tactical). <strong>GEMR</strong> offers a broad 51-function APP credential but has limited US state recognition. <strong>Kentucky</strong> (202 KAR 7:410) is the first state to codify &ldquo;Advanced Practice Paramedic&rdquo; in regulation, using IBSC specialty certs as the pathway. The gap: <strong>no one offers a unified, NCCA-accredited, US-focused capstone</strong> that sits <em>above</em> the IBSC specialties. The PP credential complements them &mdash; require an IBSC specialty as a prerequisite, then layer advanced practice on top. Note: I-CAPP, the professional body for advanced practice paramedics, is based in Suwanee, Georgia &mdash; the same state, a potential ally rather than a competitor.</div>
+        </div>
+
+        <div class="callout-info" style="margin-bottom:0;">
+          <div class="callout-info-title">Correction on the Record</div>
+          <div class="callout-info-body"><strong>IBSC is NCCA-accredited</strong> (since 2018) &mdash; its CP-C, CCP-C, FP-C, and TP-C exams all carry accreditation. The competitive differentiator for Company C is therefore <em>not</em> accreditation status. It is (1) a <strong>unified advanced-practice credential</strong> that no one offers, and (2) <strong>diagnostic feedback</strong> that IBSC does not provide.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 3: BIFACTOR DUAL-VALIDATION ── -->
+  <div class="section" id="bifactor">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#129516;</span>
+      <span class="section-title">Bifactor Dual-Validation<span class="section-subtitle">One item set &rarr; pass/fail + diagnostic</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-purple">
+          <div class="callout-purple-title">The Core Innovation</div>
+          <div class="callout-purple-body">A traditional certification exam produces a single number: pass or fail. A bifactor model fits a <strong>general competence factor</strong> (the dimension the pass/fail cut score is built on) <em>plus</em> orthogonal <strong>specific factors</strong> (airway, cardiology, trauma, medical, operations) from <strong>the same response data</strong>. The candidate gets a defensible go/no-go decision; the candidate, employer, and education partner get a <strong>diagnostic competency profile</strong> &mdash; for free, from items they already answered. This is the psychometric architecture that NREMT removed when it moved to its 2025 CAT format.</div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title c-blue">The Pass/Fail Decision</div>
+            <div class="card-body">Built on the general factor with a defensible cut score set via a documented method &mdash; <strong>Modified Angoff</strong> or <strong>Bookmark</strong> &mdash; tied to minimally competent practice from the Job Task Analysis. This is what survives a state board&rsquo;s prescriptive audit (e.g., Florida Rule 64B-1.011: scores must be &ldquo;statistically reliable,&rdquo; passing score set by &ldquo;psychometrically sound methods,&rdquo; reliability target Cronbach&rsquo;s &alpha; &ge; 0.80).</div>
+          </div>
+          <div class="card">
+            <div class="card-title c-purple">The Diagnostic Profile</div>
+            <div class="card-body">The specific factors give per-domain sub-scores: <em>strong on cardiology, weak on operations.</em> This feeds the remediation loop &mdash; Company C reports the diagnostic, Company A (education) sells the targeted prep, and Company E (data) studies the competency gap at population level. The same exam that gates the candidate also <strong>maps exactly what to study next</strong>.</div>
+          </div>
+        </div>
+
+        <div class="callout-info" style="margin-top:24px;margin-bottom:0;">
+          <div class="callout-info-title">Why It Matters for the Portfolio</div>
+          <div class="callout-info-body">Diagnostic feedback is something IBSC, GEMR, and the NREMT do <strong>not</strong> provide. It converts a one-time pass/fail event into an ongoing relationship &mdash; and it is the connective tissue between the three operating companies (C judges, A teaches, E measures) without ever sharing individual-level data across the certification/education firewall.</div>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 4: SEPARATE & SECURED QUESTION DATABASE ── -->
+  <div class="section" id="item-bank">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#128274;</span>
+      <span class="section-title">Separate &amp; Secured Question Database<span class="section-subtitle">Item-bank independence is structural, not cosmetic</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-warning">
+          <div class="callout-warning-title">&#9888; The Firewall Is the Product</div>
+          <div class="callout-warning-body">Company C runs a <strong>separate question database</strong> &mdash; independent from MedEdPrep&rsquo;s 10,083+ education items. This is not a preference; it is the NCCA/ISO 17024 separation requirement made physical. Certification items must never appear in education products, or the credential is compromised. An NCCA reviewer will scrutinize the founder&rsquo;s personal access precisely because the founder owns both entities.</div>
+        </div>
+
+        <div class="card" style="margin-bottom:24px;">
+          <div class="card-label">Gold-Standard Technical Separation</div>
+          <ul class="detail-list red">
+            <li>Separate AWS account for Company C infrastructure &mdash; separate VPC, <strong>no peering</strong> to Company A&rsquo;s network</li>
+            <li>Separate CI/CD pipeline and separate KMS/HSM key management for the certification database</li>
+            <li>Encryption at rest (AES-256) and in transit (TLS 1.2+); encrypted backups stored separately from Company A&rsquo;s</li>
+            <li>SOC 2 Type II audit of Company C infrastructure; penetration testing of the separation boundary</li>
+            <li>Automated alerts if any cross-account access is attempted</li>
+          </ul>
+        </div>
+
+        <div class="table-wrap">
+          <div class="table-label">Role-Based Access Control &mdash; the certification item bank</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>Role</th><th>Co. A access</th><th>Co. C access</th><th>Note</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Founder / CEO (Jeramey)</td><td>Full</td><td>Read-only / limited admin</td><td>Access minimized and <strong>logged</strong>; the audit trail is what matters</td></tr>
+              <tr><td>Co. A education staff</td><td>Full</td><td>None</td><td>No access to the certification database at any level</td></tr>
+              <tr><td>Co. C certification director</td><td>None</td><td>Full</td><td>Separate individual; cannot hold a role at Company A</td></tr>
+              <tr><td>Co. C item writers (SMEs)</td><td>None</td><td>Draft items only</td><td>Cannot see operational items or statistics</td></tr>
+              <tr><td>Co. C psychometrician</td><td>None</td><td>Full read, limited write</td><td>Analyzes statistics; cannot modify operational items</td></tr>
+              <tr><td>Company E data analyst</td><td>Aggregate only</td><td>Aggregate only</td><td>Only entity that sees both datasets &mdash; population level only</td></tr>
+              <tr><td>Testing vendor (Prometric/PSI/Pearson&nbsp;VUE)</td><td>None</td><td>Exam delivery only</td><td>Delivers the exam; no item-bank admin access</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout-info" style="margin-bottom:0;">
+          <div class="callout-info-title">Proving It at Audit</div>
+          <div class="callout-info-body">The clean approach is not to pretend the founder cannot see the items &mdash; it is to <strong>prove items are developed, reviewed, and approved through an independent process</strong>, governed by Company C&rsquo;s board, with architecture diagrams, access logs, signed NDAs, annual conflict-of-interest declarations, and an incident-response plan on file.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 5: NCCA ACCREDITATION PATH ── -->
+  <div class="section" id="ncca">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#127942;</span>
+      <span class="section-title">The NCCA Accreditation Path<span class="section-subtitle">For-profit allowed &middot; launch first, accredit second</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-info">
+          <div class="callout-info-title">What NCCA Is &mdash; and Why For-Profit Is Fine</div>
+          <div class="callout-info-body">The <strong>National Commission for Certifying Agencies</strong> (NCCA), the accreditation arm of the Institute for Credentialing Excellence (ICE), is the domestic US standard that validates a certification program&rsquo;s psychometric rigor, governance, and public-protection mission &mdash; the credential state licensing boards look for. NCCA accredits the <strong>program, not the organization</strong>, and <strong>does not require nonprofit status</strong>. The gating constraints are the 21 standards: independent governance with a public member, a JTA-based blueprint, psychometrically sound standard setting, audited financials, and a firewall between certification and education.</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Build &mdash; Year 1</div>
+            <div class="step-body">Job Task Analysis, exam blueprint, item development, governance setup. The JTA defines &ldquo;minimally competent&rdquo; practice and weights the content domains.</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Launch &amp; Collect &mdash; Year 2</div>
+            <div class="step-body">Pilot testing, standard setting (Angoff/Bookmark), first operational exam, and at least one administration cycle of statistical data. <strong>The EMT credential is the first launch target.</strong></div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Apply &amp; Accredit &mdash; Year 3</div>
+            <div class="step-body">Submit through the ICE portal (windows open three times/year). Review takes <strong>4&ndash;5 months</strong>; on approval the program enters a <strong>5-year renewal cycle</strong>. Then approach state boards with the accredited credential.</div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:24px;">
+          <div class="table-wrap" style="margin-bottom:0;">
+            <div class="table-label">NCCA Fees (ICE member, single program)</div>
+            <table class="data-table">
+              <tbody>
+                <tr><td>Initial application</td><td class="c-teal" style="font-weight:600;">~$2,892</td></tr>
+                <tr><td>Annual fee (up to 2 programs)</td><td>$6,870 / yr</td></tr>
+                <tr><td>Each additional program</td><td>$1,725 / yr</td></tr>
+                <tr><td>5-year total (single program)</td><td class="c-green" style="font-weight:600;">~$37,242</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-wrap" style="margin-bottom:0;">
+            <div class="table-label">Pre-NCCA Costs (the expensive part)</div>
+            <table class="data-table">
+              <tbody>
+                <tr><td>Job Task Analysis</td><td>$30K&ndash;$80K+</td></tr>
+                <tr><td>Exam development</td><td>$50K&ndash;$150K+</td></tr>
+                <tr><td>Psychometric consulting</td><td>$20K&ndash;$50K / yr</td></tr>
+                <tr><td>Governance + financial audit</td><td>$10K&ndash;$30K / yr</td></tr>
+                <tr><td>Total to application readiness</td><td class="c-amber" style="font-weight:600;">$150K&ndash;$350K+</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="callout-purple" style="margin-top:24px;margin-bottom:0;">
+          <div class="callout-purple-title">The MedEdPrep Advantage</div>
+          <div class="callout-purple-body">The NCCA fees themselves are modest &mdash; the real investment is psychometric rigor. <strong>MedEdPrep&rsquo;s existing capabilities</strong> (testing platform, item banking, IRT analytics, in-house psychometric expertise) can do the JTA in-house and compress both the cost and the ~2.5&ndash;3-year timeline materially.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 6: RECERT BY EXAM ── -->
+  <div class="section" id="recert">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9889;</span>
+      <span class="section-title">&ldquo;Recert by Exam&rdquo; &mdash; the Item-Calibration Engine<span class="section-subtitle">CE revenue that pretests items at scale</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-info">
+          <div class="callout-info-title">A Dual-Purpose Product</div>
+          <div class="callout-info-body">CAPCE-accredited continuing-education exams can be <strong>two things at once</strong>: (1) a legitimate, revenue-generating CE offering EMS clinicians use toward NREMT recertification, and (2) a <strong>high-volume pretesting pipeline</strong> that calibrates items destined for Company C&rsquo;s certification exams. The NREMT requires 16&ndash;60 CE hours per 2-year cycle across <strong>620,000+</strong> nationally certified clinicians &mdash; an enormous, recurring, self-funding source of item-response data.</div>
+        </div>
+
+        <div class="pipeline">
+          <div class="pipe-step">
+            <div class="pipe-step-num">Step 1</div>
+            <div class="pipe-step-title">Author CE module</div>
+            <div class="pipe-step-body">60-question CAPCE F3 (distributive) module with topic intro + detailed rationales after each item.</div>
+          </div>
+          <div class="pipe-step">
+            <div class="pipe-step-num">Step 2</div>
+            <div class="pipe-step-title">Clinicians take it</div>
+            <div class="pipe-step-body">Thousands of already-certified practitioners answer for CE credit toward their NREMT cycle.</div>
+          </div>
+          <div class="pipe-step">
+            <div class="pipe-step-num">Step 3</div>
+            <div class="pipe-step-title">Calibrate items</div>
+            <div class="pipe-step-body">Response data yields IRT difficulty/discrimination parameters at industrial volume.</div>
+          </div>
+          <div class="pipe-step">
+            <div class="pipe-step-num">Step 4</div>
+            <div class="pipe-step-title">Promote to cert bank</div>
+            <div class="pipe-step-body">Calibrated, vetted items graduate into Company C&rsquo;s operational certification exams.</div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <div class="table-label">NREMT CE Requirements (NCCP, 2-year cycle)</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>Level</th><th>National (50%)</th><th>Local/State (25%)</th><th>Individual (25%)</th><th>Total CE hrs</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>EMR</td><td>8</td><td>4</td><td>4</td><td class="c-green" style="font-weight:600;">16</td></tr>
+              <tr><td>EMT</td><td>20</td><td>10</td><td>10</td><td class="c-teal" style="font-weight:600;">40</td></tr>
+              <tr><td>AEMT</td><td>25</td><td>12.5</td><td>12.5</td><td class="c-blue" style="font-weight:600;">50</td></tr>
+              <tr><td>Paramedic</td><td>30</td><td>15</td><td>15</td><td class="c-purple" style="font-weight:600;">60</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title c-green">Why It Works Operationally</div>
+            <div class="card-body">CAPCE&rsquo;s F3 distributive format is explicitly built for online, exam-based activities. Since <strong>October 2024</strong> a direct CAPCE&ndash;NREMT integration auto-imports approved course records into the clinician&rsquo;s NREMT account with automatic NCCP-domain assignment &mdash; a real UX edge. The 2022 distributive-education waiver (now permanent) removed the cap on online CE.</div>
+          </div>
+          <div class="card">
+            <div class="card-title c-amber">The Structural Complexity</div>
+            <div class="card-body">Three open questions: (1) can Company C hold <strong>both</strong> NCCA certification accreditation and CAPCE CE-provider accreditation without violating either firewall; (2) are IRT estimates from a CE population (already-certified) linkable to certification candidates (new students); (3) will NCCA accept items pretested <em>outside</em> the certification exam. Feasible, but the linking design must be deliberate. Target <strong>organizational</strong> CAPCE accreditation (approve your own activities), not course-by-course. Contact: Jay Scott, CAPCE Executive Director.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 7: ENTITY ROADMAP & RELATIONSHIP TO COMPANY A ── -->
+  <div class="section" id="roadmap">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9671;</span>
+      <span class="section-title">Roadmap &amp; Relationship to Company A<span class="section-subtitle">How C fits the entity architecture</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="grid-3" style="margin-bottom:24px;">
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#127891;</span>
+              <span class="ip-card-title">Company A &mdash; Education</span>
+            </div>
+            <div class="ip-card-body">MedEdPrep LLC. Existing, already operating. Prepares candidates and sells targeted remediation driven by C&rsquo;s diagnostic profiles. <strong>Teaches.</strong></div>
+            <span class="ip-tag" style="background:var(--green-dim);color:var(--green);">Operating Today</span>
+          </div>
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#127942;</span>
+              <span class="ip-card-title">Company C &mdash; Certification</span>
+            </div>
+            <div class="ip-card-body">Separate Georgia LLC, separate brand, independent board, separate question database. Issues credentials and the diagnostic. <strong>Judges.</strong></div>
+            <span class="ip-tag" style="background:var(--blue-dim);color:var(--blue);">Future &middot; Yr 2&ndash;4</span>
+          </div>
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#128202;</span>
+              <span class="ip-card-title">Company E &mdash; Data</span>
+            </div>
+            <div class="ip-card-body">Sees both A and C datasets &mdash; but <strong>aggregate only</strong>. May not move individual-level data across the firewall. <strong>Measures.</strong></div>
+            <span class="ip-tag" style="background:var(--purple-dim);color:var(--purple);">Future</span>
+          </div>
+        </div>
+
+        <div class="callout-warning">
+          <div class="callout-warning-title">&#9888; The A&harr;C Data Firewall</div>
+          <div class="callout-warning-body">Company A licenses student-performance data to Company E; Company C licenses certification data to E <strong>at aggregate level only</strong>. Critically, <strong>E may not share individual-level data between A and C</strong>. This data firewall is what enforces the NCCA/ISO 17024 separation between education and certification &mdash; the same separation that requires A and C to be distinct legal entities. The structure is not bureaucratic overhead; it is the precondition for the credential to be accreditable.</div>
+        </div>
+
+        <div class="table-wrap" style="margin-bottom:0;">
+          <div class="table-label">Operating Companies &mdash; formation status</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>Entity</th><th>Role</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Company A &mdash; Education</td><td>MedEdPrep LLC; test prep &amp; remediation</td><td><span class="status-complete">Operating</span></td></tr>
+              <tr><td>Company C &mdash; Certification</td><td>Independent cert agency; separate LLC + brand + board</td><td><span style="background:var(--blue-dim);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;">Future &middot; Yr 2&ndash;4</span></td></tr>
+              <tr><td>Company E &mdash; Data Analytics</td><td>Aggregate data only; firewall enforcer</td><td><span style="background:var(--blue-dim);color:var(--blue);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;">Form with / before C</span></td></tr>
+              <tr><td>The Vault</td><td>Wyoming LLC; owns IP, licenses to all OpCos</td><td><span style="background:var(--amber-dim);color:var(--amber);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;">Future</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 8: SOURCE RESEARCH ── -->
+  <div class="section" id="sources">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#128218;</span>
+      <span class="section-title">Source Research<span class="section-subtitle">03-market-landscape/ &amp; 01-corporate-structure/</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="table-wrap" style="margin-bottom:0;">
+          <div class="table-label">Research files informing Company C strategy</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>File</th><th>Description</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ncca-accreditation-path.md</td><td>21 standards, for-profit allowed, fee schedule, ~2.5&ndash;3-yr timeline, &ldquo;launch before accredit,&rdquo; IBSC accreditation correction.</td><td><span class="status-complete">Complete</span></td></tr>
+              <tr><td>certification-standards.md</td><td>ISO/IEC 17024 vs. NCCA, education/certification firewall, state psychometric variance (FL 64B-1.011, NY, NC, GA SB&nbsp;464), exam technical lifecycle.</td><td><span class="status-complete">Complete</span></td></tr>
+              <tr><td>capce-recert-by-exam-research.md</td><td>CAPCE F3 distributive CE, recert-by-exam as item-calibration pipeline, NREMT NCCP hours, CAPCE&ndash;NREMT integration, dual-accreditation risks.</td><td><span class="status-complete">Complete</span></td></tr>
+              <tr><td>advanced-practice-paramedic.md</td><td>GEMR APP, IBSC specialties, I-CAPP (Suwanee GA), Kentucky 202&nbsp;KAR&nbsp;7:410, the unified-capstone gap.</td><td><span class="status-complete">Complete</span></td></tr>
+              <tr><td>pp-credential-strategy.md</td><td>51-function advanced scope, scope mapping against NRP/CCP-C/FP-C/GEMR, the PP positioning as capstone above specialties.</td><td><span class="status-complete">Complete</span></td></tr>
+              <tr><td>item-security-and-bank-separation.md</td><td>Item-bank separation, RBAC model, separate AWS/VPC/KMS, NCCA audit evidence, dual SME panel management.</td><td><span class="status-complete">Complete</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">Company C &mdash; Certification &middot; Future entity (Georgia LLC) &middot; Source: 03-market-landscape/ research &middot; Last updated: 2026-06-18</div>
+
+</div><!-- /main-inner -->
+
+<!-- ═══════ JAVASCRIPT ═══════ -->
+<script>
+  function toggleSection(header) {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.section-chevron');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    if (chevron) chevron.classList.toggle('open', !isOpen);
+    header.setAttribute('aria-expanded', String(!isOpen));
+    header.classList.toggle('active', !isOpen);
+  }
+
+  function toggleAll(open) {
+    document.querySelectorAll('.section-body').forEach(body => {
+      const header = body.previousElementSibling;
+      const chevron = header.querySelector('.section-chevron');
+      body.classList.toggle('open', open);
+      if (chevron) chevron.classList.toggle('open', open);
+      header.setAttribute('aria-expanded', String(open));
+      header.classList.toggle('active', open);
+    });
+  }
+
+  // Scroll-triggered section reveal
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -60px 0px', threshold: 0.05 });
+
+  document.querySelectorAll('.section').forEach(s => revealObserver.observe(s));
+
+  // Keyboard accessibility
+  document.querySelectorAll('.section-header').forEach(el => {
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

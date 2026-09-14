@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Platinum Educational Group vs MedEdPrep | Competitive Intelligence</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-primary: #0f1419;
+    --bg-secondary: #1a2029;
+    --bg-card: #1e2733;
+    --bg-card-alt: #222d3a;
+    --border-subtle: #2a3544;
+    --border-accent: #3a4a5c;
+    --text-primary: #e8edf3;
+    --text-secondary: #8a97a8;
+    --text-muted: #5c6b7e;
+    --accent-green: #00d68f;
+    --accent-green-dim: rgba(0, 214, 143, 0.15);
+    --accent-green-glow: rgba(0, 214, 143, 0.3);
+    --accent-amber: #ffb347;
+    --accent-amber-dim: rgba(255, 179, 71, 0.15);
+    --accent-amber-glow: rgba(255, 179, 71, 0.3);
+    --accent-blue: #4da6ff;
+    --accent-blue-dim: rgba(77, 166, 255, 0.12);
+    --accent-red: #ff6b6b;
+    --accent-red-dim: rgba(255, 107, 107, 0.15);
+    --accent-purple: #b18cff;
+    --platinum-color: #8a97a8;
+    --mededprep-color: #00d68f;
+  }
+
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    padding: 48px 40px 32px;
+    background: linear-gradient(180deg, #141b23 0%, var(--bg-primary) 100%);
+    border-bottom: 1px solid var(--border-subtle);
+    position: relative;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-amber), var(--accent-green));
+  }
+
+  .header-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  .header h1 .vs {
+    color: var(--text-muted);
+    font-weight: 400;
+    font-size: 24px;
+    padding: 0 10px;
+  }
+
+  .header h1 .platinum { color: var(--accent-amber); }
+  .header h1 .mededprep { color: var(--accent-green); }
+
+  .header-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+
+  .header-date {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    letter-spacing: 1px;
+  }
+
+  /* ── Main Layout ── */
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px 40px 60px;
+  }
+
+  /* ── Identity Cards ── */
+  .identity-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .identity-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 28px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .identity-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .identity-card.platinum::before { background: var(--accent-amber); }
+  .identity-card.mededprep::before { background: var(--accent-green); }
+
+  .identity-card .role-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .identity-card.platinum .role-tag { color: var(--accent-amber); }
+  .identity-card.mededprep .role-tag { color: var(--accent-green); }
+
+  .identity-card .company-name {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .identity-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .identity-meta-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .identity-meta-item .label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+  }
+
+  .identity-meta-item .value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .identity-meta-item .value.highlight-amber { color: var(--accent-amber); }
+  .identity-meta-item .value.highlight-green { color: var(--accent-green); }
+
+  /* ── Valuation Banner ── */
+  .valuation-banner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+
+  .valuation-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 24px 32px;
+    text-align: center;
+    position: relative;
+  }
+
+  .valuation-box .val-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .valuation-box .val-amount {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+
+  .valuation-box.platinum .val-amount { color: var(--accent-amber); }
+  .valuation-box.mededprep .val-amount { color: var(--accent-green); }
+
+  .valuation-box .val-basis {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ── Section Headings ── */
+  .section-heading {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-heading .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+    flex-shrink: 0;
+  }
+
+  /* ── Comparison Grid ── */
+  .comparison-section {
+    margin-bottom: 32px;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .comparison-table thead th {
+    background: var(--bg-card-alt);
+    padding: 10px 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .comparison-table thead th:first-child {
+    border-radius: 8px 0 0 0;
+    width: 28%;
+  }
+
+  .comparison-table thead th:nth-child(2) {
+    border-radius: 0;
+    width: 36%;
+    color: var(--accent-amber);
+  }
+
+  .comparison-table thead th:last-child {
+    border-radius: 0 8px 0 0;
+    width: 36%;
+    color: var(--accent-green);
+  }
+
+  .comparison-table tbody tr {
+    transition: background 0.15s;
+  }
+
+  .comparison-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .comparison-table tbody td {
+    padding: 12px 20px;
+    font-size: 13.5px;
+    border-bottom: 1px solid rgba(42, 53, 68, 0.5);
+    vertical-align: top;
+  }
+
+  .comparison-table tbody td:first-child {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 12px;
+    letter-spacing: 0.3px;
+  }
+
+  .comparison-table tbody tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+  .comparison-table tbody tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+
+  .val-win { color: var(--accent-green); font-weight: 600; }
+  .val-advantage { color: var(--accent-amber); font-weight: 600; }
+  .val-neutral { color: var(--text-secondary); }
+  .val-gap { color: var(--accent-red); font-style: italic; }
+
+  /* ── Bar Charts ── */
+  .bar-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+
+  .bar-chart-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 24px 28px;
+  }
+
+  .bar-chart-card h3 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+
+  .bar-item {
+    margin-bottom: 16px;
+  }
+
+  .bar-item:last-child { margin-bottom: 0; }
+
+  .bar-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 5px;
+  }
+
+  .bar-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .bar-value {
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .bar-track {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+  }
+
+  .bar-fill.amber {
+    background: linear-gradient(90deg, var(--accent-amber), #ffc966);
+    box-shadow: 0 0 12px var(--accent-amber-glow);
+  }
+
+  .bar-fill.green {
+    background: linear-gradient(90deg, var(--accent-green), #33e5aa);
+    box-shadow: 0 0 12px var(--accent-green-glow);
+  }
+
+  /* ── Capability Matrix ── */
+  .capability-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+
+  .capability-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 24px 28px;
+  }
+
+  .capability-card h3 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+
+  .cap-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(42, 53, 68, 0.4);
+  }
+
+  .cap-row:last-child { border-bottom: none; }
+
+  .cap-name {
+    font-size: 13px;
+    color: var(--text-secondary);
+    flex: 1;
+  }
+
+  .cap-indicators {
+    display: flex;
+    gap: 24px;
+    min-width: 160px;
+    justify-content: flex-end;
+  }
+
+  .cap-indicator {
+    width: 60px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .cap-indicator-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .status-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .status-yes {
+    background: var(--accent-green-dim);
+    border: 1.5px solid var(--accent-green);
+    color: var(--accent-green);
+  }
+
+  .status-no {
+    background: var(--accent-red-dim);
+    border: 1.5px solid var(--accent-red);
+    color: var(--accent-red);
+  }
+
+  .status-partial {
+    background: var(--accent-amber-dim);
+    border: 1.5px solid var(--accent-amber);
+    color: var(--accent-amber);
+  }
+
+  /* ── Products Grid ── */
+  .products-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+
+  .product-list-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 24px 28px;
+    position: relative;
+  }
+
+  .product-list-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .product-list-card.platinum::before { background: var(--accent-amber); }
+  .product-list-card.mededprep::before { background: var(--accent-green); }
+
+  .product-list-card h3 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .product-list-card.platinum h3 { color: var(--accent-amber); }
+  .product-list-card.mededprep h3 { color: var(--accent-green); }
+
+  .product-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 0;
+  }
+
+  .product-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .product-dot.amber { background: var(--accent-amber); }
+  .product-dot.green { background: var(--accent-green); }
+
+  .product-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .product-desc {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin-left: 1px;
+  }
+
+  /* ── Moat Indicators ── */
+  .moat-section {
+    margin-bottom: 36px;
+  }
+
+  .moat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .moat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 20px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .moat-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .moat-card.green-moat::after { background: var(--accent-green); }
+  .moat-card.amber-moat::after { background: var(--accent-amber); }
+
+  .moat-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  .moat-card.green-moat .moat-icon {
+    background: var(--accent-green-dim);
+    color: var(--accent-green);
+    border: 1px solid rgba(0, 214, 143, 0.25);
+  }
+
+  .moat-card.amber-moat .moat-icon {
+    background: var(--accent-amber-dim);
+    color: var(--accent-amber);
+    border: 1px solid rgba(255, 179, 71, 0.25);
+  }
+
+  .moat-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .moat-owner {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .moat-card.green-moat .moat-owner { color: var(--accent-green); }
+  .moat-card.amber-moat .moat-owner { color: var(--accent-amber); }
+
+  .moat-detail {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  /* ── Insight Callout ── */
+  .insight-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-left: 3px solid var(--accent-green);
+    border-radius: 0 12px 12px 0;
+    padding: 28px 32px;
+    margin-bottom: 36px;
+  }
+
+  .insight-section h3 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-green);
+    margin-bottom: 14px;
+  }
+
+  .insight-points {
+    list-style: none;
+    padding: 0;
+  }
+
+  .insight-points li {
+    position: relative;
+    padding: 6px 0 6px 20px;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .insight-points li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-green);
+  }
+
+  .insight-points li strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  .footer .confidential {
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    font-size: 10px;
+    color: var(--accent-red);
+  }
+
+  /* ── Infra Cost Comparison ── */
+  .infra-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+
+  .infra-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 24px 28px;
+    text-align: center;
+  }
+
+  .infra-card .infra-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .infra-card .infra-value {
+    font-size: 28px;
+    font-weight: 800;
+  }
+
+  .infra-card .infra-value.amber { color: var(--accent-amber); }
+  .infra-card .infra-value.green { color: var(--accent-green); }
+
+  .infra-card .infra-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ── Print-friendly ── */
+  @media print {
+    body { background: #fff; color: #111; }
+    .header { background: #f5f5f5; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════ HEADER ═══ -->
+<div class="header">
+  <div class="header-label">Competitive Intelligence Briefing</div>
+  <h1>
+    <span class="platinum">Platinum Educational Group</span>
+    <span class="vs">vs</span>
+    <span class="mededprep">MedEdPrep</span>
+  </h1>
+  <div class="header-sub">Side-by-side analysis of the incumbent market leader and the adaptive-technology challenger</div>
+  <div class="header-date">Prepared May 2026 &middot; Internal Use Only</div>
+</div>
+
+<div class="container">
+
+  <!-- ════════════════════════════ IDENTITY CARDS ═══ -->
+  <div class="identity-row">
+    <div class="identity-card platinum">
+      <div class="role-tag">Incumbent</div>
+      <div class="company-name">Platinum Educational Group</div>
+      <div class="identity-meta">
+        <div class="identity-meta-item">
+          <span class="label">Founded</span>
+          <span class="value highlight-amber">2002</span>
+        </div>
+        <div class="identity-meta-item">
+          <span class="label">Years in Market</span>
+          <span class="value highlight-amber">24 years</span>
+        </div>
+        <div class="identity-meta-item">
+          <span class="label">Employees</span>
+          <span class="value">~25</span>
+        </div>
+        <div class="identity-meta-item">
+          <span class="label">Est. Revenue</span>
+          <span class="value highlight-amber">$4M-$6M ARR</span>
+        </div>
+        <div class="identity-meta-item">
+          <span class="label">Markets</span>
+          <span class="value">EMS, Nursing, Allied Health</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="identity-card mededprep">
+      <div class="role-tag">Challenger</div>
+      <div class="company-name">MedEdPrep</div>
+      <div class="identity-meta">
+        <div class="identity-meta-item">
+          <span class="label">Founded</span>
+          <span class="value highlight-green">~2023</span>
+        </div>
+        <div class="identity-meta-item">
+          <span class="label">Years in Market</span>
+          <span class="value highlight-green">3 years</span>
+        </div>
+        <div class="identity-meta-item">
+          <span class="label">Team</span>
+          <span class="value">Founder + SMEs + 2 devs</span>
+        </div>
+        <div class="identity-meta-item">
+          <span class="label">Infrastructure</span>
+          <span class="value highlight-green">~$2,500/mo</span>
+        </div>
+        <div class="identity-meta-item">
+          <span class="label">Markets</span>
+          <span class="value">EMS (expanding)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════ VALUATION ═══ -->
+  <div class="valuation-banner">
+    <div class="valuation-box platinum">
+      <div class="val-label">Estimated Valuation</div>
+      <div class="val-amount">$20M &ndash; $40M</div>
+      <div class="val-basis">Revenue multiple &middot; 24 years of operations &middot; Pearson distribution</div>
+    </div>
+    <div class="valuation-box mededprep">
+      <div class="val-label">Estimated IP Value (Code + Data + Utility)</div>
+      <div class="val-amount">$5.7M &ndash; $14.7M</div>
+      <div class="val-basis">Three-lens portfolio valuation &middot; 3 years of development &middot; Zero revenue applied</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════ DATA ASSETS ═══ -->
+  <div class="section-heading">
+    <span class="dot"></span>
+    Data Assets &amp; Scale
+  </div>
+
+  <div class="bar-section">
+    <div class="bar-chart-card">
+      <h3>Question Bank Size</h3>
+      <div class="bar-item">
+        <div class="bar-label-row">
+          <span class="bar-label">Platinum</span>
+          <span class="bar-value" style="color: var(--accent-amber);">5,500+</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill amber" style="width: 52%;"></div>
+        </div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label-row">
+          <span class="bar-label">MedEdPrep</span>
+          <span class="bar-value" style="color: var(--accent-green);">10,600+</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill green" style="width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-chart-card">
+      <h3>Response Data Volume</h3>
+      <div class="bar-item">
+        <div class="bar-label-row">
+          <span class="bar-label">Platinum</span>
+          <span class="bar-value" style="color: var(--accent-amber);">337M responses</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill amber" style="width: 100%;"></div>
+        </div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label-row">
+          <span class="bar-label">MedEdPrep</span>
+          <span class="bar-value" style="color: var(--accent-green);">1.55M responses</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill green" style="width: 3%;"></div>
+        </div>
+      </div>
+      <div style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">
+        Platinum's 24-year head start produces massive volume. MedEdPrep's smaller dataset includes richer metadata: confidence tagging, metacognition markers, and IRT-calibrated parameters.
+      </div>
+    </div>
+  </div>
+
+  <div class="bar-section">
+    <div class="bar-chart-card">
+      <h3>Active Codebases / Products</h3>
+      <div class="bar-item">
+        <div class="bar-label-row">
+          <span class="bar-label">Platinum</span>
+          <span class="bar-value" style="color: var(--accent-amber);">3 products</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill amber" style="width: 20%;"></div>
+        </div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label-row">
+          <span class="bar-label">MedEdPrep</span>
+          <span class="bar-value" style="color: var(--accent-green);">15 codebases</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill green" style="width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-chart-card">
+      <h3>Institutional Reach</h3>
+      <div class="bar-item">
+        <div class="bar-label-row">
+          <span class="bar-label">Platinum</span>
+          <span class="bar-value" style="color: var(--accent-amber);">1,800+ programs</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill amber" style="width: 100%;"></div>
+        </div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label-row">
+          <span class="bar-label">MedEdPrep</span>
+          <span class="bar-value" style="color: var(--accent-green);">239 programs</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill green" style="width: 13%;"></div>
+        </div>
+      </div>
+      <div style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">
+        3,030 students across 239 programs. Platinum's distribution advantage through Pearson/Brady is significant.
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════ CAPABILITY MATRIX ═══ -->
+  <div class="section-heading">
+    <span class="dot"></span>
+    Technology &amp; Capability Matrix
+  </div>
+
+  <div class="capability-grid">
+    <div class="capability-card">
+      <h3>Assessment Technology</h3>
+      <div style="display: flex; justify-content: flex-end; gap: 24px; margin-bottom: 8px; padding-right: 0;">
+        <span class="cap-indicator-label" style="width: 60px; text-align: center;">PLAT</span>
+        <span class="cap-indicator-label" style="width: 60px; text-align: center;">MEP</span>
+      </div>
+      <div class="cap-row">
+        <span class="cap-name">Static question bank</span>
+        <div class="cap-indicators">
+          <div class="cap-indicator"><span class="status-icon status-yes">+</span></div>
+          <div class="cap-indicator"><span class="status-icon status-yes">+</span></div>
+        </div>
+      </div>
+      <div class="cap-row">
+        <span class="cap-name">IRT-based item calibration</span>
+        <div class="cap-indicators">
+          <div class="cap-indicator"><span class="status-icon status-no">&ndash;</span></div>
+          <div class="cap-indicator"><span class="status-icon status-yes">+</span></div>
+        </div>
+      </div>
+      <div class="cap-row">
+        <span class="cap-name">Computerized adaptive testing (CAT)</span>
+        <div class="cap-indicators">
+          <div class="cap-indicator"><span class="status-icon status-no">&ndash;</span></div>
+          <div class="cap-indicator"><span class="status-icon status-yes">+</span></div>
+        </div>
+      </div>
+      <div class="cap-row">
+        <span class="cap-name">Multi-dimensional diagnostics</span>
+        <div class="cap-indicators">
+          <div class="cap-indicator"><span class="status-icon status-no">&ndash;</span></div>
+          <div class="cap-indicator"><span class="status-icon status-yes">+</span></div>
+        </div>
+      </div>
+      <div class="cap-row">
+        <span class="cap-name">Confidence / metacognition data</span>
+        <div class="cap-indicators">
+          <div class="cap-indicator"><span class="status-icon status-no">&ndash;</span></div>
+          <div class="cap-indicator"><span class="status-icon status-yes">+</span></div>
+        </div>
+      </div>
+      <div class="cap-row">
+        <span class="cap-name">Per-category, per-objective reporting</span>
+        <div class="cap-indicators">
+          <div class="cap-indicator"><span class="status-icon status-no">&ndash;</span></div>
+          <div class="cap-indicator"><span class="status-icon status-yes">+</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="capability-card">
+      <h3>Platform &amp; Compliance</h3>
+      <div style="display: flex; justify-content: flex-end; gap: 24px; margin-bottom: 8px; padding-right: 0;">
+        <span class="cap-indicator-label" style="width: 60px; text-align: center;">PLAT</span>
+        <span class="cap-indicator-label" style="width: 60px; text-align: center;">MEP</span>
+      </div>
+      <div class="cap-row">
+        <span class="cap-name">Clinical field tracking</span>
+        <div class="cap-indicators">
+          <div class="cap-indicator"><span class="status-icon status-yes">+</span></div>
+          <div class="cap-indicator"><span class="status-icon status-yes">+</span></div>
+        </div>
+      </div>
+      <div class="cap-row">
+        <span class="cap-name">CoAEMSP 2023 compliance tooling</span>
+        <div class="cap-indicators">
+          <div class="cap-indicator"><span class="status-icon status-no">&ndash;</span></div>
+          <div class="cap-indicator"><span class="status-icon status-yes">+</span></div>
+        </div>
+      </div>
+      <div class="cap-row">
+        <span class="cap-name">Continuing Education (CE/CEH)</span>
+        <div class="cap-indicators">
+          <div class="cap-indicator"><span class="status-icon status-no">&ndash;</span></div>
+          <div class="cap-indicator"><span class="status-icon status-yes">+</span></div>
+        </div>
+      </div>
+      <div class="cap-row">
+        <span class="cap-name">CAPCE accreditation pipeline</span>
+        <div class="cap-indicators">
+          <div class="cap-indicator"><span class="status-icon status-no">&ndash;</span></div>
+          <div class="cap-indicator"><span class="status-icon status-yes">+</span></div>
+        </div>
+      </div>
+      <div class="cap-row">
+        <span class="cap-name">Adaptive CE (psychometric)</span>
+        <div class="cap-indicators">
+          <div class="cap-indicator"><span class="status-icon status-no">&ndash;</span></div>
+          <div class="cap-indicator"><span class="status-icon status-yes">+</span></div>
+        </div>
+      </div>
+      <div class="cap-row">
+        <span class="cap-name">Pearson/Brady distribution</span>
+        <div class="cap-indicators">
+          <div class="cap-indicator"><span class="status-icon status-yes">+</span></div>
+          <div class="cap-indicator"><span class="status-icon status-no">&ndash;</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════ PRODUCTS ═══ -->
+  <div class="section-heading">
+    <span class="dot"></span>
+    Product Portfolio
+  </div>
+
+  <div class="products-section">
+    <div class="product-list-card platinum">
+      <h3>Platinum &mdash; 3 Products</h3>
+      <div class="product-item">
+        <span class="product-dot amber"></span>
+        <div>
+          <div class="product-name">EMSTesting</div>
+          <div class="product-desc">Static exam prep &middot; Core revenue driver</div>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-dot amber"></span>
+        <div>
+          <div class="product-name">Platinum Planner</div>
+          <div class="product-desc">Clinical scheduling &amp; field tracking</div>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-dot amber"></span>
+        <div>
+          <div class="product-name">Platinum Tests</div>
+          <div class="product-desc">Institutional testing platform</div>
+        </div>
+      </div>
+      <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border-subtle); font-size: 12px; color: var(--text-muted);">
+        Mature product suite, tightly coupled to Pearson/Brady textbook distribution. Focused on static assessment and scheduling.
+      </div>
+    </div>
+
+    <div class="product-list-card mededprep">
+      <h3>MedEdPrep &mdash; 15 Codebases</h3>
+      <div class="product-item">
+        <span class="product-dot green"></span>
+        <div>
+          <div class="product-name">Portal</div>
+          <div class="product-desc">Central hub + CRM + student management</div>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-dot green"></span>
+        <div>
+          <div class="product-name">Adaptive Engine (CAT)</div>
+          <div class="product-desc">IRT-based adaptive testing &middot; Live since Nov 2025</div>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-dot green"></span>
+        <div>
+          <div class="product-name">CoAssist</div>
+          <div class="product-desc">CoAEMSP 2023 compliance &middot; No competitor exists</div>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-dot green"></span>
+        <div>
+          <div class="product-name">Pulse</div>
+          <div class="product-desc">Free community platform &middot; Trojan horse funnel</div>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-dot green"></span>
+        <div>
+          <div class="product-name">Pulse CE</div>
+          <div class="product-desc">Adaptive continuing education &middot; CAPCE pipeline</div>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-dot green"></span>
+        <div>
+          <div class="product-name">Clinicals</div>
+          <div class="product-desc">Clinical field management</div>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-dot green"></span>
+        <div>
+          <div class="product-name">AFRA + Certs + Analytics</div>
+          <div class="product-desc">Certification tracking, analytics, and more</div>
+        </div>
+      </div>
+      <div style="margin-top: 8px; font-size: 11px; color: var(--text-muted);">
+        + 8 additional active codebases spanning diagnostics, metacognition, research tooling, and infrastructure
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════ COMPETITIVE MOATS ═══ -->
+  <div class="section-heading">
+    <span class="dot"></span>
+    Competitive Moats
+  </div>
+
+  <div class="moat-grid">
+    <div class="moat-card amber-moat">
+      <div class="moat-icon">T</div>
+      <div class="moat-title">Time in Market</div>
+      <div class="moat-owner">Platinum</div>
+      <div class="moat-detail">24 years of institutional relationships and brand recognition</div>
+    </div>
+    <div class="moat-card amber-moat">
+      <div class="moat-icon">D</div>
+      <div class="moat-title">Distribution</div>
+      <div class="moat-owner">Platinum</div>
+      <div class="moat-detail">Pearson/Brady textbook bundling creates built-in pipeline</div>
+    </div>
+    <div class="moat-card green-moat">
+      <div class="moat-icon">A</div>
+      <div class="moat-title">Adaptive Technology</div>
+      <div class="moat-owner">MedEdPrep</div>
+      <div class="moat-detail">IRT-based CAT engine with calibrated item parameters. No competitor has this.</div>
+    </div>
+    <div class="moat-card green-moat">
+      <div class="moat-icon">C</div>
+      <div class="moat-title">Compliance Monopoly</div>
+      <div class="moat-owner">MedEdPrep</div>
+      <div class="moat-detail">CoAssist for CoAEMSP 2023 standards. Zero market alternatives.</div>
+    </div>
+  </div>
+
+  <div class="moat-grid" style="margin-top: 16px; margin-bottom: 36px;">
+    <div class="moat-card green-moat">
+      <div class="moat-icon">P</div>
+      <div class="moat-title">Psychometric Depth</div>
+      <div class="moat-owner">MedEdPrep</div>
+      <div class="moat-detail">1M+ confidence-tagged responses, bifactor models, metacognition data</div>
+    </div>
+    <div class="moat-card green-moat">
+      <div class="moat-icon">E</div>
+      <div class="moat-title">CE Market (Adaptive)</div>
+      <div class="moat-owner">MedEdPrep</div>
+      <div class="moat-detail">ZERO competitors offer adaptive/psychometric CE. Blue ocean.</div>
+    </div>
+    <div class="moat-card amber-moat">
+      <div class="moat-icon">V</div>
+      <div class="moat-title">Data Volume</div>
+      <div class="moat-owner">Platinum</div>
+      <div class="moat-detail">337M responses from 24 years. Scale advantage in raw volume.</div>
+    </div>
+    <div class="moat-card green-moat">
+      <div class="moat-icon">S</div>
+      <div class="moat-title">Full-Stack Ownership</div>
+      <div class="moat-owner">MedEdPrep</div>
+      <div class="moat-detail">15 codebases at ~$2,500/mo. Asset-light, high-velocity iteration.</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════ INFRASTRUCTURE ═══ -->
+  <div class="section-heading">
+    <span class="dot"></span>
+    Infrastructure Efficiency
+  </div>
+
+  <div class="infra-row">
+    <div class="infra-card">
+      <div class="infra-label">Platinum Est. Monthly Overhead</div>
+      <div class="infra-value amber">$150K&ndash;$250K+</div>
+      <div class="infra-sub">~25 employees + office + legacy infrastructure</div>
+    </div>
+    <div class="infra-card">
+      <div class="infra-label">MedEdPrep Monthly Infrastructure</div>
+      <div class="infra-value green">~$2,500</div>
+      <div class="infra-sub">Full-stack cloud &middot; 15 codebases &middot; All production</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════ KEY INSIGHT ═══ -->
+  <div class="insight-section">
+    <h3>Strategic Assessment</h3>
+    <ul class="insight-points">
+      <li><strong>Technology gap is structural, not incremental.</strong> Platinum cannot bolt on IRT, CAT, or psychometric CE without a ground-up rebuild. Their static assessment architecture is a 24-year technical debt ceiling.</li>
+      <li><strong>Compliance tooling creates a wedge.</strong> CoAssist (CoAEMSP 2023) has no market alternative. Every program that adopts it becomes a MedEdPrep customer across the full stack.</li>
+      <li><strong>The CE market is wide open.</strong> 40+ CE providers exist, but zero offer adaptive or psychometric-driven continuing education. MedEdPrep is building into a category of one.</li>
+      <li><strong>Platinum's moat is distribution, not technology.</strong> The Pearson/Brady deal is powerful but creates dependency. If textbook bundling shifts or programs demand adaptive tools, the moat erodes.</li>
+      <li><strong>At 3 years, MedEdPrep's IP value is 14&ndash;73% of Platinum's total estimated valuation</strong> with zero revenue applied. Revenue activation could shift this dramatically.</li>
+      <li><strong>1M+ metacognition-tagged responses</strong> represent a unique dataset that no competitor in the EMS education market possesses. This is a durable data moat.</li>
+    </ul>
+  </div>
+
+  <!-- ════════════════════════════ COMPARISON TABLE ═══ -->
+  <div class="comparison-section">
+    <div class="section-heading">
+      <span class="dot"></span>
+      Head-to-Head Summary
+    </div>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>Platinum Educational Group</th>
+          <th>MedEdPrep</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Question Bank</td>
+          <td class="val-neutral">5,500+ items</td>
+          <td class="val-win">10,600+ items (1.9x)</td>
+        </tr>
+        <tr>
+          <td>Response Data</td>
+          <td class="val-advantage">337M responses (24 yrs)</td>
+          <td class="val-neutral">1.55M responses (3 yrs)</td>
+        </tr>
+        <tr>
+          <td>Data Quality</td>
+          <td class="val-neutral">Raw responses only</td>
+          <td class="val-win">IRT-calibrated + confidence + metacognition</td>
+        </tr>
+        <tr>
+          <td>Adaptive Engine</td>
+          <td class="val-gap">None</td>
+          <td class="val-win">IRT-based CAT, live since Nov 2025</td>
+        </tr>
+        <tr>
+          <td>Diagnostics</td>
+          <td class="val-gap">None</td>
+          <td class="val-win">Multi-dimensional, per-category, per-objective</td>
+        </tr>
+        <tr>
+          <td>Compliance</td>
+          <td class="val-gap">None</td>
+          <td class="val-win">CoAssist (CoAEMSP 2023) &mdash; only product in market</td>
+        </tr>
+        <tr>
+          <td>CE / CAPCE</td>
+          <td class="val-gap">None</td>
+          <td class="val-win">Adaptive CE platform, CAPCE accreditation pipeline</td>
+        </tr>
+        <tr>
+          <td>Distribution</td>
+          <td class="val-advantage">Pearson/Brady textbook bundling</td>
+          <td class="val-neutral">Direct + Pulse free tier funnel</td>
+        </tr>
+        <tr>
+          <td>Market Reach</td>
+          <td class="val-advantage">1,800+ programs, multi-discipline</td>
+          <td class="val-neutral">239 programs, 3,030 students</td>
+        </tr>
+        <tr>
+          <td>Product Breadth</td>
+          <td class="val-neutral">3 products</td>
+          <td class="val-win">15 active codebases</td>
+        </tr>
+        <tr>
+          <td>Estimated Value</td>
+          <td class="val-advantage">$20M&ndash;$40M (revenue-based)</td>
+          <td class="val-win">$5.7M&ndash;$14.7M (IP only, pre-revenue)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ════════════════════════════ FOOTER ═══ -->
+  <div class="footer">
+    <div class="confidential">Confidential &mdash; Internal Use Only</div>
+    MedEdPrep Competitive Intelligence &middot; May 2026 &middot; Sources: public filings, Crunchbase estimates, internal data
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Pulse CE - Profile Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#005235",
+                        "surface-bright": "#3a3939",
+                        "primary-fixed": "#71fbbb",
+                        "primary": "#5ae6a7",
+                        "on-secondary-fixed": "#111e16",
+                        "surface-dim": "#131313",
+                        "secondary-fixed": "#d7e7d9",
+                        "on-error-container": "#ffdad6",
+                        "surface-container": "#201f1f",
+                        "secondary": "#bbcabd",
+                        "secondary-container": "#3c4a40",
+                        "on-secondary-container": "#aab9ac",
+                        "primary-fixed-dim": "#51dea0",
+                        "inverse-surface": "#e5e2e1",
+                        "on-primary-container": "#004f33",
+                        "surface": "#131313",
+                        "surface-variant": "#353534",
+                        "surface-tint": "#51dea0",
+                        "surface-container-lowest": "#0e0e0e",
+                        "tertiary": "#ffc370",
+                        "surface-container-high": "#2a2a2a",
+                        "on-background": "#e5e2e1",
+                        "inverse-on-surface": "#313030",
+                        "on-surface": "#e5e2e1",
+                        "on-error": "#690005",
+                        "tertiary-container": "#f0a21e",
+                        "on-primary": "#003823",
+                        "tertiary-fixed": "#ffddb4",
+                        "surface-container-highest": "#353534",
+                        "on-tertiary": "#452b00",
+                        "error": "#ffb4ab",
+                        "outline": "#86948a",
+                        "on-tertiary-fixed": "#291800",
+                        "tertiary-fixed-dim": "#ffb955",
+                        "on-tertiary-container": "#603d00",
+                        "on-secondary": "#26332a",
+                        "outline-variant": "#3d4a41",
+                        "background": "#131313",
+                        "secondary-fixed-dim": "#bbcabd",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "on-primary-fixed": "#002113",
+                        "inverse-primary": "#006c47",
+                        "on-surface-variant": "#bbcabf",
+                        "surface-container-low": "#1c1b1b",
+                        "on-secondary-fixed-variant": "#3c4a40",
+                        "error-container": "#93000a",
+                        "primary-container": "#36c98d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "touch-target": "44px",
+                        "nav-height": "60px",
+                        "margin-mobile": "16px",
+                        "max-width": "1280px",
+                        "margin-desktop": "24px",
+                        "gap-default": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["24px", { "lineHeight": "1.3", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-xl": ["30px", { "lineHeight": "1.2", "fontWeight": "800" }],
+                        "label-caps": ["11px", { "lineHeight": "1", "letterSpacing": "0.5px", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0A0A;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: #111111;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .active-glow {
+            box-shadow: 0 0 20px rgba(54, 201, 141, 0.15);
+        }
+        .pulse-border {
+            border-left: 4px solid #36C98D;
+        }
+        .toggle-active {
+            background-color: #36C98D;
+        }
+        .toggle-dot {
+            transform: translateX(0px);
+            transition: transform 0.2s ease-in-out;
+        }
+        .toggle-checked .toggle-dot {
+            transform: translateX(20px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex justify-center">
+<!-- Device Container (390px) -->
+<main class="w-[390px] min-h-screen relative flex flex-col pb-[160px]">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-[60px] bg-background/80 backdrop-blur-md border-b border-outline-variant/10 shadow-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="pulse_alert">pulse_alert</span>
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary tracking-tight">Settings</h1>
+</div>
+<button class="w-touch-target h-touch-target flex items-center justify-center rounded-full hover:bg-surface-variant/20 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="close">close</span>
+</button>
+</header>
+<!-- Profile Header -->
+<section class="mt-[80px] px-margin-mobile flex flex-col items-center">
+<div class="relative">
+<div class="w-32 h-32 rounded-full border-2 border-primary p-1 active-glow">
+<img alt="Sarah Mitchell" class="w-full h-full object-cover rounded-full" data-alt="A professional studio portrait of Sarah Mitchell, a female paramedic in her mid-30s with a confident expression. She is wearing a dark navy EMS uniform. The background is a clean, dark aesthetic with subtle green rim lighting that matches a high-tech medical interface. The image has a crisp, cinematic quality with focus on her face and shoulder patches." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfDTjeZbzEQRit0KLLexL94YtOAdfnDD-ttXY10kUNNdCKSITBSJtIy4opTaitJucvwIazE55pavMHA2ladxrRvOdNSkNLSVYtkX09drFpOGegnnz4jhoxYvgv_3NzYBBbjrhXJNTk_YB-zMt7i1_VnF8batFYGR90DpcYBaZhGL8OlE0kgmuoiwI87CuiVgxRFKsVMdCfYYH8AUP3ka6gMYO2KaB0txQUb2kek9qPEj3cCyrhzEBZbFmwtKmTDh8itMpe54cN0bc"/>
+</div>
+<button class="absolute bottom-0 right-0 bg-primary text-on-primary w-10 h-10 rounded-full flex items-center justify-center border-4 border-background shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+</div>
+<div class="text-center mt-4">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Sarah Mitchell</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">sarah.mitchell@email.com</p>
+<div class="mt-2 inline-flex items-center px-3 py-1 bg-secondary-container/30 border border-outline-variant/20 rounded-full">
+<span class="text-[12px] font-bold text-primary tracking-wider uppercase">EMT-P (Paramedic)</span>
+</div>
+</div>
+</section>
+<!-- Settings List -->
+<section class="mt-8 px-margin-mobile flex flex-col gap-4">
+<!-- Expandable: Account Info -->
+<div class="glass-card rounded-xl overflow-hidden pulse-border">
+<button class="w-full flex items-center justify-between p-4 active:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="manage_accounts">manage_accounts</span>
+<span class="font-body-md text-on-surface font-semibold">Account Info</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</button>
+</div>
+<!-- Expandable: Certifications -->
+<div class="glass-card rounded-xl overflow-hidden pulse-border">
+<button class="w-full flex items-center justify-between p-4 active:bg-white/5 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="card_membership">card_membership</span>
+<span class="font-body-md text-on-surface font-semibold">Certifications</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</button>
+</div>
+<!-- Notifications Section -->
+<div class="glass-card rounded-xl p-4 flex flex-col gap-4">
+<div class="flex items-center gap-3 pb-2 border-b border-outline-variant/10">
+<span class="material-symbols-outlined text-primary" data-icon="notifications">notifications</span>
+<span class="font-body-md text-on-surface font-semibold">Notifications</span>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Toggle 1 -->
+<div class="flex items-center justify-between">
+<span class="text-body-md text-on-surface-variant">Daily Reminders</span>
+<div class="w-11 h-6 bg-surface-variant rounded-full p-1 cursor-pointer toggle-checked toggle-active" onclick="this.classList.toggle('toggle-checked'); this.classList.toggle('toggle-active');">
+<div class="toggle-dot w-4 h-4 bg-white rounded-full"></div>
+</div>
+</div>
+<!-- Toggle 2 -->
+<div class="flex items-center justify-between">
+<span class="text-body-md text-on-surface-variant">Course Deadlines</span>
+<div class="w-11 h-6 bg-surface-variant rounded-full p-1 cursor-pointer toggle-checked toggle-active" onclick="this.classList.toggle('toggle-checked'); this.classList.toggle('toggle-active');">
+<div class="toggle-dot w-4 h-4 bg-white rounded-full"></div>
+</div>
+</div>
+<!-- Toggle 3 -->
+<div class="flex items-center justify-between">
+<span class="text-body-md text-on-surface-variant">New Content</span>
+<div class="w-11 h-6 bg-surface-variant rounded-full p-1 cursor-pointer" onclick="this.classList.toggle('toggle-checked'); this.classList.toggle('toggle-active');">
+<div class="toggle-dot w-4 h-4 bg-white rounded-full"></div>
+</div>
+</div>
+<!-- Toggle 4 -->
+<div class="flex items-center justify-between">
+<span class="text-body-md text-on-surface-variant">Agency Assignments</span>
+<div class="w-11 h-6 bg-surface-variant rounded-full p-1 cursor-pointer toggle-checked toggle-active" onclick="this.classList.toggle('toggle-checked'); this.classList.toggle('toggle-active');">
+<div class="toggle-dot w-4 h-4 bg-white rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Connected Agency Section -->
+<div class="glass-card rounded-xl p-4">
+<div class="flex items-center gap-3 pb-3">
+<span class="material-symbols-outlined text-primary" data-icon="business">business</span>
+<span class="font-body-md text-on-surface font-semibold">Connected Agency</span>
+</div>
+<div class="bg-surface-container/50 rounded-lg p-3 flex items-center justify-between">
+<div>
+<p class="font-body-md text-on-surface font-bold">Metro City Fire Dept</p>
+<p class="text-[12px] text-on-surface-variant">Verified Partner</p>
+</div>
+<button class="text-[12px] font-bold text-error uppercase px-3 py-1 border border-error/30 rounded active:bg-error/10 transition-colors">Disconnect</button>
+</div>
+</div>
+<!-- Appearance Section -->
+<div class="glass-card rounded-xl p-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="dark_mode">dark_mode</span>
+<span class="font-body-md text-on-surface font-semibold">Dark Mode</span>
+</div>
+<div class="w-11 h-6 bg-surface-variant rounded-full p-1 cursor-not-allowed toggle-checked toggle-active opacity-80">
+<div class="toggle-dot w-4 h-4 bg-white rounded-full"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Fixed Bottom Action Area -->
+<div class="fixed bottom-[80px] left-0 w-full px-margin-mobile pointer-events-none">
+<button class="pointer-events-auto w-full max-w-[358px] mx-auto h-[56px] bg-primary text-on-primary font-bold rounded-full shadow-lg active-glow flex items-center justify-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="save">save</span>
+                Save Changes
+            </button>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe h-[80px] bg-surface-container/90 backdrop-blur-lg border-t border-outline-variant/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] rounded-t-xl">
+<!-- Home -->
+<a href="../dashboard-variant-h-pulse.html" class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 duration-200" style="text-decoration:none">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-caps text-label-caps mt-1">Home</span>
+</a>
+<!-- Learn -->
+<a href="40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 duration-200" style="text-decoration:none">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span class="font-label-caps text-label-caps mt-1">Learn</span>
+</a>
+<!-- Practice -->
+<a href="45-extended-practice-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 duration-200" style="text-decoration:none">
+<span class="material-symbols-outlined" data-icon="exercise">exercise</span>
+<span class="font-label-caps text-label-caps mt-1">Practice</span>
+</a>
+<!-- Compliance -->
+<a href="40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 duration-200" style="text-decoration:none">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span class="font-label-caps text-label-caps mt-1">Compliance</span>
+</a>
+<!-- Profile (Active) -->
+<a href="41-settings-mobile.html" class="flex flex-col items-center justify-center text-primary font-bold bg-secondary-container/30 rounded-full px-4 py-1 shadow-[0_0_15px_rgba(54,201,141,0.15)] active:scale-90 duration-200" style="text-decoration:none">
+<span class="material-symbols-outlined" data-icon="person" data-weight="fill">person</span>
+<span class="font-label-caps text-label-caps mt-1">Profile</span>
+</a>
+</nav>
+</main>
+<script>
+        // Micro-interaction: Add haptic-like scale effect to all buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('touchstart', () => {
+                btn.style.transform = 'scale(0.96)';
+            });
+            btn.addEventListener('touchend', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+
+        // Simple visibility observer for scroll header transparency
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                header.classList.add('bg-background/95');
+                header.classList.remove('bg-background/80');
+            } else {
+                header.classList.add('bg-background/80');
+                header.classList.remove('bg-background/95');
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile Settings | Pulse CE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#201f1f",
+                        "surface-variant": "#353534",
+                        "surface-dim": "#131313",
+                        "secondary-fixed-dim": "#bbcabd",
+                        "outline": "#86948a",
+                        "primary-container": "#36c98d",
+                        "surface": "#131313",
+                        "secondary": "#bbcabd",
+                        "primary": "#5ae6a7",
+                        "surface-tint": "#51dea0",
+                        "surface-container-highest": "#353534",
+                        "tertiary-fixed": "#ffddb4",
+                        "outline-variant": "#3d4a41",
+                        "on-tertiary-fixed": "#291800",
+                        "on-error": "#690005",
+                        "inverse-surface": "#e5e2e1",
+                        "secondary-fixed": "#d7e7d9",
+                        "on-background": "#e5e2e1",
+                        "surface-container-low": "#1c1b1b",
+                        "on-surface": "#e5e2e1",
+                        "tertiary": "#ffc370",
+                        "secondary-container": "#3c4a40",
+                        "on-tertiary-container": "#603d00",
+                        "on-primary-container": "#004f33",
+                        "inverse-primary": "#006c47",
+                        "tertiary-container": "#f0a21e",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary": "#26332a",
+                        "inverse-on-surface": "#313030",
+                        "primary-fixed": "#71fbbb",
+                        "surface-bright": "#3a3939",
+                        "background": "#131313",
+                        "on-secondary-container": "#aab9ac",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#ffb955",
+                        "on-primary": "#003823",
+                        "primary-fixed-dim": "#51dea0",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#3c4a40",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#2a2a2a",
+                        "on-surface-variant": "#bbcabf",
+                        "on-tertiary": "#452b00",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "on-secondary-fixed": "#111e16",
+                        "on-primary-fixed": "#002113",
+                        "on-primary-fixed-variant": "#005235"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "max-width": "1280px",
+                        "margin-desktop": "24px",
+                        "touch-target": "44px",
+                        "margin-mobile": "16px",
+                        "nav-height": "60px",
+                        "gap-default": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-xl": ["30px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                        "headline-lg": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.5px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0A0A;
+            background-image: linear-gradient(to bottom, transparent 0%, rgba(54, 201, 141, 0.02) 100%);
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: #111111;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #36C98D;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+        .active-glow {
+            box-shadow: 0 0 20px rgba(54, 201, 141, 0.15);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .toggle-track {
+            width: 44px;
+            height: 24px;
+            border-radius: 12px;
+            background: #353534;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .toggle-track.active {
+            background: #36C98D;
+        }
+        .toggle-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: white;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.2s ease;
+        }
+        .toggle-track.active .toggle-thumb {
+            transform: translateX(20px);
+        }
+        .settings-nav-item {
+            transition: all 0.15s ease;
+        }
+        .settings-nav-item:hover {
+            background: rgba(54, 201, 141, 0.05);
+        }
+        .settings-nav-item.active {
+            background: rgba(54, 201, 141, 0.08);
+            border-left: 3px solid #36C98D;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+<!-- TopNavBar Shell -->
+<nav class="bg-surface/85 backdrop-blur-md border-b border-outline-variant/30 shadow-sm docked full-width top-0 sticky z-[100]">
+<div class="flex justify-between items-center h-nav-height max-w-max-width mx-auto px-margin-desktop w-full">
+<div class="text-headline-lg font-headline-lg font-extrabold text-primary dark:text-primary tracking-tighter">
+                Pulse CE
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="../dashboard-variant-h-pulse.html">Home</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="40-compliance-tracker-desktop.html">Learn</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="45-extended-practice-desktop.html">Practice</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="40-compliance-tracker-desktop.html">Compliance</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-all duration-200">notifications</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border-2 border-primary/40">
+<img alt="User profile avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfDTjeZbzEQRit0KLLexL94YtOAdfnDD-ttXY10kUNNdCKSITBSJtIy4opTaitJucvwIazE55pavMHA2ladxrRvOdNSkNLSVYtkX09drFpOGegnnz4jhoxYvgv_3NzYBBbjrhXJNTk_YB-zMt7i1_VnF8batFYGR90DpcYBaZhGL8OlE0kgmuoiwI87CuiVgxRFKsVMdCfYYH8AUP3ka6gMYO2KaB0txQUb2kek9qPEj3cCyrhzEBZbFmwtKmTDh8itMpe54cN0bc"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-max-width mx-auto px-margin-desktop py-12">
+<!-- Header -->
+<header class="mb-10">
+<h1 class="font-headline-xl text-headline-xl mb-2 text-on-surface">Settings</h1>
+<p class="font-body-md text-on-surface-variant max-w-xl">Manage your account, certifications, notification preferences, and connected agency.</p>
+</header>
+
+<!-- Two-Column Layout: Sidebar + Content -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Left Sidebar Nav -->
+<aside class="md:col-span-3">
+<div class="glass-card rounded-2xl overflow-hidden">
+<!-- Profile Summary -->
+<div class="p-6 border-b border-outline-variant/10 flex flex-col items-center">
+<div class="relative mb-4">
+<div class="w-24 h-24 rounded-full border-2 border-primary p-0.5 active-glow">
+<img alt="Sarah Mitchell" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfDTjeZbzEQRit0KLLexL94YtOAdfnDD-ttXY10kUNNdCKSITBSJtIy4opTaitJucvwIazE55pavMHA2ladxrRvOdNSkNLSVYtkX09drFpOGegnnz4jhoxYvgv_3NzYBBbjrhXJNTk_YB-zMt7i1_VnF8batFYGR90DpcYBaZhGL8OlE0kgmuoiwI87CuiVgxRFKsVMdCfYYH8AUP3ka6gMYO2KaB0txQUb2kek9qPEj3cCyrhzEBZbFmwtKmTDh8itMpe54cN0bc"/>
+</div>
+<button class="absolute bottom-0 right-0 bg-primary text-on-primary w-8 h-8 rounded-full flex items-center justify-center border-2 border-background shadow-lg hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+</button>
+</div>
+<h2 class="font-headline-lg text-[18px] font-bold text-on-surface">Sarah Mitchell</h2>
+<p class="font-body-md text-on-surface-variant text-sm">sarah.mitchell@email.com</p>
+<div class="mt-2 inline-flex items-center px-3 py-1 bg-secondary-container/30 border border-outline-variant/20 rounded-full">
+<span class="text-[11px] font-bold text-primary tracking-wider uppercase">EMT-P (Paramedic)</span>
+</div>
+</div>
+<!-- Nav Items -->
+<nav class="py-2">
+<button class="settings-nav-item active w-full text-left px-6 py-3 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px]">manage_accounts</span>
+<span class="font-body-md text-on-surface font-semibold">Account Info</span>
+</button>
+<button class="settings-nav-item w-full text-left px-6 py-3 flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">card_membership</span>
+<span class="font-body-md text-on-surface-variant">Certifications</span>
+</button>
+<button class="settings-nav-item w-full text-left px-6 py-3 flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">notifications</span>
+<span class="font-body-md text-on-surface-variant">Notifications</span>
+</button>
+<button class="settings-nav-item w-full text-left px-6 py-3 flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">business</span>
+<span class="font-body-md text-on-surface-variant">Connected Agency</span>
+</button>
+<button class="settings-nav-item w-full text-left px-6 py-3 flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">dark_mode</span>
+<span class="font-body-md text-on-surface-variant">Appearance</span>
+</button>
+</nav>
+</div>
+</aside>
+
+<!-- Right Content Area -->
+<div class="md:col-span-9 space-y-6">
+<!-- Account Info Card -->
+<section class="glass-card p-8 rounded-2xl">
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">manage_accounts</span>
+                        Account Info
+                    </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase mb-2">Full Name</label>
+<input type="text" value="Sarah Mitchell" class="w-full h-11 bg-surface-container border border-outline-variant/20 rounded-lg px-4 font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all"/>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase mb-2">Email Address</label>
+<input type="email" value="sarah.mitchell@email.com" class="w-full h-11 bg-surface-container border border-outline-variant/20 rounded-lg px-4 font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all"/>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase mb-2">Phone</label>
+<input type="tel" value="(555) 234-5678" class="w-full h-11 bg-surface-container border border-outline-variant/20 rounded-lg px-4 font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all"/>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase mb-2">Certification Level</label>
+<div class="w-full h-11 bg-surface-container border border-outline-variant/20 rounded-lg px-4 font-body-md text-on-surface flex items-center justify-between">
+<span>EMT-Paramedic</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Certifications Card -->
+<section class="glass-card p-8 rounded-2xl">
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">card_membership</span>
+                        Certifications
+                    </h3>
+<div class="space-y-4">
+<div class="bg-surface-container/50 rounded-xl p-5 border border-outline-variant/10 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div>
+<p class="font-body-md text-on-surface font-bold">NREMT Paramedic</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">Cert #1928374 &middot; Expires Dec 22, 2026</p>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary font-label-caps text-label-caps uppercase">Active</span>
+</div>
+<div class="bg-surface-container/50 rounded-xl p-5 border border-outline-variant/10 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div>
+<p class="font-body-md text-on-surface font-bold">ACLS Provider</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">AHA &middot; Expires Mar 15, 2027</p>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary font-label-caps text-label-caps uppercase">Active</span>
+</div>
+<button class="w-full h-11 border border-dashed border-outline-variant/30 text-on-surface-variant rounded-xl hover:border-primary/40 hover:text-primary transition-all font-body-md flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                            Add Certification
+                        </button>
+</div>
+</section>
+
+<!-- Notifications Card -->
+<section class="glass-card p-8 rounded-2xl">
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">notifications</span>
+                        Notifications
+                    </h3>
+<div class="space-y-5">
+<div class="flex items-center justify-between py-2">
+<div>
+<p class="font-body-md text-on-surface font-semibold">Daily Reminders</p>
+<p class="font-body-md text-on-surface-variant text-sm">Get a nudge to complete your daily practice</p>
+</div>
+<div class="toggle-track active" onclick="this.classList.toggle('active')">
+<div class="toggle-thumb"></div>
+</div>
+</div>
+<div class="border-t border-outline-variant/10"></div>
+<div class="flex items-center justify-between py-2">
+<div>
+<p class="font-body-md text-on-surface font-semibold">Course Deadlines</p>
+<p class="font-body-md text-on-surface-variant text-sm">Alerts when assignments are nearing due dates</p>
+</div>
+<div class="toggle-track active" onclick="this.classList.toggle('active')">
+<div class="toggle-thumb"></div>
+</div>
+</div>
+<div class="border-t border-outline-variant/10"></div>
+<div class="flex items-center justify-between py-2">
+<div>
+<p class="font-body-md text-on-surface font-semibold">New Content</p>
+<p class="font-body-md text-on-surface-variant text-sm">Notifications when new courses are published</p>
+</div>
+<div class="toggle-track" onclick="this.classList.toggle('active')">
+<div class="toggle-thumb"></div>
+</div>
+</div>
+<div class="border-t border-outline-variant/10"></div>
+<div class="flex items-center justify-between py-2">
+<div>
+<p class="font-body-md text-on-surface font-semibold">Agency Assignments</p>
+<p class="font-body-md text-on-surface-variant text-sm">When your agency assigns a required course</p>
+</div>
+<div class="toggle-track active" onclick="this.classList.toggle('active')">
+<div class="toggle-thumb"></div>
+</div>
+</div>
+<div class="border-t border-outline-variant/10"></div>
+<div class="flex items-center justify-between py-2">
+<div>
+<p class="font-body-md text-on-surface font-semibold">Retention Alerts</p>
+<p class="font-body-md text-on-surface-variant text-sm">When a domain score drops below your threshold</p>
+</div>
+<div class="toggle-track active" onclick="this.classList.toggle('active')">
+<div class="toggle-thumb"></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Connected Agency Card -->
+<section class="glass-card p-8 rounded-2xl">
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">business</span>
+                        Connected Agency
+                    </h3>
+<div class="bg-surface-container/50 rounded-xl p-6 border border-outline-variant/10 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[28px]">local_fire_department</span>
+</div>
+<div>
+<p class="font-headline-lg text-[18px] text-on-surface font-bold">Metro City Fire Dept</p>
+<p class="font-body-md text-on-surface-variant">Verified Partner &middot; Connected since Jan 2026</p>
+<p class="font-label-caps text-label-caps text-primary mt-1">Agency can view your CE transcript and compliance status</p>
+</div>
+</div>
+<button class="px-4 py-2 border border-error/30 text-error rounded-lg hover:bg-error/10 transition-colors font-label-caps text-label-caps uppercase tracking-wider font-bold">
+                        Disconnect
+                    </button>
+</div>
+</section>
+
+<!-- Appearance Card -->
+<section class="glass-card p-8 rounded-2xl">
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">palette</span>
+                        Appearance
+                    </h3>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-body-md text-on-surface font-semibold">Dark Mode</p>
+<p class="font-body-md text-on-surface-variant text-sm">Pulse CE is designed for dark mode</p>
+</div>
+<div class="toggle-track active" style="opacity: 0.6; cursor: not-allowed;">
+<div class="toggle-thumb"></div>
+</div>
+</div>
+</section>
+
+<!-- Save Button -->
+<div class="flex justify-end pt-4">
+<button class="px-8 h-12 bg-primary text-on-primary font-bold rounded-full active-glow hover:bg-primary/90 transition-all active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">save</span>
+                        Save Changes
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 md:hidden bg-surface-container/90 backdrop-blur-lg border-t border-outline-variant/20 rounded-t-xl" style="box-shadow: 0 0 20px rgba(54, 201, 141, 0.15);">
+<a href="../dashboard-variant-h-pulse.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none"><span class="material-symbols-outlined">home</span><span class="font-label-caps text-label-caps mt-1">Home</span></a>
+<a href="40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none"><span class="material-symbols-outlined">school</span><span class="font-label-caps text-label-caps mt-1">Learn</span></a>
+<a href="45-extended-practice-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none"><span class="material-symbols-outlined">fitness_center</span><span class="font-label-caps text-label-caps mt-1">Practice</span></a>
+<a href="40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none"><span class="material-symbols-outlined">verified_user</span><span class="font-label-caps text-label-caps mt-1">Compliance</span></a>
+<a href="41-settings-mobile.html" class="flex flex-col items-center justify-center bg-secondary-container text-primary rounded-2xl p-2 shadow-[0_0_10px_rgba(54,201,141,0.2)] active:scale-90 transition-transform duration-200" style="text-decoration:none"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span><span class="font-label-caps text-label-caps mt-1">Profile</span></a>
+</nav>
+<script>
+        // Hover effects for cards
+        const cards = document.querySelectorAll('.glass-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.borderColor = 'rgba(54, 201, 141, 0.3)';
+                card.style.boxShadow = '0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(54, 201, 141, 0.05)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                card.style.boxShadow = 'none';
+            });
+        });
+
+        // Settings nav interaction
+        const navItems = document.querySelectorAll('.settings-nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navItems.forEach(n => n.classList.remove('active'));
+                item.classList.add('active');
+                // Update icon colors
+                navItems.forEach(n => {
+                    const icon = n.querySelector('.material-symbols-outlined');
+                    const label = n.querySelector('.font-body-md');
+                    if (n.classList.contains('active')) {
+                        icon.classList.remove('text-on-surface-variant');
+                        icon.classList.add('text-primary');
+                        label.classList.remove('text-on-surface-variant');
+                        label.classList.add('text-on-surface');
+                        label.classList.add('font-semibold');
+                    } else {
+                        icon.classList.remove('text-primary');
+                        icon.classList.add('text-on-surface-variant');
+                        label.classList.remove('text-on-surface', 'font-semibold');
+                        label.classList.add('text-on-surface-variant');
+                    }
+                });
+            });
+        });
+    </script>
+</body></html>

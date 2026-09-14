@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Register | Pulse CE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#36C98D',
+                            hover: '#2DB87E'
+                        },
+                        background: '#0A0A0A',
+                        surface: {
+                            DEFAULT: '#111111',
+                            elevated: '#1A1A1A',
+                            hover: '#1F1F1F'
+                        },
+                        border: {
+                            subtle: 'rgba(255,255,255,0.08)',
+                            DEFAULT: 'rgba(255,255,255,0.12)',
+                            strong: 'rgba(255,255,255,0.2)'
+                        },
+                        text: {
+                            primary: '#FFFFFF',
+                            secondary: 'rgba(255,255,255,0.7)',
+                            tertiary: 'rgba(255,255,255,0.45)'
+                        },
+                        error: '#E5484D',
+                        warning: '#F5A623'
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Inter", "sans-serif"],
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(54,201,141,0.15)',
+                        'card': '0 8px 24px rgba(0,0,0,0.4)'
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A;
+            color: #FFFFFF;
+        }
+        
+        .auth-background {
+            background: linear-gradient(135deg, #0A0A0A 0%, #0D1A12 50%, #0F3D26 75%, #36C98D 100%);
+            opacity: 0.2;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -2;
+        }
+        
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .input-field {
+            @apply w-full bg-surface-elevated border border-border rounded-lg h-12 px-4 text-text-primary placeholder-text-tertiary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-200;
+        }
+        
+        .select-field {
+            @apply w-full bg-surface-elevated border border-border rounded-lg h-12 px-4 text-text-primary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-opacity='0.7' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 antialiased">
+<!-- Background Effects -->
+<div class="auth-background"></div>
+<div class="noise-overlay"></div>
+<!-- Centered Card Container -->
+<div class="w-full max-w-[520px]">
+<!-- Brand Header -->
+<div class="flex flex-col items-center mb-8">
+<div class="flex items-center gap-3">
+<img alt="Pulse CE Logo" class="w-10 h-10 object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uiQuAMb-iPTR_teZtBbpKcjDXlkM3Bcp-UIgLeUUjUEF2W65wSPHVBpP3pJjeWAY99AvnhOqGgxUtccEez9Q_aKHcqrEifRFTh2nLLWFS6AqP6tvBEQ7Yf3QZCRVq_Z-wylzBiSmdPSZqxaOFU18n0RkBJ7ACE0Xhj44fyX-BQLkAhW9i0rnv9faoWKmBq24bp11kDJVtpSHiQLQSir6Yu_hQBp5OAGk2JX54sCzayhCS6WnsJEI3hXwS7Z"/>
+<div class="flex flex-col">
+<span class="font-headline font-extrabold text-2xl tracking-tighter text-text-primary leading-none">PULSE</span>
+<span class="font-display font-semibold text-[11px] tracking-[0.1em] text-primary uppercase leading-tight mt-0.5">BY MEDEDPREP</span>
+</div>
+</div>
+</div>
+<!-- Registration Card -->
+<div class="bg-surface border border-border rounded-2xl p-10 shadow-card relative overflow-hidden">
+<!-- Subtle gradient border top accent -->
+<div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
+<!-- Header -->
+<div class="text-center mb-8">
+<h1 class="font-headline text-2xl font-semibold text-text-primary mb-2">Create your account</h1>
+<p class="font-body text-sm text-text-secondary">Start earning CE hours with adaptive learning</p>
+</div>
+<!-- Form -->
+<form class="space-y-5" onsubmit="event.preventDefault();">
+<!-- Name Row -->
+<div class="flex gap-4">
+<div class="flex-1 space-y-1.5">
+<label class="font-label text-xs font-medium text-text-secondary block">First Name</label>
+<input class="input-field" placeholder="Jane" required="" type="text"/>
+</div>
+<div class="flex-1 space-y-1.5">
+<label class="font-label text-xs font-medium text-text-secondary block">Last Name</label>
+<input class="input-field" placeholder="Doe" required="" type="text"/>
+</div>
+</div>
+<!-- Email -->
+<div class="space-y-1.5">
+<label class="font-label text-xs font-medium text-text-secondary block">Email Address</label>
+<input class="input-field" placeholder="you@agency.com" required="" type="email"/>
+</div>
+<!-- Password -->
+<div class="space-y-1.5 relative">
+<label class="font-label text-xs font-medium text-text-secondary block">Password</label>
+<div class="relative">
+<input class="input-field pr-10" id="password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute inset-y-0 right-0 px-3 flex items-center text-text-tertiary hover:text-text-primary transition-colors" onclick="togglePassword()" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility" id="eye-icon">visibility</span>
+</button>
+</div>
+<p class="text-[11px] text-text-tertiary mt-1">At least 8 characters</p>
+</div>
+<!-- Certification Dropdowns -->
+<div class="flex gap-4">
+<div class="flex-1 space-y-1.5">
+<label class="font-label text-xs font-medium text-text-secondary block">Certification Level</label>
+<select class="select-field" required="">
+<option disabled="" hidden="" selected="" value="">Select Level</option>
+<option value="emt">EMT</option>
+<option value="aemt">AEMT</option>
+<option value="paramedic">Paramedic</option>
+<option value="other">Other</option>
+</select>
+</div>
+<div class="flex-1 space-y-1.5">
+<label class="font-label text-xs font-medium text-text-secondary block">State / Jurisdiction</label>
+<select class="select-field" required="">
+<option disabled="" hidden="" selected="" value="">Select State</option>
+<option value="CA">California</option>
+<option value="TX">Texas</option>
+<option value="NY">New York</option>
+<option value="FL">Florida</option>
+<option value="OTHER">Other State</option>
+</select>
+</div>
+</div>
+<!-- NREMT ID -->
+<div class="space-y-1.5">
+<label class="font-label text-xs font-medium text-text-secondary block flex justify-between">
+<span>NREMT ID</span>
+<span class="text-text-tertiary font-normal">Optional</span>
+</label>
+<input class="input-field" placeholder="E123456" type="text"/>
+<p class="text-[11px] text-text-tertiary mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" data-icon="info">info</span>
+                        Used for automatic CAPCE reporting
+                    </p>
+</div>
+<!-- Terms Checkbox -->
+<div class="pt-2">
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="relative flex items-center justify-center mt-0.5">
+<input class="peer sr-only" required="" type="checkbox"/>
+<div class="w-4 h-4 rounded border border-border bg-surface-elevated peer-checked:bg-primary peer-checked:border-primary transition-all duration-200 group-hover:border-text-secondary"></div>
+<span class="material-symbols-outlined absolute text-[14px] text-background opacity-0 peer-checked:opacity-100 transition-opacity duration-200" data-icon="check">check</span>
+</div>
+<span class="text-sm font-body text-text-secondary leading-snug">
+                            I agree to the <a class="text-primary hover:text-primary-hover transition-colors font-medium" href="../batch-7-system/terms-of-service.html">Terms of Service</a> and <a class="text-primary hover:text-primary-hover transition-colors font-medium" href="../batch-7-system/privacy-policy.html">Privacy Policy</a>
+</span>
+</label>
+</div>
+<!-- Submit Button -->
+<button class="w-full h-12 bg-primary hover:bg-primary-hover text-background font-body font-semibold rounded-lg mt-6 shadow-glow transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-2 group" type="submit">
+                    Create Account
+                    <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</form>
+</div>
+<!-- Footer Link -->
+<div class="text-center mt-6">
+<p class="font-body text-sm text-text-secondary">
+                Already have an account? 
+                <a class="text-primary hover:text-primary-hover font-medium transition-colors" href="16-login-desktop.html">Sign in</a>
+</p>
+</div>
+</div>
+<script>
+        function togglePassword() {
+            const pwdInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+            
+            if (pwdInput.type === 'password') {
+                pwdInput.type = 'text';
+                eyeIcon.textContent = 'visibility_off';
+                eyeIcon.setAttribute('data-icon', 'visibility_off');
+            } else {
+                pwdInput.type = 'password';
+                eyeIcon.textContent = 'visibility';
+                eyeIcon.setAttribute('data-icon', 'visibility');
+            }
+        }
+    </script>
+</body></html>

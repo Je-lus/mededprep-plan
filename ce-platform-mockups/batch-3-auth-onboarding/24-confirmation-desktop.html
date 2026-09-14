@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Purchase Confirmation - Pulse CE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        pulse: {
+                            green: '#36C98D',
+                            hover: '#2DB87E',
+                            bg: '#0A0A0A',
+                            surface: '#111111',
+                            elevated: '#1A1A1A',
+                            hover_surface: '#1F1F1F',
+                            error: '#E5484D',
+                            warning: '#F5A623',
+                            border_subtle: 'rgba(255,255,255,0.08)',
+                            border_default: 'rgba(255,255,255,0.12)',
+                            border_strong: 'rgba(255,255,255,0.2)',
+                            text_primary: '#FFFFFF',
+                            text_secondary: 'rgba(255,255,255,0.7)',
+                            text_tertiary: 'rgba(255,255,255,0.45)',
+                        }
+                    },
+                    fontFamily: {
+                        headline: ["Inter", "sans-serif"],
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'glow-green': '0 0 20px rgba(54,201,141,0.15)',
+                        'glow-green-strong': '0 0 30px rgba(54,201,141,0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0A0A;
+            color: #FFFFFF;
+        }
+        .bg-pulse-gradient {
+            background: linear-gradient(180deg, rgba(54, 201, 141, 0.15) 0%, rgba(10, 10, 10, 0) 100%);
+        }
+        .radial-glow {
+            background: radial-gradient(circle at 50% 0%, rgba(54, 201, 141, 0.25) 0%, rgba(10, 10, 10, 0) 50%);
+        }
+    </style>
+</head>
+<body class="font-body min-h-screen relative overflow-x-hidden selection:bg-pulse-green selection:text-pulse-bg">
+<!-- Background Effects -->
+<div class="absolute inset-0 z-0 pointer-events-none radial-glow"></div>
+<div class="absolute inset-0 z-0 pointer-events-none bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.04%22/%3E%3C/svg%3E')]"></div>
+<!-- Top Navigation (Transactional) -->
+<nav class="relative z-10 w-full h-16 flex items-center justify-center pt-8 mb-12">
+<img alt="Pulse CE Logo" class="h-[60px] w-auto" src="https://lh3.googleusercontent.com/aida/ADBb0uiQuAMb-iPTR_teZtBbpKcjDXlkM3Bcp-UIgLeUUjUEF2W65wSPHVBpP3pJjeWAY99AvnhOqGgxUtccEez9Q_aKHcqrEifRFTh2nLLWFS6AqP6tvBEQ7Yf3QZCRVq_Z-wylzBiSmdPSZqxaOFU18n0RkBJ7ACE0Xhj44fyX-BQLkAhW9i0rnv9faoWKmBq24bp11kDJVtpSHiQLQSir6Yu_hQBp5OAGk2JX54sCzayhCS6WnsJEI3hXwS7Z"/>
+</nav>
+<!-- Main Content -->
+<main class="relative z-10 w-full max-w-[600px] mx-auto px-6 pb-24 flex flex-col items-center">
+<!-- Success Icon -->
+<div class="w-20 h-20 rounded-full bg-pulse-green flex items-center justify-center shadow-glow-green-strong mb-8 animate-[scaleIn_0.5s_ease-out]">
+<span class="material-symbols-outlined text-[40px] text-pulse-bg font-bold" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<!-- Header -->
+<div class="text-center mb-10">
+<h1 class="font-headline text-4xl font-bold tracking-tight text-pulse-text_primary mb-2">You're all set!</h1>
+<p class="text-pulse-text_secondary text-base">Your course is ready to begin.</p>
+</div>
+<!-- Receipt Card -->
+<div class="w-full bg-pulse-surface border border-pulse-border_default rounded-2xl p-6 mb-8 relative overflow-hidden">
+<!-- Order Header -->
+<div class="flex justify-between items-start mb-6 pb-6 border-b border-pulse-border_default">
+<div>
+<p class="text-xs text-pulse-text_tertiary uppercase tracking-wider font-semibold mb-1">Order #PCE-2026-0847</p>
+<h2 class="text-xl font-headline font-semibold text-pulse-text_primary leading-snug">Advanced Cardiac Life Support (ACLS) Review</h2>
+</div>
+<div class="bg-pulse-green/10 text-pulse-green px-2.5 py-1 rounded text-xs font-semibold whitespace-nowrap border border-pulse-green/20">
+                    2.0 CEH
+                </div>
+</div>
+<!-- Details Grid -->
+<div class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-pulse-border_default text-sm">
+<div>
+<p class="text-pulse-text_tertiary mb-1">Instructor</p>
+<p class="text-pulse-text_primary font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-pulse-text_secondary">person</span>
+                        Dr. James Wilson
+                    </p>
+</div>
+<div>
+<p class="text-pulse-text_tertiary mb-1">Duration</p>
+<p class="text-pulse-text_primary font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-pulse-text_secondary">schedule</span>
+                        4 hours 30 min
+                    </p>
+</div>
+<div>
+<p class="text-pulse-text_tertiary mb-1">Category</p>
+<p class="text-pulse-text_primary font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-pulse-text_secondary">category</span>
+                        NCCP Cardiology
+                    </p>
+</div>
+<div>
+<p class="text-pulse-text_tertiary mb-1">Cert Level</p>
+<p class="text-pulse-text_primary font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-pulse-text_secondary">badge</span>
+                        Paramedic
+                    </p>
+</div>
+</div>
+<!-- Payment Summary -->
+<div class="space-y-3 text-sm mb-6 pb-6 border-b border-pulse-border_default">
+<div class="flex justify-between text-pulse-text_secondary">
+<span>Subtotal</span>
+<span>$34.99</span>
+</div>
+<div class="flex justify-between text-pulse-green">
+<span>Discount</span>
+<span>-$5.00</span>
+</div>
+<div class="flex justify-between text-pulse-text_primary font-semibold text-base pt-2">
+<span>Total</span>
+<span>$29.99</span>
+</div>
+</div>
+<!-- Footer Details -->
+<div class="flex flex-col gap-2 text-sm text-pulse-text_secondary">
+<p class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">credit_card</span>
+                    Paid with Visa ending in 4242
+                </p>
+<p class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+                    Receipt sent to sarah.chen@fdny.gov
+                </p>
+</div>
+</div>
+<!-- Primary Action -->
+<a href="../dashboard-variant-h-pulse.html" class="w-full h-14 bg-pulse-green hover:bg-pulse-hover text-pulse-bg font-semibold rounded-lg flex items-center justify-center gap-2 shadow-glow-green transition-all mb-4" style="text-decoration:none;">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+            Start Learning
+        </a>
+<!-- Secondary Actions -->
+<div class="w-full grid grid-cols-2 gap-4 mb-12">
+<button class="h-12 border border-pulse-border_strong bg-transparent hover:bg-pulse-surface hover:text-pulse-text_primary text-pulse-text_secondary font-medium rounded-lg flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                View Receipt
+            </button>
+<a href="../dashboard-variant-h-pulse.html" class="h-12 border border-pulse-border_strong bg-transparent hover:bg-pulse-surface hover:text-pulse-text_primary text-pulse-text_secondary font-medium rounded-lg flex items-center justify-center gap-2 transition-colors" style="text-decoration:none;">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+                Go to Dashboard
+            </a>
+</div>
+<!-- What to Expect -->
+<div class="w-full">
+<h3 class="text-pulse-text_primary font-semibold text-lg mb-4">What to expect</h3>
+<ul class="space-y-4">
+<li class="flex items-start gap-4">
+<div class="w-8 h-8 rounded bg-pulse-elevated border border-pulse-border_default flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px] text-pulse-text_secondary">assignment</span>
+</div>
+<div>
+<p class="text-pulse-text_primary font-medium text-sm">Pre-assessment</p>
+<p class="text-pulse-text_tertiary text-sm">~10 min baseline knowledge check.</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<div class="w-8 h-8 rounded bg-pulse-elevated border border-pulse-border_default flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px] text-pulse-text_secondary">play_circle</span>
+</div>
+<div>
+<p class="text-pulse-text_primary font-medium text-sm">Video lessons</p>
+<p class="text-pulse-text_tertiary text-sm">High-yield clinical modules.</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<div class="w-8 h-8 rounded bg-pulse-elevated border border-pulse-border_default flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px] text-pulse-text_secondary">verified</span>
+</div>
+<div>
+<p class="text-pulse-text_primary font-medium text-sm">Post-test &amp; CAPCE certificate</p>
+<p class="text-pulse-text_tertiary text-sm">Earn your 2.0 CEH upon 80% passing score.</p>
+</div>
+</li>
+</ul>
+</div>
+</main>
+<style>
+        @keyframes scaleIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</body></html>

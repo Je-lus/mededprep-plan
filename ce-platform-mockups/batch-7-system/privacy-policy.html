@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulse CE — Privacy Policy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #0A0A0A;
+      --bg-surface: #111111;
+      --bg-surface-elevated: #1A1A1A;
+      --bg-surface-hover: #1F1F1F;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-default: rgba(255, 255, 255, 0.12);
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-tertiary: rgba(255, 255, 255, 0.45);
+      --green: #36C98D;
+      --green-dim: rgba(54, 201, 141, 0.12);
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-pill: 9999px;
+      --transition: 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background: linear-gradient(135deg, #0A0A0A 0%, #0D1A12 50%, #0F3D26 75%, #36C98D 100%);
+      opacity: 0.12; pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat; pointer-events: none; mix-blend-mode: overlay; opacity: 0.5; z-index: 0;
+    }
+
+    /* NAV */
+    .top-nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 60px; background: rgba(10,10,10,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; }
+    .brand-wordmark { display: flex; flex-direction: column; }
+    .brand-pulse { font-size: 17px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.02em; line-height: 1; }
+    .brand-sub { font-size: 11px; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; line-height: 1; margin-top: 2px; }
+    .pill-nav { display: flex; align-items: center; gap: 4px; background: var(--bg-surface); border-radius: var(--radius-pill); padding: 4px; border: 1px solid var(--border-subtle); }
+    .pill-nav a { text-decoration: none; font-size: 13px; font-weight: 500; color: var(--text-secondary); padding: 7px 18px; border-radius: var(--radius-pill); transition: all 0.2s; }
+    .pill-nav a:hover { color: var(--text-primary); background: var(--bg-surface-hover); }
+    .pill-nav a.active { background: var(--green); color: #0A0A0A; font-weight: 600; }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .nav-icon-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-subtle); background: var(--bg-surface); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); }
+    .nav-icon-btn svg { width: 18px; height: 18px; }
+    .avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--green), #2ba876); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #0A0A0A; cursor: pointer; }
+
+    /* LAYOUT */
+    .page-wrap { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 48px 32px 80px; display: flex; gap: 48px; }
+
+    /* TOC */
+    .toc { width: 240px; flex-shrink: 0; position: sticky; top: 108px; align-self: flex-start; max-height: calc(100vh - 140px); overflow-y: auto; }
+    .toc-title { font-size: 11px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+    .toc-list { list-style: none; }
+    .toc-list li { margin-bottom: 2px; }
+    .toc-list a { display: block; font-size: 13px; color: var(--text-secondary); text-decoration: none; padding: 6px 0 6px 12px; border-left: 2px solid transparent; transition: all 0.2s; }
+    .toc-list a:hover { color: var(--text-primary); background: rgba(255,255,255,0.03); }
+    .toc-list a.active { color: var(--green); font-weight: 500; border-left-color: var(--green); background: var(--green-dim); }
+
+    /* CONTENT */
+    .legal-content { flex: 1; min-width: 0; max-width: 720px; }
+    .legal-header { margin-bottom: 32px; }
+    .legal-header h1 { font-size: 30px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .legal-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .updated-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--green); background: var(--green-dim); padding: 4px 12px; border-radius: var(--radius-pill); }
+    .updated-badge svg { width: 14px; height: 14px; }
+    .effective-date { font-size: 13px; color: var(--text-tertiary); }
+    .legal-intro { font-size: 16px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border-subtle); }
+
+    .legal-section { margin-bottom: 40px; }
+    .legal-section h2 { font-size: 20px; font-weight: 600; margin-bottom: 16px; padding-top: 8px; }
+    .legal-section h3 { font-size: 16px; font-weight: 600; margin: 20px 0 10px; }
+    .legal-section p { font-size: 15px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 12px; }
+    .legal-section ul { list-style: none; margin: 12px 0; }
+    .legal-section ul li { font-size: 15px; color: var(--text-secondary); line-height: 1.65; padding-left: 20px; margin-bottom: 8px; position: relative; }
+    .legal-section ul li::before { content: ''; position: absolute; left: 0; top: 10px; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+    .legal-section strong { color: var(--text-primary); font-weight: 600; }
+    .legal-section .divider { border: none; border-top: 1px solid var(--border-subtle); margin: 32px 0; }
+
+    /* Data table */
+    .data-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    .data-table th { font-size: 12px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em; text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-default); }
+    .data-table td { font-size: 14px; color: var(--text-secondary); padding: 10px 12px; border-bottom: 1px solid var(--border-subtle); }
+
+    .reading-progress { position: fixed; top: 60px; right: 0; width: 3px; height: 0%; background: var(--green); z-index: 99; transition: height 0.1s linear; }
+    .footer { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 40px 32px; border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; }
+    .footer-left { font-size: 12px; color: var(--text-tertiary); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: var(--text-tertiary); text-decoration: none; }
+    .footer-links a:hover { color: var(--green); }
+
+    @media (max-width: 900px) {
+      .toc { display: none; }
+      .page-wrap { padding: 32px 16px 60px; }
+      .legal-header h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="reading-progress" id="progressBar"></div>
+
+  <nav class="top-nav">
+    <a href="../batch-2a-public-individual/01-landing-desktop.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 36 36" fill="none">
+        <path d="M18 2C10 2 4 7 4 14v8c0 4 6 12 14 12s14-8 14-12v-8c0-7-6-12-14-12z" fill="#36C98D" opacity="0.15"/>
+        <path d="M18 4C11 4 6 8.5 6 14v7c0 3.5 5.5 11 12 11s12-7.5 12-11v-7c0-5.5-5-10-12-10z" stroke="#36C98D" stroke-width="1.5" fill="none"/>
+        <polyline points="8,20 12,20 14,14 17,26 20,17 22,20 28,20" stroke="#36C98D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="brand-wordmark"><span class="brand-pulse">PULSE</span><span class="brand-sub">BY MEDEDPREP</span></div>
+    </a>
+    <div class="pill-nav">
+      <a href="../batch-2a-public-individual/01-landing-desktop.html">Home</a><a href="../batch-2a-public-individual/04-catalog-desktop.html">Courses</a><a href="../batch-2a-public-individual/03-pricing-desktop.html">Pricing</a><a href="help-faq.html">Help</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <div class="avatar">JD</div>
+    </div>
+  </nav>
+
+  <div class="page-wrap">
+    <aside class="toc">
+      <div class="toc-title">Table of Contents</div>
+      <ul class="toc-list">
+        <li><a href="#info-collect" class="active">1. Information We Collect</a></li>
+        <li><a href="#how-use">2. How We Use Information</a></li>
+        <li><a href="#data-sharing">3. Data Sharing</a></li>
+        <li><a href="#learning-data">4. Learning & Performance Data</a></li>
+        <li><a href="#cookies">5. Cookies & Tracking</a></li>
+        <li><a href="#data-retention">6. Data Retention</a></li>
+        <li><a href="#security">7. Security Measures</a></li>
+        <li><a href="#rights">8. Your Rights</a></li>
+        <li><a href="#children">9. Children's Privacy</a></li>
+        <li><a href="#third-party">10. Third-Party Services</a></li>
+        <li><a href="#changes">11. Changes to This Policy</a></li>
+        <li><a href="#contact">12. Contact Us</a></li>
+      </ul>
+    </aside>
+
+    <article class="legal-content">
+      <div class="legal-header">
+        <h1>Privacy Policy</h1>
+        <div class="legal-meta">
+          <span class="updated-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Last updated: May 15, 2026
+          </span>
+          <span class="effective-date">Effective Date: May 15, 2026</span>
+        </div>
+      </div>
+
+      <p class="legal-intro">MedEdPrep, LLC ("we", "our", "us") operates the Pulse CE platform. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our Service. We are committed to protecting the privacy of EMS professionals who use our platform for continuing education.</p>
+
+      <section class="legal-section" id="info-collect">
+        <h2>1. Information We Collect</h2>
+
+        <h3>Account Information</h3>
+        <p>When you create an account, we collect:</p>
+        <ul>
+          <li><strong>Identity data:</strong> Name, email address, NREMT certification number (optional)</li>
+          <li><strong>Professional data:</strong> Certification level (EMT, AEMT, Paramedic), state of licensure, agency affiliation</li>
+          <li><strong>Account credentials:</strong> Email and hashed password (we never store plaintext passwords)</li>
+        </ul>
+
+        <h3>Learning & Performance Data</h3>
+        <p>As you use the platform, we collect:</p>
+        <ul>
+          <li>Course progress, completion status, and assessment scores</li>
+          <li>Question-level response data (answer selections, response times, confidence ratings)</li>
+          <li>Spaced retrieval performance and retention metrics</li>
+          <li>Competency domain scores and adaptive difficulty levels</li>
+        </ul>
+
+        <h3>Technical Data</h3>
+        <ul>
+          <li>Device type, operating system, browser version</li>
+          <li>IP address and approximate geolocation (city/state level)</li>
+          <li>Session duration, page views, and interaction patterns</li>
+        </ul>
+      </section>
+
+      <hr class="divider">
+
+      <section class="legal-section" id="how-use">
+        <h2>2. How We Use Your Information</h2>
+        <p>We use collected information for the following purposes:</p>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Purpose</th>
+              <th>Data Used</th>
+              <th>Legal Basis</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Deliver CE courses and track progress</td>
+              <td>Account, Learning</td>
+              <td>Contract performance</td>
+            </tr>
+            <tr>
+              <td>Issue CE credits and certificates</td>
+              <td>Account, Learning</td>
+              <td>Contract performance</td>
+            </tr>
+            <tr>
+              <td>Report credits to CAPCE</td>
+              <td>Name, Cert #, Credits</td>
+              <td>Legitimate interest</td>
+            </tr>
+            <tr>
+              <td>Personalize adaptive learning</td>
+              <td>Learning, Performance</td>
+              <td>Consent / Contract</td>
+            </tr>
+            <tr>
+              <td>Improve platform and content</td>
+              <td>Anonymized analytics</td>
+              <td>Legitimate interest</td>
+            </tr>
+            <tr>
+              <td>Send account & course notifications</td>
+              <td>Email, Preferences</td>
+              <td>Contract / Consent</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="divider">
+
+      <section class="legal-section" id="data-sharing">
+        <h2>3. Data Sharing & Disclosure</h2>
+        <p>We do not sell your personal information. We may share data with:</p>
+        <ul>
+          <li><strong>CAPCE</strong> — We report completed CE activities (name, certification number, hours earned) to CAPCE as required for accreditation compliance</li>
+          <li><strong>Your EMS Agency</strong> — If your account is sponsored by an agency, we share your course completion and CE credit data with authorized agency administrators</li>
+          <li><strong>Service Providers</strong> — Third-party providers who assist with hosting, analytics, payment processing, and email delivery, bound by data processing agreements</li>
+          <li><strong>Legal Requirements</strong> — When required by law, subpoena, or to protect the rights and safety of our users</li>
+        </ul>
+      </section>
+
+      <hr class="divider">
+
+      <section class="legal-section" id="learning-data">
+        <h2>4. Learning & Performance Data</h2>
+        <p>Your learning data is central to the Pulse CE experience. We use psychometric models to personalize your education. Here is how we handle this sensitive data:</p>
+        <ul>
+          <li><strong>Anonymized Research:</strong> We may use de-identified, aggregated learning data for psychometric research and platform improvement. Individual responses are never identifiable in research outputs.</li>
+          <li><strong>No Sale of Learning Data:</strong> Your performance data is never sold to third parties, recruiters, or employers beyond your sponsoring agency (if applicable).</li>
+          <li><strong>Data Portability:</strong> You may request an export of your complete learning history and performance data at any time.</li>
+        </ul>
+      </section>
+
+      <hr class="divider">
+
+      <section class="legal-section" id="security">
+        <h2>7. Security Measures</h2>
+        <p>We implement industry-standard security measures to protect your data:</p>
+        <ul>
+          <li>TLS 1.3 encryption for all data in transit</li>
+          <li>AES-256 encryption for sensitive data at rest</li>
+          <li>SOC 2-aligned access controls and audit logging</li>
+          <li>Regular security assessments and penetration testing</li>
+          <li>Role-based access control for internal staff</li>
+        </ul>
+        <p>No system is 100% secure. If you become aware of any unauthorized access to your account, contact us immediately at <strong>security@pulsece.com</strong>.</p>
+      </section>
+
+      <hr class="divider">
+
+      <section class="legal-section" id="contact">
+        <h2>12. Contact Us</h2>
+        <p>If you have questions about this Privacy Policy or wish to exercise your data rights, contact us:</p>
+        <ul>
+          <li><strong>Email:</strong> privacy@pulsece.com</li>
+          <li><strong>Mail:</strong> MedEdPrep, LLC — Attn: Privacy, [Address]</li>
+          <li><strong>Help Center:</strong> <a href="help-faq.html" style="color: var(--green); text-decoration: none;">pulsece.com/help</a></li>
+        </ul>
+      </section>
+    </article>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-left">&copy; 2026 MedEdPrep. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="terms-of-service.html">Terms of Service</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="refund-policy.html">Refund Policy</a>
+      <a href="help-faq.html">Help Center</a>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      const bar = document.getElementById('progressBar');
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.height = (scrollTop / docHeight) * 100 + '%';
+    });
+  </script>
+</body>
+</html>

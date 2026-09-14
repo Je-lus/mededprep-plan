@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Pulse CE — Features (Mobile)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0A0A0A; --surface: #111111; --surface-elevated: #1A1A1A;
+      --border-subtle: rgba(255,255,255,0.08); --border-default: rgba(255,255,255,0.12);
+      --border-strong: rgba(255,255,255,0.2);
+      --text-primary: #FFFFFF; --text-secondary: rgba(255,255,255,0.7);
+      --text-tertiary: rgba(255,255,255,0.45);
+      --green: #36C98D; --green-hover: #2DB87E; --green-dim: rgba(54,201,141,0.12);
+      --green-border: rgba(54,201,141,0.3); --amber: #F5A623; --red: #E5484D;
+      --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-pill: 9999px;
+    }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg); color: var(--text-primary);
+      min-height: 100vh; -webkit-font-smoothing: antialiased;
+      overflow-x: hidden; max-width: 390px; margin: 0 auto;
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; mix-blend-mode: overlay; opacity: 0.5; z-index: 0;
+    }
+
+    /* MOBILE NAV */
+    .mobile-nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px; height: 56px;
+      background: rgba(10,10,10,0.9); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .brand-icon { width: 32px; height: 32px; border-radius: 7px; background: linear-gradient(135deg, #36C98D, #2ba876); display: flex; align-items: center; justify-content: center; }
+    .brand-icon svg { width: 18px; height: 18px; }
+    .brand-text { display: flex; flex-direction: column; }
+    .brand-pulse { font-size: 15px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.02em; line-height: 1; }
+    .brand-sub { font-size: 9px; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; line-height: 1; margin-top: 2px; }
+    .btn-sm { padding: 8px 16px; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; }
+    .btn-sm-primary { background: var(--green); color: #0A0A0A; border: none; }
+    .hamburger { width: 36px; height: 36px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; background: none; border: none; }
+    .hamburger span { width: 20px; height: 2px; background: var(--text-secondary); border-radius: 1px; }
+
+    .content { position: relative; z-index: 1; padding-bottom: 72px; }
+    section { padding: 48px 20px; }
+    .section-label { font-size: 11px; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+    .section-title { font-size: 24px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+    .section-subtitle { font-size: 15px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 24px; }
+
+    /* HERO */
+    .hero { position: relative; padding: 48px 20px 40px; text-align: center; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, #0A0A0A 0%, #0D1A12 40%, #0F3D26 70%, rgba(54,201,141,0.3) 100%); z-index: -1; }
+    .hero h1 { font-size: 30px; font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero h1 .accent { color: var(--green); }
+    .hero p { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* FEATURE BLOCKS */
+    .feature-block { margin-bottom: 32px; }
+    .feature-visual-mobile {
+      background: var(--surface); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: 20px; margin-bottom: 20px; overflow: hidden;
+    }
+    .feature-block h3 { font-size: 22px; font-weight: 700; line-height: 1.25; margin-bottom: 12px; }
+    .feature-block p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; }
+    .feature-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .pill { background: var(--green-dim); border: 1px solid var(--green-border); border-radius: var(--radius-pill); padding: 5px 12px; font-size: 12px; font-weight: 500; color: var(--green); }
+
+    /* Domain bars */
+    .domain-bar { margin-bottom: 10px; }
+    .domain-bar .label { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px; }
+    .domain-bar .label span:first-child { color: var(--text-secondary); }
+    .domain-bar .label span:last-child { color: var(--green); font-weight: 600; }
+    .domain-bar .bar { height: 5px; background: var(--surface-elevated); border-radius: 3px; overflow: hidden; }
+    .domain-bar .bar .fill { height: 100%; background: var(--green); border-radius: 3px; }
+
+    /* Micro cards */
+    .micro-card {
+      background: var(--surface); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px;
+    }
+    .micro-icon { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--green-dim); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+    .micro-icon svg { width: 20px; height: 20px; color: var(--green); }
+    .micro-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .micro-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+
+    /* Curve legend */
+    .curve-legend { display: flex; gap: 16px; margin-top: 12px; }
+    .curve-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
+    .curve-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+    /* CTA */
+    .cta-section { position: relative; padding: 48px 20px; text-align: center; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(54,201,141,0.05), rgba(54,201,141,0.12)); border-top: 1px solid var(--green-border); border-bottom: 1px solid var(--green-border); }
+    .cta-section h2 { font-size: 24px; font-weight: 700; margin-bottom: 12px; position: relative; z-index: 1; }
+    .cta-section p { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; position: relative; z-index: 1; }
+    .btn-primary-full { display: block; width: 100%; max-width: 280px; margin: 0 auto; padding: 14px; border-radius: var(--radius-md); background: var(--green); color: #0A0A0A; font-size: 16px; font-weight: 600; border: none; font-family: inherit; cursor: pointer; position: relative; z-index: 1; }
+    .cta-fine { font-size: 12px; color: var(--text-tertiary); margin-top: 12px; position: relative; z-index: 1; }
+
+    /* Footer */
+    footer { padding: 40px 20px 32px; border-top: 1px solid var(--border-subtle); }
+    .footer-brand p { font-size: 13px; color: var(--text-tertiary); line-height: 1.6; margin-top: 12px; }
+    .footer-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 24px 0; }
+    .footer-col h4 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 10px; }
+    .footer-col a { display: block; font-size: 13px; color: var(--text-tertiary); text-decoration: none; margin-bottom: 6px; }
+    .footer-bottom { padding-top: 16px; border-top: 1px solid var(--border-subtle); }
+    .footer-bottom span { display: block; font-size: 12px; color: var(--text-tertiary); margin-bottom: 6px; }
+    .capce-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--green-dim); border: 1px solid var(--green-border); border-radius: var(--radius-sm); padding: 4px 10px; font-size: 10px; font-weight: 600; color: var(--green); }
+
+    /* Bottom nav */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 390px; z-index: 100;
+      display: flex; align-items: center; justify-content: space-around;
+      height: 64px; padding-bottom: 8px;
+      background: rgba(10,10,10,0.95); backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border-subtle);
+    }
+    .bottom-nav a { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; font-size: 10px; font-weight: 500; color: var(--text-tertiary); }
+    .bottom-nav a.active { color: var(--green); }
+    .bottom-nav a svg { width: 22px; height: 22px; }
+  </style>
+</head>
+<body>
+  <nav class="mobile-nav">
+    <a href="01-landing-mobile.html" class="brand">
+      <div class="brand-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M3 12h4l3-6 4 12 3-6h4"/></svg></div>
+      <div class="brand-text"><span class="brand-pulse">PULSE</span><span class="brand-sub">BY MEDEDPREP</span></div>
+    </a>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <a href="../batch-3-auth-onboarding/17-register-mobile.html" class="btn-sm btn-sm-primary" style="text-decoration:none;">Try Free</a>
+      <button class="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="content">
+    <!-- HERO -->
+    <section class="hero">
+      <h1>CE That <span class="accent">Adapts to You</span></h1>
+      <p>Psychometric science meets microlearning. Every experience personalized.</p>
+    </section>
+
+    <!-- ADAPTIVE ENGINE -->
+    <section>
+      <div class="feature-block">
+        <div class="section-label">Adaptive Engine</div>
+        <h3>Every Question Calibrated</h3>
+        <div class="feature-visual-mobile">
+          <div style="font-size: 10px; color: var(--text-tertiary); margin-bottom: 12px; font-weight: 500;">ADAPTIVE DIFFICULTY</div>
+          <svg viewBox="0 0 340 140" style="width:100%;height:120px;">
+            <path d="M 0 110 Q 34 100, 68 80 T 136 65 T 204 45 T 272 50 T 340 35" stroke="#36C98D" stroke-width="2" fill="none"/>
+            <path d="M 0 110 Q 34 100, 68 80 T 136 65 T 204 45 T 272 50 T 340 35 L 340 140 L 0 140 Z" fill="#36C98D" opacity="0.08"/>
+            <circle cx="0" cy="110" r="3" fill="#36C98D"/><circle cx="68" cy="80" r="3" fill="#36C98D"/>
+            <circle cx="136" cy="65" r="3" fill="#36C98D"/><circle cx="204" cy="45" r="3" fill="#36C98D"/>
+            <circle cx="272" cy="50" r="3" fill="#36C98D"/><circle cx="340" cy="35" r="3" fill="#36C98D"/>
+          </svg>
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-tertiary);margin-top:8px;">
+            <span>Q1</span><span style="color:var(--green);font-weight:600;">Ability: 1.42</span><span>Q15</span>
+          </div>
+        </div>
+        <p>Powered by IRT and CAT, difficulty adjusts in real-time. No two assessments are the same.</p>
+        <div class="feature-pills">
+          <span class="pill">IRT-Calibrated</span>
+          <span class="pill">Real-Time</span>
+          <span class="pill">10.6K Items</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIAGNOSTIC REPORTS -->
+    <section style="background: var(--surface);">
+      <div class="feature-block">
+        <div class="section-label">Diagnostics</div>
+        <h3>Know Where You Stand</h3>
+        <div class="feature-visual-mobile" style="text-align: center;">
+          <svg viewBox="0 0 240 220" width="220" style="margin: 0 auto 16px;">
+            <polygon points="120,20 200,70 200,150 120,200 40,150 40,70" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <polygon points="120,50 170,85 170,135 120,170 70,135 70,85" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <polygon points="120,38 188,74 178,152 120,188 58,140 64,78" fill="rgba(54,201,141,0.15)" stroke="#36C98D" stroke-width="1.5"/>
+            <text x="120" y="14" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="9" font-family="Inter">Airway</text>
+            <text x="210" y="72" text-anchor="start" fill="rgba(255,255,255,0.6)" font-size="9" font-family="Inter">Cardio</text>
+            <text x="210" y="155" text-anchor="start" fill="rgba(255,255,255,0.6)" font-size="9" font-family="Inter">Medical</text>
+            <text x="120" y="216" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="9" font-family="Inter">Trauma</text>
+            <text x="28" y="155" text-anchor="end" fill="rgba(255,255,255,0.6)" font-size="9" font-family="Inter">OB/Peds</text>
+            <text x="28" y="72" text-anchor="end" fill="rgba(255,255,255,0.6)" font-size="9" font-family="Inter">Ops</text>
+          </svg>
+          <div style="text-align: left;">
+            <div class="domain-bar"><div class="label"><span>Airway</span><span>92%</span></div><div class="bar"><div class="fill" style="width:92%"></div></div></div>
+            <div class="domain-bar"><div class="label"><span>Cardiology</span><span>85%</span></div><div class="bar"><div class="fill" style="width:85%"></div></div></div>
+            <div class="domain-bar"><div class="label"><span>Medical</span><span>78%</span></div><div class="bar"><div class="fill" style="width:78%"></div></div></div>
+            <div class="domain-bar"><div class="label"><span>Trauma</span><span>71%</span></div><div class="bar"><div class="fill" style="width:71%;background:var(--amber)"></div></div></div>
+            <div class="domain-bar"><div class="label"><span>OB/Peds</span><span>65%</span></div><div class="bar"><div class="fill" style="width:65%;background:var(--amber)"></div></div></div>
+            <div class="domain-bar"><div class="label"><span>Operations</span><span>88%</span></div><div class="bar"><div class="fill" style="width:88%"></div></div></div>
+          </div>
+        </div>
+        <p>Detailed breakdowns across all NCCP domains after every assessment.</p>
+      </div>
+    </section>
+
+    <!-- SPACED RETRIEVAL -->
+    <section>
+      <div class="feature-block">
+        <div class="section-label">Spaced Retrieval</div>
+        <h3>Forgetting Curve, Defeated</h3>
+        <div class="feature-visual-mobile">
+          <svg viewBox="0 0 300 140" style="width:100%;height:120px;">
+            <line x1="30" y1="120" x2="280" y2="120" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+            <path d="M 30 20 Q 60 55, 90 85 T 150 108 T 220 115 T 280 118" stroke="#E5484D" stroke-width="1.5" fill="none" opacity="0.6" stroke-dasharray="5 3"/>
+            <path d="M 30 20 Q 42 28, 60 35 T 90 32 T 120 38 T 150 34 T 180 36 T 210 32 T 240 34 T 280 30" stroke="#36C98D" stroke-width="2" fill="none"/>
+            <circle cx="60" cy="35" r="2.5" fill="#36C98D"/><circle cx="120" cy="38" r="2.5" fill="#36C98D"/>
+            <circle cx="180" cy="36" r="2.5" fill="#36C98D"/><circle cx="240" cy="34" r="2.5" fill="#36C98D"/>
+          </svg>
+          <div class="curve-legend">
+            <div class="curve-legend-item"><div class="curve-legend-dot" style="background:var(--green)"></div>With Pulse CE</div>
+            <div class="curve-legend-item"><div class="curve-legend-dot" style="background:var(--red)"></div>Without</div>
+          </div>
+        </div>
+        <p>3 questions/day. 60 seconds each. Precisely timed to strengthen memory at the moment of forgetting.</p>
+        <div class="feature-pills">
+          <span class="pill">Personalized Timing</span>
+          <span class="pill">Confidence-Weighted</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- MICROLEARNING -->
+    <section style="background: var(--surface);">
+      <div class="section-label">Microlearning</div>
+      <h2 class="section-title">Built for Your Shift</h2>
+      <p class="section-subtitle">Every feature designed for learning between emergencies.</p>
+      <div class="micro-card">
+        <div class="micro-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <h4>15-Minute Segments</h4>
+        <p>Interruptible. Full state persistence. Never lose progress.</p>
+      </div>
+      <div class="micro-card">
+        <div class="micro-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg></div>
+        <h4>Mobile-First</h4>
+        <p>Dark mode. OLED-optimized. One-handed touch targets.</p>
+      </div>
+      <div class="micro-card">
+        <div class="micro-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/><path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/></svg></div>
+        <h4>Offline Ready</h4>
+        <p>Download before your shift. Syncs when you reconnect.</p>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <h2>Experience Adaptive CE</h2>
+      <p>Join 2,400+ EMS professionals.</p>
+      <a href="../batch-3-auth-onboarding/17-register-mobile.html" class="btn-primary-full" style="text-decoration:none;text-align:center;">Start Free Trial</a>
+      <div class="cta-fine">14 days free &middot; No card required</div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-brand">
+        <a href="01-landing-mobile.html" class="brand">
+          <div class="brand-icon" style="width:28px;height:28px;"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:16px;height:16px;"><path d="M3 12h4l3-6 4 12 3-6h4"/></svg></div>
+          <div class="brand-text"><span class="brand-pulse" style="font-size:14px;">PULSE</span><span class="brand-sub" style="font-size:8px;">BY MEDEDPREP</span></div>
+        </a>
+        <p>Adaptive CE for EMS professionals.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Product</h4><a href="02-features-mobile.html">Features</a><a href="04-catalog-mobile.html">Courses</a><a href="03-pricing-mobile.html">Pricing</a></div>
+        <div class="footer-col"><h4>Support</h4><a href="../batch-7-system/help-faq.html">Help</a><a href="../batch-7-system/terms-of-service.html">Terms</a><a href="../batch-7-system/privacy-policy.html">Privacy</a></div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 MedEdPrep, Inc.</span>
+        <span class="capce-badge">CAPCE Accredited</span>
+      </div>
+    </footer>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="01-landing-mobile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a>
+    <a href="#" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Features</a>
+    <a href="04-catalog-mobile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Courses</a>
+    <a href="../batch-3-auth-onboarding/17-register-mobile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Sign Up</a>
+  </nav>
+</body>
+</html>

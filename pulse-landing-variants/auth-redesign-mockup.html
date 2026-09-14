@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse Auth Pages — Design Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ========================================
+   RESET & BASE
+   ======================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #e2e8f0;
+  background: #000;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   PAGE SWITCHER (demo only)
+   ======================================== */
+.page-switcher {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: rgba(0,0,0,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(54,201,141,0.2);
+}
+.switcher-row {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+}
+.page-switcher button {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  transition: all 0.2s;
+}
+.page-switcher button.active {
+  background: #36C98D;
+  color: #000;
+}
+.page-switcher button:hover:not(.active) {
+  color: #fff;
+  background: rgba(255,255,255,0.08);
+}
+
+/* Viewport toggle */
+.viewport-row {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.viewport-row span {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  margin-right: 4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.viewport-btn {
+  font-size: 12px !important;
+  padding: 5px 14px !important;
+  border-radius: 4px !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+}
+.viewport-btn.active {
+  background: rgba(54,201,141,0.2) !important;
+  color: #36C98D !important;
+  border-color: #36C98D !important;
+}
+
+/* Mobile phone frame */
+.mobile-frame-wrapper {
+  display: none;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 90px 20px 40px;
+  background: #111;
+}
+.mobile-frame-wrapper.active { display: flex; }
+
+.phone-frame {
+  width: 390px;
+  height: 844px;
+  border-radius: 44px;
+  border: 4px solid #333;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 0 2px #1a1a1a, 0 20px 60px rgba(0,0,0,0.5);
+  background: #080E1B;
+  flex-shrink: 0;
+}
+.phone-frame::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 28px;
+  background: #333;
+  border-radius: 0 0 16px 16px;
+  z-index: 10;
+}
+.phone-frame-content {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Inside phone frame — DROP brand panel, full-screen form */
+.phone-frame-content .public-page {
+  flex-direction: column;
+  min-height: auto;
+}
+/* Hide brand panel and divider on mobile — form owns the screen */
+.phone-frame-content .public-brand { display: none; }
+.phone-frame-content .public-divider { display: none; }
+/* Show inline mini logo inside form card on mobile */
+.phone-frame-content .mobile-inline-logo { display: flex !important; }
+
+.phone-frame-content .public-form-panel {
+  padding: 48px 16px 32px;
+  background: linear-gradient(165deg, #080E1B 0%, #0d1f17 50%, #080E1B 100%);
+}
+.phone-frame-content .form-card {
+  padding: 24px 20px;
+  border-radius: 16px;
+  max-width: 100%;
+  background: transparent;
+  border: none;
+  backdrop-filter: none;
+}
+.phone-frame-content .form-card h2 { font-size: 20px; }
+.phone-frame-content .form-card .subtitle { font-size: 13px; margin-bottom: 20px; }
+.phone-frame-content .form-row { grid-template-columns: 1fr; }
+.phone-frame-content .form-input { font-size: 14px; padding: 11px 14px 11px 40px; }
+.phone-frame-content .form-input.no-icon { padding-left: 14px; }
+.phone-frame-content .form-label { font-size: 12px; }
+.phone-frame-content .btn-submit { font-size: 15px; padding: 13px; min-height: 48px; }
+.phone-frame-content .role-toggle { gap: 6px; }
+.phone-frame-content .role-btn { font-size: 13px; padding: 9px; }
+.phone-frame-content .level-group { gap: 6px; }
+.phone-frame-content .level-pill { font-size: 12px; padding: 7px 12px; min-height: 36px; }
+.phone-frame-content .checkbox-wrap span { font-size: 12px; }
+.phone-frame-content .form-footer p { font-size: 13px; }
+.phone-frame-content .form-legal { font-size: 11px; }
+.phone-frame-content .success-card { padding: 24px; }
+.phone-frame-content .success-card h3 { font-size: 18px; }
+.phone-frame-content .success-card p { font-size: 13px; }
+
+/* Inline mini logo — hidden on desktop, shown on mobile */
+.mobile-inline-logo {
+  display: none;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.mobile-inline-logo svg {
+  width: 120px;
+  height: auto;
+  filter: drop-shadow(0 0 12px rgba(54,201,141,0.25));
+  opacity: 0.8;
+}
+
+/* ---- Utility page layout (forgot/reset — no split panel) ---- */
+.utility-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(165deg, #080E1B 0%, #0d1f17 50%, #080E1B 100%);
+  padding: 40px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.utility-page .public-grid-overlay {
+  position: absolute; inset: 0; opacity: 0.02; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.utility-page .utility-glow {
+  position: absolute; width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(54,201,141,0.06) 0%, transparent 70%);
+  top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none;
+}
+.utility-page .utility-logo {
+  width: 160px; height: auto;
+  filter: drop-shadow(0 0 16px rgba(54,201,141,0.25));
+  margin-bottom: 24px; opacity: 0.7;
+}
+.utility-page .form-card { max-width: 400px; width: 100%; }
+.phone-frame-content .utility-page { padding: 48px 16px 32px; min-height: auto; }
+.phone-frame-content .utility-page .utility-logo { width: 100px; margin-bottom: 16px; }
+.phone-frame-content .utility-page .form-card {
+  padding: 24px 20px; border-radius: 16px;
+  background: transparent; border: none; backdrop-filter: none;
+}
+
+/* Progress dots for multi-step */
+.progress-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.progress-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  transition: all 0.3s;
+}
+.progress-dot.active {
+  background: #36C98D;
+  box-shadow: 0 0 8px rgba(54,201,141,0.4);
+}
+.progress-dot.completed { background: rgba(54,201,141,0.4); }
+
+/* Skip link */
+.skip-link {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+.skip-link:hover { color: rgba(255,255,255,0.5); }
+
+/* ---- Profile Setup: focused full-screen layout ---- */
+.profile-focused {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(165deg, #080E1B 0%, #0d1f17 50%, #080E1B 100%);
+  padding: 40px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.profile-focused .public-grid-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.02;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.profile-focused .profile-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(54,201,141,0.08) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.profile-focused .profile-mini-logo {
+  width: 64px;
+  height: auto;
+  filter: drop-shadow(0 0 16px rgba(54,201,141,0.25));
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+.profile-focused .profile-step-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #36C98D;
+  margin-bottom: 12px;
+}
+.profile-focused .profile-step-badge::before {
+  content: '';
+  width: 20px;
+  height: 1.5px;
+  background: #36C98D;
+}
+.profile-focused .form-card {
+  max-width: 420px;
+  width: 100%;
+}
+
+/* Mobile phone frame overrides for profile-focused */
+.phone-frame-content .profile-focused {
+  padding: 48px 16px 32px;
+  min-height: auto;
+}
+.phone-frame-content .profile-focused .profile-mini-logo { width: 48px; margin-bottom: 12px; }
+.phone-frame-content .profile-focused .form-card { padding: 24px 20px; border-radius: 16px; }
+.phone-frame-content .profile-focused h2 { font-size: 20px; }
+.phone-frame-content .profile-focused .subtitle { font-size: 13px; }
+
+/* Hide desktop pages when mobile frame is active */
+body.mobile-mode .auth-page { display: none !important; }
+body.mobile-mode .mobile-frame-wrapper { display: flex; }
+
+.auth-page { display: none; }
+.auth-page.visible { display: block; }
+body.mobile-mode .auth-page.visible { display: none; }
+
+/* ========================================
+   PUBLIC PAGE LAYOUT — Split Panel
+   ======================================== */
+.public-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+/* ---- Brand Panel (Left) ---- */
+.public-brand {
+  position: relative;
+  width: 42%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(165deg, #000000 0%, #071a12 40%, #0a2a1a 70%, #0d1f17 100%);
+}
+
+.public-brand-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* Geometric rings */
+.public-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(54,201,141,0.08);
+}
+.public-ring-1 { width: 500px; height: 500px; top: -120px; left: -160px; }
+.public-ring-2 { width: 380px; height: 380px; bottom: -80px; right: -100px; border-color: rgba(54,201,141,0.06); }
+.public-ring-3 { width: 240px; height: 240px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-color: rgba(54,201,141,0.04); }
+
+/* Radial glow */
+.public-brand-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(54,201,141,0.12) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* EKG line accent */
+.public-ekg-line {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  opacity: 0.15;
+}
+
+.public-logo-section {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+}
+
+.public-logo-stacked {
+  width: 220px;
+  height: auto;
+  filter: drop-shadow(0 0 28px rgba(54,201,141,0.3));
+  margin-bottom: 24px;
+}
+
+.public-sep {
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #36C98D, transparent);
+  margin-bottom: 24px;
+}
+
+.public-tagline {
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.6);
+  max-width: 260px;
+  line-height: 1.5;
+  margin-bottom: 28px;
+}
+
+/* ─── Cert Badges (glass morphism) ─── */
+.cert-badge-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+.cert-badge {
+  position: relative;
+  min-width: 80px;
+  padding: 8px 12px 10px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  cursor: default;
+  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 50%, rgba(0,0,0,0.08) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid var(--cb-color);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.cert-badge::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cb-bright, rgba(255,255,255,0.3)) 50%, transparent);
+  opacity: 0.5;
+}
+.cert-badge-icon { width: 14px; height: 14px; flex-shrink: 0; }
+.cert-badge-icon svg { width: 100%; height: 100%; }
+.cert-badge-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--cb-color);
+  white-space: nowrap;
+}
+.cert-badge-soon {
+  font-size: 6px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--cb-color);
+  opacity: 0.5;
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* Colors */
+.cb-emr { --cb-color: #6B7280; --cb-bright: rgba(107,114,128,0.5); --cb-fill: rgba(107,114,128,0.12);
+  box-shadow: 0 0 10px rgba(107,114,128,0.1), inset 0 0 15px rgba(107,114,128,0.03); }
+.cb-emt { --cb-color: #3B82F6; --cb-bright: rgba(59,130,246,0.6); --cb-fill: rgba(59,130,246,0.12);
+  box-shadow: 0 0 12px rgba(59,130,246,0.12), 0 0 30px rgba(59,130,246,0.06), inset 0 0 15px rgba(59,130,246,0.04); }
+.cb-aemt { --cb-color: #10B981; --cb-bright: rgba(16,185,129,0.6); --cb-fill: rgba(16,185,129,0.12);
+  box-shadow: 0 0 12px rgba(16,185,129,0.12), 0 0 30px rgba(16,185,129,0.06), inset 0 0 15px rgba(16,185,129,0.04); }
+.cb-pmdc { --cb-color: #F59E0B; --cb-bright: rgba(245,158,11,0.6); --cb-fill: rgba(245,158,11,0.12);
+  box-shadow: 0 0 12px rgba(245,158,11,0.12), 0 0 30px rgba(245,158,11,0.06), inset 0 0 15px rgba(245,158,11,0.04); }
+.cb-cc { --cb-color: rgba(244,63,94,0.3); --cb-bright: rgba(244,63,94,0.15);
+  box-shadow: 0 0 8px rgba(244,63,94,0.04); opacity: 0.6; border-style: dashed; padding-bottom: 16px; }
+
+/* Selectable variant (for register form) */
+.cert-badge-select { cursor: pointer; }
+.cert-badge-select:not(.cb-cc):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--cb-color) 20%, transparent),
+    0 0 40px color-mix(in srgb, var(--cb-color) 10%, transparent);
+}
+.cert-badge-select.cb-selected {
+  background: var(--cb-fill);
+  border-width: 2px;
+  transform: scale(1.04);
+  z-index: 2;
+}
+.cert-badge-select.cb-selected .cert-badge-label {
+  color: #fff;
+  text-shadow: 0 0 12px var(--cb-color);
+}
+.cert-badge-select.cb-selected .cert-badge-icon svg {
+  filter: drop-shadow(0 0 4px var(--cb-color));
+}
+/* Selected glow per color */
+.cert-badge-select.cb-selected.cb-emr { box-shadow: 0 0 16px rgba(107,114,128,0.25), 0 0 40px rgba(107,114,128,0.12), inset 0 0 20px rgba(107,114,128,0.06); }
+.cert-badge-select.cb-selected.cb-emt { box-shadow: 0 0 16px rgba(59,130,246,0.35), 0 0 40px rgba(59,130,246,0.15), inset 0 0 20px rgba(59,130,246,0.08); }
+.cert-badge-select.cb-selected.cb-aemt { box-shadow: 0 0 16px rgba(16,185,129,0.35), 0 0 40px rgba(16,185,129,0.15), inset 0 0 20px rgba(16,185,129,0.08); }
+.cert-badge-select.cb-selected.cb-pmdc { box-shadow: 0 0 16px rgba(245,158,11,0.35), 0 0 40px rgba(245,158,11,0.15), inset 0 0 20px rgba(245,158,11,0.08); }
+/* Lock/check toggle */
+.cert-badge-select .cb-icon-lock { display: block; }
+.cert-badge-select .cb-icon-check { display: none; }
+.cert-badge-select.cb-selected .cb-icon-lock { display: none; }
+.cert-badge-select.cb-selected .cb-icon-check { display: block; }
+
+/* ---- Divider (vertical on desktop, horizontal on mobile) ---- */
+.public-divider {
+  width: 3px;
+  background: linear-gradient(180deg, transparent, #36C98D 30%, #36C98D 70%, transparent);
+  flex-shrink: 0;
+}
+
+/* ---- Form Panel (Right) ---- */
+.public-form-panel {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+  overflow: hidden;
+  background: #080E1B;
+}
+
+.public-form-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(54,201,141,0.06) 0%, transparent 70%);
+  top: -100px;
+  right: -100px;
+  pointer-events: none;
+}
+
+.public-form-glow-2 {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(54,201,141,0.04) 0%, transparent 70%);
+  bottom: -80px;
+  left: -80px;
+  pointer-events: none;
+}
+
+/* Grid overlay */
+.public-grid-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ---- Form Card ---- */
+.form-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 420px;
+  background: rgba(17,24,39,0.85);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 40px;
+  backdrop-filter: blur(20px);
+}
+.form-card-wide { max-width: 480px; }
+
+.form-card h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.form-card .subtitle {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+/* ---- Form Elements ---- */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 6px;
+}
+
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  color: rgba(255,255,255,0.3);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+.input-icon svg { width: 18px; height: 18px; }
+
+.form-input {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  background: rgba(30,41,59,0.8);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input::placeholder { color: rgba(255,255,255,0.25); }
+
+.form-input:focus {
+  border-color: #36C98D;
+  box-shadow: 0 0 0 3px rgba(54,201,141,0.15);
+}
+
+.form-input.no-icon { padding-left: 14px; }
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Role toggle */
+.role-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.role-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255,255,255,0.1);
+  background: rgba(30,41,59,0.5);
+  color: rgba(255,255,255,0.5);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 44px;
+}
+.role-btn.active {
+  border-color: #36C98D;
+  background: rgba(54,201,141,0.15);
+  color: #36C98D;
+}
+.role-btn:hover:not(.active) {
+  border-color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.7);
+}
+
+/* Testing level pills */
+.level-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.level-pill {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255,255,255,0.1);
+  background: rgba(30,41,59,0.5);
+  color: rgba(255,255,255,0.5);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 40px;
+}
+.level-pill.active {
+  border-color: #36C98D;
+  background: rgba(54,201,141,0.15);
+  color: #36C98D;
+}
+.level-pill:hover:not(.active) {
+  border-color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.7);
+}
+
+/* Checkbox */
+.checkbox-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.checkbox-wrap input[type="checkbox"] {
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+  accent-color: #36C98D;
+  flex-shrink: 0;
+}
+.checkbox-wrap span {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.5;
+}
+.checkbox-wrap a {
+  color: #36C98D;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.checkbox-wrap a:hover { color: #2db87d; }
+
+/* Submit button */
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #36C98D;
+  color: #000;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 50px;
+}
+.btn-submit:hover {
+  background: #2db87d;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(54,201,141,0.25);
+}
+.btn-submit:active { transform: translateY(0); }
+.btn-submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Form footer */
+.form-footer {
+  text-align: center;
+  margin-top: 24px;
+}
+.form-footer p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+}
+.form-footer a {
+  color: #36C98D;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+.form-footer a:hover { color: #2db87d; }
+
+.form-legal {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.25);
+}
+.form-legal a {
+  color: rgba(255,255,255,0.35);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.form-legal a:hover { color: rgba(255,255,255,0.5); }
+
+/* Success state card */
+.success-card {
+  background: rgba(30,41,59,0.6);
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.success-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(54,201,141,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+.success-icon svg { width: 24px; height: 24px; color: #36C98D; }
+.success-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.success-card p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+}
+.success-card strong { color: #fff; }
+
+/* ========================================
+   RESPONSIVE — Mobile
+   ======================================== */
+@media (max-width: 1024px) {
+  .public-brand { width: 38%; }
+  .public-logo-stacked { width: 180px; }
+  .form-card { padding: 32px; }
+}
+
+@media (max-width: 768px) {
+  .public-page { flex-direction: column; }
+  .public-brand {
+    width: 100%;
+    min-height: auto;
+    padding: 60px 24px 40px;
+  }
+  .public-divider {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #36C98D 30%, #36C98D 70%, transparent);
+  }
+  .public-logo-stacked { width: 160px; margin-bottom: 16px; }
+  .public-tagline { font-size: 14px; margin-bottom: 20px; }
+  .public-ring { display: none; }
+  .public-form-panel { padding: 32px 20px; }
+  .form-card { padding: 28px 24px; border-radius: 16px; }
+  .page-switcher { padding: 8px 8px; gap: 1px; }
+  .page-switcher button { font-size: 11px; padding: 6px 12px; }
+}
+
+@media (max-width: 480px) {
+  .form-row { grid-template-columns: 1fr; }
+  .public-badges { gap: 4px; }
+  .public-cert-badge { padding: 3px 8px; font-size: 9px; }
+}
+
+/* ========================================
+   PROFILE SETUP (Step 2 of Register)
+   ======================================== */
+.avatar-preview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.avatar-circle {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #36C98D 0%, #2563EB 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  border: 3px solid rgba(255,255,255,0.1);
+  box-shadow: 0 0 24px rgba(54,201,141,0.2);
+  position: relative;
+}
+.avatar-shuffle {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(30,41,59,0.9);
+  border: 2px solid #080E1B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(255,255,255,0.5);
+  transition: color 0.2s;
+}
+.avatar-shuffle:hover { color: #36C98D; }
+.avatar-shuffle svg { width: 14px; height: 14px; }
+
+.style-pills {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.color-palette {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.color-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.color-dot:hover { transform: scale(1.1); }
+.color-dot.active { border-color: #fff; transform: scale(1.15); }
+
+.alias-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.alias-display {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(30,41,59,0.8);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.alias-display:hover { border-color: rgba(54,201,141,0.3); }
+.alias-shuffle {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(30,41,59,0.8);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.alias-shuffle:hover { color: #36C98D; border-color: rgba(54,201,141,0.3); }
+.alias-shuffle svg { width: 18px; height: 18px; }
+.alias-hint {
+  font-size: 12px;
+  color: rgba(255,255,255,0.25);
+  text-align: center;
+  margin-bottom: 20px;
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     PAGE SWITCHER (demo nav — not part of actual implementation)
+     ============================================================ -->
+<div class="page-switcher">
+  <div class="switcher-row">
+    <button class="active" onclick="showPage('login')">Login</button>
+    <button onclick="showPage('register')">Register</button>
+    <button onclick="showPage('register-profile')">Profile Setup</button>
+    <button onclick="showPage('forgot')">Forgot Password</button>
+    <button onclick="showPage('reset')">Reset Password</button>
+    <button onclick="showPage('forgot-success')">Forgot (Success)</button>
+    <button onclick="showPage('reset-success')">Reset (Success)</button>
+  </div>
+  <div class="viewport-row">
+    <span>View:</span>
+    <button class="viewport-btn active" onclick="setViewport('desktop')">Desktop</button>
+    <button class="viewport-btn" onclick="setViewport('mobile')">Mobile</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     SVG DEFS (shared shield icon)
+     ============================================================ -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Mail icon -->
+    <symbol id="icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="20" height="16" x="2" y="4" rx="2"/>
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+    </symbol>
+    <!-- Lock icon -->
+    <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </symbol>
+    <!-- User icon -->
+    <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </symbol>
+    <!-- Phone icon -->
+    <symbol id="icon-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+    </symbol>
+    <!-- School icon -->
+    <symbol id="icon-school" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 22V8l10-6 10 6v14"/>
+      <path d="M6 12v5"/><path d="M18 12v5"/>
+      <path d="M10 22v-4a2 2 0 1 1 4 0v4"/>
+    </symbol>
+    <!-- Check circle -->
+    <symbol id="icon-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/>
+    </symbol>
+    <!-- Mail check -->
+    <symbol id="icon-mail-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 13V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h8"/>
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+      <path d="m16 19 2 2 4-4"/>
+    </symbol>
+    <!-- Refresh icon -->
+    <symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+      <path d="M3 3v5h5"/>
+      <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
+      <path d="M16 16h5v5"/>
+    </symbol>
+    <!-- Shield mini -->
+    <symbol id="icon-shield-mini" viewBox="0 0 24 24" fill="currentColor">
+      <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============================================================
+     SHIELD-EKG LOGO SVG (inline for the mockup)
+     ============================================================ -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Logo-02: Stacked shield+EKG outline with PULSE wordmark + BY MEDEDPREP -->
+  <symbol id="logo-stacked" viewBox="600 630 800 740">
+    <style>.st0{fill:#36C98D;}.st1{fill:#FFFFFF;}</style>
+    <g>
+      <g>
+        <path class="st0" d="M781.68,1328.02c0,7.62-6.04,14.71-15.25,14.71h-17.85v-48.2h13.16c8.04,0,13.84,5.68,13.84,12.02c0,5.23-3.8,9.03-6.25,9.03C775.53,1315.58,781.68,1320.76,781.68,1328.02z M754,1299.83v14.59h8.01c5.23,0.03,8.46-3.17,8.46-7.24c0-4.13-3.86-7.35-8.43-7.35H754z M776.36,1327.66c0-4.51-4.28-8.43-10.64-8.4H754v18.15h11.99C771.49,1337.41,776.36,1333.25,776.36,1327.66z"/>
+        <path class="st0" d="M798.24,1322.25l-17.01-27.72h6.1l13.63,21.65l13.63-21.65h6.13l-17.07,27.72v20.48h-5.41V1322.25z"/>
+        <path class="st0" d="M896.6,1293.64v49.09h-5.44v-32.71l-18.12,31.9h-0.06l-18.15-31.96v32.77h-5.44v-49.09h0.63l22.99,38.33l22.99-38.33H896.6z"/>
+        <path class="st0" d="M913.84,1299.89v15.25h19.82v5.44h-19.82v16.74h22.87v5.41H908.4v-48.2h28.31v5.35H913.84z"/>
+        <path class="st0" d="M983.03,1318.66c0,14.71-9.57,24.07-24.58,24.07h-13.42v-48.2l13.42-0.03C973.46,1294.5,983.03,1303.89,983.03,1318.66z M977.55,1318.66c0-11.39-7.48-18.75-19.14-18.75h-7.95v37.37h8.04C970.11,1337.29,977.55,1329.99,977.55,1318.66z"/>
+        <path class="st0" d="M997.88,1299.89v15.25h19.82v5.44h-19.82v16.74h22.87v5.41h-28.31v-48.2h28.31v5.35H997.88z"/>
+        <path class="st0" d="M1067.07,1318.66c0,14.71-9.57,24.07-24.58,24.07h-13.42v-48.2l13.42-0.03C1057.5,1294.5,1067.07,1303.89,1067.07,1318.66z M1061.59,1318.66c0-11.39-7.48-18.75-19.14-18.75h-7.95v37.37h8.04C1054.15,1337.29,1061.59,1329.99,1061.59,1318.66z"/>
+        <path class="st0" d="M1076.48,1294.53h15.28c9.33,0,16.95,7,16.95,15.55c0,8.19-7.62,14.86-16.95,14.86h-9.84v17.79h-5.44V1294.53z M1103.27,1310.02c0-5.56-5.17-10.11-11.51-10.11h-9.84v19.64l9.84,0.03C1098.1,1319.62,1103.27,1315.31,1103.27,1310.02z"/>
+        <path class="st0" d="M1144.01,1342.73l-13.45-18.81h-9v18.81h-5.44l-0.03-48.2h14.23c8.94,0,16.24,6.88,16.24,15.37c0,6.25-4.28,11.63-10.14,13.39l14.32,19.43H1144.01z M1130.49,1319.35c5.74,0,10.47-4.36,10.47-9.57c0-5.56-4.78-9.87-10.47-9.87h-8.97v19.4L1130.49,1319.35z"/>
+        <path class="st0" d="M1163.06,1299.89v15.25h19.82v5.44h-19.82v16.74h22.87v5.41h-28.31v-48.2h28.31v5.35H1163.06z"/>
+        <path class="st0" d="M1194.25,1294.53h15.28c9.33,0,16.95,7,16.95,15.55c0,8.19-7.62,14.86-16.95,14.86h-9.84v17.79h-5.44V1294.53z M1221.04,1310.02c0-5.56-5.17-10.11-11.51-10.11h-9.84v19.64l9.84,0.03C1215.86,1319.62,1221.04,1315.31,1221.04,1310.02z"/>
+        <path class="st1" d="M647.02,1066.32h61.62c37.62,0,68.38,28.22,68.38,62.71c0,33.04-30.75,59.93-68.38,59.93h-39.67v71.75h-21.95V1066.32z M755.07,1128.79c0-22.43-20.86-40.76-46.43-40.76h-39.67v79.23l39.67,0.12C734.2,1167.49,755.07,1150.13,755.07,1128.79z"/>
+        <path class="st1" d="M789.98,1185.22v-118.9h22.07v118.78c0,32.68,21.22,56.44,49.93,56.44c28.7,0,49.93-23.88,49.93-56.44v-118.78h22.07v118.9c0,45.34-30.63,78.51-71.99,78.51C820.73,1263.73,789.98,1230.56,789.98,1185.22z"/>
+        <path class="st1" d="M1081.03,1238.89v21.83H963.81v-194.39h21.95v172.57H1081.03z"/>
+        <path class="st1" d="M1086.02,1225.98l16.88-12.42c8.8,16.64,28.7,27.74,49.32,27.74c25.44,0,46.19-13.75,46.19-32.92c0-21.83-27.86-32.32-52.7-41.72c-23.88-9.29-50.53-20.98-50.53-51.01c0-29.91,26.89-52.22,61.02-52.22c28.82,0,48.48,15.8,55.71,34.97l-16.52,11.09c-6.27-14.59-21.95-24.48-39.43-24.48c-20.86,0-38.71,13.75-38.71,31.11c0,18.81,21.34,25.69,46.43,35.33c29.18,11.82,56.8,25.32,56.8,56.56c0,33.52-30.99,55.35-68.38,55.35C1120.15,1263.37,1095.3,1246.72,1086.02,1225.98z"/>
+        <path class="st1" d="M1260.73,1087.9v61.5h79.95v21.95h-79.95v67.53h92.25v21.83h-114.2v-194.39h114.2v21.59H1260.73z"/>
+      </g>
+      <g>
+        <path class="st0" d="M1161.41,690.51L1161.41,690.51l-0.12-4.7c-0.06-2.27-1.54-4.27-3.7-4.98l-4.73-1.57c-1.79-0.58-18.24-5.84-44.11-11.03c-36.27-7.27-72.86-10.95-108.76-10.96c-35.9,0.01-72.49,3.7-108.76,10.96c-14.16,2.84-25.38,5.69-32.3,7.57c-3.17,0.86-6.14,1.71-8.82,2.53c-1.02,0.31-1.81,0.56-2.35,0.73l-0.63,0.2l-4.72,1.56c-2.15,0.71-3.64,2.71-3.7,4.97l-0.13,4.72c-0.11,4.12-0.17,8.35-0.17,12.58c0,50.04,8.13,96.41,24.17,137.84c22.61,58.41,57.16,96.7,82.16,118.53c11.26,9.85,23.42,18.84,35.15,26.01c3.78,2.31,7.42,4.38,10.83,6.15c1.31,0.68,2.34,1.19,3.08,1.54c0.37,0.18,0.66,0.32,0.88,0.42l3.1,1.4c0.7,0.32,1.45,0.48,2.22,0.48c0.77,0,1.51-0.16,2.21-0.47l2.74-1.23l-0.05-0.16l0.07,0.15c4.11-1.86,41.21-19.45,78.93-63.14c22.6-26.18,40.61-56.36,53.51-89.68c16.04-41.4,24.17-87.75,24.17-137.84C1161.58,698.87,1161.52,694.64,1161.41,690.51z M1000.53,983.91l-0.52,0.24l-0.86-0.39c-2.22-1.03-22.44-10.7-47.3-32.43c-22.97-20.07-54.29-54.57-76.07-106.58h20.51c5.41,0,10.61-1.97,14.67-5.57l10.43-9.93c1.7-1.48,3.78-2.26,6.03-2.27c1.34,0,2.69,0.3,3.89,0.86c1.21,0.57,2.27,1.38,3.08,2.33l4.72,7.04c0.12,0.19,0.15,0.22,0.29,0.4c4.22,5.2,10.48,8.18,17.18,8.18h11.74c1.85,0,3.51,1.09,4.25,2.79l8.65,19.89c0.86,1.97,2.8,3.24,4.95,3.24c0.31,0,0.62-0.03,0.94-0.08c2.46-0.43,4.29-2.48,4.45-4.98l8.86-82.33l8.98,115.64c0.21,2.73,2.44,4.87,5.18,4.97l0.2,0c2.64,0,4.93-1.97,5.33-4.58l8.57-56.07c0.06-0.41,0.26-0.76,0.57-1.02c0.32-0.27,0.69-0.41,1.1-0.41h11.44c8.65,0,16.74-4.64,21.1-12.12l12.51-21.44c0.15-0.25,0.28-0.35,0.43-0.44c0.16-0.09,0.36-0.14,0.57-0.14c0.22,0,0.44,0.06,0.6,0.15c0.17,0.11,0.3,0.22,0.43,0.49l8.81,17.82c4.39,8.87,13.26,14.39,23.17,14.39h16.15c-12.31,30.36-29.04,57.93-49.8,81.98C1038.09,967.17,1000.92,983.74,1000.53,983.91z M849.98,688.73L849.98,688.73L849.98,688.73l0.33,0.84c1.72-0.56,17.54-5.64,43.06-10.76c24.45-4.9,62.8-10.74,106.64-10.75c43.83,0.01,82.18,5.85,106.63,10.75c13.86,2.78,24.83,5.56,31.59,7.4c3.07,0.84,5.94,1.66,8.52,2.44c0.97,0.29,1.71,0.53,2.21,0.69l1.64,0.54l0.02,0.92c0.11,4.03,0.16,8.17,0.16,12.36c0,46.17-7.11,89.06-21.12,127.62h-20.29c-5.77,0-10.94-3.21-13.49-8.38l-8.81-17.82c-1.01-2.06-2.64-3.83-4.59-4.98c-1.84-1.09-3.96-1.67-6.12-1.67c-2.02,0-4.01,0.51-5.77,1.48c-1.88,1.03-3.44,2.57-4.54,4.45l-12.51,21.45c-2.44,4.17-6.95,6.77-11.78,6.77h-11.45c-2.98,0-5.87,1.07-8.12,3.01c-2.26,1.94-3.75,4.63-4.2,7.58l-1.49,9.73l-11.34-145.99c-0.22-2.79-2.58-4.98-5.42-4.98c-2.82,0.02-5.17,2.24-5.34,5.06l-12.26,137.16c-2.58-5.27-7.94-8.63-13.85-8.63h-11.74c-3.36,0-6.53-1.48-8.63-3.98l-4.72-7.04c-0.12-0.19-0.15-0.22-0.29-0.4c-1.9-2.35-4.35-4.26-7.07-5.52c-2.62-1.22-5.54-1.86-8.47-1.86c-4.86,0-9.55,1.78-13.22,5.03l-10.44,9.94c-2.07,1.8-4.71,2.8-7.46,2.8h-24.77c-14.78-39.4-22.3-83.4-22.3-130.87c0-4.14,0.05-8.28,0.16-12.29l0.03-0.93l0.87-0.29L849.98,688.73L849.98,688.73L849.98,688.73z"/>
+      </g>
+    </g>
+  </symbol>
+</svg>
+
+
+<!-- ============================================================
+     1. LOGIN PAGE
+     ============================================================ -->
+<div id="page-login" class="auth-page visible">
+  <div class="public-page">
+    <!-- Brand Panel -->
+    <div class="public-brand">
+      <div class="public-brand-noise"></div>
+      <div class="public-ring public-ring-1"></div>
+      <div class="public-ring public-ring-2"></div>
+      <div class="public-ring public-ring-3"></div>
+      <div class="public-brand-glow"></div>
+      <div class="public-logo-section">
+        <svg class="public-logo-stacked"><use href="#logo-stacked"/></svg>
+        <div class="public-sep"></div>
+        <p class="public-tagline">Your EMS education companion</p>
+        <div class="cert-badge-row">
+          <div class="cert-badge cb-emr"><div class="cert-badge-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--cb-color)"/><circle cx="10" cy="13" r="1.5" fill="currentColor" style="color:var(--cb-color)"/></svg></div><span class="cert-badge-label">EMR</span></div>
+          <div class="cert-badge cb-emt"><div class="cert-badge-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--cb-color)"/><circle cx="10" cy="13" r="1.5" fill="currentColor" style="color:var(--cb-color)"/></svg></div><span class="cert-badge-label">EMT</span></div>
+          <div class="cert-badge cb-aemt"><div class="cert-badge-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--cb-color)"/><circle cx="10" cy="13" r="1.5" fill="currentColor" style="color:var(--cb-color)"/></svg></div><span class="cert-badge-label">AEMT</span></div>
+          <div class="cert-badge cb-pmdc"><div class="cert-badge-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--cb-color)"/><circle cx="10" cy="13" r="1.5" fill="currentColor" style="color:var(--cb-color)"/></svg></div><span class="cert-badge-label">Paramedic</span></div>
+          <div class="cert-badge cb-cc"><div class="cert-badge-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--cb-color)"/><circle cx="10" cy="13" r="1.5" fill="currentColor" style="color:var(--cb-color)"/></svg></div><span class="cert-badge-label">Critical Care</span><span class="cert-badge-soon">Coming Soon</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="public-divider"></div>
+
+    <!-- Form Panel -->
+    <div class="public-form-panel">
+      <div class="public-grid-overlay"></div>
+      <div class="public-form-glow"></div>
+      <div class="public-form-glow-2"></div>
+
+      <div class="form-card">
+        <!-- Inline logo for mobile only -->
+        <div class="mobile-inline-logo"><svg><use href="#logo-stacked"/></svg></div>
+
+        <h2>Welcome back</h2>
+        <p class="subtitle">Sign in to continue</p>
+
+        <form onsubmit="return false">
+          <div class="form-group">
+            <label class="form-label">Email or Phone</label>
+            <div class="input-wrap">
+              <span class="input-icon"><svg><use href="#icon-mail"/></svg></span>
+              <input class="form-input" type="text" placeholder="Email or phone number" autocomplete="email">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div class="input-wrap">
+              <span class="input-icon"><svg><use href="#icon-lock"/></svg></span>
+              <input class="form-input" type="password" placeholder="Enter your password" autocomplete="current-password">
+            </div>
+          </div>
+
+          <button class="btn-submit" type="submit">Sign In</button>
+        </form>
+
+        <div class="form-footer">
+          <p>Don't have an account? <a href="#">Create one</a></p>
+          <p style="margin-top:8px"><a href="#" style="color:rgba(255,255,255,0.4)">Forgot password?</a></p>
+        </div>
+
+        <p class="form-legal">
+          By signing in, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     2. REGISTER PAGE
+     ============================================================ -->
+<div id="page-register" class="auth-page">
+  <div class="public-page">
+    <div class="public-brand">
+      <div class="public-brand-noise"></div>
+      <div class="public-ring public-ring-1"></div>
+      <div class="public-ring public-ring-2"></div>
+      <div class="public-ring public-ring-3"></div>
+      <div class="public-brand-glow"></div>
+      <div class="public-logo-section">
+        <svg class="public-logo-stacked"><use href="#logo-stacked"/></svg>
+        <div class="public-sep"></div>
+        <p class="public-tagline">Gamified learning for EMS professionals</p>
+        <div class="cert-badge-row">
+          <div class="cert-badge cb-emr"><div class="cert-badge-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--cb-color)"/><circle cx="10" cy="13" r="1.5" fill="currentColor" style="color:var(--cb-color)"/></svg></div><span class="cert-badge-label">EMR</span></div>
+          <div class="cert-badge cb-emt"><div class="cert-badge-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--cb-color)"/><circle cx="10" cy="13" r="1.5" fill="currentColor" style="color:var(--cb-color)"/></svg></div><span class="cert-badge-label">EMT</span></div>
+          <div class="cert-badge cb-aemt"><div class="cert-badge-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--cb-color)"/><circle cx="10" cy="13" r="1.5" fill="currentColor" style="color:var(--cb-color)"/></svg></div><span class="cert-badge-label">AEMT</span></div>
+          <div class="cert-badge cb-pmdc"><div class="cert-badge-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--cb-color)"/><circle cx="10" cy="13" r="1.5" fill="currentColor" style="color:var(--cb-color)"/></svg></div><span class="cert-badge-label">Paramedic</span></div>
+          <div class="cert-badge cb-cc"><div class="cert-badge-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--cb-color)"/><circle cx="10" cy="13" r="1.5" fill="currentColor" style="color:var(--cb-color)"/></svg></div><span class="cert-badge-label">Critical Care</span><span class="cert-badge-soon">Coming Soon</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="public-divider"></div>
+    <div class="public-form-panel">
+      <div class="public-grid-overlay"></div>
+      <div class="public-form-glow"></div>
+      <div class="public-form-glow-2"></div>
+
+      <div class="form-card form-card-wide">
+        <!-- Inline logo for mobile only -->
+        <div class="mobile-inline-logo"><svg><use href="#logo-stacked"/></svg></div>
+
+        <!-- Progress dots -->
+        <div class="progress-dots">
+          <div class="progress-dot active"></div>
+          <div class="progress-dot"></div>
+        </div>
+
+        <h2>Create your account</h2>
+        <p class="subtitle">Join thousands of EMS students</p>
+
+        <!-- Role toggle -->
+        <div class="role-toggle">
+          <button class="role-btn active" onclick="toggleRole(this, 'student')">I'm a Student</button>
+          <button class="role-btn" onclick="toggleRole(this, 'instructor')">I'm an Instructor</button>
+        </div>
+
+        <form onsubmit="return false">
+          <div class="form-group">
+            <div class="form-row">
+              <div>
+                <label class="form-label">First Name</label>
+                <div class="input-wrap">
+                  <span class="input-icon"><svg><use href="#icon-user"/></svg></span>
+                  <input class="form-input" type="text" placeholder="First name" autocomplete="given-name">
+                </div>
+              </div>
+              <div>
+                <label class="form-label">Last Name</label>
+                <div class="input-wrap">
+                  <input class="form-input no-icon" type="text" placeholder="Optional" autocomplete="family-name">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <div class="input-wrap">
+              <span class="input-icon"><svg><use href="#icon-mail"/></svg></span>
+              <input class="form-input" type="email" placeholder="Enter your school email" autocomplete="email">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Phone (optional)</label>
+            <div class="input-wrap">
+              <span class="input-icon"><svg><use href="#icon-phone"/></svg></span>
+              <input class="form-input" type="tel" placeholder="(555) 123-4567" autocomplete="tel">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div class="input-wrap">
+              <span class="input-icon"><svg><use href="#icon-lock"/></svg></span>
+              <input class="form-input" type="password" placeholder="At least 8 characters" autocomplete="new-password">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Testing Level</label>
+            <div class="cert-badge-row">
+              <div class="cert-badge cert-badge-select cb-emr" onclick="selectCert(this)"><div class="cert-badge-icon"><svg class="cb-icon-lock" viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--cb-color)"/><circle cx="10" cy="13" r="1.5" fill="currentColor" style="color:var(--cb-color)"/></svg><svg class="cb-icon-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M6.5 10.5l2.5 2.5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cb-color)"/></svg></div><span class="cert-badge-label">EMR</span></div>
+              <div class="cert-badge cert-badge-select cb-emt cb-selected" onclick="selectCert(this)"><div class="cert-badge-icon"><svg class="cb-icon-lock" viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--cb-color)"/><circle cx="10" cy="13" r="1.5" fill="currentColor" style="color:var(--cb-color)"/></svg><svg class="cb-icon-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M6.5 10.5l2.5 2.5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cb-color)"/></svg></div><span class="cert-badge-label">EMT</span></div>
+              <div class="cert-badge cert-badge-select cb-aemt" onclick="selectCert(this)"><div class="cert-badge-icon"><svg class="cb-icon-lock" viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--cb-color)"/><circle cx="10" cy="13" r="1.5" fill="currentColor" style="color:var(--cb-color)"/></svg><svg class="cb-icon-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M6.5 10.5l2.5 2.5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cb-color)"/></svg></div><span class="cert-badge-label">AEMT</span></div>
+              <div class="cert-badge cert-badge-select cb-pmdc" onclick="selectCert(this)"><div class="cert-badge-icon"><svg class="cb-icon-lock" viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--cb-color)"/><circle cx="10" cy="13" r="1.5" fill="currentColor" style="color:var(--cb-color)"/></svg><svg class="cb-icon-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M6.5 10.5l2.5 2.5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cb-color)"/></svg></div><span class="cert-badge-label">Paramedic</span></div>
+              <div class="cert-badge cb-cc"><div class="cert-badge-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" style="color:var(--cb-color)"/><path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--cb-color)"/><circle cx="10" cy="13" r="1.5" fill="currentColor" style="color:var(--cb-color)"/></svg></div><span class="cert-badge-label">Critical Care</span><span class="cert-badge-soon">Coming Soon</span></div>
+            </div>
+          </div>
+
+          <!-- School field (shown for instructors) -->
+          <div class="form-group" id="school-field" style="display:none">
+            <label class="form-label">School / Program Name</label>
+            <div class="input-wrap">
+              <span class="input-icon"><svg><use href="#icon-school"/></svg></span>
+              <input class="form-input" type="text" placeholder="e.g. Grady EMS Academy" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="checkbox-wrap">
+            <input type="checkbox" id="tos-check">
+            <span>I have read and agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+          </div>
+
+          <button class="btn-submit" type="submit">Next</button>
+        </form>
+
+        <div class="form-footer">
+          <p>Already have an account? <a href="#">Sign in</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     3. REGISTER — PROFILE SETUP (Step 2)
+     ============================================================ -->
+<div id="page-register-profile" class="auth-page">
+  <div class="profile-focused">
+    <div class="public-grid-overlay"></div>
+    <div class="profile-glow"></div>
+
+    <div class="form-card">
+      <!-- Progress dots -->
+      <div class="progress-dots">
+        <div class="progress-dot completed"></div>
+        <div class="progress-dot active"></div>
+      </div>
+
+      <h2>Set up your profile</h2>
+      <p class="subtitle">This is how other players see you in games</p>
+
+      <!-- Avatar -->
+      <div class="avatar-preview">
+        <div class="avatar-circle">
+          <span>&#129418;</span>
+          <div class="avatar-shuffle">
+            <svg><use href="#icon-refresh"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Style pills -->
+      <div class="style-pills">
+        <button class="level-pill active">Classic</button>
+        <button class="level-pill">Minimal</button>
+        <button class="level-pill">Emoji</button>
+      </div>
+
+      <!-- Color palette -->
+      <div class="color-palette">
+        <div class="color-dot active" style="background:#36C98D"></div>
+        <div class="color-dot" style="background:#2563EB"></div>
+        <div class="color-dot" style="background:#8B5CF6"></div>
+        <div class="color-dot" style="background:#F59E0B"></div>
+        <div class="color-dot" style="background:#EF4444"></div>
+        <div class="color-dot" style="background:#10B981"></div>
+        <div class="color-dot" style="background:#EC4899"></div>
+        <div class="color-dot" style="background:#F97316"></div>
+        <div class="color-dot" style="background:#6366F1"></div>
+        <div class="color-dot" style="background:#14B8A6"></div>
+        <div class="color-dot" style="background:#0F172A"></div>
+        <div class="color-dot" style="background:#FFFFFF; border:1px solid rgba(255,255,255,0.2)"></div>
+      </div>
+
+      <!-- Alias -->
+      <label class="form-label" style="text-align:center; margin-bottom:6px">Your Alias</label>
+      <div class="alias-row">
+        <div class="alias-display">MedicFox42</div>
+        <div class="alias-shuffle">
+          <svg><use href="#icon-refresh"/></svg>
+        </div>
+      </div>
+      <p class="alias-hint">Tap your alias to type your own, or shuffle for a new one</p>
+
+      <button class="btn-submit">Get Started</button>
+      <a class="skip-link" href="#">Skip for now</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     4. FORGOT PASSWORD — Utility layout (no split panel)
+     ============================================================ -->
+<div id="page-forgot" class="auth-page">
+  <div class="utility-page">
+    <div class="public-grid-overlay"></div>
+    <div class="utility-glow"></div>
+    <svg class="utility-logo"><use href="#logo-stacked"/></svg>
+
+    <div class="form-card">
+      <h2>Reset your password</h2>
+      <p class="subtitle">Enter your email and we'll send you a reset link.</p>
+
+      <form onsubmit="return false">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <div class="input-wrap">
+            <span class="input-icon"><svg><use href="#icon-mail"/></svg></span>
+            <input class="form-input" type="email" placeholder="Enter your email" autocomplete="email">
+          </div>
+        </div>
+
+        <button class="btn-submit" type="submit">Send Reset Link</button>
+      </form>
+
+      <div class="form-footer">
+        <p><a href="#">Back to sign in</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     5. RESET PASSWORD — Utility layout
+     ============================================================ -->
+<div id="page-reset" class="auth-page">
+  <div class="utility-page">
+    <div class="public-grid-overlay"></div>
+    <div class="utility-glow"></div>
+    <svg class="utility-logo"><use href="#logo-stacked"/></svg>
+
+    <div class="form-card">
+      <h2>Choose a new password</h2>
+      <p class="subtitle">Must be at least 8 characters.</p>
+
+      <form onsubmit="return false">
+        <div class="form-group">
+          <label class="form-label">New Password</label>
+          <div class="input-wrap">
+            <span class="input-icon"><svg><use href="#icon-lock"/></svg></span>
+            <input class="form-input" type="password" placeholder="At least 8 characters" autocomplete="new-password">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Confirm Password</label>
+          <div class="input-wrap">
+            <span class="input-icon"><svg><use href="#icon-lock"/></svg></span>
+            <input class="form-input" type="password" placeholder="Re-enter your password" autocomplete="new-password">
+          </div>
+        </div>
+
+        <button class="btn-submit" type="submit">Reset Password</button>
+      </form>
+
+      <div class="form-footer">
+        <p><a href="#">Back to sign in</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     6. FORGOT PASSWORD — SUCCESS (Utility layout)
+     ============================================================ -->
+<div id="page-forgot-success" class="auth-page">
+  <div class="utility-page">
+    <div class="public-grid-overlay"></div>
+    <div class="utility-glow"></div>
+    <svg class="utility-logo"><use href="#logo-stacked"/></svg>
+
+    <div class="form-card">
+      <div class="success-card">
+        <div class="success-icon">
+          <svg><use href="#icon-mail-check"/></svg>
+        </div>
+        <h3>Check your email</h3>
+        <p>If an account exists for <strong>student1@gtc.edu</strong>, we've sent a password reset link. It expires in 1 hour.</p>
+      </div>
+
+      <div class="form-footer" style="margin-top:0">
+        <p><a href="#">Back to sign in</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     7. RESET PASSWORD — SUCCESS (Utility layout)
+     ============================================================ -->
+<div id="page-reset-success" class="auth-page">
+  <div class="utility-page">
+    <div class="public-grid-overlay"></div>
+    <div class="utility-glow"></div>
+    <svg class="utility-logo"><use href="#logo-stacked"/></svg>
+
+    <div class="form-card">
+      <div class="success-card">
+        <div class="success-icon">
+          <svg><use href="#icon-check-circle"/></svg>
+        </div>
+        <h3>Password reset!</h3>
+        <p>Your password has been updated. Redirecting you to sign in...</p>
+      </div>
+
+      <div class="form-footer" style="margin-top:0">
+        <p><a href="#">Sign in now</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     MOBILE PHONE FRAME
+     ============================================================ -->
+<div class="mobile-frame-wrapper" id="mobile-frame-wrapper">
+  <div class="phone-frame">
+    <div class="phone-frame-content" id="phone-frame-content">
+      <!-- Content cloned dynamically by JS -->
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     SCRIPT — Page switching + demo interactions
+     ============================================================ -->
+<script>
+let currentPage = 'login';
+let currentViewport = 'desktop';
+
+function showPage(id) {
+  currentPage = id;
+  // Update page tab buttons
+  document.querySelectorAll('.switcher-row button').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  if (currentViewport === 'desktop') {
+    document.querySelectorAll('.auth-page').forEach(p => p.classList.remove('visible'));
+    document.getElementById('page-' + id).classList.add('visible');
+  } else {
+    renderMobileFrame();
+  }
+}
+
+function setViewport(mode) {
+  currentViewport = mode;
+  document.querySelectorAll('.viewport-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  if (mode === 'desktop') {
+    document.body.classList.remove('mobile-mode');
+    document.getElementById('mobile-frame-wrapper').classList.remove('active');
+    // Show the current desktop page
+    document.querySelectorAll('.auth-page').forEach(p => p.classList.remove('visible'));
+    document.getElementById('page-' + currentPage).classList.add('visible');
+  } else {
+    document.body.classList.add('mobile-mode');
+    document.getElementById('mobile-frame-wrapper').classList.add('active');
+    renderMobileFrame();
+  }
+}
+
+function renderMobileFrame() {
+  var source = document.getElementById('page-' + currentPage);
+  var target = document.getElementById('phone-frame-content');
+  // Clone the inner content — either .public-page or .profile-focused
+  var inner = source.querySelector('.public-page') || source.querySelector('.profile-focused') || source.querySelector('.utility-page');
+  target.innerHTML = '';
+  if (inner) {
+    var clone = inner.cloneNode(true);
+    target.appendChild(clone);
+    // Re-bind interactive elements in clone
+    bindCloneInteractions(target);
+  }
+  // Scroll to top
+  target.scrollTop = 0;
+}
+
+function bindCloneInteractions(container) {
+  // Role toggle
+  container.querySelectorAll('.role-toggle .role-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      container.querySelectorAll('.role-toggle .role-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var schoolField = container.querySelector('#school-field') || container.querySelector('[id="school-field"]');
+      if (schoolField) {
+        schoolField.style.display = btn.textContent.trim().includes('Instructor') ? 'block' : 'none';
+      }
+    });
+  });
+  // Cert badge selectors
+  container.querySelectorAll('.cert-badge-select').forEach(function(badge) {
+    badge.addEventListener('click', function() {
+      if (badge.classList.contains('cb-cc')) return;
+      badge.closest('.cert-badge-row').querySelectorAll('.cert-badge-select').forEach(function(b) { b.classList.remove('cb-selected'); });
+      badge.classList.add('cb-selected');
+    });
+  });
+  // Color dots
+  container.querySelectorAll('.color-dot').forEach(function(dot) {
+    dot.addEventListener('click', function() {
+      dot.closest('.color-palette').querySelectorAll('.color-dot').forEach(function(d) { d.classList.remove('active'); });
+      dot.classList.add('active');
+    });
+  });
+  // Style pills
+  container.querySelectorAll('.style-pills .level-pill').forEach(function(pill) {
+    pill.addEventListener('click', function() {
+      pill.closest('.style-pills').querySelectorAll('.level-pill').forEach(function(p) { p.classList.remove('active'); });
+      pill.classList.add('active');
+    });
+  });
+}
+
+function toggleRole(btn, role) {
+  document.querySelectorAll('.role-toggle .role-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('school-field').style.display = role === 'instructor' ? 'block' : 'none';
+}
+
+function selectCert(el) {
+  if (el.classList.contains('cb-cc')) return;
+  var row = el.closest('.cert-badge-row');
+  row.querySelectorAll('.cert-badge-select').forEach(function(b) { b.classList.remove('cb-selected'); });
+  el.classList.add('cb-selected');
+}
+
+// Color dots (desktop)
+document.querySelectorAll('.color-dot').forEach(dot => {
+  dot.addEventListener('click', () => {
+    dot.closest('.color-palette').querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+    dot.classList.add('active');
+  });
+});
+
+// Style pills in profile (desktop)
+document.querySelectorAll('.style-pills .level-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    pill.closest('.style-pills').querySelectorAll('.level-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>

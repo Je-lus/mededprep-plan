@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout | PULSE CE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#36C98D",
+                        "primary-hover": "#2DB87E",
+                        background: "#0A0A0A",
+                        surface: "#111111",
+                        "surface-elevated": "#1A1A1A",
+                        "surface-hover": "#1F1F1F",
+                        "border-subtle": "rgba(255,255,255,0.08)",
+                        "border-default": "rgba(255,255,255,0.12)",
+                        "border-strong": "rgba(255,255,255,0.2)",
+                        "text-primary": "#FFFFFF",
+                        "text-secondary": "rgba(255,255,255,0.7)",
+                        "text-tertiary": "rgba(255,255,255,0.45)",
+                        error: "#E5484D",
+                        warning: "#F5A623"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Inter", "sans-serif"],
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0A0A;
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .green-glow {
+            box-shadow: 0 0 20px rgba(54, 201, 141, 0.15);
+        }
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        input:focus {
+            outline: none;
+            border-color: #36C98D !important;
+            box-shadow: 0 0 0 1px #36C98D;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 glass-nav border-b border-white/10">
+<div class="max-w-7xl mx-auto flex justify-between items-center h-16 px-6">
+<div class="flex items-center gap-3">
+<img alt="PULSE Logo" class="w-8 h-8" src="https://lh3.googleusercontent.com/aida/ADBb0uiQuAMb-iPTR_teZtBbpKcjDXlkM3Bcp-UIgLeUUjUEF2W65wSPHVBpP3pJjeWAY99AvnhOqGgxUtccEez9Q_aKHcqrEifRFTh2nLLWFS6AqP6tvBEQ7Yf3QZCRVq_Z-wylzBiSmdPSZqxaOFU18n0RkBJ7ACE0Xhj44fyX-BQLkAhW9i0rnv9faoWKmBq24bp11kDJVtpSHiQLQSir6Yu_hQBp5OAGk2JX54sCzayhCS6WnsJEI3hXwS7Z"/>
+<div class="flex flex-col leading-none">
+<span class="text-xl font-extrabold text-white tracking-tighter">PULSE</span>
+<span class="text-[10px] font-bold text-[#36C98D] tracking-[0.2em] uppercase">BY MEDEDPREP</span>
+</div>
+</div>
+<a class="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm font-medium" href="../batch-2a-public-individual/03-pricing-desktop.html">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+                Back to pricing
+            </a>
+</div>
+</header>
+<main class="pt-32 pb-20 px-6 max-w-[1100px] mx-auto">
+<div class="flex flex-col lg:flex-row gap-12">
+<!-- Left Column: Checkout Form (55%) -->
+<div class="lg:w-[55%] space-y-10">
+<h1 class="text-[32px] font-bold text-white tracking-tight">Checkout</h1>
+<!-- Contact Section -->
+<section class="space-y-4">
+<h2 class="text-lg font-semibold text-white">Contact Information</h2>
+<div class="bg-surface-elevated border border-border-default rounded-xl p-5 flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-white font-medium">sarah.chen@fdny.gov</span>
+<span class="material-symbols-outlined text-[#36C98D] text-lg" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<span class="text-[#36C98D] text-sm mt-1">Logged in as Sarah Chen</span>
+</div>
+<button class="text-white/45 hover:text-white text-xs font-medium transition-colors">Change</button>
+</div>
+</section>
+<!-- Payment Section -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<h2 class="text-lg font-semibold text-white">Payment Method</h2>
+<div class="flex items-center gap-1.5 text-white/45 text-xs">
+<span class="material-symbols-outlined text-sm">lock</span>
+                            Secured by Stripe
+                        </div>
+</div>
+<div class="space-y-3">
+<div class="relative">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-white/30">credit_card</span>
+</div>
+<input class="w-full bg-surface-elevated border border-border-default rounded-lg h-12 pl-12 pr-4 text-white placeholder-white/30 transition-all" placeholder="Card number" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<input class="bg-surface-elevated border border-border-default rounded-lg h-12 px-4 text-white placeholder-white/30 transition-all" placeholder="MM / YY" type="text"/>
+<input class="bg-surface-elevated border border-border-default rounded-lg h-12 px-4 text-white placeholder-white/30 transition-all" placeholder="CVC" type="text"/>
+</div>
+</div>
+</section>
+<!-- Coupon Section -->
+<section class="space-y-3">
+<div class="inline-flex items-center gap-2 bg-[#36C98D]/10 border border-[#36C98D]/20 px-3 py-1.5 rounded-full">
+<span class="text-[#36C98D] text-xs font-bold tracking-wider">FIRSTCE -$5.00</span>
+<button class="text-[#36C98D] hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+</section>
+<!-- Pay Button -->
+<button class="w-full h-[52px] bg-[#36C98D] hover:bg-[#2DB87E] text-[#0A0A0A] font-bold rounded-lg flex items-center justify-center gap-2 transition-all active:scale-[0.98] green-glow">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lock</span>
+                    Pay $29.99
+                </button>
+<p class="text-center text-white/30 text-xs">
+                    By confirming your purchase, you agree to our Terms of Service and Privacy Policy.
+                </p>
+</div>
+<!-- Right Column: Summary Card (45%) -->
+<div class="lg:w-[45%]">
+<div class="sticky top-24 bg-surface border border-border-default rounded-2xl p-8 space-y-8">
+<h2 class="text-xl font-bold text-white">Order Summary</h2>
+<!-- Course Details -->
+<div class="flex gap-4">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 border border-white/5">
+<img class="w-full h-full object-cover" data-alt="A high-end cinematic close-up of a medical monitor in a dark clinical setting, showing a bright green EKG cardiac waveform pulse against a pitch-black background. The lighting is moody and professional, with a soft emerald glow reflecting on sleek medical equipment. The visual style is modern, premium, and tech-focused." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPFyqpBc9t_Lmo5HX11cKoZFB7jV9aKhdETVAw3jWHh2GxNrkwbrGdNDGwcGir7gXgPPaQiWxB9lKkuQzDkTHELyVkFIEmAoin7L1Sp12Ot6-h_4aHCTMmqV64V5PWY0lUpX9XNtM6JBHwMKLp1wX7iqANbq00ypAg6Xx7idFpj9kagRibo2VIc4gvfVqZN12M6qv9601vnvrz8tKCWD9kwo-ivrCuaWSHZ1Ll7EmJZmZqpsja4ksKU8Cf8Bg_4lUBn_V_5LOibBlV"/>
+</div>
+<div class="flex flex-col justify-between py-1">
+<h3 class="text-sm font-semibold text-white leading-snug">Advanced Cardiac Life Support (ACLS) Review</h3>
+<div class="inline-block bg-[#36C98D]/15 text-[#36C98D] text-[10px] font-bold px-2 py-0.5 rounded-full w-fit">
+                                2.0 CEH
+                            </div>
+</div>
+</div>
+<!-- Pricing -->
+<div class="space-y-3 pt-4 border-t border-white/5">
+<div class="flex justify-between text-sm text-white/70">
+<span>Subtotal</span>
+<span>$34.99</span>
+</div>
+<div class="flex justify-between text-sm text-[#36C98D]">
+<span>Discount</span>
+<span>-$5.00</span>
+</div>
+<div class="flex justify-between items-end pt-2">
+<span class="text-white font-medium">Total</span>
+<span class="text-2xl font-bold text-white">$29.99</span>
+</div>
+</div>
+<!-- Checklist -->
+<ul class="space-y-3 pt-4">
+<li class="flex items-center gap-3 text-sm text-white/70">
+<span class="material-symbols-outlined text-[#36C98D] text-lg" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            CAPCE-accredited certification
+                        </li>
+<li class="flex items-center gap-3 text-sm text-white/70">
+<span class="material-symbols-outlined text-[#36C98D] text-lg" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            Adaptive pre-assessment included
+                        </li>
+<li class="flex items-center gap-3 text-sm text-white/70">
+<span class="material-symbols-outlined text-[#36C98D] text-lg" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            Detailed diagnostic performance report
+                        </li>
+<li class="flex items-center gap-3 text-sm text-white/70">
+<span class="material-symbols-outlined text-[#36C98D] text-lg" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            Instant digital certificate upon completion
+                        </li>
+</ul>
+<!-- Footer -->
+<div class="pt-6 border-t border-white/5 flex flex-col items-center gap-2">
+<div class="flex items-center gap-2 text-white/45 text-xs">
+<span class="material-symbols-outlined text-sm">verified_user</span>
+                            30-day money-back guarantee
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Micro-interactions for button and inputs
+        const payButton = document.querySelector('button.green-glow');
+        payButton.addEventListener('mouseenter', () => {
+            payButton.style.boxShadow = '0 0 30px rgba(54, 201, 141, 0.3)';
+        });
+        payButton.addEventListener('mouseleave', () => {
+            payButton.style.boxShadow = '0 0 20px rgba(54, 201, 141, 0.15)';
+        });
+
+        // Simple input focus effects handled by Tailwind, 
+        // but could add custom JS for more complex Stripe-like animations if needed.
+    </script>
+</body></html>

@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adaptive Domain Classification Simulator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0e1117;
+  --bg-card: #161b22;
+  --bg-card-alt: #1c2230;
+  --border: rgba(255,255,255,0.06);
+  --border-accent: rgba(99,140,255,0.18);
+  --text: #c9d1d9;
+  --text-muted: #8b949e;
+  --text-bright: #e6edf3;
+  --accent: #638cff;
+  --accent-dim: rgba(99,140,255,0.10);
+  --amber: #c9a227;
+  --amber-dim: rgba(201,162,39,0.10);
+  --amber-border: rgba(201,162,39,0.25);
+  --green: #3fb950;
+  --green-dim: rgba(63,185,80,0.10);
+  --green-border: rgba(63,185,80,0.30);
+  --red: #e55353;
+  --red-dim: rgba(229,83,83,0.10);
+  --red-border: rgba(229,83,83,0.30);
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* ── Page Header ── */
+.page-header {
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-bright);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin-bottom: 0.15rem;
+}
+
+.page-subtitle {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 0.85rem;
+}
+
+.page-desc {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+
+.page-desc strong {
+  color: var(--text);
+  font-weight: 650;
+}
+
+.page-highlights {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.page-highlight-chip {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.3rem 0.65rem;
+  border-radius: 5px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(99,140,255,0.15);
+  color: var(--accent);
+}
+
+/* ── Wrapper ── */
+.tracker-wrap {
+  width: 100%;
+  max-width: 620px;
+}
+
+/* ── Controls ── */
+.tracker-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.tracker-controls .btn {
+  appearance: none;
+  border: 1px solid rgba(99,140,255,0.32);
+  background: linear-gradient(180deg, rgba(99,140,255,0.2), rgba(99,140,255,0.08));
+  color: var(--text-bright);
+  border-radius: 7px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  font-family: inherit;
+}
+
+.tracker-controls .btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(99,140,255,0.55);
+  background: linear-gradient(180deg, rgba(99,140,255,0.28), rgba(99,140,255,0.11));
+}
+
+.tracker-controls .btn:active { transform: translateY(0); }
+
+.tracker-controls .btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.tracker-controls .btn.secondary {
+  background: rgba(255,255,255,0.025);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.tracker-controls .btn.secondary:hover {
+  border-color: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+}
+
+.tracker-step-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Current Item Panel ── */
+.current-item-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.current-item-panel.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.item-meta-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.item-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.item-value {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-left: 0.3rem;
+}
+
+.item-why {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--accent);
+  opacity: 0.75;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.item-why::before {
+  content: '\2190  ';
+  opacity: 0.6;
+}
+
+.item-result-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.05);
+  color: var(--text-muted);
+}
+
+/* Flashing animations for right/wrong */
+@keyframes flash-correct {
+  0% { background-color: rgba(63,185,80,0.3); border-color: rgba(63,185,80,0.8); box-shadow: 0 0 15px rgba(63,185,80,0.2); }
+  100% { background-color: var(--bg-card-alt); border-color: var(--border); box-shadow: none; }
+}
+
+@keyframes flash-incorrect {
+  0% { background-color: rgba(229,83,83,0.3); border-color: rgba(229,83,83,0.8); box-shadow: 0 0 15px rgba(229,83,83,0.2); }
+  100% { background-color: var(--bg-card-alt); border-color: var(--border); box-shadow: none; }
+}
+
+.panel-flash-correct { animation: flash-correct 1s ease-out; }
+.panel-flash-incorrect { animation: flash-incorrect 1s ease-out; }
+
+.badge-correct { color: var(--green); background: var(--green-dim); }
+.badge-incorrect { color: var(--red); background: var(--red-dim); }
+
+/* ── Tracker Card ── */
+.tracker-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.018), transparent), var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem 0.9rem;
+  transition: border-color 0.2s ease;
+}
+
+.tracker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tracker-title {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.tracker-phase-pill {
+  font-size: 0.54rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  transition: all 0.4s ease;
+}
+
+.phase-sweep { color: var(--accent); background: var(--accent-dim); }
+.phase-drill { color: var(--amber); background: var(--amber-dim); }
+.phase-complete { color: var(--green); background: var(--green-dim); }
+
+/* ── Domain Rows ── */
+.domain-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.domain-row {
+  display: grid;
+  grid-template-columns: 98px 1fr auto auto;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.45rem 0;
+  border-radius: 6px;
+  transition: opacity 0.5s ease, background-color 0.3s ease;
+  position: relative;
+}
+
+.domain-row.settled { opacity: 0.55; }
+.domain-row.settled:hover { opacity: 0.8; }
+
+.domain-name-group {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.domain-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: box-shadow 0.4s ease;
+}
+
+.domain-row.active-domain .domain-dot {
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.04), 0 0 8px currentColor;
+}
+
+.domain-name {
+  font-size: 0.74rem;
+  font-weight: 650;
+  color: var(--text-bright);
+  white-space: nowrap;
+}
+
+/* ── Confidence Interval Track ── */
+.ci-track-wrap {
+  position: relative;
+  height: 22px;
+  min-width: 0;
+}
+
+.ci-track-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 11px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.03);
+  overflow: hidden;
+}
+
+.ci-track-bg::before {
+  content: '';
+  position: absolute;
+  left: calc(50% - 0.5px);
+  top: 2px;
+  bottom: 2px;
+  width: 1px;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.18) 0px,
+    rgba(255,255,255,0.18) 2px,
+    transparent 2px,
+    transparent 5px
+  );
+  z-index: 1;
+}
+
+.ci-band {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  border-radius: 8px;
+  transition: left 0.6s cubic-bezier(0.33, 1, 0.68, 1),
+              width 0.6s cubic-bezier(0.33, 1, 0.68, 1),
+              background 0.4s ease,
+              border-color 0.4s ease,
+              box-shadow 0.4s ease;
+}
+
+.ci-band.pending { border: 1px solid rgba(255,255,255,0.08); box-shadow: none; }
+.ci-band.flagged {
+  border: 1.5px dashed rgba(201,162,39,0.55);
+  box-shadow: 0 0 12px rgba(201,162,39,0.08);
+  animation: flagged-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes flagged-pulse {
+  0%, 100% { border-color: rgba(201,162,39,0.4); box-shadow: 0 0 8px rgba(201,162,39,0.06); }
+  50%      { border-color: rgba(201,162,39,0.7); box-shadow: 0 0 14px rgba(201,162,39,0.12); }
+}
+.ci-band.classified-strong { border: 1px solid var(--green-border); box-shadow: 0 0 10px rgba(63,185,80,0.08); }
+.ci-band.classified-developing { border: 1px solid var(--amber-border); box-shadow: 0 0 10px rgba(201,162,39,0.08); }
+.ci-band.classified-gap { border: 1px solid var(--red-border); box-shadow: 0 0 10px rgba(229,83,83,0.08); }
+
+/* ── Classification Label ── */
+.class-pill {
+  font-size: 0.58rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.18rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  min-width: 70px;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+.class-pending { color: var(--text-muted); background: transparent; }
+.class-flagged { color: var(--amber); background: var(--amber-dim); }
+.class-strong { color: var(--green); background: var(--green-dim); }
+.class-developing { color: var(--amber); background: var(--amber-dim); }
+.class-gap { color: var(--red); background: var(--red-dim); }
+
+/* ── Item Counter ── */
+.item-count {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+  min-width: 42px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.3s ease;
+}
+
+.domain-row.active-domain .item-count { color: var(--text); }
+
+/* ── Ability estimate marker inside CI track ── */
+.ci-marker {
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-bright);
+  border: 2px solid rgba(255,255,255,0.6);
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  box-shadow: 0 0 6px rgba(255,255,255,0.2);
+  transition: left 0.6s cubic-bezier(0.33, 1, 0.68, 1),
+              background 0.4s ease,
+              border-color 0.4s ease,
+              box-shadow 0.4s ease;
+}
+
+.classified-strong ~ .ci-marker { background: var(--green); border-color: var(--green); box-shadow: 0 0 8px rgba(63,185,80,0.4); }
+.classified-developing ~ .ci-marker { background: var(--amber); border-color: var(--amber); box-shadow: 0 0 8px rgba(201,162,39,0.4); }
+.classified-gap ~ .ci-marker { background: var(--red); border-color: var(--red); box-shadow: 0 0 8px rgba(229,83,83,0.4); }
+
+/* ── Descriptor box ── */
+.tracker-descriptor {
+  margin-top: 0.85rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent), var(--bg-card-alt);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--border-accent);
+  border-radius: 8px;
+  font-size: 0.78rem;
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 3.2rem;
+  transition: border-left-color 0.4s ease;
+}
+.tracker-descriptor.phase-sweep-desc { border-left-color: rgba(99,140,255,0.45); }
+.tracker-descriptor.phase-drill-desc { border-left-color: rgba(201,162,39,0.45); }
+.tracker-descriptor.phase-complete-desc { border-left-color: rgba(63,185,80,0.45); }
+
+/* ── Scale Axis (under domain rows) ── */
+.ci-scale-axis {
+  display: grid;
+  grid-template-columns: 98px 1fr auto auto;
+  align-items: center;
+  gap: 0.65rem;
+  padding-top: 0.55rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.ci-scale-track {
+  position: relative;
+  height: 14px;
+}
+
+.ci-scale-track .axis-label {
+  position: absolute;
+  top: 0;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.ci-scale-track .axis-label.left { left: 0; }
+.ci-scale-track .axis-label.center {
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--text);
+}
+.ci-scale-track .axis-label.right { right: 0; }
+
+.axis-pill-spacer {
+  font-size: 0.58rem;
+  padding: 0.18rem 0.5rem;
+  min-width: 70px;
+  visibility: hidden;
+}
+.axis-count-spacer {
+  font-size: 0.62rem;
+  min-width: 42px;
+  visibility: hidden;
+}
+
+/* ── Summary Panel ── */
+.summary-panel {
+  margin-top: 1rem;
+  background: linear-gradient(180deg, rgba(99,140,255,0.04), transparent), var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0 1.25rem;
+  opacity: 0;
+  transform: translateY(8px);
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.5s ease, transform 0.5s ease, max-height 0.7s ease, padding 0.4s ease;
+  pointer-events: none;
+}
+
+.summary-panel.visible {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 500px;
+  padding: 1.1rem 1.25rem;
+  pointer-events: auto;
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.summary-title {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.summary-meta {
+  font-size: 0.54rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  color: var(--green);
+  background: var(--green-dim);
+}
+
+.summary-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.stat-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.7rem 0.4rem;
+  border-radius: 8px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border);
+}
+
+.stat-block.strong {
+  border-color: var(--green-border);
+  background: linear-gradient(180deg, rgba(63,185,80,0.07), transparent), var(--bg-card-alt);
+}
+.stat-block.developing {
+  border-color: var(--amber-border);
+  background: linear-gradient(180deg, rgba(201,162,39,0.07), transparent), var(--bg-card-alt);
+}
+.stat-block.gap {
+  border-color: var(--red-border);
+  background: linear-gradient(180deg, rgba(229,83,83,0.07), transparent), var(--bg-card-alt);
+}
+.stat-block.flagged {
+  border-color: var(--amber-border);
+  background: var(--bg-card-alt);
+}
+
+.stat-count {
+  font-size: 1.6rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  color: var(--text-bright);
+}
+.stat-block.strong .stat-count { color: var(--green); }
+.stat-block.developing .stat-count { color: var(--amber); }
+.stat-block.gap .stat-count { color: var(--red); }
+.stat-block.flagged .stat-count { color: var(--amber); opacity: 0.7; }
+
+.stat-label {
+  font-size: 0.55rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+.summary-recommendation {
+  padding: 0.75rem 0.9rem;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+}
+
+.rec-label {
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 0.45rem;
+}
+
+.rec-domains {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.rec-domains .rec-empty {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.rec-domain-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.rec-domain-chip .chip-priority {
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  background: rgba(0,0,0,0.25);
+}
+
+.rec-domain-chip.gap {
+  background: var(--red-dim);
+  color: var(--red);
+  border: 1px solid var(--red-border);
+}
+.rec-domain-chip.developing {
+  background: var(--amber-dim);
+  color: var(--amber);
+  border: 1px solid var(--amber-border);
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  body { padding: 1rem; }
+  .domain-row { grid-template-columns: 78px 1fr auto auto; gap: 0.4rem; }
+  .domain-name { font-size: 0.68rem; }
+  .class-pill { font-size: 0.52rem; min-width: 60px; padding: 0.15rem 0.35rem; }
+  .item-count { font-size: 0.56rem; min-width: 36px; }
+  .current-item-panel { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .ci-scale-axis { grid-template-columns: 78px 1fr auto auto; gap: 0.4rem; }
+  .ci-scale-track .axis-label { font-size: 0.5rem; }
+  .summary-stats { grid-template-columns: repeat(2, 1fr); }
+  .stat-count { font-size: 1.35rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="tracker-wrap">
+  <div class="page-header">
+    <h1 class="page-title">Adaptive Domain Classification Simulator</h1>
+    <div class="page-subtitle">Item Response Theory &middot; Computerized Adaptive Testing</div>
+    <p class="page-desc">Every learner has different strengths and gaps. Instead of a one-size-fits-all exam, this engine uses <strong>IRT</strong> and <strong>CAT</strong> to adapt in real time, selecting items based on each response to zero in on exactly where a learner needs work. Each clinical domain is classified independently, producing a precise competency profile that drives targeted continuing education.</p>
+    <div class="page-highlights">
+      <span class="page-highlight-chip">Real-Time Adaptation</span>
+      <span class="page-highlight-chip">Per-Domain Classification</span>
+      <span class="page-highlight-chip">Confidence Intervals</span>
+      <span class="page-highlight-chip">Targeted CE Recommendations</span>
+    </div>
+  </div>
+
+  <div class="tracker-controls">
+    <button class="btn" id="btnStep" type="button">Step</button>
+    <button class="btn secondary" id="btnAuto" type="button">Auto Run</button>
+    <button class="btn secondary" id="btnReset" type="button">Reset</button>
+    <span class="tracker-step-label" id="stepLabel">Q0 / 20</span>
+  </div>
+
+  <!-- New Current Item Panel -->
+  <div class="current-item-panel" id="currentItemPanel">
+    <div class="item-meta-group">
+      <span class="item-label">Current Item: <span class="item-value" id="curDomain">--</span></span>
+      <span class="item-label">Difficulty: <span class="item-value" id="curDiff">--</span></span>
+      <span class="item-why" id="curWhy"></span>
+    </div>
+    <div class="item-result-badge" id="curResult">Pending</div>
+  </div>
+
+  <div class="tracker-card" id="trackerCard">
+    <div class="tracker-header">
+      <span class="tracker-title">Domain Classification</span>
+      <span class="tracker-phase-pill phase-sweep" id="phasePill">Breadth Sweep</span>
+    </div>
+    <div class="domain-rows" id="domainRows"></div>
+    <div class="ci-scale-axis">
+      <div></div>
+      <div class="ci-scale-track">
+        <span class="axis-label left">Gap</span>
+        <span class="axis-label center">Mastery Threshold</span>
+        <span class="axis-label right">Strong</span>
+      </div>
+      <span class="axis-pill-spacer"></span>
+      <span class="axis-count-spacer"></span>
+    </div>
+  </div>
+  
+  <div class="tracker-descriptor phase-sweep-desc" id="trackerDesc">Press <strong>Step</strong> or <strong>Auto Run</strong> to begin the assessment simulation. The engine will classify 7 clinical domains independently, stopping each one as soon as it has enough evidence.</div>
+
+  <div class="summary-panel" id="summaryPanel">
+    <div class="summary-header">
+      <span class="summary-title">Assessment Result</span>
+      <span class="summary-meta">20 Items · Adaptive</span>
+    </div>
+    <div class="summary-stats">
+      <div class="stat-block strong">
+        <span class="stat-count" id="statStrong">0</span>
+        <span class="stat-label">Strong</span>
+      </div>
+      <div class="stat-block developing">
+        <span class="stat-count" id="statDeveloping">0</span>
+        <span class="stat-label">Developing</span>
+      </div>
+      <div class="stat-block gap">
+        <span class="stat-count" id="statGap">0</span>
+        <span class="stat-label">Gap</span>
+      </div>
+      <div class="stat-block flagged">
+        <span class="stat-count" id="statFlagged">0</span>
+        <span class="stat-label">Indeterminate</span>
+      </div>
+    </div>
+    <div class="summary-recommendation">
+      <div class="rec-label">Recommended Continuing Education Focus</div>
+      <div class="rec-domains" id="recDomains"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var DOMAINS = [
+    { key: 'airway',     name: 'Airway',     color: '#638cff' },
+    { key: 'cardiology', name: 'Cardiology', color: '#4a6fd4' },
+    { key: 'trauma',     name: 'Trauma',     color: '#c9a227' },
+    { key: 'medical',    name: 'Medical',    color: '#2dd4bf' },
+    { key: 'obpeds',     name: 'OB/Peds',    color: '#ec4899' },
+    { key: 'behavioral', name: 'Behavioral', color: '#8b5cf6' },
+    { key: 'operations', name: 'Operations', color: '#3554a8' }
+  ];
+
+  // ── Simulation Steps with Item Properties ──
+  // why: short reason the CAT engine selected this domain/difficulty for the next item
+  var STEPS = [
+    // Breadth Sweep
+    { q:1, domain:'airway',     diff:'Medium', res:'Correct',   ciLeft:8,  ciWidth:72, estimate:52, classification:'Pending', items:1, why:'Initial sweep' },
+    { q:2, domain:'cardiology', diff:'Medium', res:'Correct',   ciLeft:10, ciWidth:70, estimate:55, classification:'Pending', items:1, why:'Initial sweep' },
+    { q:3, domain:'trauma',     diff:'Hard',   res:'Incorrect', ciLeft:12, ciWidth:68, estimate:42, classification:'Pending', items:1, why:'Initial sweep' },
+    { q:4, domain:'medical',    diff:'Medium', res:'Incorrect', ciLeft:10, ciWidth:72, estimate:38, classification:'Pending', items:1, why:'Initial sweep' },
+    { q:5, domain:'obpeds',     diff:'Easy',   res:'Correct',   ciLeft:9,  ciWidth:70, estimate:48, classification:'Pending', items:1, why:'Initial sweep' },
+    { q:6, domain:'behavioral', diff:'Medium', res:'Correct',   ciLeft:11, ciWidth:68, estimate:50, classification:'Pending', items:1, why:'Initial sweep' },
+    { q:7, domain:'operations', diff:'Hard',   res:'Correct',   ciLeft:10, ciWidth:70, estimate:58, classification:'Pending', items:1, why:'Initial sweep' },
+
+    // Lock in some early successes
+    { q:8, domain:'airway',     diff:'Hard',   res:'Correct',   ciLeft:55, ciWidth:28, estimate:69, classification:'Strong',  items:2, why:'Highest uncertainty' },
+    { q:9, domain:'cardiology', diff:'Medium', res:'Correct',   ciLeft:52, ciWidth:30, estimate:67, classification:'Strong',  items:2, why:'Highest uncertainty' },
+
+    // Drill down on Trauma & Medical
+    { q:10, domain:'trauma',    diff:'Medium', res:'Correct',   ciLeft:18, ciWidth:52, estimate:46, classification:'Flagged', items:2, why:'Below threshold' },
+
+    // --> BIG JUMP DOWN: Getting an Easy question wrong is highly penalizing
+    { q:11, domain:'medical',   diff:'Easy',   res:'Incorrect', ciLeft:14, ciWidth:36, estimate:22, classification:'Flagged', items:2, why:'Below threshold' },
+
+    { q:12, domain:'obpeds',    diff:'Medium', res:'Correct',   ciLeft:54, ciWidth:26, estimate:67, classification:'Strong',  items:2, why:'Near threshold' },
+    { q:13, domain:'operations',diff:'Medium', res:'Correct',   ciLeft:56, ciWidth:24, estimate:68, classification:'Strong',  items:2, why:'Near threshold' },
+
+    // --> THE WIDENING BAND: Getting a Hard question right when ability was estimated low
+    { q:14, domain:'behavioral',diff:'Hard',   res:'Correct',   ciLeft:11, ciWidth:80, estimate:75, classification:'Flagged', items:2, why:'Widest band' },
+
+    // Trauma continues to bounce around
+    { q:15, domain:'trauma',    diff:'Hard',   res:'Incorrect', ciLeft:22, ciWidth:40, estimate:40, classification:'Flagged', items:3, why:'Flagged domain' },
+
+    // Medical bottoms out
+    { q:16, domain:'medical',   diff:'Easy',   res:'Incorrect', ciLeft:8,  ciWidth:22, estimate:16, classification:'Gap',    items:3, why:'Confirming gap' },
+
+    { q:17, domain:'trauma',    diff:'Easy',   res:'Correct',   ciLeft:26, ciWidth:28, estimate:42, classification:'Developing', items:4, why:'Resolving flag' },
+    { q:18, domain:'behavioral',diff:'Medium', res:'Incorrect', ciLeft:24, ciWidth:35, estimate:58, classification:'Flagged', items:3, why:'Resolving flag' },
+    { q:19, domain:'behavioral',diff:'Easy',   res:'Correct',   ciLeft:30, ciWidth:26, estimate:60, classification:'Developing', items:4, why:'Resolving flag' },
+    { q:20, domain:'trauma',    diff:'Medium', res:'Incorrect', ciLeft:28, ciWidth:24, estimate:40, classification:'Developing', items:5, why:'Final classification' }
+  ];
+
+  var DESCRIPTORS = [
+    { from:0, to:6, cls:'phase-sweep-desc', text:'<strong>Breadth sweep.</strong> One item per domain to establish an initial ability estimate. The dot shifts up or down based on the response; the band shows the range of plausible ability.' },
+    { from:7, to:9, cls:'phase-drill-desc', text:'<strong>Locking in.</strong> Consistently correct answers on medium and hard items shrink the confidence band quickly, classifying Airway and Cardiology as <span style="color:var(--green)">Strong</span>.' },
+    { from:10, to:10, cls:'phase-drill-desc', text:'<strong>Watch Medical (Q11).</strong> The next item demonstrates a "big jump." If a learner misses an Easy question, the algorithm dramatically lowers the estimate &mdash; easy misses carry enormous information.' },
+    { from:11, to:12, cls:'phase-drill-desc', text:'<strong>Big Jump Down.</strong> Medical\'s estimate plummeted after an Easy miss. In IRT, the probability of getting an easy item wrong when ability is high is extremely low &mdash; so a miss here is very informative.' },
+    { from:13, to:13, cls:'phase-drill-desc', text:'<strong>Watch Behavioral (Q14).</strong> The next item demonstrates "band widening." When a response contradicts the model\'s current estimate, uncertainty <em>increases</em> rather than decreasing.' },
+    { from:14, to:16, cls:'phase-drill-desc', text:'<strong>Band Widening.</strong> Behavioral\'s band grew <em>wider</em> despite a correct answer. A hard question answered correctly when estimated ability was low creates contradictory evidence &mdash; the algorithm needs more data before it can classify.' },
+    { from:17, to:19, cls:'phase-complete-desc', text:'<strong>Assessment complete.</strong> 20 items adapted to the learner\'s performance. Each domain was classified independently based on where the confidence band settled relative to the mastery threshold.' }
+  ];
+
+  var currentStep = -1;
+  var autoTimer = null;
+  var autoRunning = false;
+  var domainState = {};
+
+  DOMAINS.forEach(function(d) {
+    domainState[d.key] = { items: 0, classification: 'Pending', ciLeft: 5, ciWidth: 80, estimate: 45 };
+  });
+
+  var domainRowsEl = document.getElementById('domainRows');
+  var trackerDesc = document.getElementById('trackerDesc');
+  var phasePill = document.getElementById('phasePill');
+  var stepLabel = document.getElementById('stepLabel');
+  var btnStep = document.getElementById('btnStep');
+  var btnAuto = document.getElementById('btnAuto');
+  var btnReset = document.getElementById('btnReset');
+  
+  // Panel elements
+  var currentItemPanel = document.getElementById('currentItemPanel');
+  var curDomainEl = document.getElementById('curDomain');
+  var curDiffEl = document.getElementById('curDiff');
+  var curResultEl = document.getElementById('curResult');
+  var curWhyEl = document.getElementById('curWhy');
+
+  // Summary panel elements
+  var summaryPanel = document.getElementById('summaryPanel');
+  var statStrongEl = document.getElementById('statStrong');
+  var statDevelopingEl = document.getElementById('statDeveloping');
+  var statGapEl = document.getElementById('statGap');
+  var statFlaggedEl = document.getElementById('statFlagged');
+  var recDomainsEl = document.getElementById('recDomains');
+
+  function hexToRgba(hex, alpha) {
+    var r = parseInt(hex.slice(1,3), 16), g = parseInt(hex.slice(3,5), 16), b = parseInt(hex.slice(5,7), 16);
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+  }
+
+  function buildRows() {
+    domainRowsEl.innerHTML = '';
+    DOMAINS.forEach(function(d) {
+      var row = document.createElement('div');
+      row.className = 'domain-row';
+      row.id = 'row-' + d.key;
+      var edgeColor = hexToRgba(d.color, 0.06), midColor = hexToRgba(d.color, 0.18);
+      row.innerHTML =
+        '<div class="domain-name-group">' +
+          '<span class="domain-dot" style="color:' + d.color + '; background:' + d.color + ';"></span>' +
+          '<span class="domain-name">' + d.name + '</span>' +
+        '</div>' +
+        '<div class="ci-track-wrap">' +
+          '<div class="ci-track-bg"></div>' +
+          '<div class="ci-band pending" id="band-' + d.key + '" style="left:5%; width:80%; background: linear-gradient(90deg, ' + edgeColor + ', ' + midColor + ', ' + edgeColor + ');"></div>' +
+          '<div class="ci-marker" id="marker-' + d.key + '" style="left:45%; opacity:0;"></div>' +
+        '</div>' +
+        '<span class="class-pill class-pending" id="pill-' + d.key + '">Pending</span>' +
+        '<span class="item-count" id="count-' + d.key + '">0 items</span>';
+      domainRowsEl.appendChild(row);
+    });
+  }
+
+  function bandBackground(color, cls) {
+    if (cls === 'Strong') return 'linear-gradient(90deg, rgba(63,185,80,0.08), rgba(63,185,80,0.3), rgba(63,185,80,0.08))';
+    if (cls === 'Gap') return 'linear-gradient(90deg, rgba(229,83,83,0.08), rgba(229,83,83,0.3), rgba(229,83,83,0.08))';
+    if (cls === 'Developing') return 'linear-gradient(90deg, rgba(201,162,39,0.08), rgba(201,162,39,0.3), rgba(201,162,39,0.08))';
+    if (cls === 'Flagged') return 'linear-gradient(90deg, rgba(201,162,39,0.06), rgba(201,162,39,0.22), rgba(201,162,39,0.06))';
+    return 'linear-gradient(90deg, ' + hexToRgba(color, 0.06) + ', ' + hexToRgba(color, 0.18) + ', ' + hexToRgba(color, 0.06) + ')';
+  }
+
+  function bandClass(cls) {
+    if (cls === 'Strong') return 'classified-strong';
+    if (cls === 'Developing') return 'classified-developing';
+    if (cls === 'Gap') return 'classified-gap';
+    if (cls === 'Flagged') return 'flagged';
+    return 'pending';
+  }
+
+  function renderAll() {
+    var allFinal = true;
+    DOMAINS.forEach(function(d) {
+      var state = domainState[d.key];
+      var band = document.getElementById('band-' + d.key), pill = document.getElementById('pill-' + d.key), marker = document.getElementById('marker-' + d.key), count = document.getElementById('count-' + d.key), row = document.getElementById('row-' + d.key);
+      if (!band) return;
+      band.style.left = state.ciLeft + '%'; band.style.width = state.ciWidth + '%';
+      band.style.background = bandBackground(d.color, state.classification);
+      band.className = 'ci-band ' + bandClass(state.classification);
+      pill.textContent = state.classification;
+      pill.className = 'class-pill class-' + state.classification.toLowerCase();
+      marker.style.left = state.estimate + '%'; marker.style.opacity = state.items > 0 ? '1' : '0';
+      count.textContent = state.items + (state.items === 1 ? ' item' : ' items');
+      
+      var isFinal = ['Strong', 'Developing', 'Gap'].indexOf(state.classification) > -1;
+      if (!isFinal) allFinal = false;
+      row.classList.toggle('settled', isFinal);
+    });
+
+    if (currentStep < 0) { phasePill.textContent = 'Ready'; phasePill.className = 'tracker-phase-pill phase-sweep'; }
+    else if (allFinal) { phasePill.textContent = 'Complete'; phasePill.className = 'tracker-phase-pill phase-complete'; }
+    else if (STEPS[currentStep].q <= 7) { phasePill.textContent = 'Breadth Sweep'; phasePill.className = 'tracker-phase-pill phase-sweep'; }
+    else { phasePill.textContent = 'Drill-Down'; phasePill.className = 'tracker-phase-pill phase-drill'; }
+  }
+
+  function stepTo(n) {
+    if (n < 0 || n >= STEPS.length) return;
+    var s = STEPS[n], state = domainState[s.domain];
+    
+    state.items = s.items; state.classification = s.classification;
+    state.ciLeft = s.ciLeft; state.ciWidth = s.ciWidth; state.estimate = s.estimate;
+    
+    for (var i = DESCRIPTORS.length - 1; i >= 0; i--) {
+      if (n >= DESCRIPTORS[i].from) {
+        trackerDesc.innerHTML = DESCRIPTORS[i].text;
+        trackerDesc.className = 'tracker-descriptor ' + DESCRIPTORS[i].cls;
+        break;
+      }
+    }
+    currentStep = n; stepLabel.textContent = 'Q' + s.q + ' / 20';
+
+    // Update Current Item Panel
+    currentItemPanel.classList.add('visible');
+    var domainObj = DOMAINS.find(function(d) { return d.key === s.domain; });
+    curDomainEl.textContent = domainObj.name;
+    curDomainEl.style.color = domainObj.color;
+    curDiffEl.textContent = s.diff;
+    curResultEl.textContent = s.res;
+    curWhyEl.textContent = s.why || '';
+    
+    var isCorrect = s.res === 'Correct';
+    curResultEl.className = 'item-result-badge ' + (isCorrect ? 'badge-correct' : 'badge-incorrect');
+    
+    // Trigger Panel Flash
+    currentItemPanel.classList.remove('panel-flash-correct', 'panel-flash-incorrect');
+    void currentItemPanel.offsetWidth; // Reflow
+    currentItemPanel.classList.add(isCorrect ? 'panel-flash-correct' : 'panel-flash-incorrect');
+
+    renderAll();
+    
+    if (n >= STEPS.length - 1) {
+      btnStep.disabled = true;
+      btnStep.textContent = 'Done';
+      stopAuto();
+      setTimeout(showSummary, 700);
+    }
+  }
+
+  function showSummary() {
+    var counts = { Strong: 0, Developing: 0, Gap: 0, Flagged: 0, Pending: 0 };
+    var ceFocus = [];
+
+    DOMAINS.forEach(function(d) {
+      var cls = domainState[d.key].classification;
+      counts[cls] = (counts[cls] || 0) + 1;
+      if (cls === 'Gap') ceFocus.push({ name: d.name, level: 'gap', priority: 0 });
+      else if (cls === 'Developing') ceFocus.push({ name: d.name, level: 'developing', priority: 1 });
+    });
+
+    ceFocus.sort(function(a, b) { return a.priority - b.priority; });
+
+    statStrongEl.textContent = counts.Strong || 0;
+    statDevelopingEl.textContent = counts.Developing || 0;
+    statGapEl.textContent = counts.Gap || 0;
+    statFlaggedEl.textContent = counts.Flagged || 0;
+
+    if (ceFocus.length === 0) {
+      recDomainsEl.innerHTML = '<span class="rec-empty">All domains classified as Strong — no immediate CE focus needed.</span>';
+    } else {
+      recDomainsEl.innerHTML = ceFocus.map(function(d) {
+        var priorityLabel = d.level === 'gap' ? 'Priority' : 'Reinforce';
+        return '<span class="rec-domain-chip ' + d.level + '">' +
+               '<span class="chip-priority">' + priorityLabel + '</span>' +
+               d.name +
+               '</span>';
+      }).join('');
+    }
+
+    summaryPanel.classList.add('visible');
+  }
+
+  function stepForward() { if (currentStep < STEPS.length - 1) stepTo(currentStep + 1); }
+  function startAuto() { if (autoRunning) return; autoRunning = true; btnAuto.textContent = 'Pause'; autoTimer = setInterval(function() { if (currentStep >= STEPS.length - 1) stopAuto(); else stepForward(); }, 2000); }
+  function stopAuto() { autoRunning = false; if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } btnAuto.textContent = 'Auto Run'; }
+  
+  function resetTracker() {
+    stopAuto(); currentStep = -1;
+    DOMAINS.forEach(function(d) { domainState[d.key] = { items: 0, classification: 'Pending', ciLeft: 5, ciWidth: 80, estimate: 45 }; });
+    stepLabel.textContent = 'Q0 / 20';
+    trackerDesc.innerHTML = 'Press <strong>Step</strong> or <strong>Auto Run</strong> to begin the assessment simulation.';
+    trackerDesc.className = 'tracker-descriptor phase-sweep-desc';
+    btnStep.disabled = false; btnStep.textContent = 'Step';
+    currentItemPanel.classList.remove('visible');
+    summaryPanel.classList.remove('visible');
+    renderAll();
+  }
+
+  btnStep.addEventListener('click', function() { stopAuto(); stepForward(); });
+  btnAuto.addEventListener('click', function() { autoRunning ? stopAuto() : startAuto(); });
+  btnReset.addEventListener('click', resetTracker);
+
+  buildRows(); renderAll();
+})();
+</script>
+</body>
+</html>

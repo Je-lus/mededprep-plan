@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Item Bank | Pulse CE Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+    body { background-color: #0A0A0A; color: rgba(255,255,255,0.87); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .pulse-glow { box-shadow: 0 0 15px rgba(54, 201, 141, 0.15); }
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 10px; }
+    .irt-bar { transition: width 0.6s ease; }
+</style>
+<script>
+    tailwind.config = { darkMode: "class", theme: { extend: { fontFamily: { "sans": ["Inter"], "mono": ["JetBrains Mono"] } } } }
+</script>
+</head>
+<body class="flex min-h-screen overflow-hidden">
+
+<!-- ====== SIDEBAR ====== -->
+<aside class="fixed left-0 top-0 h-full w-[240px] bg-[#0e0e0e] border-r border-[rgba(255,255,255,0.06)] flex flex-col z-50">
+    <div class="p-5 pb-4">
+        <div class="flex items-center gap-2.5 mb-6">
+            <div class="w-8 h-8 rounded-lg bg-[#36C98D] flex items-center justify-center"><span class="material-symbols-outlined text-[18px] text-[#0A0A0A]">favorite</span></div>
+            <div><div class="text-[15px] font-bold text-[rgba(255,255,255,0.87)] leading-none">Pulse CE</div><div class="text-[9px] font-semibold text-[#36C98D] uppercase tracking-[0.1em] mt-0.5">Platform Admin</div></div>
+        </div>
+        <nav class="space-y-0.5">
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="58-platform-dashboard.html"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="59-course-management.html"><span class="material-symbols-outlined text-[20px]">school</span>Courses</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="60-course-editor.html"><span class="material-symbols-outlined text-[20px]">edit_note</span>Course Editor</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#36C98D] bg-[rgba(54,201,141,0.08)] border-l-2 border-[#36C98D] text-[13px] font-medium transition-colors" href="61-item-bank.html"><span class="material-symbols-outlined text-[20px]">database</span>Item Bank</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="62-user-management.html"><span class="material-symbols-outlined text-[20px]">group</span>Users</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="63-agency-management.html"><span class="material-symbols-outlined text-[20px]">corporate_fare</span>Agencies</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="64-analytics-dashboard.html"><span class="material-symbols-outlined text-[20px]">analytics</span>Analytics</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="65-capce-reporting.html"><span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>CAPCE</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="66-content-pipeline.html"><span class="material-symbols-outlined text-[20px]">account_tree</span>Content Pipeline</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="67-financial-reports.html"><span class="material-symbols-outlined text-[20px]">payments</span>Financial</a>
+        </nav>
+    </div>
+    <div class="mt-auto p-4 border-t border-[rgba(255,255,255,0.06)]">
+        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="../batch-3-auth-onboarding/16-login-desktop.html"><span class="material-symbols-outlined text-[20px]">logout</span>Logout</a>
+        <div class="flex items-center gap-3 mt-3 p-2 rounded-[12px] bg-[#111111]">
+            <div class="w-8 h-8 rounded-full bg-[rgba(54,201,141,0.15)] flex items-center justify-center text-[#36C98D] text-[11px] font-bold flex-shrink-0">PA</div>
+            <div class="overflow-hidden"><p class="text-[12px] font-medium text-[rgba(255,255,255,0.87)] truncate">Admin User</p><p class="text-[10px] text-[rgba(255,255,255,0.4)] truncate">admin@pulsece.com</p></div>
+        </div>
+    </div>
+</aside>
+
+<!-- ====== MAIN ====== -->
+<main class="ml-[240px] w-[calc(100%-240px)] flex flex-col h-screen overflow-y-auto custom-scrollbar">
+    <header class="flex justify-between items-center w-full px-8 h-14 bg-[#111111] border-b border-[rgba(255,255,255,0.06)] sticky top-0 z-40">
+        <div class="flex items-center gap-3">
+            <h1 class="text-[15px] font-semibold text-[rgba(255,255,255,0.87)]">Item Bank</h1>
+            <span class="text-[12px] text-[rgba(255,255,255,0.4)]">/</span>
+            <span class="text-[12px] text-[rgba(255,255,255,0.4)]">All Items</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="relative">
+                <span class="material-symbols-outlined text-[rgba(255,255,255,0.6)] text-[20px] cursor-pointer hover:text-[rgba(255,255,255,0.87)] transition-colors">notifications</span>
+                <span class="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#36C98D] rounded-full border border-[#111111]"></span>
+            </div>
+            <button class="bg-[#36C98D] text-[#0A0A0A] px-4 py-1.5 rounded-lg text-[12px] font-bold flex items-center gap-1.5 pulse-glow hover:brightness-110 transition-all">
+                <span class="material-symbols-outlined text-[16px]">add</span>New Item
+            </button>
+        </div>
+    </header>
+
+    <div class="p-8 space-y-6 max-w-[1600px] mx-auto w-full">
+        <!-- Heading -->
+        <div class="flex justify-between items-end">
+            <div>
+                <h2 class="text-[24px] font-extrabold tracking-tight text-[rgba(255,255,255,0.87)] mb-1">Item Bank</h2>
+                <p class="text-[rgba(255,255,255,0.6)] text-[14px]">10,642 items across 24 content domains &middot; 1.55M total responses</p>
+            </div>
+            <div class="flex gap-2">
+                <button class="px-4 py-1.5 border border-[rgba(255,255,255,0.1)] rounded-lg text-[13px] font-medium text-[rgba(255,255,255,0.87)] hover:bg-[rgba(255,255,255,0.04)] transition-colors flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">upload</span>Import</button>
+                <button class="px-4 py-1.5 border border-[rgba(255,255,255,0.1)] rounded-lg text-[13px] font-medium text-[rgba(255,255,255,0.87)] hover:bg-[rgba(255,255,255,0.04)] transition-colors flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">file_download</span>Export CSV</button>
+            </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="grid grid-cols-5 gap-4">
+            <div class="bg-[#111111] p-4 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <p class="text-[rgba(255,255,255,0.4)] text-[10px] font-medium uppercase tracking-wider mb-1">Total Items</p>
+                <h3 class="text-[22px] font-bold">10,642</h3>
+            </div>
+            <div class="bg-[#111111] p-4 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <p class="text-[rgba(255,255,255,0.4)] text-[10px] font-medium uppercase tracking-wider mb-1">IRT Calibrated</p>
+                <h3 class="text-[22px] font-bold text-[#36C98D]">8,417</h3>
+                <p class="text-[10px] text-[rgba(255,255,255,0.4)]">79.1%</p>
+            </div>
+            <div class="bg-[#111111] p-4 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <p class="text-[rgba(255,255,255,0.4)] text-[10px] font-medium uppercase tracking-wider mb-1">Avg Difficulty</p>
+                <h3 class="text-[22px] font-bold">0.62</h3>
+                <p class="text-[10px] text-amber-500">Skewed easy</p>
+            </div>
+            <div class="bg-[#111111] p-4 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <p class="text-[rgba(255,255,255,0.4)] text-[10px] font-medium uppercase tracking-wider mb-1">Avg Discrimination</p>
+                <h3 class="text-[22px] font-bold">1.24</h3>
+                <p class="text-[10px] text-[#36C98D]">Good</p>
+            </div>
+            <div class="bg-[#111111] p-4 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <p class="text-[rgba(255,255,255,0.4)] text-[10px] font-medium uppercase tracking-wider mb-1">Flagged</p>
+                <h3 class="text-[22px] font-bold text-[#ffb4ab]">147</h3>
+                <p class="text-[10px] text-[rgba(255,255,255,0.4)]">DIF / Low disc.</p>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="border-b border-[rgba(255,255,255,0.06)] flex gap-0">
+            <button class="px-5 py-3 text-[#36C98D] border-b-2 border-[#36C98D] font-medium text-[12px]">All Items</button>
+            <button class="px-5 py-3 text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] text-[12px] transition-colors">By Domain</button>
+            <button class="px-5 py-3 text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] text-[12px] transition-colors">IRT Parameters</button>
+            <button class="px-5 py-3 text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] text-[12px] transition-colors">Flagged Items</button>
+            <button class="px-5 py-3 text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] text-[12px] transition-colors">Usage Analytics</button>
+        </div>
+
+        <!-- Filters -->
+        <div class="flex gap-3 items-center flex-wrap">
+            <select class="bg-[#0e0e0e] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-1.5 text-[12px] text-[rgba(255,255,255,0.87)] focus:border-[rgba(54,201,141,0.5)] focus:ring-0 outline-none"><option>All Domains</option><option>Cardiology</option><option>Airway Management</option><option>Trauma</option><option>Medical Emergencies</option></select>
+            <select class="bg-[#0e0e0e] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-1.5 text-[12px] text-[rgba(255,255,255,0.87)] focus:border-[rgba(54,201,141,0.5)] focus:ring-0 outline-none"><option>All Types</option><option>Multiple Choice</option><option>Multiple Select</option><option>Drag &amp; Drop</option></select>
+            <select class="bg-[#0e0e0e] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-1.5 text-[12px] text-[rgba(255,255,255,0.87)] focus:border-[rgba(54,201,141,0.5)] focus:ring-0 outline-none"><option>All Difficulty</option><option>Easy (b &lt; -1.0)</option><option>Medium (-1.0 to 1.0)</option><option>Hard (b &gt; 1.0)</option></select>
+            <select class="bg-[#0e0e0e] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-1.5 text-[12px] text-[rgba(255,255,255,0.87)] focus:border-[rgba(54,201,141,0.5)] focus:ring-0 outline-none"><option>All Status</option><option>Active</option><option>Retired</option><option>Flagged</option></select>
+            <div class="ml-auto text-[11px] text-[rgba(255,255,255,0.4)]">Showing <span class="text-[rgba(255,255,255,0.87)] font-medium">1&ndash;25</span> of <span class="text-[rgba(255,255,255,0.87)] font-medium">10,642</span></div>
+        </div>
+
+        <!-- Items Table -->
+        <div class="bg-[#111111] rounded-[12px] border border-[rgba(255,255,255,0.06)] overflow-hidden">
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="border-b border-[rgba(255,255,255,0.06)] text-[10px] uppercase tracking-wider text-[rgba(255,255,255,0.4)]">
+                        <th class="px-4 py-3 font-medium w-[60px]">ID</th>
+                        <th class="px-4 py-3 font-medium">Item Stem</th>
+                        <th class="px-4 py-3 font-medium w-[100px]">Domain</th>
+                        <th class="px-4 py-3 font-medium w-[60px]">Type</th>
+                        <th class="px-4 py-3 font-medium w-[50px] text-center">a</th>
+                        <th class="px-4 py-3 font-medium w-[50px] text-center">b</th>
+                        <th class="px-4 py-3 font-medium w-[50px] text-center">c</th>
+                        <th class="px-4 py-3 font-medium w-[70px] text-center">Resp</th>
+                        <th class="px-4 py-3 font-medium w-[80px] text-center">P-value</th>
+                        <th class="px-4 py-3 font-medium w-[70px]">Status</th>
+                        <th class="px-4 py-3 font-medium w-[40px]"></th>
+                    </tr>
+                </thead>
+                <tbody class="text-[12px]">
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3 font-mono text-[10px] text-[rgba(255,255,255,0.4)]">#4201</td>
+                        <td class="px-4 py-3">A 62-year-old male presents with chest pain radiating to the left arm. ECG shows ST-elevation in leads II, III, aVF...</td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full">Cardiology</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.4)] text-[10px]">MC</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">1.42</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">0.85</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">0.18</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">2,341</td>
+                        <td class="px-4 py-3 text-center"><div class="flex items-center gap-1.5 justify-center"><div class="w-12 h-1.5 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#36C98D] rounded-full irt-bar" style="width:58%"></div></div><span class="font-mono text-[10px]">.58</span></div></td>
+                        <td class="px-4 py-3"><span class="text-[9px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full font-bold">ACTIVE</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3 font-mono text-[10px] text-[rgba(255,255,255,0.4)]">#4202</td>
+                        <td class="px-4 py-3">During endotracheal intubation of a pediatric patient, the appropriate tube size is determined by...</td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded-full">Airway</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.4)] text-[10px]">MC</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">1.87</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">-0.42</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">0.22</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">3,102</td>
+                        <td class="px-4 py-3 text-center"><div class="flex items-center gap-1.5 justify-center"><div class="w-12 h-1.5 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-amber-500 rounded-full irt-bar" style="width:74%"></div></div><span class="font-mono text-[10px]">.74</span></div></td>
+                        <td class="px-4 py-3"><span class="text-[9px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full font-bold">ACTIVE</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3 font-mono text-[10px] text-[rgba(255,255,255,0.4)]">#4203</td>
+                        <td class="px-4 py-3">Which pharmacological agent is most appropriate for a patient experiencing symptomatic bradycardia with...</td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-full">Pharmacology</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.4)] text-[10px]">MC</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">0.94</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">1.21</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">0.20</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">1,890</td>
+                        <td class="px-4 py-3 text-center"><div class="flex items-center gap-1.5 justify-center"><div class="w-12 h-1.5 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-blue-400 rounded-full irt-bar" style="width:41%"></div></div><span class="font-mono text-[10px]">.41</span></div></td>
+                        <td class="px-4 py-3"><span class="text-[9px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full font-bold">ACTIVE</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors bg-[rgba(255,180,171,0.02)]">
+                        <td class="px-4 py-3 font-mono text-[10px] text-[rgba(255,255,255,0.4)]">#4204</td>
+                        <td class="px-4 py-3">A trauma patient presents with paradoxical chest wall movement. The MOST likely diagnosis is...</td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-red-500/10 text-red-400 px-2 py-0.5 rounded-full">Trauma</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.4)] text-[10px]">MC</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px] text-[#ffb4ab]">0.31</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">-1.80</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">0.25</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">4,210</td>
+                        <td class="px-4 py-3 text-center"><div class="flex items-center gap-1.5 justify-center"><div class="w-12 h-1.5 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#ffb4ab] rounded-full irt-bar" style="width:89%"></div></div><span class="font-mono text-[10px]">.89</span></div></td>
+                        <td class="px-4 py-3"><span class="text-[9px] bg-[rgba(255,180,171,0.1)] text-[#ffb4ab] px-2 py-0.5 rounded-full font-bold">FLAGGED</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3 font-mono text-[10px] text-[rgba(255,255,255,0.4)]">#4205</td>
+                        <td class="px-4 py-3">Select ALL appropriate interventions for a patient in anaphylactic shock. (Select all that apply)</td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded-full">Medical</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.4)] text-[10px]">MS</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">1.56</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">0.34</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">&mdash;</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">1,456</td>
+                        <td class="px-4 py-3 text-center"><div class="flex items-center gap-1.5 justify-center"><div class="w-12 h-1.5 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#36C98D] rounded-full irt-bar" style="width:52%"></div></div><span class="font-mono text-[10px]">.52</span></div></td>
+                        <td class="px-4 py-3"><span class="text-[9px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full font-bold">ACTIVE</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3 font-mono text-[10px] text-[rgba(255,255,255,0.4)]">#4206</td>
+                        <td class="px-4 py-3">An 8-month pregnant patient is found unconscious. The correct positioning for CPR is...</td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-pink-500/10 text-pink-400 px-2 py-0.5 rounded-full">OB/Peds</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.4)] text-[10px]">MC</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">1.18</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">0.67</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">0.19</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">987</td>
+                        <td class="px-4 py-3 text-center"><div class="flex items-center gap-1.5 justify-center"><div class="w-12 h-1.5 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#36C98D] rounded-full irt-bar" style="width:55%"></div></div><span class="font-mono text-[10px]">.55</span></div></td>
+                        <td class="px-4 py-3"><span class="text-[9px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full font-bold">ACTIVE</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3 font-mono text-[10px] text-[rgba(255,255,255,0.4)]">#4207</td>
+                        <td class="px-4 py-3">Drag the steps for rapid sequence intubation into the correct order.</td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded-full">Airway</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.4)] text-[10px]">D&amp;D</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">&mdash;</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">&mdash;</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">&mdash;</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">312</td>
+                        <td class="px-4 py-3 text-center"><div class="flex items-center gap-1.5 justify-center"><div class="w-12 h-1.5 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[rgba(255,255,255,0.4)] rounded-full irt-bar" style="width:45%"></div></div><span class="font-mono text-[10px]">.45</span></div></td>
+                        <td class="px-4 py-3"><span class="text-[9px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded-full font-bold">UNCALIB</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3 font-mono text-[10px] text-[rgba(255,255,255,0.4)]">#4208</td>
+                        <td class="px-4 py-3">A patient with a history of COPD presents with increasing dyspnea. SpO2 is 88% on room air. The initial...</td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded-full">Medical</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.4)] text-[10px]">MC</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">1.33</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">-0.15</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">0.21</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">2,678</td>
+                        <td class="px-4 py-3 text-center"><div class="flex items-center gap-1.5 justify-center"><div class="w-12 h-1.5 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#36C98D] rounded-full irt-bar" style="width:63%"></div></div><span class="font-mono text-[10px]">.63</span></div></td>
+                        <td class="px-4 py-3"><span class="text-[9px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full font-bold">ACTIVE</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex items-center justify-between">
+            <p class="text-[11px] text-[rgba(255,255,255,0.4)]">Page 1 of 426</p>
+            <div class="flex gap-1">
+                <button class="px-3 py-1.5 bg-[rgba(54,201,141,0.1)] text-[#36C98D] rounded text-[11px] font-bold">1</button>
+                <button class="px-3 py-1.5 text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] rounded text-[11px]">2</button>
+                <button class="px-3 py-1.5 text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] rounded text-[11px]">3</button>
+                <span class="px-2 py-1.5 text-[rgba(255,255,255,0.4)] text-[11px]">...</span>
+                <button class="px-3 py-1.5 text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] rounded text-[11px]">426</button>
+                <button class="px-3 py-1.5 text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] rounded text-[11px] flex items-center gap-1">Next <span class="material-symbols-outlined text-[14px]">chevron_right</span></button>
+            </div>
+        </div>
+
+        <!-- Distribution Charts -->
+        <div class="grid grid-cols-2 gap-5">
+            <div class="bg-[#111111] p-6 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <div class="flex justify-between items-center mb-6">
+                    <h4 class="text-[16px] font-semibold">Difficulty Distribution (b)</h4>
+                    <span class="text-[rgba(255,255,255,0.4)] text-[10px]">IRT 2PL Model</span>
+                </div>
+                <div class="h-[140px] flex items-end gap-1">
+                    <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full bg-blue-500/30 rounded-t-sm" style="height:15%"></div><span class="text-[9px] text-[rgba(255,255,255,0.4)]">&lt;-2</span></div>
+                    <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full bg-blue-500/40 rounded-t-sm" style="height:25%"></div><span class="text-[9px] text-[rgba(255,255,255,0.4)]">-2</span></div>
+                    <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full bg-[rgba(54,201,141,0.5)] rounded-t-sm" style="height:55%"></div><span class="text-[9px] text-[rgba(255,255,255,0.4)]">-1</span></div>
+                    <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full bg-[rgba(54,201,141,0.7)] rounded-t-sm" style="height:100%"></div><span class="text-[9px] text-[rgba(255,255,255,0.4)]">0</span></div>
+                    <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full bg-[#36C98D] rounded-t-sm" style="height:80%"></div><span class="text-[9px] text-[rgba(255,255,255,0.4)]">1</span></div>
+                    <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full bg-amber-500/60 rounded-t-sm" style="height:35%"></div><span class="text-[9px] text-[rgba(255,255,255,0.4)]">2</span></div>
+                    <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full bg-amber-500/30 rounded-t-sm" style="height:10%"></div><span class="text-[9px] text-[rgba(255,255,255,0.4)]">&gt;2</span></div>
+                </div>
+            </div>
+            <div class="bg-[#111111] p-6 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <div class="flex justify-between items-center mb-6">
+                    <h4 class="text-[16px] font-semibold">Items by Domain</h4>
+                    <span class="text-[rgba(255,255,255,0.4)] text-[10px]">Top 6 domains</span>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3"><span class="text-[10px] text-[rgba(255,255,255,0.4)] w-24 truncate">Cardiology</span><div class="flex-1 h-2 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-[#36C98D] rounded-full" style="width:22%"></div></div><span class="font-mono text-[10px] w-10 text-right">2,341</span></div>
+                    <div class="flex items-center gap-3"><span class="text-[10px] text-[rgba(255,255,255,0.4)] w-24 truncate">Trauma</span><div class="flex-1 h-2 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-red-400 rounded-full" style="width:18%"></div></div><span class="font-mono text-[10px] w-10 text-right">1,915</span></div>
+                    <div class="flex items-center gap-3"><span class="text-[10px] text-[rgba(255,255,255,0.4)] w-24 truncate">Airway Mgmt</span><div class="flex-1 h-2 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-amber-400 rounded-full" style="width:16%"></div></div><span class="font-mono text-[10px] w-10 text-right">1,702</span></div>
+                    <div class="flex items-center gap-3"><span class="text-[10px] text-[rgba(255,255,255,0.4)] w-24 truncate">Medical Emrg</span><div class="flex-1 h-2 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-purple-400 rounded-full" style="width:15%"></div></div><span class="font-mono text-[10px] w-10 text-right">1,596</span></div>
+                    <div class="flex items-center gap-3"><span class="text-[10px] text-[rgba(255,255,255,0.4)] w-24 truncate">Pharmacology</span><div class="flex-1 h-2 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-blue-400 rounded-full" style="width:14%"></div></div><span class="font-mono text-[10px] w-10 text-right">1,489</span></div>
+                    <div class="flex items-center gap-3"><span class="text-[10px] text-[rgba(255,255,255,0.4)] w-24 truncate">OB/Pediatrics</span><div class="flex-1 h-2 bg-[#0e0e0e] rounded-full overflow-hidden"><div class="h-full bg-pink-400 rounded-full" style="width:10%"></div></div><span class="font-mono text-[10px] w-10 text-right">1,063</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

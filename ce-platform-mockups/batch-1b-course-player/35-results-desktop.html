@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pulse CE - Course Results</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: "#36C98D",
+                            hover: "#2DB87E",
+                            active: "#28A572",
+                            subtle: "rgba(54, 201, 141, 0.12)"
+                        },
+                        surface: {
+                            DEFAULT: "#111111",
+                            elevated: "#1A1A1A",
+                            hover: "#1F1F1F"
+                        },
+                        background: "#0A0A0A",
+                        border: {
+                            subtle: "rgba(255, 255, 255, 0.08)",
+                            default: "rgba(255, 255, 255, 0.12)",
+                            strong: "rgba(255, 255, 255, 0.2)"
+                        },
+                        text: {
+                            primary: "#FFFFFF",
+                            secondary: "rgba(255, 255, 255, 0.7)",
+                            tertiary: "rgba(255, 255, 255, 0.45)"
+                        },
+                        error: "#E5484D",
+                        warning: "#F5A623"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "sm": "6px",
+                        "md": "8px",
+                        "lg": "12px",
+                        "xl": "16px",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Inter", "sans-serif"],
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    vertical-align: middle
+    }
+.fill-icon {
+    font-variation-settings: "FILL" 1
+    }
+.pulse-glow {
+    box-shadow: 0 0 20px rgba(54, 201, 141, 0.15)
+    }
+.noise-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBpWF9HKxW32MrqDBmkwNI47eboGRtdJ1SZuGwncdONZCJ7J-jAxR54wdv03UbFer3Tdmbnj6dg8bAj2czcxL8IEjU5lZV4qxmPkIKn0ZFJF5xy69im6gzaGLAnpOFWF6RT1umENTW1sb_KdeVnpQxkCVMAvnWrRJLFWEsV547PbkouBqbUaivoFwsqWc_0N1gUWIlr2wpGhHBcub7CK2tkHzNdSbhHqi5Om5is4XSGd9C3gETVX0yPBJeGfc_s-kc1klOjLr-5CNKg)
+    }
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px
+    }
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02)
+    }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px
+    }
+.result-gradient {
+    background: linear-gradient(135deg, #0A0A0A 0%, #0D1A12 50%, #0F3D26 75%, #36C98D 100%);
+    opacity: 0.08;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none
+    }</style>
+</head>
+<body class="bg-background text-text-primary font-body min-h-screen overflow-x-hidden">
+<div class="noise-overlay"></div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0A0A0A] border-b border-white/10 shadow-[0_0_20px_rgba(54,201,141,0.15)] flex justify-between items-center h-16 px-6">
+<div class="flex items-center gap-4">
+<div class="flex flex-col leading-none">
+<span class="text-xl font-bold tracking-tighter text-white font-headline">PULSE</span>
+<span class="text-[10px] font-semibold tracking-widest text-[#36C98D] uppercase">BY MEDEDPREP</span>
+</div>
+<div class="h-6 w-[1px] bg-white/10 mx-2"></div>
+<div class="hidden md:block">
+<h1 class="text-sm font-semibold text-white/90">Cardiac Emergencies: Advanced Assessment</h1>
+<div class="flex items-center gap-3 mt-1">
+<div class="w-48 h-1.5 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-[#36C98D] rounded-full" style="width: 95%"></div>
+</div>
+<span class="text-[10px] font-medium text-[#36C98D]">95% COMPLETE</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-white/70 hover:text-[#2DB87E] transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar (Left Rail) -->
+<aside class="fixed left-0 top-16 h-screen w-16 md:w-64 bg-[#111111] border-r border-white/10 flex flex-col py-4 z-40">
+<div class="hidden md:block px-6 mb-6">
+<h2 class="text-lg font-black text-[#36C98D] font-headline">Pulse CE</h2>
+<p class="text-[10px] text-white/45 uppercase tracking-widest font-bold">EMS Education</p>
+</div>
+<nav class="flex-1 overflow-y-auto custom-scrollbar">
+<!-- Intro (Completed) -->
+<div class="cursor-pointer transition-transform hover:bg-white/10 hover:text-white group flex items-center text-white/45 px-4 py-3">
+<span class="material-symbols-outlined text-[#36C98D] fill-icon">check_circle</span>
+<span class="ml-3 text-sm font-medium hidden md:inline">Introduction</span>
+</div>
+<!-- Airway (Completed) -->
+<div class="cursor-pointer transition-transform hover:bg-white/10 hover:text-white group flex items-center text-white/45 px-4 py-3">
+<span class="material-symbols-outlined text-[#36C98D] fill-icon">check_circle</span>
+<span class="ml-3 text-sm font-medium hidden md:inline">Airway Management</span>
+</div>
+<!-- Cardiology (Completed) -->
+<div class="cursor-pointer transition-transform hover:bg-white/10 hover:text-white group flex items-center text-white/45 px-4 py-3">
+<span class="material-symbols-outlined text-[#36C98D] fill-icon">check_circle</span>
+<span class="ml-3 text-sm font-medium hidden md:inline">Cardiology Basics</span>
+</div>
+<!-- Pharmacology (Completed) -->
+<div class="cursor-pointer transition-transform hover:bg-white/10 hover:text-white group flex items-center text-white/45 px-4 py-3">
+<span class="material-symbols-outlined text-[#36C98D] fill-icon">check_circle</span>
+<span class="ml-3 text-sm font-medium hidden md:inline">Pharmacology</span>
+</div>
+<!-- Post-Test (Completed) -->
+<div class="cursor-pointer transition-transform hover:bg-white/10 hover:text-white group flex items-center text-white/45 px-4 py-3">
+<span class="material-symbols-outlined text-[#36C98D] fill-icon">check_circle</span>
+<span class="ml-3 text-sm font-medium hidden md:inline">Final Exam</span>
+</div>
+<!-- Results (Active) -->
+<div class="cursor-pointer transition-transform text-[#36C98D] bg-white/5 border-l-4 border-[#36C98D] px-4 py-3 flex items-center">
+<span class="material-symbols-outlined fill-icon">radio_button_checked</span>
+<span class="ml-3 text-sm font-bold hidden md:inline">Results</span>
+</div>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-32 pl-16 md:pl-64 min-h-screen relative overflow-hidden">
+<div class="result-gradient"></div>
+<div class="max-w-[720px] mx-auto px-6 relative z-10">
+<!-- Header -->
+<header class="mb-12">
+<h2 class="text-4xl font-extrabold text-white tracking-tight font-headline">Results</h2>
+<div class="flex items-center gap-2 mt-2">
+<span class="px-2 py-0.5 bg-primary-subtle text-primary text-[10px] font-bold rounded-sm uppercase tracking-wider">1.0 CEH Credits</span>
+<span class="text-text-tertiary text-xs">• Course ID: MED-24-CAR-ADV</span>
+</div>
+</header>
+<!-- PASS State Card -->
+<div class="mb-12 flex flex-col items-center text-center py-10 bg-surface rounded-xl border border-border-default pulse-glow relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-primary"></div>
+<div class="w-24 h-24 bg-primary-subtle rounded-full flex items-center justify-center mb-6 ring-4 ring-primary/20">
+<span class="material-symbols-outlined text-primary text-6xl" style="font-variation-settings: 'wght' 700;">check_circle</span>
+</div>
+<h3 class="text-3xl font-black text-primary mb-2 font-headline">You Passed!</h3>
+<p class="text-2xl font-semibold text-white">Score: 84% <span class="text-text-secondary font-normal text-lg">(17/20)</span></p>
+<p class="mt-4 text-text-secondary max-w-md">Congratulations! You have successfully demonstrated competency in Advanced Cardiac Assessment protocols.</p>
+</div>
+<!-- Score Breakdown -->
+<section class="mb-12">
+<div class="flex items-center justify-between mb-6">
+<h4 class="text-lg font-bold text-white uppercase tracking-wider text-sm">Learning Objective Breakdown</h4>
+<span class="text-text-tertiary text-xs">Standard: 80% passing</span>
+</div>
+<div class="space-y-4">
+<!-- LO 1 -->
+<div class="bg-surface p-5 rounded-lg border-l-4 border-primary border-r border-t border-b border-border-subtle flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<span class="text-white font-semibold">Cardiac Assessment Fundamentals</span>
+<span class="text-primary font-bold">5/5 (100%)</span>
+</div>
+<div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000" style="width: 100%"></div>
+</div>
+</div>
+<!-- LO 2 -->
+<div class="bg-surface p-5 rounded-lg border-l-4 border-primary border-r border-t border-b border-border-subtle flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<span class="text-white font-semibold">ECG Interpretation</span>
+<span class="text-primary font-bold">4/5 (80%)</span>
+</div>
+<div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000" style="width: 80%"></div>
+</div>
+</div>
+<!-- LO 3 -->
+<div class="bg-surface p-5 rounded-lg border-l-4 border-primary border-r border-t border-b border-border-subtle flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<span class="text-white font-semibold">Hemodynamic Management</span>
+<span class="text-primary font-bold">4/5 (80%)</span>
+</div>
+<div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000" style="width: 80%"></div>
+</div>
+</div>
+<!-- LO 4 -->
+<div class="bg-surface p-5 rounded-lg border-l-4 border-primary border-r border-t border-b border-border-subtle flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<span class="text-white font-semibold">Team Communication</span>
+<span class="text-primary font-bold">4/5 (80%)</span>
+</div>
+<div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000" style="width: 80%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Growth Comparison Card -->
+<section class="bg-[#111111] p-6 rounded-xl border border-border-default mb-16 shadow-xl">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-primary">trending_up</span>
+<h4 class="text-lg font-bold text-white">Your Growth</h4>
+</div>
+<div class="space-y-8">
+<!-- Pre-Assessment -->
+<div>
+<div class="flex justify-between text-xs font-bold uppercase tracking-widest text-text-secondary mb-2">
+<span>Pre-Assessment</span>
+<span>62%</span>
+</div>
+<div class="w-full h-3 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-warning rounded-full transition-all duration-1000 delay-300" style="width: 62%"></div>
+</div>
+</div>
+<!-- Post-Test -->
+<div>
+<div class="flex justify-between text-xs font-bold uppercase tracking-widest text-primary mb-2">
+<span>Post-Test</span>
+<span>84%</span>
+</div>
+<div class="w-full h-3 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000 delay-500" style="width: 84%"></div>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-white/5 flex items-center justify-between">
+<p class="text-text-secondary text-sm">Improvement after module completion:</p>
+<span class="px-3 py-1 bg-primary-subtle text-primary font-black rounded-md text-lg">+22%</span>
+</div>
+</section>
+<!-- Footer Actions -->
+<div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-20">
+<button class="text-text-secondary hover:text-white transition-colors text-sm font-semibold flex items-center gap-2 group underline underline-offset-4 decoration-white/10 hover:decoration-white/40">
+<span class="material-symbols-outlined text-lg group-hover:translate-x-[-2px] transition-transform">description</span>
+                    View Detailed Report
+                </button>
+<div class="flex items-center gap-4 w-full md:w-auto">
+<button class="flex-1 md:w-48 py-4 bg-primary text-background font-black rounded-md hover:bg-primary-hover active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-[0_4px_14px_0_rgba(54,201,141,0.39)]">
+                        Continue
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<footer class="fixed bottom-0 w-full md:hidden z-50 bg-[#0A0A0A] border-t border-white/10 shadow-lg flex justify-around items-center h-16 px-4">
+<a href="../dashboard-variant-h-pulse.html" class="flex flex-col items-center text-white/45 active:opacity-80 transition-opacity" style="text-decoration:none">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] uppercase tracking-widest font-label mt-1">Home</span>
+</a>
+<a href="../batch-4-learner-portal/40-compliance-tracker-mobile.html" class="flex flex-col items-center text-[#36C98D] active:opacity-80 transition-opacity" style="text-decoration:none">
+<span class="material-symbols-outlined fill-icon">menu_book</span>
+<span class="text-[10px] uppercase tracking-widest font-label mt-1">Courses</span>
+</a>
+<a href="../batch-4-learner-portal/38-certificate-view-mobile.html" class="flex flex-col items-center text-white/45 active:opacity-80 transition-opacity" style="text-decoration:none">
+<span class="material-symbols-outlined">verified</span>
+<span class="text-[10px] uppercase tracking-widest font-label mt-1">Certs</span>
+</a>
+<a href="../batch-4-learner-portal/41-settings-mobile.html" class="flex flex-col items-center text-white/45 active:opacity-80 transition-opacity" style="text-decoration:none">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] uppercase tracking-widest font-label mt-1">Profile</span>
+</a>
+</footer>
+<script>
+        // Micro-interaction for progression bars on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.transition-all');
+            bars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        });
+    </script>
+</body></html>

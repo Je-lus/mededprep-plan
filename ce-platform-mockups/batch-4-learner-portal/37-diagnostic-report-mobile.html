@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Diagnostic Report | Pulse CE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#aab9ac",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container": "#201f1f",
+                    "error": "#ffb4ab",
+                    "on-tertiary-fixed-variant": "#633f00",
+                    "surface-tint": "#51dea0",
+                    "primary-fixed": "#71fbbb",
+                    "on-secondary-fixed": "#111e16",
+                    "error-container": "#93000a",
+                    "primary-fixed-dim": "#51dea0",
+                    "on-primary-fixed": "#002113",
+                    "surface-variant": "#353534",
+                    "on-primary": "#003823",
+                    "tertiary-fixed": "#ffddb4",
+                    "on-error-container": "#ffdad6",
+                    "primary": "#5ae6a7",
+                    "on-surface": "#e5e2e1",
+                    "on-primary-container": "#004f33",
+                    "tertiary": "#ffc370",
+                    "surface-container-highest": "#353534",
+                    "on-surface-variant": "#bbcabf",
+                    "inverse-surface": "#e5e2e1",
+                    "background": "#0A0A0A",
+                    "on-tertiary-fixed": "#291800",
+                    "on-error": "#690005",
+                    "on-secondary-fixed-variant": "#3c4a40",
+                    "on-tertiary": "#452b00",
+                    "on-secondary": "#26332a",
+                    "on-primary-fixed-variant": "#005235",
+                    "outline": "#86948a",
+                    "secondary-fixed-dim": "#bbcabd",
+                    "surface": "#131313",
+                    "on-background": "#e5e2e1",
+                    "tertiary-fixed-dim": "#ffb955",
+                    "surface-container-high": "#2a2a2a",
+                    "primary-container": "#36c98d",
+                    "surface-dim": "#131313",
+                    "on-tertiary-container": "#603d00",
+                    "secondary-container": "#3c4a40",
+                    "outline-variant": "#3d4a41",
+                    "secondary": "#bbcabd",
+                    "inverse-on-surface": "#313030",
+                    "secondary-fixed": "#d7e7d9",
+                    "surface-bright": "#3a3939",
+                    "surface-container-low": "#1c1b1b",
+                    "inverse-primary": "#006c47",
+                    "tertiary-container": "#f0a21e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gap-default": "16px",
+                    "margin-desktop": "24px",
+                    "max-width": "1280px",
+                    "touch-target": "44px",
+                    "margin-mobile": "16px",
+                    "nav-height": "60px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-xl-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                    "headline-lg": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                    "headline-xl": ["30px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                    "headline-lg-mobile": ["20px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                    "headline-xl-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "800"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0A0A0A;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: #111111;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-left: 4px solid #36C98D;
+        }
+        .standard-card {
+            background: #111111;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .pulse-glow {
+            box-shadow: 0 0 20px rgba(54, 201, 141, 0.15);
+        }
+        .safe-pb {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="max-w-[390px] mx-auto min-h-screen relative overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-background/85 backdrop-blur-md border-b border-outline-variant/10 h-nav-height max-w-[390px]">
+<div class="flex items-center justify-between px-margin-mobile h-full">
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface tracking-tight">Diagnostic Report</h1>
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">share</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-[76px] pb-[160px] px-margin-mobile space-y-6">
+<!-- Hero Card -->
+<section class="glass-card rounded-xl p-5 pulse-glow">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-1">Airway Management</h2>
+<div class="flex items-center gap-2">
+<span class="bg-primary/10 text-primary px-2 py-0.5 rounded-full font-label-caps text-[10px] uppercase tracking-wider">1.5 CEH Earned</span>
+</div>
+</div>
+<div class="text-right">
+<div class="text-[44px] font-extrabold text-primary leading-none">89%</div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
+<div class="flex items-center gap-1.5">
+<span class="text-on-secondary-container font-body-md text-xs">Pre: 62%</span>
+<span class="text-primary font-body-md text-xs font-semibold">(+27 pts)</span>
+</div>
+<p class="text-on-surface-variant font-body-md text-[11px]">82nd percentile — above 82% of learners</p>
+</div>
+</section>
+<!-- Domain Performance Card -->
+<section class="standard-card rounded-xl p-5 space-y-4">
+<h3 class="font-headline-lg-mobile text-[16px] text-on-surface">Domain Performance</h3>
+<div class="space-y-4">
+<!-- Airway -->
+<div class="space-y-1.5">
+<div class="flex justify-between text-[12px] font-medium">
+<span class="text-on-surface">Airway</span>
+<span class="text-primary">92%</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden relative">
+<div class="h-full bg-primary-container rounded-full" style="width: 92%"></div>
+</div>
+<div class="text-[10px] text-on-secondary-container">Pre-assessment: 71%</div>
+</div>
+<!-- Cardiology -->
+<div class="space-y-1.5">
+<div class="flex justify-between text-[12px] font-medium">
+<span class="text-on-surface">Cardiology</span>
+<span class="text-primary">88%</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden relative">
+<div class="h-full bg-primary-container rounded-full" style="width: 88%"></div>
+</div>
+<div class="text-[10px] text-on-secondary-container">Pre-assessment: 55%</div>
+</div>
+<!-- Trauma -->
+<div class="space-y-1.5">
+<div class="flex justify-between text-[12px] font-medium">
+<span class="text-on-surface">Trauma</span>
+<span class="text-primary">85%</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden relative">
+<div class="h-full bg-primary-container rounded-full" style="width: 85%"></div>
+</div>
+<div class="text-[10px] text-on-secondary-container">Pre-assessment: 60%</div>
+</div>
+<!-- Medical -->
+<div class="space-y-1.5">
+<div class="flex justify-between text-[12px] font-medium">
+<span class="text-on-surface">Medical</span>
+<span class="text-primary">91%</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden relative">
+<div class="h-full bg-primary-container rounded-full" style="width: 91%"></div>
+</div>
+<div class="text-[10px] text-on-secondary-container">Pre-assessment: 64%</div>
+</div>
+<!-- Operations -->
+<div class="space-y-1.5">
+<div class="flex justify-between text-[12px] font-medium">
+<span class="text-on-surface">Operations</span>
+<span class="text-primary">82%</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden relative">
+<div class="h-full bg-primary-container rounded-full" style="width: 82%"></div>
+</div>
+<div class="text-[10px] text-on-secondary-container">Pre-assessment: 59%</div>
+</div>
+</div>
+</section>
+<!-- Question Analysis Card -->
+<section class="standard-card rounded-xl p-5">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-lg-mobile text-[16px] text-on-surface">Question Analysis</h3>
+<span class="bg-primary/10 text-primary px-2 py-0.5 rounded-full font-label-caps text-[10px]">18/20 CORRECT</span>
+</div>
+<div class="grid grid-cols-5 gap-y-4 justify-items-center">
+<!-- Row 1 -->
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">1</div>
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">2</div>
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">3</div>
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">4</div>
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">5</div>
+<!-- Row 2 -->
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">6</div>
+<div class="w-8 h-8 rounded-full bg-error/20 border border-error flex items-center justify-center text-[11px] font-bold text-error">7</div>
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">8</div>
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">9</div>
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">10</div>
+<!-- Row 3 -->
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">11</div>
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">12</div>
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">13</div>
+<div class="w-8 h-8 rounded-full bg-error/20 border border-error flex items-center justify-center text-[11px] font-bold text-error">14</div>
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">15</div>
+<!-- Row 4 -->
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">16</div>
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">17</div>
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">18</div>
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">19</div>
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-[11px] font-bold text-primary">20</div>
+</div>
+</section>
+<!-- Missed Concepts -->
+<section class="space-y-3">
+<h3 class="font-headline-lg-mobile text-[16px] text-on-surface">Missed Concepts</h3>
+<!-- Question 7 -->
+<div class="standard-card rounded-xl p-4 border-l-4 border-l-error">
+<div class="flex justify-between items-start mb-2">
+<span class="text-on-secondary-container font-label-caps text-[10px]">QUESTION 7</span>
+<span class="bg-error/10 text-error px-2 py-0.5 rounded-full font-label-caps text-[9px] font-bold">MISSED</span>
+</div>
+<p class="text-on-surface font-body-md text-sm mb-3">Identify the correct sequence for securing a complicated pediatric airway when initial intubation attempts fail.</p>
+<a class="inline-flex items-center text-primary font-label-caps text-[11px] hover:opacity-80" href="45-extended-practice-mobile.html">
+                    REVIEW CONCEPT
+                    <span class="material-symbols-outlined text-[14px] ml-1">chevron_right</span>
+</a>
+</div>
+<!-- Question 14 -->
+<div class="standard-card rounded-xl p-4 border-l-4 border-l-error">
+<div class="flex justify-between items-start mb-2">
+<span class="text-on-secondary-container font-label-caps text-[10px]">QUESTION 14</span>
+<span class="bg-error/10 text-error px-2 py-0.5 rounded-full font-label-caps text-[9px] font-bold">MISSED</span>
+</div>
+<p class="text-on-surface font-body-md text-sm mb-3">Select the appropriate waveform capnography characteristics indicative of an occluded endotracheal tube.</p>
+<a class="inline-flex items-center text-primary font-label-caps text-[11px] hover:opacity-80" href="45-extended-practice-mobile.html">
+                    REVIEW CONCEPT
+                    <span class="material-symbols-outlined text-[14px] ml-1">chevron_right</span>
+</a>
+</div>
+</section>
+<!-- Action Buttons -->
+<section class="flex flex-col gap-3 pt-4">
+<button class="w-full h-12 bg-primary text-[#002113] font-bold rounded-full active:scale-95 transition-all flex items-center justify-center gap-2">
+                Continue Learning
+            </button>
+<button class="w-full h-12 border border-outline-variant text-on-surface font-semibold rounded-full active:scale-95 transition-all flex items-center justify-center">
+                Download PDF Report
+            </button>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl border-t border-outline-variant/10 pb-safe max-w-[390px]">
+<div class="flex justify-around items-center h-nav-height px-2">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container gap-1 transition-all duration-200" href="../dashboard-variant-h-pulse.html"><span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-label-caps">Home</span>
+</a>
+<!-- Learn (Active) -->
+<a class="flex flex-col items-center justify-center text-primary gap-1 brightness-110 shadow-[0_0_15px_rgba(81,222,160,0.2)] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">school</span>
+<span class="font-label-caps text-label-caps">Learn</span>
+</a>
+<!-- Practice -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container gap-1 transition-all duration-200" href="45-extended-practice-mobile.html"><span class="material-symbols-outlined">fitness_center</span>
+<span class="font-label-caps text-label-caps">Practice</span>
+</a>
+<!-- Compliance -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container gap-1 transition-all duration-200" href="40-compliance-tracker-mobile.html">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="font-label-caps text-label-caps">Compliance</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container gap-1 transition-all duration-200" href="41-settings-mobile.html"><span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-label-caps">Profile</span>
+</a>
+</div>
+</nav>
+<script>
+        // Micro-interactions for domain bars
+        document.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.h-full.bg-primary-container');
+            bars.forEach(bar => {
+                const finalWidth = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.transition = 'width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    bar.style.width = finalWidth;
+                }, 200);
+            });
+        });
+    </script>
+</body></html>

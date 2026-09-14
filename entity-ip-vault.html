@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IP Strategy &amp; The Vault &mdash; MedEdPrep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0e14;
+    --bg-surface: #111820;
+    --bg-card: #151c25;
+    --bg-card-hover: #1a2331;
+    --bg-elevated: #1e2733;
+    --border: #243040;
+    --border-subtle: #1c2535;
+    --text-primary: #e8edf4;
+    --text-secondary: #8899aa;
+    --text-muted: #5a6a7a;
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+    --teal-glow: rgba(45,212,191,0.06);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.12);
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.12);
+    --orange: #fb923c;
+    --orange-dim: rgba(251,146,60,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.12);
+    --nav-width: 240px;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg-base);
+    background-image: radial-gradient(circle at 1px 1px, rgba(45,212,191,0.02) 1px, transparent 0);
+    background-size: 40px 40px;
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--purple), var(--blue), var(--teal));
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+    z-index: 200;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    width: var(--nav-width);
+    min-width: var(--nav-width);
+    background: rgba(17,24,32,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  nav::-webkit-scrollbar { width: 0; }
+
+  .nav-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .nav-brand-name {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--teal), #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-brand-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links { flex: 1; padding: 4px 0; }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    position: relative;
+  }
+  nav a:hover {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.04);
+    border-left-color: var(--teal);
+  }
+  nav a.active {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.06);
+    border-left-color: var(--teal);
+  }
+  nav a .nav-icon {
+    font-size: 15px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .nav-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 8px 16px;
+  }
+  .nav-footer {
+    padding: 20px 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .nav-footer-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .nav-footer-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    margin-left: var(--nav-width);
+    padding: 64px 56px 48px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #080c12 0%, #0d1520 30%, #0a1420 60%, #080e18 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: 10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(45,212,191,0.07) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: 20%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(167,139,250,0.05) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--teal);
+    vertical-align: middle;
+    margin-left: 12px;
+    opacity: 0.4;
+  }
+
+  .hero-headline {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f0f4f8 25%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: var(--amber-dim);
+    color: var(--amber);
+    margin-bottom: 16px;
+    vertical-align: middle;
+  }
+  .hero-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--amber);
+  }
+
+  .hero-narrative {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-top: 16px;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    align-self: start;
+  }
+  .hero-metric {
+    background: var(--bg-surface);
+    padding: 20px 22px;
+    transition: background 0.2s;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .hero-metric:nth-child(1) { animation-delay: 0.05s; }
+  .hero-metric:nth-child(2) { animation-delay: 0.1s; }
+  .hero-metric:nth-child(3) { animation-delay: 0.15s; }
+  .hero-metric:nth-child(4) { animation-delay: 0.2s; }
+  .hero-metric:hover { background: var(--bg-card); }
+  .hero-metric-value {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .c-teal { color: var(--teal); }
+  .c-purple { color: var(--purple); }
+  .c-blue { color: var(--blue); }
+  .c-green { color: var(--green); }
+  .c-amber { color: var(--amber); }
+  .c-pink { color: var(--pink); }
+  .hero-metric-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .hero-metric-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── MAIN ── */
+  .main-inner {
+    margin-left: var(--nav-width);
+    padding: 40px 56px 80px;
+    max-width: 1300px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .section[id] { scroll-margin-top: 24px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+    padding: 16px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .section-header::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: transparent;
+    transition: background 0.2s;
+    border-radius: 3px 0 0 3px;
+  }
+  .section-header:hover { background: var(--bg-card-hover); }
+  .section-header.active::before {
+    background: linear-gradient(180deg, var(--teal), var(--purple));
+  }
+  .section-header.active {
+    border-color: rgba(45,212,191,0.15);
+    background: linear-gradient(135deg, rgba(45,212,191,0.03) 0%, var(--bg-card) 40%);
+  }
+
+  .section-icon { font-size: 20px; width: 24px; text-align: center; flex-shrink: 0; }
+  .section-title { font-size: 16px; font-weight: 700; color: var(--text-primary); flex: 1; }
+  .section-subtitle { font-size: 12px; font-weight: 500; color: var(--text-muted); margin-left: 10px; }
+  .section-chevron {
+    color: var(--text-muted);
+    font-size: 11px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+  .section-chevron.open { transform: rotate(180deg); }
+
+  .section-body {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    opacity: 0;
+  }
+  .section-body.open { max-height: 99999px; opacity: 1; }
+  .section-inner { padding: 24px 0 0; }
+
+  /* ── CALLOUTS ── */
+  .callout-warning {
+    background: linear-gradient(135deg, rgba(251,191,36,0.06) 0%, var(--bg-card) 60%);
+    border: 1px solid rgba(251,191,36,0.25);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-warning-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--amber);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .callout-warning-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-warning-body strong { color: var(--text-primary); }
+
+  .callout-info {
+    background: linear-gradient(135deg, rgba(45,212,191,0.06) 0%, var(--bg-card) 60%);
+    border: 1px solid rgba(45,212,191,0.2);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-info-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .callout-info-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-info-body strong { color: var(--text-primary); }
+
+  .callout-red {
+    background: linear-gradient(135deg, rgba(248,113,113,0.04) 0%, var(--bg-card) 50%);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-red-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+  .callout-red-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: #344050; }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .card-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .card-body strong { color: var(--text-primary); }
+
+  /* Two-column and three-column grids */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+
+  /* ── IP ASSET CARDS ── */
+  .ip-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .ip-card:hover { border-color: rgba(45,212,191,0.2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .ip-card-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .ip-card-icon { font-size: 18px; flex-shrink: 0; line-height: 1.3; }
+  .ip-card-title { font-size: 13px; font-weight: 700; color: var(--text-primary); line-height: 1.4; }
+  .ip-card-body { font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
+  .ip-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  /* ── RISK CARDS ── */
+  .risk-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+  .risk-card-high {
+    border-left: 3px solid var(--red);
+    background: linear-gradient(135deg, rgba(248,113,113,0.03) 0%, var(--bg-card) 40%);
+  }
+  .risk-card-medium {
+    border-left: 3px solid var(--amber);
+    background: linear-gradient(135deg, rgba(251,191,36,0.02) 0%, var(--bg-card) 40%);
+  }
+  .risk-card-low {
+    border-left: 3px solid var(--green);
+    background: linear-gradient(135deg, rgba(74,222,128,0.02) 0%, var(--bg-card) 40%);
+  }
+  .risk-card-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+  .risk-card-title { font-size: 14px; font-weight: 700; color: var(--text-primary); flex: 1; }
+  .risk-badge {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; padding: 3px 9px; border-radius: 20px; white-space: nowrap;
+  }
+  .risk-badge-high { background: var(--red-dim); color: var(--red); }
+  .risk-badge-medium { background: var(--amber-dim); color: var(--amber); }
+  .risk-badge-low { background: var(--green-dim); color: var(--green); }
+  .risk-meta {
+    font-size: 11px; color: var(--text-muted); font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .risk-body { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+  .risk-action {
+    margin-top: 10px;
+    background: var(--bg-elevated);
+    border-radius: var(--radius-xs);
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .risk-action strong { color: var(--text-primary); }
+
+  /* ── PHASE BADGES ── */
+  .phase-badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; padding: 3px 10px; border-radius: 20px;
+    margin-bottom: 6px;
+  }
+  .phase-1 { background: var(--green-dim); color: var(--green); }
+  .phase-2 { background: var(--blue-dim); color: var(--blue); }
+  .phase-3 { background: var(--purple-dim); color: var(--purple); }
+  .phase-4 { background: var(--amber-dim); color: var(--amber); }
+
+  /* ── TABLES ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .data-table th {
+    text-align: left;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table td {
+    padding: 10px 12px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .data-table td:first-child { color: var(--text-primary); font-weight: 500; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+  .table-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .table-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-muted);
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  /* detail-table for smaller inline tables */
+  .detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .detail-table th {
+    text-align: left;
+    color: var(--text-muted);
+    padding: 5px 10px 5px 0;
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .detail-table td {
+    padding: 6px 10px 6px 0;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border-subtle);
+  }
+  .detail-table td:first-child { color: var(--text-primary); }
+
+  /* ── ENTITY TREE ── */
+  .entity-tree {
+    font-family: 'Inter', 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--text-secondary);
+    background: var(--bg-elevated);
+    border-radius: var(--radius-sm);
+    padding: 20px 24px;
+    line-height: 2.2;
+    margin-bottom: 24px;
+    overflow-x: auto;
+  }
+  .tree-trust { color: var(--purple); font-weight: 700; }
+  .tree-vault { color: var(--teal); font-weight: 700; }
+  .tree-opco { color: var(--blue); }
+  .tree-indent { padding-left: 20px; }
+  .tree-indent2 { padding-left: 40px; }
+  .tree-muted { color: var(--text-muted); font-size: 11px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 14px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--teal), var(--blue), var(--purple), var(--amber));
+    border-radius: 1px;
+  }
+  .timeline-phase {
+    position: relative;
+    margin-bottom: 32px;
+  }
+  .timeline-phase:last-child { margin-bottom: 0; }
+  .timeline-dot {
+    position: absolute;
+    left: -30px; top: 3px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2.5px solid;
+    background: var(--bg-base);
+    z-index: 1;
+  }
+  .dot-teal { border-color: var(--teal); }
+  .dot-blue { border-color: var(--blue); }
+  .dot-purple { border-color: var(--purple); }
+  .dot-amber { border-color: var(--amber); }
+  .phase-name { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+  .phase-period { font-size: 12px; color: var(--text-muted); font-weight: 600; margin-left: 10px; }
+  .phase-desc {
+    font-size: 13px; color: var(--text-secondary);
+    margin-top: 8px; line-height: 1.6;
+  }
+  .phase-desc strong { color: var(--text-primary); }
+  .phase-items {
+    list-style: none;
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 10px;
+  }
+  .phase-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    padding: 5px 12px;
+    font-size: 12px; color: var(--text-secondary); font-weight: 500;
+  }
+
+  /* ── STEP CARDS ── */
+  .step-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    display: flex; gap: 14px; align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+  .step-card:hover { border-color: #344050; }
+  .step-num {
+    width: 32px; height: 32px;
+    border-radius: var(--radius-xs);
+    background: var(--teal-dim);
+    color: var(--teal);
+    font-size: 13px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-content { flex: 1; min-width: 0; }
+  .step-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .step-body { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+  .step-body strong { color: var(--text-primary); }
+
+  /* ── AGREEMENT CARDS ── */
+  .agreement-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+  .agreement-card:hover { border-color: #344050; }
+  .agreement-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+  .agreement-num {
+    width: 28px; height: 28px;
+    border-radius: var(--radius-xs);
+    background: var(--blue-dim);
+    color: var(--blue);
+    font-size: 12px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .agreement-title { font-size: 14px; font-weight: 700; color: var(--text-primary); flex: 1; }
+  .agreement-body { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+  .agreement-body strong { color: var(--text-primary); }
+
+  .detail-list {
+    list-style: none;
+    font-size: 12px;
+    margin-top: 8px;
+  }
+  .detail-list li {
+    padding: 4px 0;
+    color: var(--text-secondary);
+    display: flex; align-items: baseline; gap: 8px; line-height: 1.5;
+  }
+  .detail-list li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+  .detail-list.teal li::before { background: var(--teal); }
+  .detail-list.amber li::before { background: var(--amber); }
+  .detail-list.red li::before { background: var(--red); }
+
+  /* ── STATUS TAGS ── */
+  .status-complete { background: var(--green-dim); color: var(--green); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+
+  /* ── CONTROLS ── */
+  .controls {
+    display: flex; gap: 8px;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+  }
+  .controls button {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .controls button:hover { color: var(--teal); border-color: var(--teal); background: var(--teal-dim); }
+
+  /* ── PAGE FOOTER ── */
+  .page-footer {
+    font-size: 11px; color: var(--text-muted);
+    text-align: right;
+    margin-top: 48px; padding-top: 20px;
+    border-top: 1px solid var(--border-subtle);
+    font-weight: 500;
+  }
+
+  /* ── ENTITY STATUS ── */
+  .entity-status {
+    font-size: 10px; font-weight: 700;
+    padding: 5px 12px; border-radius: 20px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .entity-status .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .es-planning { background: var(--amber-dim); color: var(--amber); }
+  .es-planning .dot { background: var(--amber); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .hero-content { grid-template-columns: 1fr; gap: 32px; }
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: 1fr 1fr; }
+    .grid-5 { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 900px) {
+    nav { display: none; }
+    .hero { margin-left: 0; padding: 40px 24px 32px; }
+    .main-inner { margin-left: 0; padding: 24px 20px 60px; }
+    .hero-headline { font-size: 26px; }
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .grid-5 { grid-template-columns: 1fr 1fr; }
+    .grid-auto { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .hero-metrics { grid-template-columns: 1fr; }
+    .grid-5 { grid-template-columns: 1fr; }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-base); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a4a5a; }
+
+  /* ── PRINT ── */
+  @media print {
+    nav { display: none; }
+    body { background: white; color: #111; }
+    body::before { display: none; }
+    .hero, .main-inner { margin-left: 0; }
+    .section { opacity: 1 !important; transform: none !important; }
+    .section-body { max-height: none !important; opacity: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAVIGATION ═══════ -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-name">MedEdPrep</div>
+    <div class="nav-brand-sub">Founder Command Center</div>
+  </div>
+  <div class="nav-links">
+    <a href="hub.html"><span class="nav-icon">&#9670;</span> Hub</a>
+    <a href="entity-company-a.html"><span class="nav-icon">&#9671;</span> Co. A &mdash; Education</a>
+    <a href="entity-company-c.html"><span class="nav-icon">&#9671;</span> Co. C &mdash; Certification</a>
+    <a href="entity-nonprofit.html"><span class="nav-icon">&#9671;</span> Foundation (501c3)</a>
+    <a href="#" class="active"><span class="nav-icon">&#9670;</span> IP &amp; The Vault</a>
+    <a href="entity-market.html"><span class="nav-icon">&#9671;</span> Market Landscape</a>
+    <a href="entity-psychometric.html"><span class="nav-icon">&#9671;</span> Psychometric &amp; Data</a>
+    <div class="nav-divider"></div>
+    <a href="dashboard.html"><span class="nav-icon">&#9671;</span> Dashboard</a>
+    <a href="action-center.html"><span class="nav-icon">&#9671;</span> Action Center</a>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-footer-label">Last updated</div>
+    <div class="nav-footer-date">April 9, 2026</div>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-eyebrow">IP Strategy &amp; Corporate Structure</div>
+      <h1 class="hero-headline">IP Strategy &amp; The Vault</h1>
+      <div>
+        <span class="entity-status es-planning"><span class="dot"></span> Future State &mdash; Wyoming LLC</span>
+      </div>
+      <p class="hero-narrative">Holding company owning all IP. Takes no operational risk. Licenses IP to operating companies at arm&rsquo;s length. Wyoming LLC for strongest charging order protection at $60/yr. The Vault structure is primarily for asset protection and organizational architecture &mdash; Georgia&rsquo;s addback statute neutralizes state tax arbitrage.</p>
+    </div>
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="hero-metric-value c-teal">$60/yr</div>
+        <div class="hero-metric-label">Wyoming LLC annual cost</div>
+        <div class="hero-metric-note">Formation: $100 one-time</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-purple">8&ndash;15%</div>
+        <div class="hero-metric-label">Defensible royalty range</div>
+        <div class="hero-metric-note">Phase-in from 0% to 15%</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-blue">5 OpCos</div>
+        <div class="hero-metric-label">IP license recipients</div>
+        <div class="hero-metric-note">Companies A, B, C, D, E</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-green">~95%</div>
+        <div class="hero-metric-label">Clean dependency licenses</div>
+        <div class="hero-metric-note">MIT / Apache / BSD</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ MAIN CONTENT ═══════ -->
+<div class="main-inner">
+
+  <div class="controls">
+    <button onclick="toggleAll(true)">Expand All</button>
+    <button onclick="toggleAll(false)">Collapse All</button>
+  </div>
+
+  <!-- ── SECTION 1: CURRENT STATE ── -->
+  <div class="section visible" id="current-state">
+    <div class="section-header active" onclick="toggleSection(this)" aria-expanded="true" tabindex="0" role="button">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">Current IP Ownership<span class="section-subtitle">All IP currently lives in Company A</span></span>
+      <span class="section-chevron open">&#9662;</span>
+    </div>
+    <div class="section-body open">
+      <div class="section-inner">
+
+        <div class="callout-warning">
+          <div class="callout-warning-title">&#9888; Important: The Vault Does Not Exist Yet</div>
+          <div class="callout-warning-body">All intellectual property &mdash; question banks, analytics algorithms, software platforms, trademarks, trade secrets, and the trait ontology / measurement framework &mdash; <strong>currently lives under MedEdPrep LLC (Company A)</strong>. The Vault formation is future state. Entity separation happens over time as described in the implementation phases below.</div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title" style="color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px;">What Exists Today</div>
+            <ul class="detail-list amber">
+              <li>Company A (MedEdPrep LLC) owns everything</li>
+              <li>Single entity, no IP licensing structure</li>
+              <li>No formal intercompany agreements</li>
+              <li>All development, IP, and operations commingled</li>
+              <li>~$200K+ annual revenue flowing through Company A</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px;">What We&rsquo;re Building Toward</div>
+            <ul class="detail-list teal">
+              <li>The Vault (Wyoming LLC) owns all IP</li>
+              <li>Five operating companies license IP at arm&rsquo;s length</li>
+              <li>Section 482 compliant transfer pricing</li>
+              <li>Section 351 tax-free IP transfer from Company A</li>
+              <li>Executed intercompany license agreements for each OpCo</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2: IP PORTFOLIO ── -->
+  <div class="section" id="ip-portfolio">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">IP Portfolio<span class="section-subtitle">The crown jewels, centralized in The Vault</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="grid-3">
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x1F3DB;</span>
+              <span class="ip-card-title">Question Banks</span>
+            </div>
+            <div class="ip-card-body">10,083+ questions across EMT/AEMT/Paramedic levels. Production MySQL database with 120+ tables, 1.55M student responses. The most valuable data asset in the portfolio.</div>
+            <span class="ip-tag" style="background:var(--teal-dim);color:var(--teal);">Core IP</span>
+          </div>
+
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#9889;</span>
+              <span class="ip-card-title">Analytics Algorithms</span>
+            </div>
+            <div class="ip-card-body">Adaptive testing engine, IRT calibration models, bifactor psychometric architecture. Cognitive process taxonomy. Confidence calibration signal (TQZ). First validated EMS measurement framework.</div>
+            <span class="ip-tag" style="background:var(--purple-dim);color:var(--purple);">Core IP</span>
+          </div>
+
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x1F5A5;</span>
+              <span class="ip-card-title">Software Platforms</span>
+            </div>
+            <div class="ip-card-body">mededprep-c (Laravel/PHP legacy production app), mededprep-ecosystem (20+ Node.js/React microservices), CoAssist accreditation platform, Pulse gamified learning platform.</div>
+            <span class="ip-tag" style="background:var(--blue-dim);color:var(--blue);">Core IP</span>
+          </div>
+
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x2122;</span>
+              <span class="ip-card-title">Trademarks &amp; Brand</span>
+            </div>
+            <div class="ip-card-body">MedEdPrep name and brand assets. Company C certification brand (TBD). All registered marks and trade dress. <strong>Note:</strong> Goodwill must transfer with trademark or assignment is invalid &ldquo;in gross.&rdquo;</div>
+            <span class="ip-tag" style="background:var(--amber-dim);color:var(--amber);">Core IP</span>
+          </div>
+
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x1F512;</span>
+              <span class="ip-card-title">Trade Secrets</span>
+            </div>
+            <div class="ip-card-body">Proprietary pricing models, internal business methods, customer lists, non-public platform architecture. Protected under Georgia Trade Secrets Act + federal Defend Trade Secrets Act (2016).</div>
+            <span class="ip-tag" style="background:var(--orange-dim);color:var(--orange);">Core IP</span>
+          </div>
+
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x1F9E0;</span>
+              <span class="ip-card-title">Trait Ontology &amp; Measurement Framework</span>
+            </div>
+            <div class="ip-card-body">6-level EMS cognitive process taxonomy. Measurement framework licensed to both Company A (education) and Company C (certification). No validated EMS cognitive taxonomy previously existed.</div>
+            <span class="ip-tag" style="background:var(--pink-dim);color:var(--pink);">Core IP</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 3: ENTITY DOMICILE ── -->
+  <div class="section" id="domicile">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">Entity Domicile<span class="section-subtitle">Wyoming LLC for The Vault &mdash; asset protection, not tax arbitrage</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="grid-2" style="margin-bottom:24px;">
+          <div class="table-wrap">
+            <div class="table-label">The Vault &mdash; Wyoming LLC</div>
+            <table class="detail-table" style="padding:0 16px 16px;display:table;width:100%;">
+              <tbody>
+                <tr><td style="padding:8px 16px;">Formation cost</td><td style="padding:8px 16px;color:var(--teal);font-weight:600;">$100 one-time</td></tr>
+                <tr><td style="padding:8px 16px;">Annual fee</td><td style="padding:8px 16px;color:var(--teal);font-weight:600;">$60/yr (assets &le;$300K in Wyoming)</td></tr>
+                <tr><td style="padding:8px 16px;">State income tax</td><td style="padding:8px 16px;color:var(--green);font-weight:600;">None</td></tr>
+                <tr><td style="padding:8px 16px;">Franchise tax</td><td style="padding:8px 16px;color:var(--green);font-weight:600;">None</td></tr>
+                <tr><td style="padding:8px 16px;">Charging order protection</td><td style="padding:8px 16px;color:var(--teal);font-weight:600;">Exclusive remedy, even for single-member LLC</td></tr>
+                <tr><td style="padding:8px 16px;">Member privacy</td><td style="padding:8px 16px;color:var(--teal);font-weight:600;">No public disclosure required</td></tr>
+                <tr><td style="padding:8px 16px;">Registered agent</td><td style="padding:8px 16px;">~$100&ndash;200/yr (third-party)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-wrap">
+            <div class="table-label">Operating Companies &mdash; Georgia LLCs</div>
+            <table class="detail-table" style="padding:0 16px 16px;display:table;width:100%;">
+              <tbody>
+                <tr><td style="padding:8px 16px;">Company A (Education)</td><td style="padding:8px 16px;">Existing LLC, already operating</td></tr>
+                <tr><td style="padding:8px 16px;">Company B (Accreditation)</td><td style="padding:8px 16px;">Form when CoAssist launches commercially</td></tr>
+                <tr><td style="padding:8px 16px;">Company C (Certification)</td><td style="padding:8px 16px;">Separate LLC + brand + independent board</td></tr>
+                <tr><td style="padding:8px 16px;">Company D (Hospice Software)</td><td style="padding:8px 16px;">Form when ready</td></tr>
+                <tr><td style="padding:8px 16px;">Company E (Data Analytics)</td><td style="padding:8px 16px;">Form with Company C or before</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="callout-warning" style="margin-bottom:16px;">
+          <div class="callout-warning-title">&#9888; Critical Finding: Georgia O.C.G.A. &sect; 48-7-28.3 &mdash; The Addback Statute</div>
+          <div class="callout-warning-body">Georgia requires operating companies to <strong>add back</strong> royalty payments made to related entities (defined as 50%+ common ownership) on their Georgia income tax returns. Wyoming has no state income tax, so the &ldquo;taxed elsewhere&rdquo; exception does <strong>NOT</strong> apply. The Vault structure produces <strong>zero Georgia state tax benefit</strong> for the operating companies. This is by design &mdash; Georgia enacted this statute to prevent the &ldquo;Delaware IP holding company&rdquo; strategy used in the early 2000s.</div>
+        </div>
+
+        <div class="callout-info">
+          <div class="callout-info-title">What The Vault Still Provides</div>
+          <div class="callout-info-body">
+            <ul class="detail-list teal" style="margin-top:4px;">
+              <li><strong>Asset protection:</strong> IP is legally separated from operational liability. OpCo litigation cannot reach The Vault&rsquo;s IP assets.</li>
+              <li><strong>Centralized IP management:</strong> Clean licensing architecture for multiple operating companies and future franchisees.</li>
+              <li><strong>Transactional agility:</strong> Clean IP portfolio simplifies due diligence for fundraising, M&amp;A, or third-party licensing.</li>
+              <li><strong>Federal tax structure:</strong> Intercompany royalties still affect federal taxable income allocation between entities.</li>
+              <li><strong>Future flexibility:</strong> Royalty deductions become valuable when OpCos expand to states without addback statutes.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:0;">
+          <div class="card-title" style="color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">States WITH Addback Statutes (Partial List)</div>
+          <div class="card-body" style="font-size:11px;color:var(--text-muted);line-height:1.8;">Alabama, Arkansas, Connecticut, <strong style="color:var(--amber);">Georgia</strong>, Indiana, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Mississippi, Missouri, New Jersey, New York, North Carolina, Ohio, Oregon, Pennsylvania, Rhode Island, South Carolina, Tennessee, Virginia, West Virginia, Wisconsin</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 4: TRANSFER PRICING ── -->
+  <div class="section" id="transfer-pricing">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">Transfer Pricing<span class="section-subtitle">Section 482 arm&rsquo;s length &mdash; phased royalty ramp</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-info">
+          <div class="callout-info-title">Rate Correction</div>
+          <div class="callout-info-body">Some documents reference a flat 8&ndash;15% rate. The correct approach is a <strong>three-phase ramp</strong>. Charging full royalties when an OpCo has minimal revenue creates persistent losses &mdash; a red flag the IRS explicitly identifies as triggering audit scrutiny. The Commensurate with Income (CWI) standard under Treas. Reg. 1.482-4(f)(2) contemplates that royalty rates should reflect actual economic results.</div>
+        </div>
+
+        <!-- Phase table -->
+        <div class="table-wrap" style="margin-bottom:24px;">
+          <div class="table-label">Three-Phase Royalty Ramp</div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Phase</th>
+                <th>Revenue Threshold</th>
+                <th>Rate</th>
+                <th>Rationale</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="phase-badge phase-1">Phase 1 &mdash; Launch</span></td>
+                <td>Pre-revenue or &lt;$50K/yr</td>
+                <td style="color:var(--green);font-weight:700;">0% or cost-recovery</td>
+                <td>Independent licensee would negotiate a royalty holiday. Persistent losses trigger IRS scrutiny. Document as &ldquo;launch period&rdquo; clause with objective revenue threshold trigger.</td>
+              </tr>
+              <tr>
+                <td><span class="phase-badge phase-2">Phase 2 &mdash; Growth</span></td>
+                <td>$50K&ndash;$500K annual revenue</td>
+                <td style="color:var(--blue);font-weight:700;">5&ndash;8% net revenue</td>
+                <td>OpCo retains margin to reinvest. IP unproven in specific market. OpCo bears disproportionate launch risk. CWI contemplates upward adjustment as income materializes.</td>
+              </tr>
+              <tr>
+                <td><span class="phase-badge phase-3">Phase 3 &mdash; Mature</span></td>
+                <td>$500K+ annual revenue</td>
+                <td style="color:var(--purple);font-weight:700;">10&ndash;15% net revenue</td>
+                <td>Falls within interquartile range for SaaS/software licensing (SEC EDGAR benchmarks). IP has demonstrated income-generating capacity. Entity-specific rates apply.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Per-entity Phase 3 rates -->
+        <div style="margin-bottom:8px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:12px;display:flex;align-items:center;gap:12px;">Phase 3 Rates by Entity <span style="flex:1;height:1px;background:var(--border-subtle);display:inline-block;"></span></div>
+        </div>
+        <div class="grid-auto" style="margin-bottom:24px;">
+          <div class="card" style="padding:16px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--green);margin-bottom:4px;">Company A &mdash; Education</div>
+            <div style="font-size:22px;font-weight:800;color:var(--teal);margin-bottom:4px;">12&ndash;15%</div>
+            <div style="font-size:11px;color:var(--text-muted);">Full platform + question banks + algorithms + trademark. Largest IP bundle.</div>
+          </div>
+          <div class="card" style="padding:16px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--purple);margin-bottom:4px;">Company B &mdash; Accreditation</div>
+            <div style="font-size:22px;font-weight:800;color:var(--teal);margin-bottom:4px;">10&ndash;12%</div>
+            <div style="font-size:11px;color:var(--text-muted);">Platform tech + shared code. Narrower IP bundle than A.</div>
+          </div>
+          <div class="card" style="padding:16px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--blue);margin-bottom:4px;">Company C &mdash; Certification</div>
+            <div style="font-size:22px;font-weight:800;color:var(--teal);margin-bottom:4px;">10&ndash;13%</div>
+            <div style="font-size:11px;color:var(--text-muted);">Separate question DB + platform + cert trademark. Mid-range.</div>
+          </div>
+          <div class="card" style="padding:16px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--orange);margin-bottom:4px;">Company D &mdash; Hospice</div>
+            <div style="font-size:22px;font-weight:800;color:var(--teal);margin-bottom:4px;">10&ndash;12%</div>
+            <div style="font-size:11px;color:var(--text-muted);">Platform tech adapted for hospice. Similar to Company B.</div>
+          </div>
+          <div class="card" style="padding:16px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--pink);margin-bottom:4px;">Company E &mdash; Data</div>
+            <div style="font-size:22px;font-weight:800;color:var(--teal);margin-bottom:4px;">8&ndash;10%</div>
+            <div style="font-size:11px;color:var(--text-muted);">Aggregation algorithms + analytics IP. Narrowest scope.</div>
+          </div>
+        </div>
+
+        <!-- Benchmarking table -->
+        <div class="table-wrap" style="margin-bottom:24px;">
+          <div class="table-label">Benchmarking Sources</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>Source</th><th>Asset Type</th><th>Range</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>RoyaltyStat / SEC EDGAR</td>
+                <td>SaaS / Software IP</td>
+                <td style="color:var(--teal);font-weight:600;">10&ndash;19% IQR</td>
+                <td>Publicly filed license agreements; interquartile range</td>
+              </tr>
+              <tr>
+                <td>LES High Tech Survey (2021)</td>
+                <td>Software specifically</td>
+                <td style="color:var(--teal);font-weight:600;">5.88% mean</td>
+                <td>Software-only licensors; lower (includes hardware)</td>
+              </tr>
+              <tr>
+                <td>Stanzione IP Law (2026)</td>
+                <td>Software patents</td>
+                <td style="color:var(--teal);font-weight:600;">8&ndash;12%</td>
+                <td>Cloud platforms and enterprise software at higher end</td>
+              </tr>
+              <tr>
+                <td>EdTech/SaaS intercompany (interpolated)</td>
+                <td>Education software</td>
+                <td style="color:var(--teal);font-weight:600;">8&ndash;15%</td>
+                <td>No single authoritative EdTech study; interpolated from software benchmarks</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout-info" style="margin-bottom:16px;">
+          <div class="callout-info-title">Primary TP Method: CPM + CUT Corroboration</div>
+          <div class="callout-info-body"><strong>Comparable Profits Method (CPM)</strong> is the primary method. <strong>Comparable Uncontrolled Transaction (CUT)</strong> serves as a corroborating check. CUT requires finding highly comparable third-party educational question-bank license agreements (scarce in EDGAR). CPM benchmarks the OpCo&rsquo;s operating margin against independent SaaS distributors; residual profit flows to The Vault as implied royalty. Using CPM proactively puts the analysis on the same footing the IRS would use in an audit, reducing the attack surface.</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">&ldquo;Lite&rdquo; TP Study Timeline</div>
+          <div class="card-body">Formal benchmark study (RoyaltyStat / EDGAR database access) is warranted at <strong>$500K revenue</strong>. At current scale, a contemporaneous &ldquo;lite&rdquo; TP memo &mdash; documenting economic rationale, phase-in logic, and method selection &mdash; is sufficient for penalty protection under Treas. Reg. &sect; 1.6662-6. Annual review is required: the CWI standard requires royalties to be commensurate with actual income. If Company A unexpectedly generates $2M in Year 1, the Phase 1 rate must be replaced by Phase 3 rates.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 5: TRUST STRUCTURE ── -->
+  <div class="section" id="trust-structure">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">Trust Ownership Layer<span class="section-subtitle">Wyoming DAPT above The Vault &mdash; future state</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="entity-tree">
+          <div><span class="tree-trust">Wyoming DAPT (Irrevocable Trust)</span> <span class="tree-muted">&mdash; future state</span></div>
+          <div class="tree-indent">&#x2514;&#x2500;&#x2500; <span class="tree-vault">The Vault &mdash; MedEdPrep, LLC (Wyoming LLC)</span></div>
+          <div class="tree-indent2">&#x251C;&#x2500;&#x2500; <span class="tree-opco">Company A &mdash; MedEdPrep Education (Georgia LLC)</span></div>
+          <div class="tree-indent2">&#x251C;&#x2500;&#x2500; <span class="tree-opco">Company B &mdash; MedEdPrep Accreditation (Georgia LLC)</span></div>
+          <div class="tree-indent2">&#x251C;&#x2500;&#x2500; <span class="tree-opco">Company C &mdash; Certification Body (Georgia LLC)</span></div>
+          <div class="tree-indent2">&#x251C;&#x2500;&#x2500; <span class="tree-opco">Company D &mdash; Hospice Software (Georgia LLC)</span></div>
+          <div class="tree-indent2">&#x2514;&#x2500;&#x2500; <span class="tree-opco">Company E &mdash; MedEdPrep Data (Georgia LLC)</span></div>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-teal"></div>
+            <div>
+              <span class="phase-name">Founder Direct Ownership</span>
+              <span class="phase-period">Current</span>
+            </div>
+            <div class="phase-desc">Founder owns The Vault directly (once formed). No trust layer yet. Revocable trust available now for probate avoidance ($1,000&ndash;$3,000 legal cost) &mdash; adds estate planning value without changing tax treatment. <strong>Revocable trust provides zero additional creditor protection:</strong> trust property remains reachable by the settlor&rsquo;s creditors.</div>
+          </div>
+
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-blue"></div>
+            <div>
+              <span class="phase-name">Revocable Living Trust</span>
+              <span class="phase-period">$100K&ndash;$250K Revenue</span>
+            </div>
+            <div class="phase-desc">Place The Vault into a revocable living trust. Provides probate avoidance and continuity of control at incapacity/death. Founder remains trustee during life; names successor trustee. Tax treatment unchanged &mdash; grantor trust, founder reports all income. <strong>One-time cost: ~$1,000&ndash;$3,000 legal drafting.</strong></div>
+          </div>
+
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-purple"></div>
+            <div>
+              <span class="phase-name">Wyoming DAPT (Irrevocable)</span>
+              <span class="phase-period">$1M&ndash;$2M Entity Value</span>
+            </div>
+            <div class="phase-desc">Convert to irrevocable Wyoming Domestic Asset Protection Trust. Self-settled DAPTs allowed by Wyoming statute. 2-year statute of limitations for post-transfer creditors (shortest alongside Nevada). No state income tax on trust income. Pairs naturally with Wyoming-domiciled Vault. <strong>One-time planning cost: $7,500&ndash;$25,000. Annual compliance: $1,000&ndash;$6,000 (Form 1041, fiduciary accounting).</strong></div>
+          </div>
+        </div>
+
+        <div class="callout-warning" style="margin-top:24px;">
+          <div class="callout-warning-title">&#9888; DAPT Limitations</div>
+          <div class="callout-warning-body">
+            <ul class="detail-list amber" style="margin-top:4px;">
+              <li>Must be funded well before any creditor claims exist &mdash; fraudulent transfer risk is real</li>
+              <li>Federal bankruptcy 10-year lookback for self-settled trusts (actual intent to hinder/defraud standard)</li>
+              <li>Wyoming: 2-year SOL for post-transfer creditors; longer for pre-existing claims under fraudulent transfer law</li>
+              <li>Cannot retain full managerial control as trustee; need independent or co-trustee per Wyoming statute</li>
+              <li>Rev. Rul. 2023-2: generally no §1014 basis step-up at death if trust assets are not included in gross estate</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="margin-top:24px;">
+          <div class="table-label">Tax Treatment by Ownership Structure</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>Ownership</th><th>Income Tax Owner</th><th>Federal Return</th><th>Basis at Death</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Individual founder</td>
+                <td>Founder</td>
+                <td>Schedule C / K-1</td>
+                <td>&sect;1014 step-up available</td>
+              </tr>
+              <tr>
+                <td>Revocable trust</td>
+                <td>Founder (grantor)</td>
+                <td>Grantor trust reporting</td>
+                <td>&sect;1014 step-up (included in estate)</td>
+              </tr>
+              <tr>
+                <td>Wyoming DAPT (grantor trust)</td>
+                <td>Founder (income tax)</td>
+                <td>Grantor trust reporting</td>
+                <td>Rev. Rul. 2023-2: generally <strong>no step-up</strong> if not in estate</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 6: SOFTWARE IP RISK FLAGS ── -->
+  <div class="section" id="ip-risks">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">Software IP Risk Assessment<span class="section-subtitle">Must resolve before Section 351 transfer</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-info" style="margin-bottom:24px;">
+          <div class="callout-info-title">Overall Status: Mostly Clean</div>
+          <div class="callout-info-body">~95% of dependencies across all five project directories (mededprep-c, mededprep-ecosystem, ems-books-rag, gtc-demo, mededprep-demo) use permissive licenses with <strong>no transfer restrictions</strong>. Four items require attention before any IP transfer.</div>
+        </div>
+
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--red);margin-bottom:12px;display:flex;align-items:center;gap:12px;">High Risk Items <span style="flex:1;height:1px;background:rgba(248,113,113,0.2);display:inline-block;"></span></div>
+
+        <div class="risk-card risk-card-high">
+          <div class="risk-card-header">
+            <span class="risk-badge risk-badge-high">HIGH RISK</span>
+            <span class="risk-card-title">JpGraph 4.4.2-pro &mdash; Commercial License</span>
+          </div>
+          <div class="risk-meta">Project: mededprep-c (legacy production platform) &middot; Location: app/Services/JpGraph/src/ (embedded, not via Composer)</div>
+          <div class="risk-body">Commercial license from Asial Corporation. Embedded directly in source code rather than installed via package manager. License is almost certainly tied to a specific legal entity and likely contains anti-assignment clauses. Cannot be assumed to transfer automatically with company assets.</div>
+          <div class="risk-meta" style="margin-top:6px;">Used for: Adaptive exam charting &mdash; line charts and radar charts</div>
+          <div class="risk-action"><strong>Required action:</strong> Contact Asial Corporation to request license transfer to The Vault, or purchase a new commercial license under The Vault entity prior to the Section 351 transfer.</div>
+        </div>
+
+        <div class="risk-card risk-card-high">
+          <div class="risk-card-header">
+            <span class="risk-badge risk-badge-high">HIGH RISK</span>
+            <span class="risk-card-title">SurveyJS Creator / PDF / Analytics &mdash; Commercial License</span>
+          </div>
+          <div class="risk-meta">Projects: mededprep-c + 6 ecosystem applications &middot; Vendor: Devsoft Baltic OU</div>
+          <div class="risk-body"><code style="font-size:11px;background:var(--bg-elevated);padding:1px 5px;border-radius:3px;">survey-creator-core</code>, <code style="font-size:11px;background:var(--bg-elevated);padding:1px 5px;border-radius:3px;">survey-creator-react</code>, <code style="font-size:11px;background:var(--bg-elevated);padding:1px 5px;border-radius:3px;">survey-pdf</code>, and <code style="font-size:11px;background:var(--bg-elevated);padding:1px 5px;border-radius:3px;">survey-analytics</code> are proprietary commercial licenses. Active license key confirmed in .env. Note: <code style="font-size:11px;background:var(--bg-elevated);padding:1px 5px;border-radius:3px;">survey-core</code> and <code style="font-size:11px;background:var(--bg-elevated);padding:1px 5px;border-radius:3px;">survey-react-ui</code> are MIT &mdash; those are fine.</div>
+          <div class="risk-meta" style="margin-top:6px;">Used for: Survey form builder, exam display, CAPCE evaluations across 6+ apps</div>
+          <div class="risk-action"><strong>Required action:</strong> Review SurveyJS commercial license agreement for assignability clauses. Contact Devsoft Baltic OU about transfer terms or purchase of new license under The Vault entity.</div>
+        </div>
+
+        <div class="risk-card risk-card-high">
+          <div class="risk-card-header">
+            <span class="risk-badge risk-badge-high">HIGH RISK</span>
+            <span class="risk-card-title">mpdf/mpdf &mdash; GPL-2.0-only Copyleft</span>
+          </div>
+          <div class="risk-meta">Project: mededprep-c &middot; Used for: PDF generation</div>
+          <div class="risk-body">GPL-2.0 is a copyleft license. If the proprietary application code is considered a derivative work of mpdf, copyleft obligations could affect IP transferability and require source code disclosure obligations. Risk to IP transfer defensibility.</div>
+          <div class="risk-action"><strong>Required action:</strong> Swap for <code style="font-size:11px;background:var(--bg-elevated);padding:1px 5px;border-radius:3px;">barryvdh/laravel-dompdf</code> (MIT license). DomPDF is <strong>already installed</strong> as an alternative in the Composer dependencies &mdash; this is a drop-in replacement. Resolve before IP transfer.</div>
+        </div>
+
+        <div class="risk-card risk-card-high">
+          <div class="risk-card-header">
+            <span class="risk-badge risk-badge-high">HIGH RISK</span>
+            <span class="risk-card-title">ems-books-rag &mdash; Copyrighted Textbook Content</span>
+          </div>
+          <div class="risk-meta">Project: ems-books-rag (content/RAG pipeline)</div>
+          <div class="risk-body">The RAG pipeline contains extracted content from 16 commercially published EMS textbooks. This content is <strong>NOT owned by MedEdPrep</strong>. Likely falls under educational fair use, but extracted data cannot be treated as a transferable proprietary asset.</div>
+          <div class="risk-action"><strong>Required action:</strong> Exclude all textbook-extracted content from any IP transfer. The pipeline code itself is transferable; the textbook content is not. Do not represent the ems-books-rag content dataset as proprietary IP in any contribution agreement or IP assignment.</div>
+        </div>
+
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--amber);margin:20px 0 12px;display:flex;align-items:center;gap:12px;">Medium Risk Items <span style="flex:1;height:1px;background:rgba(251,191,36,0.2);display:inline-block;"></span></div>
+
+        <div class="risk-card risk-card-medium">
+          <div class="risk-card-header">
+            <span class="risk-badge risk-badge-medium">MEDIUM</span>
+            <span class="risk-card-title">SaaS API Service Agreements</span>
+          </div>
+          <div class="risk-body">Stripe, SendGrid, AWS S3, Firebase, ImageKit, Vimeo, Sentry, OpenAI, Anthropic, Cloudflare &mdash; all have service agreements that may require notification or account setup under the new entity on an ownership change.</div>
+          <div class="risk-action"><strong>Required action:</strong> Review each provider&rsquo;s Terms of Service for assignment/ownership-change provisions. Most SaaS platforms allow entity transfers with notification. Plan for account migration or API key reissuance as part of the IP transfer process.</div>
+        </div>
+
+        <div class="callout-info" style="margin-top:16px;margin-bottom:0;">
+          <div class="callout-info-title">~95% of Dependencies: Clean</div>
+          <div class="callout-info-body">All other dependencies &mdash; Laravel framework, React, Node.js ecosystem, Prisma, Radix UI, all standard Composer and npm packages &mdash; use <strong>MIT, Apache-2.0, or BSD-3-Clause</strong> licenses. These pose no barrier to IP transfer. Cartalyst/Stripe-Laravel (BSD-3-Clause) has no license transfer issue despite being technically abandoned upstream.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 7: IP TRANSFER PROCESS ── -->
+  <div class="section" id="transfer-process">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">The IP Transfer<span class="section-subtitle">Section 351 tax-free capitalization</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:24px;">The transfer of IP from Company A (MedEdPrep LLC) into The Vault (Wyoming LLC) must be structured as a <strong style="color:var(--text-primary);">Section 351 exchange</strong> to avoid triggering immediate tax liability on built-in gain. Internally developed software now carries a capitalized basis under Section 174 (mandatory 5-year amortization for domestic R&amp;D post-TCJA 2017) &mdash; this basis absorbs assumed liabilities and reduces Section 357(c) exposure.</p>
+
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:12px;display:flex;align-items:center;gap:12px;">Four Section 351 Requirements <span style="flex:1;height:1px;background:var(--border-subtle);display:inline-block;"></span></div>
+
+        <div class="grid-2" style="margin-bottom:24px;">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">All Substantial Rights</div>
+              <div class="step-body">Must transfer ALL rights, title, and interest &mdash; not a partial license. <strong>IRS Revenue Ruling 69-156:</strong> transfer must be equivalent to a sale or exchange to qualify as &ldquo;property&rdquo; under Section 351. Retaining any right to license IP to third parties may cause the transfer to be treated as a taxable license at ordinary income rates.</div>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">80% Control &mdash; Immediately After</div>
+              <div class="step-body">Founder must own &ge;80% of total voting power AND &ge;80% of all other share classes immediately after transfer (IRC &sect;368(c)). Step-transaction doctrine: if a binding commitment to sell equity to third parties pre-existed, IRS collapses the steps. <strong>Do NOT execute Section 351 transfer within a pending equity financing round.</strong></div>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">No Boot</div>
+              <div class="step-body">Transfer must be solely in exchange for LLC membership interests. Any cash, promissory notes, or non-equity consideration = &ldquo;boot&rdquo; = gain recognition up to the value of boot received. Avoid side agreements, contingent payments, or assumed liabilities that exceed aggregate property basis.</div>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Section 357(c) &mdash; Liabilities vs. Basis</div>
+              <div class="step-body">If liabilities assumed by The Vault exceed the aggregate adjusted tax basis of contributed property, the excess is recognized as immediate taxable gain. Section 174 capitalization (post-TCJA 2017) creates a tangible basis in software development costs &mdash; amortized over 5 years. This basis absorbs assumed liabilities and reduces Section 357(c) exposure substantially.</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:12px;display:flex;align-items:center;gap:12px;">Execution Timeline <span style="flex:1;height:1px;background:var(--border-subtle);display:inline-block;"></span></div>
+
+        <div class="timeline" style="margin-bottom:24px;">
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-teal"></div>
+            <div>
+              <span class="phase-name" style="font-size:14px;">Now</span>
+            </div>
+            <div class="phase-desc">Inventory all IP. Resolve HIGH RISK license issues (JpGraph, SurveyJS, mpdf swap, exclude ems-books-rag content). Register trademarks if not yet registered. <strong>Do nothing structural yet.</strong></div>
+          </div>
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-blue"></div>
+            <div>
+              <span class="phase-name" style="font-size:14px;">$50K&ndash;$100K Revenue</span>
+            </div>
+            <div class="phase-desc">Form The Vault as Wyoming LLC. Draft Contribution Agreement and IP Assignment Agreements. Establish basic intercompany license agreements (0% royalty during launch period is acceptable and documented).</div>
+          </div>
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-purple"></div>
+            <div>
+              <span class="phase-name" style="font-size:14px;">$250K&ndash;$500K Revenue</span>
+            </div>
+            <div class="phase-desc">Execute formal Section 351 IP transfer. &ldquo;Lite&rdquo; TP study (contemporaneous memo). Begin Phase 2 royalty payments (5&ndash;8%). File trademark assignments with USPTO and Georgia Secretary of State.</div>
+          </div>
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-amber"></div>
+            <div>
+              <span class="phase-name" style="font-size:14px;">$500K+ Revenue</span>
+            </div>
+            <div class="phase-desc">Formal TP benchmark study (RoyaltyStat / EDGAR database). Phase 3 royalty rates (10&ndash;15% entity-specific). Annual TP documentation cycle. Consider Wyoming DAPT trust layer above The Vault.</div>
+          </div>
+        </div>
+
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:12px;display:flex;align-items:center;gap:12px;">Required Legal Documents <span style="flex:1;height:1px;background:var(--border-subtle);display:inline-block;"></span></div>
+
+        <div class="card">
+          <ul class="detail-list teal">
+            <li>Contribution Agreement (conveys IP from Company A to The Vault)</li>
+            <li>IP Assignment Agreement &mdash; Software (explicit source code + object code assignment; review all anti-assignment clauses in third-party licenses)</li>
+            <li>IP Assignment Agreement &mdash; Trademarks (must include business goodwill; avoid &ldquo;assignment in gross&rdquo;)</li>
+            <li>IP Assignment Agreement &mdash; Trade Secrets (confidentiality covenants; maintain secrecy protocols to preserve trade secret status)</li>
+            <li>Amended Operating Agreement for Company A (The Vault becomes sole member)</li>
+            <li>Georgia Form CD 115 (Articles of Amendment if entity structure or name changes)</li>
+            <li>USPTO Trademark Assignment Recordation</li>
+            <li>Georgia Secretary of State Form TM04 (state trademark assignment)</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 8: INTERCOMPANY AGREEMENTS ── -->
+  <div class="section" id="agreements">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">Required Intercompany Agreements<span class="section-subtitle">Section 482 compliance &mdash; must be executed before royalties flow</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-warning" style="margin-bottom:24px;">
+          <div class="callout-warning-title">&#9888; Without Executed ICAs, the IRS Sets the Terms</div>
+          <div class="callout-warning-body">Without formal, executed Intercompany Agreements (ICAs), the IRS has authority to impute contractual terms based on its own interpretation of economic substance. Failure to maintain adequate contemporaneous documentation exposes the enterprise to <strong>20% and 40% penalties</strong> under IRC &sect;6662(e) for substantial transfer pricing misstatements.</div>
+        </div>
+
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:12px;display:flex;align-items:center;gap:12px;">10 Principal Documents for TP Penalty Protection (Treas. Reg. &sect;1.6662-6) <span style="flex:1;height:1px;background:var(--border-subtle);display:inline-block;"></span></div>
+
+        <div class="table-wrap" style="margin-bottom:24px;">
+          <table class="data-table">
+            <thead>
+              <tr><th>#</th><th>Document</th><th>What It Must Contain for MedEdPrep</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="color:var(--teal);font-weight:700;width:36px;">1</td>
+                <td>Business Overview</td>
+                <td>Description of the MedEdPrep ecosystem, SaaS model dynamics, competitive landscape, regulatory environment (NCCA, ISO 17024)</td>
+              </tr>
+              <tr>
+                <td style="color:var(--teal);font-weight:700;">2</td>
+                <td>Organizational Structure</td>
+                <td>Entity map showing all related parties, ownership percentages, jurisdictions, The Vault as IPCo</td>
+              </tr>
+              <tr>
+                <td style="color:var(--teal);font-weight:700;">3</td>
+                <td>Section 482 Documentation</td>
+                <td>Specific documents required under &sect;482 regs; cost-sharing elections if applicable</td>
+              </tr>
+              <tr>
+                <td style="color:var(--teal);font-weight:700;">4</td>
+                <td>Method Selection</td>
+                <td>Why CPM selected as primary; why CUT is corroborating check; Best Method Rule analysis and documentation</td>
+              </tr>
+              <tr>
+                <td style="color:var(--teal);font-weight:700;">5</td>
+                <td>Rejected Alternative Methods</td>
+                <td>Why PSM rejected (OpCos don&rsquo;t contribute unique intangibles); why CUT is secondary (lack of comparable EQ-bank license agreements in EDGAR)</td>
+              </tr>
+              <tr>
+                <td style="color:var(--teal);font-weight:700;">6</td>
+                <td>Controlled Transactions &amp; Internal Data</td>
+                <td>Each intercompany transaction described; segmented income statements by entity</td>
+              </tr>
+              <tr>
+                <td style="color:var(--teal);font-weight:700;">7</td>
+                <td>Comparables &amp; Adjustments</td>
+                <td>Independent comparables from EDGAR / RoyaltyStat; adjustments for working capital and risk profile differences</td>
+              </tr>
+              <tr>
+                <td style="color:var(--teal);font-weight:700;">8</td>
+                <td>Economic Analysis &amp; Projections</td>
+                <td>Phase-in justification, CPM benchmarking, royalty rate derivation, CWI commensurate-with-income analysis</td>
+              </tr>
+              <tr>
+                <td style="color:var(--teal);font-weight:700;">9</td>
+                <td>Post-Year-End Data</td>
+                <td>Actual results vs. projections after year-end but before filing; documents 1&ndash;8 must be contemporaneous; 9 &amp; 10 due within 30 days of IRS audit request</td>
+              </tr>
+              <tr>
+                <td style="color:var(--teal);font-weight:700;">10</td>
+                <td>Index of Documents</td>
+                <td>Complete index of all TP documents and recordkeeping system; cataloging of all background documents, ICAs, and executed agreements</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:12px;display:flex;align-items:center;gap:12px;">Principal Operating Agreements <span style="flex:1;height:1px;background:var(--border-subtle);display:inline-block;"></span></div>
+
+        <div class="agreement-card">
+          <div class="agreement-header">
+            <span class="agreement-num">1</span>
+            <span class="agreement-title">Master IP License Agreement (The Vault &rarr; each OpCo)</span>
+          </div>
+          <div class="agreement-body">One per operating company &mdash; <strong>not a single omnibus agreement</strong>. The IRS requires each transaction to be independently analyzable. Key provisions:
+            <ul class="detail-list teal" style="margin-top:8px;">
+              <li>Licensed IP defined with specificity (software modules, question banks, algorithms, trademarks, trade secrets)</li>
+              <li>Net Revenue defined precisely: gross minus returns, refunds, taxes, and CC processing fees</li>
+              <li>Exclusive license within field of use (Company A: educational testing; Company C: professional certification)</li>
+              <li>Derivative works automatically assigned to The Vault; OpCo receives perpetual license-back</li>
+              <li>Phase-in royalty schedule with revenue thresholds as objective triggering events (not dates)</li>
+              <li>Quarterly payments, due within 30 days of quarter-end; late payment at prime+2%</li>
+              <li>Annual audit rights (once/year, 30 days notice; underpayment &gt;5% &rarr; OpCo bears audit costs)</li>
+              <li>5-year initial term, rolling 1-year renewals; 12-month notice for termination for convenience</li>
+              <li>The Vault indemnifies OpCo against third-party IP infringement claims; OpCo indemnifies The Vault against operational claims</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="agreement-card">
+          <div class="agreement-header">
+            <span class="agreement-num">2</span>
+            <span class="agreement-title">Shared Services Agreement</span>
+          </div>
+          <div class="agreement-body">Required if The Vault or any entity provides IT infrastructure, admin, accounting, or HR services to others. Key provisions: service catalog with scope, direct allocation preferred (usage metrics for IT; headcount for HR; revenue for G&amp;A). IRS Services Cost Method (Rev. Proc. 2007-13) permits <strong>0% markup</strong> for qualifying low-value-adding services; 5&ndash;7% for non-qualifying routine services. Maintain contemporaneous time records and cost allocation worksheets.</div>
+        </div>
+
+        <div class="agreement-card">
+          <div class="agreement-header">
+            <span class="agreement-num">3</span>
+            <span class="agreement-title">Data Sharing Agreements (A&rarr;E, C&rarr;E)</span>
+          </div>
+          <div class="agreement-body">Company A licenses student performance data to Company E &mdash; not a transfer of ownership; A retains raw records. Company C licenses certification data to Company E at aggregate level only. <strong>Critical:</strong> E may NOT share individual-level data between A and C. This data firewall enforces the NCCA/ISO 17024 separation requirement between education and certification. FERPA compliance clauses required for student records. E may not share individual-level data with any entity.</div>
+        </div>
+
+        <div class="agreement-card">
+          <div class="agreement-header">
+            <span class="agreement-num">4</span>
+            <span class="agreement-title">501(c)(3) Purchase Agreements (Foundation &rarr; A, Foundation &rarr; D)</span>
+          </div>
+          <div class="agreement-body">Foundation purchases software/services at <strong>fair market value</strong>, funded by grants. Not an in-kind donation. Arm&rsquo;s length, auditable, traceable. Required for Form 990 related-party transaction disclosure. Rebuttable presumption protocol applies: independent board approval + comparable market data. Arm&rsquo;s length pricing prevents private inurement concerns under IRC &sect;4958.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 9: RESEARCH DOCUMENTS ── -->
+  <div class="section" id="research-docs">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#9670;</span>
+      <span class="section-title">Research Documents<span class="section-subtitle">02-ip-strategy/ &amp; relevant 01-corporate-structure/ files</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="table-wrap" style="margin-bottom:20px;">
+          <div class="table-label">02-ip-strategy/ &mdash; 5 files</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>File</th><th>Description</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ip-restructure.md</td>
+                <td>Section 351 tax-free transfers, all-substantial-rights doctrine, boot/control prerequisites, IP valuation methodologies (Cost Approach/RCNLD, Relief-from-Royalty, Multi-Period Excess Earnings / MPEEM). State law mechanics, trademark assignment, trade secret protection.</td>
+                <td><span class="status-complete">Complete</span></td>
+              </tr>
+              <tr>
+                <td>intercompany-licensing.md</td>
+                <td>Section 482, arm&rsquo;s length standard, Best Method Rule (CUT/CPM/PSM), SaaS royalty benchmarking (10&ndash;19% IQR from SEC EDGAR), 10 Principal Documents, ICA anatomy, &sect;6662 penalty regime, DEMPE framework, cost-sharing arrangements vs. licensing.</td>
+                <td><span class="status-complete">Complete</span></td>
+              </tr>
+              <tr>
+                <td>transfer-pricing-implementation.md</td>
+                <td>Practical implementation: three-phase royalty ramp with dollar thresholds, per-entity Phase 3 rates, ICA structures and required provisions, &ldquo;lite&rdquo; TP study guidance for current scale, trust layer phasing, dynasty trust jurisdiction comparison.</td>
+                <td><span class="status-complete">Complete</span></td>
+              </tr>
+              <tr>
+                <td>software-asset-inventory.md</td>
+                <td>Full software IP inventory across 5 project directories. HIGH RISK: JpGraph (commercial), SurveyJS (commercial), mpdf (GPL-2.0), ems-books-rag content (copyrighted). ~95% MIT/Apache/BSD. All API service agreements inventoried.</td>
+                <td><span class="status-complete">Complete</span></td>
+              </tr>
+              <tr>
+                <td>software-asset-inventory.csv</td>
+                <td>CSV format with 100+ software asset rows plus blank physical asset section for manual completion. Structured for import into IP management systems or legal review tools.</td>
+                <td><span class="status-complete">Complete</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrap">
+          <div class="table-label">01-corporate-structure/ &mdash; Files Relevant to IP / The Vault</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>File</th><th>Description</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>entity-domicile-analysis.md</td>
+                <td>Wyoming vs. Delaware vs. Georgia for The Vault. Charging order protection by state (exclusive remedy comparison). Georgia addback statute (O.C.G.A. &sect;48-7-28.3) full analysis and exceptions. States with and without addback statutes. NCCA firewall doesn&rsquo;t require different-state formation.</td>
+                <td><span class="status-complete">Complete</span></td>
+              </tr>
+              <tr>
+                <td>trust-ownership.md</td>
+                <td>Revocable vs. irrevocable trusts, DAPTs (Wyoming / Delaware / Nevada), grantor vs. non-grantor tax treatment, charging order rules by state, cost-benefit thresholds for trust planning, bankruptcy overlay (10-year lookback), basis step-up rules (Rev. Rul. 2023-2).</td>
+                <td><span class="status-complete">Complete</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">IP Strategy research &middot; 5 documents in 02-ip-strategy/ &middot; Last updated: 2026-04-09</div>
+
+</div><!-- /main-inner -->
+
+<!-- ═══════ JAVASCRIPT ═══════ -->
+<script>
+  function toggleSection(header) {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.section-chevron');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    if (chevron) chevron.classList.toggle('open', !isOpen);
+    header.setAttribute('aria-expanded', String(!isOpen));
+    header.classList.toggle('active', !isOpen);
+  }
+
+  function toggleAll(open) {
+    document.querySelectorAll('.section-body').forEach(body => {
+      const header = body.previousElementSibling;
+      const chevron = header.querySelector('.section-chevron');
+      body.classList.toggle('open', open);
+      if (chevron) chevron.classList.toggle('open', open);
+      header.setAttribute('aria-expanded', String(open));
+      header.classList.toggle('active', open);
+    });
+  }
+
+  // Scroll-triggered section reveal
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -60px 0px', threshold: 0.05 });
+
+  document.querySelectorAll('.section').forEach(s => revealObserver.observe(s));
+
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  sections.forEach(s => navObserver.observe(s));
+
+  // Keyboard accessibility
+  document.querySelectorAll('.section-header').forEach(el => {
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

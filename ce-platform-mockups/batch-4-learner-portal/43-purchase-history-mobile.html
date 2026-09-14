@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Purchase History | Pulse CE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#005235",
+                    "on-surface-variant": "#bbcabf",
+                    "surface-dim": "#131313",
+                    "on-secondary-container": "#aab9ac",
+                    "inverse-primary": "#006c47",
+                    "outline": "#86948a",
+                    "on-tertiary-fixed": "#291800",
+                    "on-secondary-fixed-variant": "#3c4a40",
+                    "tertiary-fixed-dim": "#ffb955",
+                    "on-tertiary-fixed-variant": "#633f00",
+                    "background": "#0A0A0A",
+                    "surface-container-high": "#2a2a2a",
+                    "on-tertiary": "#452b00",
+                    "on-secondary": "#26332a",
+                    "surface-container-highest": "#353534",
+                    "tertiary-fixed": "#ffddb4",
+                    "surface-tint": "#51dea0",
+                    "secondary-fixed-dim": "#bbcabd",
+                    "on-primary": "#003823",
+                    "on-tertiary-container": "#603d00",
+                    "tertiary-container": "#f0a21e",
+                    "surface-container": "#111111",
+                    "on-secondary-fixed": "#111e16",
+                    "surface-container-lowest": "#0e0e0e",
+                    "secondary-container": "#3c4a40",
+                    "surface": "#131313",
+                    "secondary-fixed": "#d7e7d9",
+                    "primary-container": "#36c98d",
+                    "inverse-surface": "#e5e2e1",
+                    "on-primary-container": "#004f33",
+                    "outline-variant": "#3d4a41",
+                    "on-surface": "#e5e2e1",
+                    "inverse-on-surface": "#313030",
+                    "primary-fixed": "#71fbbb",
+                    "error": "#ffb4ab",
+                    "surface-variant": "#353534",
+                    "surface-container-low": "#1c1b1b",
+                    "tertiary": "#ffc370",
+                    "primary": "#36C98D",
+                    "surface-bright": "#3a3939",
+                    "on-background": "#e5e2e1",
+                    "secondary": "#bbcabd",
+                    "on-error": "#690005",
+                    "error-container": "#93000a",
+                    "on-primary-fixed": "#002113",
+                    "on-error-container": "#ffdad6",
+                    "primary-fixed-dim": "#51dea0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "nav-height": "60px",
+                    "margin-desktop": "24px",
+                    "max-width": "1280px",
+                    "touch-target": "44px",
+                    "gap-default": "16px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                    "headline-xl": ["30px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                    "headline-lg": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["20px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #0A0A0A;
+            background-image: linear-gradient(180deg, rgba(54, 201, 141, 0.03) 0%, rgba(10, 10, 10, 0) 100%);
+            min-height: 100vh;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .pulse-glow {
+            box-shadow: 0 0 20px rgba(54, 201, 141, 0.1);
+        }
+        .transaction-card {
+            border-left: 4px solid #36C98D;
+            transition: all 0.2s ease;
+        }
+        .transaction-card:active {
+            transform: scale(0.98);
+            background: rgba(54, 201, 141, 0.05);
+        }
+        .safe-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col items-center justify-start overflow-x-hidden pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/85 dark:bg-surface/85 backdrop-blur-md border-b border-outline-variant/10 shadow-sm flex items-center h-[60px] px-margin-mobile">
+<button aria-label="Go back" class="active:scale-95 transition-transform mr-4">
+<span class="material-symbols-outlined text-primary dark:text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary dark:text-primary">Purchase History</h1>
+</header>
+<main class="w-full max-w-[390px] px-margin-mobile pt-[80px] space-y-6">
+<!-- Summary Section -->
+<section class="glass-card rounded-xl p-5 pulse-glow relative overflow-hidden">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-primary/10 blur-3xl rounded-full"></div>
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-end">
+<div>
+<p class="text-on-surface-variant font-label-caps uppercase tracking-wider mb-1">Total Spent (2026)</p>
+<h2 class="text-primary font-headline-xl text-headline-xl">$298.00</h2>
+</div>
+<div class="text-right">
+<p class="text-on-surface-variant font-label-caps uppercase tracking-wider mb-1">Courses</p>
+<h2 class="text-on-surface font-headline-lg text-headline-lg">04</h2>
+</div>
+</div>
+<div class="h-[2px] w-full bg-outline-variant/20 rounded-full">
+<div class="h-full bg-primary w-3/4 rounded-full shadow-[0_0_8px_rgba(54,201,141,0.5)]"></div>
+</div>
+</div>
+</section>
+<!-- Transaction List -->
+<div class="space-y-4">
+<h3 class="text-on-surface font-label-caps uppercase tracking-widest pl-1">Recent Transactions</h3>
+<!-- Card 1 -->
+<div class="transaction-card glass-card rounded-lg p-4 space-y-3">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant font-label-caps">Oct 12, 2026</span>
+<span class="text-on-surface font-bold text-body-md">$49.00</span>
+</div>
+<p class="text-on-surface font-semibold text-body-md leading-snug">Advanced Airway Management Course</p>
+<div class="flex justify-between items-center pt-1">
+<span class="px-2 py-1 bg-primary/10 text-primary rounded-full font-label-caps text-[10px] tracking-wide border border-primary/20">COMPLETED</span>
+<button class="flex items-center gap-1 text-primary hover:opacity-80 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span class="font-label-caps">Download Receipt</span>
+</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="transaction-card glass-card rounded-lg p-4 space-y-3">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant font-label-caps">Sep 15, 2026</span>
+<span class="text-on-surface font-bold text-body-md">$199.00</span>
+</div>
+<p class="text-on-surface font-semibold text-body-md leading-snug">Pulse Pro Annual Subscription</p>
+<div class="flex justify-between items-center pt-1">
+<span class="px-2 py-1 bg-primary/10 text-primary rounded-full font-label-caps text-[10px] tracking-wide border border-primary/20">COMPLETED</span>
+<button class="flex items-center gap-1 text-primary hover:opacity-80 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span class="font-label-caps">Download Receipt</span>
+</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="transaction-card glass-card rounded-lg p-4 space-y-3">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant font-label-caps">Aug 02, 2026</span>
+<span class="text-on-surface font-bold text-body-md">$25.00</span>
+</div>
+<p class="text-on-surface font-semibold text-body-md leading-snug">Cardiac Emergencies Module</p>
+<div class="flex justify-between items-center pt-1">
+<span class="px-2 py-1 bg-primary/10 text-primary rounded-full font-label-caps text-[10px] tracking-wide border border-primary/20">COMPLETED</span>
+<button class="flex items-center gap-1 text-primary hover:opacity-80 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span class="font-label-caps">Download Receipt</span>
+</button>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="transaction-card glass-card rounded-lg p-4 space-y-3">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant font-label-caps">Jul 20, 2026</span>
+<span class="text-on-surface font-bold text-body-md">$25.00</span>
+</div>
+<p class="text-on-surface font-semibold text-body-md leading-snug">Trauma Assessment Review</p>
+<div class="flex justify-between items-center pt-1">
+<span class="px-2 py-1 bg-primary/10 text-primary rounded-full font-label-caps text-[10px] tracking-wide border border-primary/20">COMPLETED</span>
+<button class="flex items-center gap-1 text-primary hover:opacity-80 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span class="font-label-caps">Download Receipt</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Help Section (Extra UI polish) -->
+<div class="pt-4 pb-8 flex flex-col items-center gap-2">
+<p class="text-on-surface-variant text-body-md">Missing a transaction?</p>
+<button class="text-primary font-bold font-body-md border-b border-primary/30">Contact Billing Support</button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface/95 dark:bg-surface/95 backdrop-blur-lg border-t border-outline-variant/10 shadow-[0_-4px_20px_rgba(54,201,141,0.05)] rounded-t-xl flex justify-around items-center h-[60px] px-2 pb-safe w-full">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-colors active:scale-90 transition-all duration-200" href="../dashboard-variant-h-pulse.html"><span class="material-symbols-outlined">home</span><span class="font-label-sm text-label-sm">Home</span></a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-colors active:scale-90 transition-all duration-200" href="40-compliance-tracker-mobile.html"><span class="material-symbols-outlined">school</span><span class="font-label-sm text-label-sm">Learn</span></a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-colors active:scale-90 transition-all duration-200" href="45-extended-practice-mobile.html">
+<span class="material-symbols-outlined">exercise</span>
+<span class="font-label-caps text-label-caps">Practice</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-colors active:scale-90 transition-all duration-200" href="40-compliance-tracker-mobile.html">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="font-label-caps text-label-caps">Compliance</span>
+</a>
+<!-- Active Tab: Profile -->
+<a class="flex flex-col items-center justify-center text-primary font-bold active:scale-90 transition-all duration-200" href="41-settings-mobile.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-caps text-label-caps">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for receipt download simulation
+        document.querySelectorAll('button').forEach(btn => {
+            if(btn.innerText.includes('Download')) {
+                btn.addEventListener('click', (e) => {
+                    const originalContent = btn.innerHTML;
+                    btn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> <span class="font-label-caps">Generating...</span>`;
+                    btn.classList.add('pointer-events-none');
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = `<span class="material-symbols-outlined">check_circle</span> <span class="font-label-caps">Downloaded</span>`;
+                        setTimeout(() => {
+                            btn.innerHTML = originalContent;
+                            btn.classList.remove('pointer-events-none');
+                        }, 2000);
+                    }, 1200);
+                });
+            }
+        });
+    </script>
+</body></html>

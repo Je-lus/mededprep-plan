@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulse CE — Terms of Service</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #0A0A0A;
+      --bg-surface: #111111;
+      --bg-surface-elevated: #1A1A1A;
+      --bg-surface-hover: #1F1F1F;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-default: rgba(255, 255, 255, 0.12);
+      --border-strong: rgba(255, 255, 255, 0.2);
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-tertiary: rgba(255, 255, 255, 0.45);
+      --green: #36C98D;
+      --green-dim: rgba(54, 201, 141, 0.12);
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-pill: 9999px;
+      --transition: 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #0A0A0A 0%, #0D1A12 50%, #0F3D26 75%, #36C98D 100%);
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      opacity: 0.5;
+      z-index: 0;
+    }
+
+    /* ===== TOP NAV ===== */
+    .top-nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 60px;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-mark { width: 36px; height: 36px; flex-shrink: 0; }
+    .brand-wordmark { display: flex; flex-direction: column; }
+    .brand-pulse { font-size: 17px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.02em; line-height: 1; }
+    .brand-sub { font-size: 11px; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; line-height: 1; margin-top: 2px; }
+    .pill-nav { display: flex; align-items: center; gap: 4px; background: var(--bg-surface); border-radius: var(--radius-pill); padding: 4px; border: 1px solid var(--border-subtle); }
+    .pill-nav a { text-decoration: none; font-size: 13px; font-weight: 500; color: var(--text-secondary); padding: 7px 18px; border-radius: var(--radius-pill); transition: all 0.2s ease; }
+    .pill-nav a:hover { color: var(--text-primary); background: var(--bg-surface-hover); }
+    .pill-nav a.active { background: var(--green); color: #0A0A0A; font-weight: 600; }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .nav-icon-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-subtle); background: var(--bg-surface); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); transition: all 0.2s; }
+    .nav-icon-btn:hover { border-color: var(--border-default); color: var(--text-primary); }
+    .nav-icon-btn svg { width: 18px; height: 18px; }
+    .avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--green), #2ba876); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #0A0A0A; cursor: pointer; }
+
+    /* ===== PAGE LAYOUT ===== */
+    .page-wrap {
+      position: relative; z-index: 1;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 48px 32px 80px;
+      display: flex;
+      gap: 48px;
+    }
+
+    /* ===== TOC SIDEBAR ===== */
+    .toc {
+      width: 240px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 108px;
+      align-self: flex-start;
+      max-height: calc(100vh - 140px);
+      overflow-y: auto;
+    }
+    .toc-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+    .toc-list { list-style: none; }
+    .toc-list li { margin-bottom: 2px; }
+    .toc-list a {
+      display: block;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 6px 0 6px 12px;
+      border-left: 2px solid transparent;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      transition: all 0.2s ease;
+    }
+    .toc-list a:hover { color: var(--text-primary); background: rgba(255,255,255,0.03); }
+    .toc-list a.active {
+      color: var(--green);
+      font-weight: 500;
+      border-left-color: var(--green);
+      background: var(--green-dim);
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .legal-content {
+      flex: 1;
+      min-width: 0;
+      max-width: 720px;
+    }
+
+    .legal-header { margin-bottom: 32px; }
+    .legal-header h1 {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .legal-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .updated-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--green);
+      background: var(--green-dim);
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+    }
+    .effective-date { font-size: 13px; color: var(--text-tertiary); }
+
+    .legal-intro {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 40px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .legal-section { margin-bottom: 40px; }
+    .legal-section h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      padding-top: 8px;
+    }
+    .legal-section p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+    .legal-section ul {
+      list-style: none;
+      margin: 12px 0;
+      padding-left: 0;
+    }
+    .legal-section ul li {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      padding-left: 20px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .legal-section ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+    .legal-section strong { color: var(--text-primary); font-weight: 600; }
+    .legal-section .divider {
+      border: none;
+      border-top: 1px solid var(--border-subtle);
+      margin: 32px 0;
+    }
+
+    /* Reading progress bar */
+    .reading-progress {
+      position: fixed;
+      top: 60px;
+      right: 0;
+      width: 3px;
+      height: 0%;
+      background: var(--green);
+      z-index: 99;
+      transition: height 0.1s linear;
+      border-radius: 0 0 2px 2px;
+    }
+
+    /* Footer */
+    .footer {
+      position: relative; z-index: 1;
+      max-width: 1120px; margin: 0 auto; padding: 40px 32px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-left { font-size: 12px; color: var(--text-tertiary); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: var(--text-tertiary); text-decoration: none; }
+    .footer-links a:hover { color: var(--green); }
+
+    @media (max-width: 900px) {
+      .toc { display: none; }
+      .page-wrap { padding: 32px 16px 60px; }
+      .legal-header h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="reading-progress" id="progressBar"></div>
+
+  <!-- TOP NAV -->
+  <nav class="top-nav">
+    <a href="../batch-2a-public-individual/01-landing-desktop.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 36 36" fill="none">
+        <path d="M18 2C10 2 4 7 4 14v8c0 4 6 12 14 12s14-8 14-12v-8c0-7-6-12-14-12z" fill="#36C98D" opacity="0.15"/>
+        <path d="M18 4C11 4 6 8.5 6 14v7c0 3.5 5.5 11 12 11s12-7.5 12-11v-7c0-5.5-5-10-12-10z" stroke="#36C98D" stroke-width="1.5" fill="none"/>
+        <polyline points="8,20 12,20 14,14 17,26 20,17 22,20 28,20" stroke="#36C98D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="brand-wordmark">
+        <span class="brand-pulse">PULSE</span>
+        <span class="brand-sub">BY MEDEDPREP</span>
+      </div>
+    </a>
+    <div class="pill-nav">
+      <a href="../batch-2a-public-individual/01-landing-desktop.html">Home</a>
+      <a href="../batch-2a-public-individual/04-catalog-desktop.html">Courses</a>
+      <a href="../batch-2a-public-individual/03-pricing-desktop.html">Pricing</a>
+      <a href="help-faq.html">Help</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+      <div class="avatar">JD</div>
+    </div>
+  </nav>
+
+  <!-- PAGE CONTENT -->
+  <div class="page-wrap">
+
+    <!-- TOC Sidebar -->
+    <aside class="toc">
+      <div class="toc-title">Table of Contents</div>
+      <ul class="toc-list">
+        <li><a href="#acceptance" class="active">1. Acceptance of Terms</a></li>
+        <li><a href="#description">2. Description of Service</a></li>
+        <li><a href="#accounts">3. User Accounts</a></li>
+        <li><a href="#ce-credits">4. CE Credit Policies</a></li>
+        <li><a href="#ip">5. Intellectual Property</a></li>
+        <li><a href="#payment">6. Payment Terms</a></li>
+        <li><a href="#refunds">7. Refund Policy</a></li>
+        <li><a href="#privacy">8. Privacy</a></li>
+        <li><a href="#disclaimers">9. Disclaimers</a></li>
+        <li><a href="#liability">10. Limitation of Liability</a></li>
+        <li><a href="#termination">11. Termination</a></li>
+        <li><a href="#governing-law">12. Governing Law</a></li>
+        <li><a href="#changes">13. Changes to Terms</a></li>
+        <li><a href="#contact">14. Contact Information</a></li>
+      </ul>
+    </aside>
+
+    <!-- Legal Content -->
+    <article class="legal-content">
+      <div class="legal-header">
+        <h1>Terms of Service</h1>
+        <div class="legal-meta">
+          <span class="updated-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Last updated: May 15, 2026
+          </span>
+          <span class="effective-date">Effective Date: May 15, 2026</span>
+        </div>
+      </div>
+
+      <p class="legal-intro">Welcome to Pulse CE, a continuing education platform operated by MedEdPrep, LLC ("Company", "we", "us", or "our"). These Terms of Service ("Terms") govern your access to and use of the Pulse CE platform, including our website, mobile applications, and related services (collectively, the "Service"). By accessing or using the Service, you agree to be bound by these Terms.</p>
+
+      <section class="legal-section" id="acceptance">
+        <h2>1. Acceptance of Terms</h2>
+        <p>By creating an account, accessing, or using the Pulse CE platform, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service and our Privacy Policy. If you do not agree to these Terms, you must not access or use the Service.</p>
+        <p>You represent that you are at least 18 years of age and have the legal capacity to enter into these Terms. If you are using the Service on behalf of an organization (such as an EMS agency), you represent that you have the authority to bind that organization to these Terms.</p>
+      </section>
+
+      <hr class="divider">
+
+      <section class="legal-section" id="description">
+        <h2>2. Description of Service</h2>
+        <p>Pulse CE provides an adaptive continuing education platform designed specifically for Emergency Medical Services (EMS) professionals. The Service includes, but is not limited to:</p>
+        <ul>
+          <li><strong>CE Course Delivery</strong> — Video-based and interactive continuing education courses covering EMS knowledge domains</li>
+          <li><strong>Adaptive Learning</strong> — Psychometric-driven question delivery that adapts to your demonstrated competency level</li>
+          <li><strong>Spaced Retrieval</strong> — Evidence-based knowledge retention system with scheduled review questions</li>
+          <li><strong>CE Credit Tracking</strong> — Automated tracking and reporting of earned continuing education hours</li>
+          <li><strong>Certificate Generation</strong> — Digital certificates of completion for CAPCE-accredited activities</li>
+        </ul>
+        <p>We reserve the right to modify, suspend, or discontinue any aspect of the Service at any time, with or without notice. We will make reasonable efforts to notify users of material changes to the Service.</p>
+      </section>
+
+      <hr class="divider">
+
+      <section class="legal-section" id="accounts">
+        <h2>3. User Accounts</h2>
+        <p>To access most features of the Service, you must create a user account. You agree to:</p>
+        <ul>
+          <li>Provide accurate, current, and complete registration information</li>
+          <li>Maintain the security and confidentiality of your login credentials</li>
+          <li>Promptly update your information if it changes</li>
+          <li>Accept responsibility for all activities that occur under your account</li>
+          <li>Notify us immediately of any unauthorized use of your account</li>
+        </ul>
+        <p>You may not share your account credentials with others, use another person's account, or create multiple accounts. <strong>CE credits are non-transferable</strong> and are awarded only to the authenticated account holder who completes the course requirements.</p>
+      </section>
+
+      <hr class="divider">
+
+      <section class="legal-section" id="ce-credits">
+        <h2>4. CE Credit Policies</h2>
+        <p>Pulse CE is accredited by the <strong>Commission on Accreditation for Pre-Hospital Continuing Education (CAPCE)</strong>. CE credits are subject to the following policies:</p>
+        <ul>
+          <li>Credits are awarded only upon successful completion of all required course activities, including post-assessments</li>
+          <li>A minimum passing score of 70% is required on all post-assessments</li>
+          <li>The minimum CE hour increment is <strong>0.25 CEH</strong> per CAPCE standards</li>
+          <li>Completed credits are automatically reported to CAPCE within 24 hours</li>
+          <li>You are responsible for verifying that earned credits meet your state or organizational recertification requirements</li>
+        </ul>
+        <p>MedEdPrep makes no guarantee that credits earned through Pulse CE will satisfy all state or employer-specific CE requirements. You should verify acceptance with your relevant certifying body.</p>
+      </section>
+
+      <hr class="divider">
+
+      <section class="legal-section" id="ip">
+        <h2>5. Intellectual Property</h2>
+        <p>All content on the Pulse CE platform — including but not limited to course materials, videos, assessments, graphics, software, and trademarks — is the property of MedEdPrep, LLC or its content licensors and is protected by copyright, trademark, and other intellectual property laws.</p>
+        <p>You are granted a limited, non-exclusive, non-transferable license to access and use the Service for your personal, non-commercial educational purposes. You may not:</p>
+        <ul>
+          <li>Copy, reproduce, or distribute any course content</li>
+          <li>Record, screenshot, or capture video or assessment content</li>
+          <li>Reverse engineer, decompile, or attempt to extract the source code of the platform</li>
+          <li>Share assessment questions or answers with others</li>
+          <li>Use automated tools to access or scrape the Service</li>
+        </ul>
+      </section>
+
+    </article>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-left">&copy; 2026 MedEdPrep. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="terms-of-service.html">Terms of Service</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="refund-policy.html">Refund Policy</a>
+      <a href="help-faq.html">Help Center</a>
+    </div>
+  </footer>
+
+  <script>
+    // Reading progress bar
+    window.addEventListener('scroll', () => {
+      const bar = document.getElementById('progressBar');
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrollTop / docHeight) * 100;
+      bar.style.height = progress + '%';
+    });
+  </script>
+
+</body>
+</html>

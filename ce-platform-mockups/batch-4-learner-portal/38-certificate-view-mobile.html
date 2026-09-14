@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Certificate View - Pulse CE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#aab9ac",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed-dim": "#51dea0",
+                        "on-primary-fixed": "#002113",
+                        "secondary-container": "#3c4a40",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-bright": "#3a3939",
+                        "tertiary-fixed-dim": "#ffb955",
+                        "tertiary-container": "#f0a21e",
+                        "surface-container-low": "#1c1b1b",
+                        "on-surface": "#e5e2e1",
+                        "primary-container": "#36c98d",
+                        "tertiary": "#ffc370",
+                        "outline-variant": "#3d4a41",
+                        "surface-tint": "#51dea0",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "on-tertiary-fixed": "#291800",
+                        "error-container": "#93000a",
+                        "outline": "#86948a",
+                        "on-tertiary": "#452b00",
+                        "surface-container-highest": "#353534",
+                        "primary-fixed": "#71fbbb",
+                        "primary": "#5ae6a7",
+                        "surface-container": "#201f1f",
+                        "surface": "#131313",
+                        "secondary-fixed": "#d7e7d9",
+                        "on-primary-fixed-variant": "#005235",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#ffddb4",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary": "#bbcabd",
+                        "on-secondary-fixed-variant": "#3c4a40",
+                        "on-surface-variant": "#bbcabf",
+                        "inverse-on-surface": "#313030",
+                        "on-primary": "#003823",
+                        "inverse-primary": "#006c47",
+                        "background": "#131313",
+                        "on-secondary-fixed": "#111e16",
+                        "secondary-fixed-dim": "#bbcabd",
+                        "surface-dim": "#131313",
+                        "on-secondary": "#26332a",
+                        "on-tertiary-container": "#603d00",
+                        "on-primary-container": "#004f33",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-variant": "#353534",
+                        "on-error": "#690005",
+                        "on-background": "#e5e2e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "nav-height": "60px",
+                        "margin-desktop": "24px",
+                        "touch-target": "44px",
+                        "gap-default": "16px",
+                        "max-width": "1280px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["11px", { "lineHeight": "1", "letterSpacing": "0.5px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-xl": ["30px", { "lineHeight": "1.2", "fontWeight": "800" }],
+                        "headline-lg": ["24px", { "lineHeight": "1.3", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #0A0A0A; }
+        .glass-panel {
+            background: linear-gradient(180deg, rgba(32, 31, 31, 0.9) 0%, rgba(19, 19, 19, 0.95) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .cert-glow {
+            box-shadow: 0 0 20px rgba(54, 201, 141, 0.15);
+        }
+        .ekg-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #36C98D 50%, transparent 100%);
+            width: 100%;
+            position: relative;
+        }
+        .ekg-line::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 10px;
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='10' viewBox='0 0 20 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 5H4L7 1L11 9L14 5H20' stroke='%2336C98D' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="text-on-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 shadow-sm border-b border-outline-variant/30 bg-surface/85 backdrop-blur-md dark:bg-surface/85 h-nav-height">
+<div class="flex items-center justify-between px-margin-mobile h-full max-w-max-width mx-auto">
+<button aria-label="Go back" class="w-touch-target h-touch-target flex items-center justify-center text-primary dark:text-primary-fixed-dim hover:opacity-80 transition-opacity active:scale-95 duration-100">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-lg text-[20px] font-bold text-on-surface">Certificate</h1>
+<button aria-label="Share" class="w-touch-target h-touch-target flex items-center justify-center text-on-surface-variant dark:text-on-secondary-container hover:opacity-80 transition-opacity active:scale-95 duration-100">
+<span class="material-symbols-outlined">ios_share</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-[80px] px-margin-mobile max-w-md mx-auto space-y-6">
+<!-- Certificate Card -->
+<article class="glass-panel rounded-xl cert-glow border-l-4 border-l-primary-container p-6 flex flex-col items-center text-center space-y-6 relative overflow-hidden">
+<!-- Decorative background elements -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/5 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 w-24 h-24 bg-primary-container/5 rounded-full blur-xl -ml-12 -mb-12 pointer-events-none"></div>
+<img alt="Pulse CE Brand Logo" class="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(54,201,141,0.3)]" src="https://lh3.googleusercontent.com/aida/ADBb0uiL35dK2XfzKKx3IPT6SGhqzY-qcZFTLGC7GIfLxERldY9ZRebDeju_HZUcQRDBzlz5c4FWHrsFajy4EgKMqkt2nNu_JdDe4qPyUX3_7ky14nexnG8i5a5522zk41fdWfc89c4PhBJi6hYgF7nVCfU6XRn3CBpDuqL6ROT2HfH8iGxLQVFBoZSkZEHZWd9fsupZphHkph8vfL46yOy87k9ve0zGS2QqWPslG0_CmCFQVdw9w2sDduM7IEQ"/>
+<div class="space-y-1 w-full">
+<h2 class="font-label-caps text-label-caps text-primary-container tracking-widest uppercase">Certificate of Completion</h2>
+<div class="ekg-line my-4"></div>
+</div>
+<div class="space-y-2 w-full">
+<p class="font-headline-lg text-[20px] text-on-surface">Sarah Mitchell, EMT-P</p>
+<p class="font-body-md text-body-md text-primary-container font-medium">Advanced Airway Management</p>
+</div>
+<div class="space-y-3 w-full">
+<p class="font-body-md text-body-md text-on-surface-variant">1.5 CEH | CAPCE Accredited | May 14, 2026</p>
+<div class="inline-flex items-center px-3 py-1 rounded-full bg-primary-container/10 border border-primary-container/20 text-primary-container font-label-caps text-[10px] tracking-wide">
+                    Airway, Respiration &amp; Ventilation
+                </div>
+</div>
+<div class="w-full pt-6 mt-2 border-t border-outline-variant/30 text-left space-y-2">
+<p class="font-label-caps text-[9px] text-on-surface-variant font-medium tracking-wide">CAPCE ACTIVITY #: EMT-2026-0847</p>
+<p class="font-label-caps text-[9px] text-on-surface-variant font-medium tracking-wide break-all">VERIFICATION URL: verify.pulsece.com/cert/ABC123</p>
+<p class="font-label-caps text-[9px] text-on-surface-variant font-medium tracking-wide">CERT ID: CERT-2026-05142847</p>
+</div>
+</article>
+<!-- Action Buttons -->
+<div class="space-y-3 pt-2">
+<button class="w-full h-touch-target rounded-full bg-primary-container text-on-primary-container font-body-md text-body-md font-bold flex items-center justify-center gap-2 hover:bg-primary-fixed transition-colors active:scale-95 duration-100 shadow-[0_4px_12px_rgba(54,201,141,0.2)]">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                Download PDF
+            </button>
+<div class="grid grid-cols-2 gap-3">
+<button class="h-touch-target rounded-full border border-outline-variant text-on-surface font-body-md text-body-md font-semibold flex items-center justify-center gap-2 hover:bg-surface-container-high transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined text-[18px]">print</span>
+                    Print
+                </button>
+<button class="h-touch-target rounded-full border border-outline-variant text-on-surface font-body-md text-body-md font-semibold flex items-center justify-center gap-2 hover:bg-surface-container-high transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined text-[18px]">share</span>
+                    Share
+                </button>
+</div>
+<button class="w-full h-touch-target rounded-full border border-[#0077b5]/30 bg-[#0077b5]/5 text-[#0077b5] font-body-md text-body-md font-semibold flex items-center justify-center gap-2 hover:bg-[#0077b5]/10 transition-colors active:scale-95 duration-100">
+<svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+                Add to LinkedIn
+            </button>
+</div>
+<!-- Verification Note -->
+<div class="flex items-center justify-center gap-2 text-primary-container opacity-80 pt-4">
+<span class="material-symbols-outlined text-[16px]">shield_lock</span>
+<span class="font-label-caps text-label-caps tracking-wide">Independently verifiable</span>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 pb-safe border-t border-outline-variant/30 bg-surface-container dark:bg-surface-container shadow-[0_-4px_20px_rgba(54,201,141,0.05)] md:hidden">
+<div class="flex justify-around items-center h-nav-height px-2 max-w-md mx-auto">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-colors active:scale-90 transition-all duration-200" href="../dashboard-variant-h-pulse.html"><span class="material-symbols-outlined">home</span><span class="font-label-sm text-label-sm">Home</span></a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-colors active:scale-90 transition-all duration-200" href="40-compliance-tracker-mobile.html"><span class="material-symbols-outlined">school</span><span class="font-label-sm text-label-sm">Learn</span></a>
+<a class="w-touch-target flex flex-col items-center justify-center gap-1 text-on-surface-variant dark:text-on-secondary-container opacity-60 hover:text-primary dark:hover:text-primary-fixed-dim active:scale-90 transition-all duration-200" href="45-extended-practice-mobile.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">exercise</span>
+<span class="font-label-caps text-label-caps">Practice</span>
+</a>
+<!-- Active Tab: Compliance -->
+<a class="w-touch-target flex flex-col items-center justify-center gap-1 text-primary dark:text-primary-fixed-dim scale-110 transition-transform active:scale-90 duration-200" href="38-certificate-view-mobile.html">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-caps text-label-caps text-primary-container font-bold">Compliance</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-colors active:scale-90 transition-all duration-200" href="41-settings-mobile.html"><span class="material-symbols-outlined">person</span><span class="font-label-sm text-label-sm">Profile</span></a>
+</div>
+</nav>
+</body></html>

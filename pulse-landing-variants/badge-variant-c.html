@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse by MedEdPrep - Certification Badge Variant C</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(165deg, #000000 0%, #071a12 40%, #0a2a1a 70%, #0d1f17 100%);
+    color: #e2e8f0;
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .page-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #22c55e, #4ade80, #86efac);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+
+  .page-header .subtitle {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ---------- Section ---------- */
+  .section {
+    max-width: 800px;
+    margin: 0 auto 64px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #4ade80;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #cbd5e1;
+    margin-bottom: 24px;
+  }
+
+  .section-desc {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: -16px;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  /* ---------- Badge row ---------- */
+  .badge-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ---------- Badge base ---------- */
+  .badge {
+    width: 100px;
+    height: 120px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255,255,255,0.02);
+    overflow: hidden;
+  }
+
+  .badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    pointer-events: none;
+  }
+
+  .badge .lock-icon {
+    font-size: 12px;
+    opacity: 0.6;
+  }
+
+  .badge .badge-label {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+
+  .badge .badge-tier {
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  /* ---------- Tier: EMR ---------- */
+  .badge-emr {
+    border: 1.5px solid #4b5563;
+    color: #9ca3af;
+  }
+  .badge-emr::before {
+    box-shadow: inset 0 0 12px rgba(75, 85, 99, 0.15);
+  }
+  .badge-emr .lock-icon { color: #6b7280; }
+
+  /* ---------- Tier: EMT ---------- */
+  .badge-emt {
+    border: 1.5px solid #3b82f6;
+    color: #93c5fd;
+    box-shadow: 0 0 16px rgba(59, 130, 246, 0.15), 0 0 4px rgba(59, 130, 246, 0.1);
+  }
+  .badge-emt::before {
+    box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.08);
+  }
+  .badge-emt .lock-icon { color: #60a5fa; }
+
+  /* ---------- Tier: AEMT ---------- */
+  .badge-aemt {
+    border: 2px solid #22c55e;
+    color: #86efac;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.2), 0 0 6px rgba(34, 197, 94, 0.15);
+  }
+  .badge-aemt::before {
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: 7px;
+    inset: 3px;
+    box-shadow: inset 0 0 24px rgba(34, 197, 94, 0.06);
+  }
+  .badge-aemt .lock-icon { color: #4ade80; }
+
+  /* ---------- Tier: PMDC ---------- */
+  .badge-pmdc {
+    border: 2px solid #f59e0b;
+    color: #fcd34d;
+    box-shadow: 0 0 28px rgba(245, 158, 11, 0.25), 0 0 8px rgba(245, 158, 11, 0.2), 0 0 60px rgba(245, 158, 11, 0.06);
+  }
+  .badge-pmdc::before {
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    border-radius: 7px;
+    inset: 3px;
+    box-shadow: inset 0 0 30px rgba(245, 158, 11, 0.08);
+  }
+  .badge-pmdc::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(245, 158, 11, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .badge-pmdc .lock-icon { color: #fbbf24; }
+
+  /* ---------- Tier: CC (Coming Soon) ---------- */
+  .badge-cc {
+    border: 1.5px dashed #f43f5e;
+    color: #fda4af;
+    opacity: 0.45;
+    animation: cc-pulse 3s ease-in-out infinite;
+  }
+  .badge-cc::before {
+    box-shadow: inset 0 0 16px rgba(244, 63, 94, 0.05);
+  }
+  .badge-cc .lock-icon { color: #fb7185; }
+  .badge-cc .coming-soon {
+    font-size: 6px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #fb7185;
+    opacity: 0.8;
+    margin-top: 2px;
+  }
+
+  @keyframes cc-pulse {
+    0%, 100% { opacity: 0.35; border-color: rgba(244, 63, 94, 0.4); }
+    50% { opacity: 0.55; border-color: rgba(244, 63, 94, 0.7); }
+  }
+
+  /* ---------- Hover states ---------- */
+  .badge:not(.badge-cc):hover {
+    transform: translateY(-2px);
+  }
+  .badge-emr:hover { box-shadow: 0 0 16px rgba(75, 85, 99, 0.25); }
+  .badge-emt:hover { box-shadow: 0 0 24px rgba(59, 130, 246, 0.3); }
+  .badge-aemt:hover { box-shadow: 0 0 28px rgba(34, 197, 94, 0.35); }
+  .badge-pmdc:hover { box-shadow: 0 0 36px rgba(245, 158, 11, 0.4), 0 0 80px rgba(245, 158, 11, 0.1); }
+
+  /* ========== SELECTED STATE ========== */
+  .badge.selected {
+    transform: scale(1.08);
+  }
+
+  .badge-emt.selected {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: #60a5fa;
+    box-shadow: 0 0 32px rgba(59, 130, 246, 0.35), 0 0 8px rgba(59, 130, 246, 0.25);
+  }
+
+  .badge .check-icon {
+    display: none;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 12px;
+    color: #60a5fa;
+  }
+
+  .badge.selected .check-icon {
+    display: block;
+  }
+
+  .badge.selected .lock-icon {
+    display: none;
+  }
+
+  /* ========== VERTICAL / TIER LIST ========== */
+  .tier-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .tier-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 10px;
+    position: relative;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .tier-rank {
+    font-size: 10px;
+    font-weight: 700;
+    width: 20px;
+    text-align: center;
+    opacity: 0.35;
+  }
+
+  .tier-badge-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+
+  .tier-info {
+    flex: 1;
+  }
+
+  .tier-name {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .tier-desc {
+    font-size: 10px;
+    opacity: 0.45;
+    margin-top: 1px;
+  }
+
+  .tier-bar {
+    height: 3px;
+    border-radius: 2px;
+    margin-top: 6px;
+    opacity: 0.5;
+  }
+
+  /* Tier colors */
+  .tier-emr { border-left: 3px solid #4b5563; }
+  .tier-emr .tier-badge-icon { border: 1.5px solid #4b5563; color: #9ca3af; }
+  .tier-emr .tier-name { color: #9ca3af; }
+  .tier-emr .tier-bar { background: linear-gradient(90deg, #4b5563, transparent); width: 30%; }
+
+  .tier-emt { border-left: 3px solid #3b82f6; }
+  .tier-emt .tier-badge-icon { border: 1.5px solid #3b82f6; color: #93c5fd; box-shadow: 0 0 8px rgba(59,130,246,0.15); }
+  .tier-emt .tier-name { color: #93c5fd; }
+  .tier-emt .tier-bar { background: linear-gradient(90deg, #3b82f6, transparent); width: 50%; }
+
+  .tier-aemt { border-left: 3px solid #22c55e; }
+  .tier-aemt .tier-badge-icon { border: 1.5px solid #22c55e; color: #86efac; box-shadow: 0 0 10px rgba(34,197,94,0.2); }
+  .tier-aemt .tier-name { color: #86efac; }
+  .tier-aemt .tier-bar { background: linear-gradient(90deg, #22c55e, transparent); width: 70%; }
+
+  .tier-pmdc { border-left: 3px solid #f59e0b; }
+  .tier-pmdc .tier-badge-icon { border: 1.5px solid #f59e0b; color: #fcd34d; box-shadow: 0 0 14px rgba(245,158,11,0.25); }
+  .tier-pmdc .tier-name { color: #fcd34d; }
+  .tier-pmdc .tier-bar { background: linear-gradient(90deg, #f59e0b, rgba(245,158,11,0.3)); width: 90%; }
+
+  .tier-cc { border-left: 3px dashed rgba(244,63,94,0.4); opacity: 0.4; }
+  .tier-cc .tier-badge-icon { border: 1.5px dashed rgba(244,63,94,0.5); color: #fda4af; }
+  .tier-cc .tier-name { color: #fda4af; }
+  .tier-cc .tier-bar { background: linear-gradient(90deg, rgba(244,63,94,0.4), transparent); width: 15%; }
+
+  /* ========== EKG BADGE ========== */
+  .badge-ekg-wrap {
+    position: relative;
+  }
+
+  .badge-ekg-wrap .badge.selected {
+    overflow: visible;
+  }
+
+  /* EKG line across the badge */
+  .ekg-line-container {
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    right: -10px;
+    height: 30px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .badge.selected .ekg-line-container {
+    opacity: 1;
+  }
+
+  .ekg-line {
+    width: 200%;
+    height: 100%;
+  }
+
+  .ekg-trace {
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 3px currentColor);
+  }
+
+  .ekg-trace-emt { stroke: #60a5fa; color: #60a5fa; }
+  .ekg-trace-aemt { stroke: #4ade80; color: #4ade80; }
+  .ekg-trace-pmdc { stroke: #fbbf24; color: #fbbf24; }
+
+  @keyframes ekg-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .ekg-line {
+    animation: ekg-scroll 2.5s linear infinite;
+  }
+
+  /* EKG border pulse */
+  .badge.selected.ekg-active {
+    animation: ekg-border-pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes ekg-border-pulse {
+    0%, 100% { box-shadow: 0 0 24px rgba(59, 130, 246, 0.25); }
+    25% { box-shadow: 0 0 36px rgba(59, 130, 246, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+    75% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.45); }
+  }
+
+  /* ========== DIVIDER ========== */
+  .divider {
+    max-width: 800px;
+    margin: 0 auto 48px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(74, 222, 128, 0.15), transparent);
+  }
+
+  /* ========== Responsive ========== */
+  @media (max-width: 600px) {
+    .badge-row { gap: 10px; }
+    .badge { width: 64px; height: 82px; border-radius: 8px; }
+    .badge .badge-label { font-size: 11px; letter-spacing: 1px; }
+    .badge .lock-icon { font-size: 10px; }
+    .badge .badge-tier { font-size: 7px; }
+    .badge-cc .coming-soon { font-size: 5px; }
+    .section-title { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Certification Level Badges</h1>
+  <div class="subtitle">Variant C -- Tiered Achievement Progression</div>
+</div>
+
+<!-- ==================== 1. DEFAULT ROW ==================== -->
+<div class="section">
+  <div class="section-label">Variation 1</div>
+  <div class="section-title">Default Row -- Idle State</div>
+  <div class="section-desc">All badges in their resting state. Progression goes from muted (EMR) to prestigious (PMDC). CC is locked with a pulsing dashed border.</div>
+
+  <div class="badge-row">
+    <!-- EMR -->
+    <div class="badge badge-emr">
+      <span class="lock-icon">&#x1F512;</span>
+      <span class="badge-label">EMR</span>
+      <span class="badge-tier">Tier I</span>
+    </div>
+    <!-- EMT -->
+    <div class="badge badge-emt">
+      <span class="lock-icon">&#x1F512;</span>
+      <span class="badge-label">EMT</span>
+      <span class="badge-tier">Tier II</span>
+    </div>
+    <!-- AEMT -->
+    <div class="badge badge-aemt">
+      <span class="lock-icon">&#x1F512;</span>
+      <span class="badge-label">AEMT</span>
+      <span class="badge-tier">Tier III</span>
+    </div>
+    <!-- PMDC -->
+    <div class="badge badge-pmdc">
+      <span class="lock-icon">&#x1F512;</span>
+      <span class="badge-label">PMDC</span>
+      <span class="badge-tier">Tier IV</span>
+    </div>
+    <!-- CC -->
+    <div class="badge badge-cc">
+      <span class="lock-icon">&#x1F512;</span>
+      <span class="badge-label">CC</span>
+      <span class="badge-tier">Tier V</span>
+      <span class="coming-soon">COMING SOON</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ==================== 2. SELECTION STATE ==================== -->
+<div class="section">
+  <div class="section-label">Variation 2</div>
+  <div class="section-title">Selection State -- EMT Active</div>
+  <div class="section-desc">EMT is selected: scaled up, checkmark in corner, filled background at low opacity. Lock icon is replaced by the check.</div>
+
+  <div class="badge-row">
+    <!-- EMR -->
+    <div class="badge badge-emr">
+      <span class="lock-icon">&#x1F512;</span>
+      <span class="badge-label">EMR</span>
+      <span class="badge-tier">Tier I</span>
+    </div>
+    <!-- EMT (selected) -->
+    <div class="badge badge-emt selected">
+      <span class="check-icon">&#x2713;</span>
+      <span class="lock-icon">&#x1F512;</span>
+      <span class="badge-label">EMT</span>
+      <span class="badge-tier">Tier II</span>
+    </div>
+    <!-- AEMT -->
+    <div class="badge badge-aemt">
+      <span class="lock-icon">&#x1F512;</span>
+      <span class="badge-label">AEMT</span>
+      <span class="badge-tier">Tier III</span>
+    </div>
+    <!-- PMDC -->
+    <div class="badge badge-pmdc">
+      <span class="lock-icon">&#x1F512;</span>
+      <span class="badge-label">PMDC</span>
+      <span class="badge-tier">Tier IV</span>
+    </div>
+    <!-- CC -->
+    <div class="badge badge-cc">
+      <span class="lock-icon">&#x1F512;</span>
+      <span class="badge-label">CC</span>
+      <span class="badge-tier">Tier V</span>
+      <span class="coming-soon">COMING SOON</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ==================== 3. VERTICAL TIER LIST ==================== -->
+<div class="section">
+  <div class="section-label">Variation 3</div>
+  <div class="section-title">Stacked Tier List -- Progression View</div>
+  <div class="section-desc">Badges arranged vertically with PMDC at top and EMR at bottom. Progress bars show relative tier advancement. Reads like a rank ladder.</div>
+
+  <div class="tier-list">
+    <!-- PMDC (top) -->
+    <div class="tier-item tier-pmdc">
+      <span class="tier-rank">IV</span>
+      <div class="tier-badge-icon">&#x1F512;</div>
+      <div class="tier-info">
+        <div class="tier-name">PMDC</div>
+        <div class="tier-desc">Paramedic</div>
+        <div class="tier-bar"></div>
+      </div>
+    </div>
+    <!-- AEMT -->
+    <div class="tier-item tier-aemt">
+      <span class="tier-rank">III</span>
+      <div class="tier-badge-icon">&#x1F512;</div>
+      <div class="tier-info">
+        <div class="tier-name">AEMT</div>
+        <div class="tier-desc">Advanced EMT</div>
+        <div class="tier-bar"></div>
+      </div>
+    </div>
+    <!-- EMT -->
+    <div class="tier-item tier-emt">
+      <span class="tier-rank">II</span>
+      <div class="tier-badge-icon">&#x1F512;</div>
+      <div class="tier-info">
+        <div class="tier-name">EMT</div>
+        <div class="tier-desc">Emergency Medical Technician</div>
+        <div class="tier-bar"></div>
+      </div>
+    </div>
+    <!-- EMR (bottom) -->
+    <div class="tier-item tier-emr">
+      <span class="tier-rank">I</span>
+      <div class="tier-badge-icon">&#x1F512;</div>
+      <div class="tier-info">
+        <div class="tier-name">EMR</div>
+        <div class="tier-desc">Emergency Medical Responder</div>
+        <div class="tier-bar"></div>
+      </div>
+    </div>
+    <!-- CC (locked, at very top visually but dimmed) -->
+    <div class="tier-item tier-cc" style="order: -1;">
+      <span class="tier-rank">V</span>
+      <div class="tier-badge-icon">&#x1F512;</div>
+      <div class="tier-info">
+        <div class="tier-name">CC</div>
+        <div class="tier-desc">Critical Care -- Coming Soon</div>
+        <div class="tier-bar"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ==================== 4. EKG PULSE ANIMATION ==================== -->
+<div class="section">
+  <div class="section-label">Variation 4</div>
+  <div class="section-title">EKG Pulse Animation -- Selected Badge</div>
+  <div class="section-desc">The selected badge has an animated EKG trace scrolling through it and a rhythmic border glow. Click any non-CC badge to select it and see the effect.</div>
+
+  <div class="badge-row" id="ekg-row">
+    <!-- EMR -->
+    <div class="badge badge-emr badge-ekg-wrap" onclick="selectEkg(this, 'emr')">
+      <div class="ekg-line-container">
+        <svg class="ekg-line" viewBox="0 0 240 30" preserveAspectRatio="none">
+          <polyline class="ekg-trace" style="stroke:#9ca3af; color:#9ca3af;" points="0,15 10,15 15,15 20,15 25,8 28,22 31,5 34,25 37,15 42,15 50,15 55,15 60,14 65,15 70,15 80,15 90,15 95,15 100,15 105,8 108,22 111,5 114,25 117,15 122,15 130,15 135,15 140,14 145,15 150,15 160,15 170,15 175,15 180,15 185,8 188,22 191,5 194,25 197,15 202,15 210,15 215,15 220,14 225,15 230,15 240,15" />
+        </svg>
+      </div>
+      <span class="lock-icon">&#x1F512;</span>
+      <span class="badge-label">EMR</span>
+      <span class="badge-tier">Tier I</span>
+    </div>
+    <!-- EMT (selected by default) -->
+    <div class="badge badge-emt badge-ekg-wrap selected ekg-active" onclick="selectEkg(this, 'emt')">
+      <span class="check-icon">&#x2713;</span>
+      <div class="ekg-line-container">
+        <svg class="ekg-line" viewBox="0 0 240 30" preserveAspectRatio="none">
+          <polyline class="ekg-trace ekg-trace-emt" points="0,15 10,15 15,15 20,15 25,8 28,22 31,5 34,25 37,15 42,15 50,15 55,15 60,14 65,15 70,15 80,15 90,15 95,15 100,15 105,8 108,22 111,5 114,25 117,15 122,15 130,15 135,15 140,14 145,15 150,15 160,15 170,15 175,15 180,15 185,8 188,22 191,5 194,25 197,15 202,15 210,15 215,15 220,14 225,15 230,15 240,15" />
+        </svg>
+      </div>
+      <span class="lock-icon">&#x1F512;</span>
+      <span class="badge-label">EMT</span>
+      <span class="badge-tier">Tier II</span>
+    </div>
+    <!-- AEMT -->
+    <div class="badge badge-aemt badge-ekg-wrap" onclick="selectEkg(this, 'aemt')">
+      <div class="ekg-line-container">
+        <svg class="ekg-line" viewBox="0 0 240 30" preserveAspectRatio="none">
+          <polyline class="ekg-trace ekg-trace-aemt" points="0,15 10,15 15,15 20,15 25,8 28,22 31,5 34,25 37,15 42,15 50,15 55,15 60,14 65,15 70,15 80,15 90,15 95,15 100,15 105,8 108,22 111,5 114,25 117,15 122,15 130,15 135,15 140,14 145,15 150,15 160,15 170,15 175,15 180,15 185,8 188,22 191,5 194,25 197,15 202,15 210,15 215,15 220,14 225,15 230,15 240,15" />
+        </svg>
+      </div>
+      <span class="lock-icon">&#x1F512;</span>
+      <span class="badge-label">AEMT</span>
+      <span class="badge-tier">Tier III</span>
+    </div>
+    <!-- PMDC -->
+    <div class="badge badge-pmdc badge-ekg-wrap" onclick="selectEkg(this, 'pmdc')">
+      <div class="ekg-line-container">
+        <svg class="ekg-line" viewBox="0 0 240 30" preserveAspectRatio="none">
+          <polyline class="ekg-trace ekg-trace-pmdc" points="0,15 10,15 15,15 20,15 25,8 28,22 31,5 34,25 37,15 42,15 50,15 55,15 60,14 65,15 70,15 80,15 90,15 95,15 100,15 105,8 108,22 111,5 114,25 117,15 122,15 130,15 135,15 140,14 145,15 150,15 160,15 170,15 175,15 180,15 185,8 188,22 191,5 194,25 197,15 202,15 210,15 215,15 220,14 225,15 230,15 240,15" />
+        </svg>
+      </div>
+      <span class="lock-icon">&#x1F512;</span>
+      <span class="badge-label">PMDC</span>
+      <span class="badge-tier">Tier IV</span>
+    </div>
+    <!-- CC -->
+    <div class="badge badge-cc">
+      <span class="lock-icon">&#x1F512;</span>
+      <span class="badge-label">CC</span>
+      <span class="badge-tier">Tier V</span>
+      <span class="coming-soon">COMING SOON</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // EKG selection: tier-specific glow colors
+  const tierGlows = {
+    emr: {
+      bg: 'rgba(75, 85, 99, 0.08)',
+      border: '#6b7280',
+      shadow: '0 0 24px rgba(75, 85, 99, 0.3)',
+      pulseA: '0 0 24px rgba(75, 85, 99, 0.2)',
+      pulseB: '0 0 36px rgba(75, 85, 99, 0.45)',
+    },
+    emt: {
+      bg: 'rgba(59, 130, 246, 0.1)',
+      border: '#60a5fa',
+      shadow: '0 0 32px rgba(59, 130, 246, 0.35)',
+      pulseA: '0 0 24px rgba(59, 130, 246, 0.25)',
+      pulseB: '0 0 40px rgba(59, 130, 246, 0.5)',
+    },
+    aemt: {
+      bg: 'rgba(34, 197, 94, 0.1)',
+      border: '#4ade80',
+      shadow: '0 0 32px rgba(34, 197, 94, 0.35)',
+      pulseA: '0 0 24px rgba(34, 197, 94, 0.25)',
+      pulseB: '0 0 40px rgba(34, 197, 94, 0.5)',
+    },
+    pmdc: {
+      bg: 'rgba(245, 158, 11, 0.1)',
+      border: '#fbbf24',
+      shadow: '0 0 36px rgba(245, 158, 11, 0.4)',
+      pulseA: '0 0 28px rgba(245, 158, 11, 0.3)',
+      pulseB: '0 0 48px rgba(245, 158, 11, 0.55)',
+    },
+  };
+
+  function selectEkg(el, tier) {
+    if (el.classList.contains('badge-cc')) return;
+
+    const row = document.getElementById('ekg-row');
+    // Clear all selected
+    row.querySelectorAll('.badge').forEach(b => {
+      b.classList.remove('selected', 'ekg-active');
+      b.style.background = '';
+      b.style.borderColor = '';
+      b.style.boxShadow = '';
+      b.style.animation = '';
+    });
+
+    // Select this one
+    el.classList.add('selected', 'ekg-active');
+    const g = tierGlows[tier];
+    if (g) {
+      el.style.background = g.bg;
+      el.style.boxShadow = g.shadow;
+
+      // Dynamic keyframes for border pulse
+      const styleName = 'ekg-pulse-' + tier;
+      let existing = document.getElementById(styleName);
+      if (!existing) {
+        const style = document.createElement('style');
+        style.id = styleName;
+        style.textContent = `
+          @keyframes ${styleName} {
+            0%, 100% { box-shadow: ${g.pulseA}; }
+            25% { box-shadow: ${g.pulseB}; }
+            50% { box-shadow: ${g.pulseA}; }
+            75% { box-shadow: ${g.pulseB}; }
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      el.style.animation = `${styleName} 1.5s ease-in-out infinite`;
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Psychometrics &mdash; The Analytic Moat &mdash; MedEdPrep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0e14;
+    --bg-surface: #111820;
+    --bg-card: #151c25;
+    --bg-card-hover: #1a2331;
+    --bg-elevated: #1e2733;
+    --border: #243040;
+    --border-subtle: #1c2535;
+    --text-primary: #e8edf4;
+    --text-secondary: #8899aa;
+    --text-muted: #5a6a7a;
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+    --teal-glow: rgba(45,212,191,0.06);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.12);
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.12);
+    --orange: #fb923c;
+    --orange-dim: rgba(251,146,60,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.12);
+    --nav-width: 240px;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg-base);
+    background-image: radial-gradient(circle at 1px 1px, rgba(45,212,191,0.02) 1px, transparent 0);
+    background-size: 40px 40px;
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--purple), var(--blue), var(--teal));
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+    z-index: 200;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    width: var(--nav-width);
+    min-width: var(--nav-width);
+    background: rgba(17,24,32,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  nav::-webkit-scrollbar { width: 0; }
+
+  .nav-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .nav-brand-name {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--teal), #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-brand-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links { flex: 1; padding: 4px 0; }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    position: relative;
+  }
+  nav a:hover {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.04);
+    border-left-color: var(--teal);
+  }
+  nav a.active {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.06);
+    border-left-color: var(--teal);
+  }
+  nav a .nav-icon {
+    font-size: 15px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .nav-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 8px 16px;
+  }
+  .nav-footer {
+    padding: 20px 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .nav-footer-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .nav-footer-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    margin-left: var(--nav-width);
+    padding: 64px 56px 48px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #080c12 0%, #0d1520 30%, #0a1420 60%, #080e18 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: 10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(45,212,191,0.07) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: 20%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(167,139,250,0.05) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--teal);
+    vertical-align: middle;
+    margin-left: 12px;
+    opacity: 0.4;
+  }
+
+  .hero-headline {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f0f4f8 25%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  .hero-narrative {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-top: 16px;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+  .hero-narrative strong { color: var(--text-primary); }
+
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    align-self: start;
+  }
+  .hero-metric {
+    background: var(--bg-surface);
+    padding: 20px 22px;
+    transition: background 0.2s;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .hero-metric:nth-child(1) { animation-delay: 0.05s; }
+  .hero-metric:nth-child(2) { animation-delay: 0.1s; }
+  .hero-metric:nth-child(3) { animation-delay: 0.15s; }
+  .hero-metric:nth-child(4) { animation-delay: 0.2s; }
+  .hero-metric:hover { background: var(--bg-card); }
+  .hero-metric-value {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .c-teal { color: var(--teal); }
+  .c-purple { color: var(--purple); }
+  .c-blue { color: var(--blue); }
+  .c-green { color: var(--green); }
+  .c-amber { color: var(--amber); }
+  .c-pink { color: var(--pink); }
+  .c-orange { color: var(--orange); }
+  .c-red { color: var(--red); }
+  .hero-metric-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .hero-metric-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── MAIN ── */
+  .main-inner {
+    margin-left: var(--nav-width);
+    padding: 40px 56px 80px;
+    max-width: 1300px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .section[id] { scroll-margin-top: 24px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+    padding: 16px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .section-header::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: transparent;
+    transition: background 0.2s;
+    border-radius: 3px 0 0 3px;
+  }
+  .section-header:hover { background: var(--bg-card-hover); }
+  .section-header.active::before {
+    background: linear-gradient(180deg, var(--teal), var(--purple));
+  }
+  .section-header.active {
+    border-color: rgba(45,212,191,0.15);
+    background: linear-gradient(135deg, rgba(45,212,191,0.03) 0%, var(--bg-card) 40%);
+  }
+
+  .section-icon { font-size: 20px; width: 24px; text-align: center; flex-shrink: 0; }
+  .section-title { font-size: 16px; font-weight: 700; color: var(--text-primary); flex: 1; }
+  .section-subtitle { font-size: 12px; font-weight: 500; color: var(--text-muted); margin-left: 10px; }
+  .section-chevron {
+    color: var(--text-muted);
+    font-size: 11px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+  .section-chevron.open { transform: rotate(180deg); }
+
+  .section-body {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    opacity: 0;
+  }
+  .section-body.open { max-height: 99999px; opacity: 1; }
+  .section-inner { padding: 24px 0 0; }
+
+  /* ── CALLOUTS ── */
+  .callout-warning {
+    background: linear-gradient(135deg, rgba(251,191,36,0.06) 0%, var(--bg-card) 60%);
+    border: 1px solid rgba(251,191,36,0.25);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-warning-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--amber);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .callout-warning-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-warning-body strong { color: var(--text-primary); }
+
+  .callout-info {
+    background: linear-gradient(135deg, rgba(45,212,191,0.06) 0%, var(--bg-card) 60%);
+    border: 1px solid rgba(45,212,191,0.2);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-info-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .callout-info-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-info-body strong { color: var(--text-primary); }
+
+  .callout-purple {
+    background: linear-gradient(135deg, rgba(167,139,250,0.06) 0%, var(--bg-card) 60%);
+    border: 1px solid rgba(167,139,250,0.22);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-purple-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--purple);
+    margin-bottom: 8px;
+  }
+  .callout-purple-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-purple-body strong { color: var(--text-primary); }
+
+  .callout-red {
+    background: linear-gradient(135deg, rgba(248,113,113,0.04) 0%, var(--bg-card) 50%);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-red-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+  .callout-red-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-red-body strong { color: var(--text-primary); }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: #344050; }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .card-label {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+  }
+  .card-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .card-body strong { color: var(--text-primary); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+  /* ── ASSET / SIGNAL CARDS ── */
+  .ip-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .ip-card:hover { border-color: rgba(45,212,191,0.2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .ip-card-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .ip-card-icon { font-size: 18px; flex-shrink: 0; line-height: 1.3; }
+  .ip-card-title { font-size: 13px; font-weight: 700; color: var(--text-primary); line-height: 1.4; }
+  .ip-card-body { font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
+  .ip-card-body strong { color: var(--text-primary); }
+  .ip-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  /* ── FEASIBILITY / RISK CARDS ── */
+  .risk-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+  .risk-card-high {
+    border-left: 3px solid var(--red);
+    background: linear-gradient(135deg, rgba(248,113,113,0.03) 0%, var(--bg-card) 40%);
+  }
+  .risk-card-medium {
+    border-left: 3px solid var(--amber);
+    background: linear-gradient(135deg, rgba(251,191,36,0.02) 0%, var(--bg-card) 40%);
+  }
+  .risk-card-low {
+    border-left: 3px solid var(--green);
+    background: linear-gradient(135deg, rgba(74,222,128,0.02) 0%, var(--bg-card) 40%);
+  }
+  .risk-card-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+  .risk-card-title { font-size: 14px; font-weight: 700; color: var(--text-primary); flex: 1; }
+  .risk-badge {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; padding: 3px 9px; border-radius: 20px; white-space: nowrap;
+  }
+  .risk-badge-high { background: var(--red-dim); color: var(--red); }
+  .risk-badge-medium { background: var(--amber-dim); color: var(--amber); }
+  .risk-badge-low { background: var(--green-dim); color: var(--green); }
+  .risk-meta {
+    font-size: 11px; color: var(--text-muted); font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .risk-body { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+  .risk-body strong { color: var(--text-primary); }
+  .risk-action {
+    margin-top: 10px;
+    background: var(--bg-elevated);
+    border-radius: var(--radius-xs);
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .risk-action strong { color: var(--text-primary); }
+
+  /* ── PHASE / TIER BADGES ── */
+  .phase-badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; padding: 3px 10px; border-radius: 20px;
+    margin-bottom: 6px;
+  }
+  .phase-1 { background: var(--green-dim); color: var(--green); }
+  .phase-2 { background: var(--blue-dim); color: var(--blue); }
+  .phase-3 { background: var(--purple-dim); color: var(--purple); }
+  .phase-4 { background: var(--amber-dim); color: var(--amber); }
+
+  /* ── TABLES ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .data-table th {
+    text-align: left;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table td {
+    padding: 10px 12px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .data-table td:first-child { color: var(--text-primary); font-weight: 500; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.015); }
+  .mono { font-family: 'Courier New', monospace; font-size: 12px; color: var(--teal); }
+
+  .table-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .table-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-muted);
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .feas-tag {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; padding: 2px 8px; border-radius: 4px; white-space: nowrap;
+  }
+  .feas-have { background: var(--green-dim); color: var(--green); }
+  .feas-deriv { background: var(--teal-dim); color: var(--teal); }
+  .feas-capture { background: var(--amber-dim); color: var(--amber); }
+  .feas-acq { background: var(--red-dim); color: var(--red); }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 14px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--teal), var(--blue), var(--purple), var(--amber));
+    border-radius: 1px;
+  }
+  .timeline-phase {
+    position: relative;
+    margin-bottom: 32px;
+  }
+  .timeline-phase:last-child { margin-bottom: 0; }
+  .timeline-dot {
+    position: absolute;
+    left: -30px; top: 3px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2.5px solid;
+    background: var(--bg-base);
+    z-index: 1;
+  }
+  .dot-teal { border-color: var(--teal); }
+  .dot-blue { border-color: var(--blue); }
+  .dot-purple { border-color: var(--purple); }
+  .dot-amber { border-color: var(--amber); }
+  .phase-name { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+  .phase-period { font-size: 12px; color: var(--text-muted); font-weight: 600; margin-left: 10px; }
+  .phase-desc {
+    font-size: 13px; color: var(--text-secondary);
+    margin-top: 8px; line-height: 1.6;
+  }
+  .phase-desc strong { color: var(--text-primary); }
+  .phase-items {
+    list-style: none;
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 10px;
+  }
+  .phase-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    padding: 5px 12px;
+    font-size: 12px; color: var(--text-secondary); font-weight: 500;
+  }
+
+  /* ── STEP CARDS ── */
+  .step-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    display: flex; gap: 14px; align-items: flex-start;
+    transition: border-color 0.2s;
+    margin-bottom: 12px;
+  }
+  .step-card:hover { border-color: #344050; }
+  .step-num {
+    width: 32px; height: 32px;
+    border-radius: var(--radius-xs);
+    background: var(--teal-dim);
+    color: var(--teal);
+    font-size: 13px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-content { flex: 1; min-width: 0; }
+  .step-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .step-body { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+  .step-body strong { color: var(--text-primary); }
+
+  .detail-list {
+    list-style: none;
+    font-size: 12px;
+    margin-top: 8px;
+  }
+  .detail-list li {
+    padding: 4px 0;
+    color: var(--text-secondary);
+    display: flex; align-items: baseline; gap: 8px; line-height: 1.5;
+  }
+  .detail-list li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+  .detail-list.teal li::before { background: var(--teal); }
+  .detail-list.amber li::before { background: var(--amber); }
+  .detail-list.red li::before { background: var(--red); }
+  .detail-list.purple li::before { background: var(--purple); }
+  .detail-list strong { color: var(--text-primary); }
+
+  /* ── CONTROLS ── */
+  .controls {
+    display: flex; gap: 8px;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+  }
+  .controls button {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .controls button:hover { color: var(--teal); border-color: var(--teal); background: var(--teal-dim); }
+
+  /* ── PAGE FOOTER ── */
+  .page-footer {
+    font-size: 11px; color: var(--text-muted);
+    text-align: right;
+    margin-top: 48px; padding-top: 20px;
+    border-top: 1px solid var(--border-subtle);
+    font-weight: 500;
+  }
+
+  /* ── ENTITY STATUS ── */
+  .entity-status {
+    font-size: 10px; font-weight: 700;
+    padding: 5px 12px; border-radius: 20px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .entity-status .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .es-build { background: var(--blue-dim); color: var(--blue); }
+  .es-build .dot { background: var(--blue); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .hero-content { grid-template-columns: 1fr; gap: 32px; }
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 900px) {
+    nav { display: none; }
+    .hero { margin-left: 0; padding: 40px 24px 32px; }
+    .main-inner { margin-left: 0; padding: 24px 20px 60px; }
+    .hero-headline { font-size: 26px; }
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .grid-auto { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .hero-metrics { grid-template-columns: 1fr; }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-base); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a4a5a; }
+
+  /* ── PRINT ── */
+  @media print {
+    nav { display: none; }
+    body { background: white; color: #111; }
+    body::before { display: none; }
+    .hero, .main-inner { margin-left: 0; }
+    .section { opacity: 1 !important; transform: none !important; }
+    .section-body { max-height: none !important; opacity: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAVIGATION ═══════ -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-name">MedEdPrep</div>
+    <div class="nav-brand-sub">Founder Command Center</div>
+  </div>
+  <div class="nav-links">
+    <a href="hub.html"><span class="nav-icon">&#x2B21;</span> Hub</a>
+    <a href="entity-company-a.html"><span class="nav-icon">&#x1F393;</span> Company A &mdash; MedEdPrep Education</a>
+    <a href="entity-company-c.html"><span class="nav-icon">&#x1F3C6;</span> Company C &mdash; Certification</a>
+    <a href="entity-nonprofit.html"><span class="nav-icon">&#x1F91D;</span> Foundation (501c3)</a>
+    <a href="entity-ip-vault.html"><span class="nav-icon">&#x1F510;</span> IP &amp; The Vault</a>
+    <a href="entity-market.html"><span class="nav-icon">&#x1F4CA;</span> Market Landscape</a>
+    <a href="entity-psychometric.html" class="active"><span class="nav-icon">&#x1F9EC;</span> Psychometric &amp; Data</a>
+    <div class="nav-divider"></div>
+    <a href="dashboard.html"><span class="nav-icon">&#x25C8;</span> Dashboard</a>
+    <a href="action-center.html"><span class="nav-icon">&#x26A1;</span> Action Center</a>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-footer-label">Last updated</div>
+    <div class="nav-footer-date">June 18, 2026</div>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Psychometric Capability &amp; Data Assets</div>
+      <h1 class="hero-headline">Psychometrics &mdash; The Analytic Moat</h1>
+      <div>
+        <span class="entity-status es-build"><span class="dot"></span> Build in progress &mdash; IRT layer, summer 2026</span>
+      </div>
+      <p class="hero-narrative">A decade of EMS testing has produced a deep response corpus that almost no competitor holds: per-question correctness <em>plus</em> the selected option, a mandatory continuous confidence signal, a real student&rarr;school&rarr;instructor&rarr;cohort hierarchy, and recent per-item timing. The honest gap: today&rsquo;s &ldquo;adaptive&rdquo; exam is <strong>domain-mastery proficiency with random selection</strong> &mdash; not real IRT. A credentialed psychometrics intern is building the calibration layer this summer: 1PL bank-wide, 2PL where data supports, item-quality and distractor flagging, then a real CAT for the CE/CAPCE product.</p>
+    </div>
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="hero-metric-value c-teal">~10,600</div>
+        <div class="hero-metric-label">Published items</div>
+        <div class="hero-metric-note">+ ~10k AI-generated awaiting review</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-purple">~1.55M</div>
+        <div class="hero-metric-label">Response records</div>
+        <div class="hero-metric-note">Correctness + selected option</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-blue">~4,222</div>
+        <div class="hero-metric-label">Students</div>
+        <div class="hero-metric-note">239 programs &middot; 30+ states</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-amber">~225</div>
+        <div class="hero-metric-label">Matched NREMT outcomes</div>
+        <div class="hero-metric-note">The binding predictive constraint</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ MAIN CONTENT ═══════ -->
+<div class="main-inner">
+
+  <div class="controls">
+    <button onclick="toggleAll(true)">Expand All</button>
+    <button onclick="toggleAll(false)">Collapse All</button>
+  </div>
+
+  <!-- ── SECTION 1: THE MOAT ── -->
+  <div class="section visible" id="moat">
+    <div class="section-header active" onclick="toggleSection(this)" aria-expanded="true" tabindex="0" role="button">
+      <span class="section-icon">&#x1F9EC;</span>
+      <span class="section-title">Why This Is a Moat<span class="section-subtitle">Distinctively possible here &mdash; not generic test-bank features</span></span>
+      <span class="section-chevron open">&#9662;</span>
+    </div>
+    <div class="section-body open">
+      <div class="section-inner">
+
+        <div class="callout-info">
+          <div class="callout-info-title">Internal capability &mdash; not outward marketing</div>
+          <div class="callout-info-body">This page documents an <strong>internal analytic asset</strong>: what the data can measure and what is being built on top of it. The psychometric machinery (IRT calibration, the confidence signal, the multilevel hierarchy, the AI item-quality loop) is the moat precisely because it stays under the hood. The outward story is &ldquo;evidence-based,&rdquo; not the backend mechanics. Treat everything here as capability / portfolio documentation.</div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-label">Three Things Almost No Competitor Has</div>
+            <ul class="detail-list teal">
+              <li><strong>The confidence signal.</strong> A mandatory, continuous 1&ndash;100 self-rating on every quiz/unit/exit response &mdash; ~1.6M of them. Enables genuine confidence-accuracy calibration and the &ldquo;confident-and-wrong on an airway item&rdquo; clinical-safety quadrant.</li>
+              <li><strong>The institutional hierarchy.</strong> A real student &rarr; school &rarr; branch &rarr; instructor &rarr; cohort FK tree, spanning 239 programs in 30+ states &mdash; the substrate for multilevel and value-added modeling no generic bank can build.</li>
+              <li><strong>The selected option.</strong> We store <em>which</em> wrong answer was chosen, not just right/wrong &mdash; turning every response into full distractor-trace data that feeds the AI item generator.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-label">The Honest Gap Being Closed</div>
+            <ul class="detail-list amber">
+              <li>Current &ldquo;Adaptive&rdquo; exam is <strong>domain-mastery proficiency with random selection</strong> &mdash; no theta, no item information, no true adaptivity.</li>
+              <li><strong>No item statistics are persisted</strong> &mdash; difficulty / discrimination / IRT parameters are computed ad hoc (in <span class="mono">UnitExamStudentService.php</span>) and never saved.</li>
+              <li>Matched NREMT outcomes sit at <strong>~225</strong> &mdash; fine for descriptive validity, too thin to anchor heavy prediction.</li>
+              <li>The summer build replaces random selection with a calibrated bank and a real CAT (theta + max-information selection + stopping rules).</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2: WHAT THE DATA CAN MEASURE ── -->
+  <div class="section" id="signals">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#x1F4E1;</span>
+      <span class="section-title">What the Data Can Measure<span class="section-subtitle">High-signal assets present in the response corpus today</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="grid-3">
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x2705;</span>
+              <span class="ip-card-title">Correctness + Selected Option</span>
+            </div>
+            <div class="ip-card-body">Per-response correctness <strong>and the chosen option text</strong> across the legacy banks (Quiz, Simulator, Unit, Exit). Stored as option text matched back to <span class="mono">questions.option_1..6</span>; Adaptive uses normalized option IDs. This is the IRT calibration matrix and the distractor-analysis input.</div>
+            <span class="ip-tag" style="background:var(--teal-dim);color:var(--teal);">Have now</span>
+          </div>
+
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x1F3AF;</span>
+              <span class="ip-card-title">Continuous Confidence (1&ndash;100)</span>
+            </div>
+            <div class="ip-card-body">A <strong>mandatory per-question 1&ndash;100 slider</strong> stored raw as <span class="mono">confidence_level_range</span> on Quiz/Unit/Exit. The High/Med/Low enum (1&ndash;29 / 30&ndash;70 / 71+) is only a derived instructor label. Enables Brier curves and continuous over/under-confidence &mdash; absent on Simulator/EOPA/Adaptive; entry is client-side-only, so filter <span class="mono">&gt; 0</span>.</div>
+            <span class="ip-tag" style="background:var(--purple-dim);color:var(--purple);">Have now</span>
+          </div>
+
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x1F3DB;</span>
+              <span class="ip-card-title">Institutional Hierarchy</span>
+            </div>
+            <div class="ip-card-body">A real <strong>student &rarr; school &rarr; branch &rarr; instructor &rarr; group/cohort</strong> tree via <span class="mono">users.school_id</span> / <span class="mono">school_branch_id</span> / <span class="mono">instructor_id</span> and <span class="mono">group_students</span>. Caveat: membership changes over time &mdash; use <span class="mono">user_school_transfer_histories</span> for time-correct cluster assignment.</div>
+            <span class="ip-tag" style="background:var(--blue-dim);color:var(--blue);">Have now</span>
+          </div>
+
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x23F1;</span>
+              <span class="ip-card-title">Per-Item Timing &amp; Position</span>
+            </div>
+            <div class="ip-card-body">Duration and <span class="mono">question_number</span> from <span class="mono">*_time_logs</span> enable rapid-guessing / non-effort filters, order effects, and within-attempt fatigue. <strong>Recent-only:</strong> timing migrations land Feb 2026, so the historical bulk has a blind spot &mdash; clean only on post-Feb-2026 data.</div>
+            <span class="ip-tag" style="background:var(--green-dim);color:var(--green);">Have now (recent)</span>
+          </div>
+
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x1F4C8;</span>
+              <span class="ip-card-title">Longitudinal Signal</span>
+            </div>
+            <div class="ip-card-body">Exam-level progression EMT&rarr;AEMT&rarr;Paramedic (<span class="mono">user_exam_level_histories</span>), retakes (<span class="mono">adaptive_exam_retake_requests</span>), and cross-bank linkage via shared <span class="mono">user_id</span> &mdash; one unified per-student record spanning every bank, for learning curves and decay modeling.</div>
+            <span class="ip-tag" style="background:var(--orange-dim);color:var(--orange);">Derivable</span>
+          </div>
+
+          <div class="ip-card">
+            <div class="ip-card-header">
+              <span class="ip-card-icon">&#x1F4CF;</span>
+              <span class="ip-card-title">Item-Exposure Counts</span>
+            </div>
+            <div class="ip-card-body"><span class="mono">COUNT(*) GROUP BY question_id</span> over the response tables sets the per-item N. This threshold decides which items support 1PL vs 2PL calibration &mdash; the practical gate on the entire build, given a sparse per-item bank.</div>
+            <span class="ip-tag" style="background:var(--pink-dim);color:var(--pink);">Derivable</span>
+          </div>
+        </div>
+
+        <div class="callout-purple" style="margin-top:24px;">
+          <div class="callout-purple-title">The 60-Second Picture</div>
+          <div class="callout-purple-body">Richest data: legacy <strong>response records</strong> &mdash; per-question correctness, selected-option text, category/objective tags &mdash; joined to the institutional hierarchy. Thinnest watch-outs: <strong>no item statistics stored</strong>, timing recent-only, confidence bank-limited (none on EOPA/Adaptive), NREMT sparse + manual, Bloom&rsquo;s absent, demographics = DOB + gender only. The anonymized export Brad works from (<span class="mono">anon_GA_combined_question_report.csv</span>, ~308K rows) is a person &times; item &times; correct matrix &mdash; <strong>calibration-ready on day one</strong>.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 3: THE IRT CALIBRATION BUILD ── -->
+  <div class="section" id="irt-build">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#x1F4D0;</span>
+      <span class="section-title">The IRT Calibration Build<span class="section-subtitle">The spine &mdash; everything downstream consumes these parameters</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="step-card">
+          <span class="step-num">1</span>
+          <div class="step-content">
+            <div class="step-title">IRT Parameter Estimation &mdash; the spine (W6)</div>
+            <div class="step-body"><strong>1PL across the production bank; 2PL where response volume supports it.</strong> No full 3PL across all ~10,600 items &mdash; sparse items are excluded by design, and partial pooling over the hierarchy (W20) is the principled answer to thin per-item N, not guessing-parameter models. Calibrate on <strong>Exit + Unit Exam</strong> first (consistent stakes); treat Targeted Quiz as a metacognition signal, not a calibration input, since voluntary low-stakes effort biases difficulty. No persisted parameters exist anywhere &mdash; this is a pure from-scratch build in R / <span class="mono">mirt</span> / <span class="mono">rstan</span>, with nothing to validate against.</div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <span class="step-num">2</span>
+          <div class="step-content">
+            <div class="step-title">Item Quality &amp; Distractor Analysis &mdash; falls out of #1 (W2, W7, W11)</div>
+            <div class="step-body">Because the bank stores the <strong>selected option</strong>, every response becomes distractor-trace data: which wrong answers attract whom, dead distractors, distractors that lure high-ability students, and keys that underperform a distractor. Layered with Rasch fit statistics (infit/outfit + point-biserial), this makes 20k+ items human-reviewable and is the cheapest keying-failure detector. The resulting <strong>item-quality rubric feeds the AI question generator</strong> &mdash; closing a generate&rarr;vet&rarr;improve loop no prep shop has. (Persisting the grade back to the bank is the one piece needing a new migration.)</div>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <span class="step-num">3</span>
+          <div class="step-content">
+            <div class="step-title">CAT Formalization &mdash; deploy in CE/CAPCE, not main mededprep.com (W16)</div>
+            <div class="step-body">Build a real adaptive test on the calibrated bank: <strong>EAP theta estimation + maximum-information item selection + stopping rules.</strong> CE is the right target &mdash; new build, lower-stakes than NREMT, current business priority. The engine is derivable from a calibrated bank; a live test additionally needs new SE/theta/exposure logging columns in the runtime, plus an exposure/retirement ledger (W23) as the safety prerequisite before any CAT goes live.</div>
+          </div>
+        </div>
+
+        <div class="callout-info">
+          <div class="callout-info-title">Calibration Ground Rules</div>
+          <div class="callout-info-body">Separate the streams (Exit + Unit first; Targeted Quiz is metacognition, not calibration). <strong>1PL bank-wide, 2PL where data is rich, no 3PL-across-everything.</strong> Exclude very-low-N items. NREMT outcomes (~225) are fine for descriptive validity but too thin to make prediction a centerpiece &mdash; don&rsquo;t over-promise on it.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 4: PRIORITIZED WISHLIST ── -->
+  <div class="section" id="wishlist">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#x1F5C2;</span>
+      <span class="section-title">Prioritized Wishlist<span class="section-subtitle">Reconciled across two independent feasibility passes (codex + gemini)</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-purple">
+          <div class="callout-purple-title">Top 5 Bets &mdash; High Value AND Confirmed Feasible</div>
+          <div class="callout-purple-body">These five clear both bars: distinctive value, and both feasibility passes confirm the data exists today. Start here.</div>
+        </div>
+
+        <div class="grid-2" style="margin-bottom:24px;">
+          <div class="card"><div class="card-title c-teal">W1 &middot; Confidence-Accuracy Calibration Engine</div><div class="card-body">Confident-and-right vs. confident-and-wrong, per item / student / cohort. The continuous 1&ndash;100 signal makes this genuine Brier-curve calibration &mdash; the EMS clinical-safety story competitors can&rsquo;t tell.</div></div>
+          <div class="card"><div class="card-title c-teal">W2 &middot; Full Distractor / Option-Trace Analysis</div><div class="card-body">The single strongest under-used signal in the bank. Raw selection rates available now; the &ldquo;high-ability picks the distractor&rdquo; cut needs theta from W6. Feeds the AI generator and remediation.</div></div>
+          <div class="card"><div class="card-title c-teal">W4 &middot; Confidence-Keyed Miskey Detector</div><div class="card-body">Items where high-confidence responses are systematically wrong &rarr; probable miskeys / ambiguous stems. Needs <em>no IRT</em>, so it works even where per-item N is too thin to calibrate.</div></div>
+          <div class="card"><div class="card-title c-teal">W9 + W10 &middot; Program/Instructor Value-Added</div><div class="card-body">Shrinkage-adjusted value-added over the real FK hierarchy, paired with incoming-ability adjustment so it doesn&rsquo;t punish programs serving weaker-entering students. Most distinctive institutional asset.</div></div>
+        </div>
+        <div class="card" style="margin-bottom:24px;"><div class="card-title c-teal">W15 &middot; Cohort &amp; State Benchmarking Reports</div><div class="card-body">&ldquo;How do my students compare?&rdquo; is the #1 program-director ask, and 239 programs / 30+ states make it meaningful. The most directly <strong>sellable</strong> artifact &mdash; and the natural payload of the NREMT acquisition calls. Honest label: &ldquo;national&rdquo; is internal-bank-relative, not externally normed.</div></div>
+
+        <div class="table-wrap">
+          <div class="table-label">Full Wishlist &mdash; Feasibility Reconciled (legend: have-now &middot; derivable &middot; needs-capture &middot; needs-NREMT)</div>
+          <table class="data-table">
+            <thead><tr><th>#</th><th>What it is</th><th>Tier</th><th>Feasibility</th></tr></thead>
+            <tbody>
+              <tr><td>W1</td><td>Confidence-accuracy calibration (Brier / over-under-confidence index)</td><td>1</td><td><span class="feas-tag feas-have">Have now</span></td></tr>
+              <tr><td>W2</td><td>Full distractor / option-trace analysis</td><td>1</td><td><span class="feas-tag feas-have">Have / derivable</span></td></tr>
+              <tr><td>W3</td><td>Rapid-guessing / non-effort timing filter</td><td>1</td><td><span class="feas-tag feas-have">Have (recent-only)</span></td></tr>
+              <tr><td>W4</td><td>Confidence-keyed miskey &amp; ambiguity detector</td><td>1</td><td><span class="feas-tag feas-have">Have now</span></td></tr>
+              <tr><td>W5</td><td>Confidence-weighted targeted remediation queue</td><td>1</td><td><span class="feas-tag feas-deriv">Derivable</span></td></tr>
+              <tr><td>W6 &#11088;</td><td>Uneven-N calibration tiering (1PL &rarr; 2PL) &mdash; keystone</td><td>2</td><td><span class="feas-tag feas-deriv">Derivable</span></td></tr>
+              <tr><td>W7</td><td>Rasch fit-statistic flagging (infit/outfit + point-biserial)</td><td>2</td><td><span class="feas-tag feas-deriv">Derivable</span></td></tr>
+              <tr><td>W8</td><td>Distractor-misconception map &rarr; adaptive feedback</td><td>2</td><td><span class="feas-tag feas-capture">Needs capture</span></td></tr>
+              <tr><td>W9</td><td>Program/branch/instructor value-added (multilevel)</td><td>2</td><td><span class="feas-tag feas-have">Have now</span></td></tr>
+              <tr><td>W10</td><td>Incoming-ability adjustment layer (fair value-added)</td><td>2</td><td><span class="feas-tag feas-deriv">Derivable</span></td></tr>
+              <tr><td>W11</td><td>AI-item quality rubric &amp; pre-screen gate</td><td>2</td><td><span class="feas-tag feas-capture">Deriv / capture</span></td></tr>
+              <tr><td>W12</td><td>Knowledge-decay / forgetting curves by domain</td><td>2</td><td><span class="feas-tag feas-deriv">Derivable</span></td></tr>
+              <tr><td>W13</td><td>Exit-exam cut-score validation</td><td>2</td><td><span class="feas-tag feas-acq">Needs NREMT</span></td></tr>
+              <tr><td>W14</td><td>Cross-bank common-item linking &amp; equating</td><td>2</td><td><span class="feas-tag feas-deriv">Derivable</span></td></tr>
+              <tr><td>W15</td><td>Cohort &amp; state benchmarking reports</td><td>2</td><td><span class="feas-tag feas-deriv">Derivable</span></td></tr>
+              <tr><td>W16 &#11088;</td><td>CAT engine for CE/CAPCE (EAP theta + max-info)</td><td>3</td><td><span class="feas-tag feas-capture">Deriv / capture</span></td></tr>
+              <tr><td>W17 &#11088;</td><td>NREMT outcome acquisition campaign (matched, consented)</td><td>3</td><td><span class="feas-tag feas-acq">Needs NREMT</span></td></tr>
+              <tr><td>W18</td><td>Pass-probability predictive model (parsimonious, N-honest)</td><td>3</td><td><span class="feas-tag feas-deriv">Derivable (N-honest)</span></td></tr>
+              <tr><td>W19</td><td>Individual learning-curve trajectories (theta-over-time)</td><td>3</td><td><span class="feas-tag feas-deriv">Derivable</span></td></tr>
+              <tr><td>W20</td><td>Hierarchy-aware multilevel item difficulty (partial pooling)</td><td>3</td><td><span class="feas-tag feas-deriv">Derivable</span></td></tr>
+              <tr><td>W21</td><td>Program-facing reporting dashboard (productized)</td><td>3</td><td><span class="feas-tag feas-deriv">Derivable</span></td></tr>
+              <tr><td>W22</td><td>Program/state DIF screening (curricular, honest scope)</td><td>3</td><td><span class="feas-tag feas-deriv">Deriv (curricular)</span></td></tr>
+              <tr><td>W23</td><td>Item exposure / aging / retirement ledger</td><td>3</td><td><span class="feas-tag feas-deriv">Derivable</span></td></tr>
+              <tr><td>W24</td><td>Predictive-validity white paper</td><td>3</td><td><span class="feas-tag feas-deriv">Derivable (scales w/ N)</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 5: METACOGNITION RESEARCH THREAD ── -->
+  <div class="section" id="metacognition">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#x1F9E0;</span>
+      <span class="section-title">Metacognition Research Thread<span class="section-subtitle">The confidence signal as a publication-track asset</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-info">
+          <div class="callout-info-title">A Remarkable Mandatory Metacognition Dataset</div>
+          <div class="callout-info-body">Students self-rate <strong>every</strong> quiz/unit/exit question on a mandatory continuous 1&ndash;100 confidence slider. Across ~1.6M responses, that is a per-question metacognition corpus essentially no competitor holds &mdash; because almost none capture confidence at all. It upgrades the calibration work from coarse calibration-by-bucket to genuine <strong>continuous</strong> calibration: Brier curves and continuous over/under-confidence indices.</div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-label">What the Research Lane Builds</div>
+            <ul class="detail-list purple">
+              <li>Rerun the metacognition analyses with updated categorizations (TQZ + the continuous confidence signal)</li>
+              <li>The <strong>confident-and-wrong</strong> quadrant &mdash; the EMS clinical-safety angle (e.g. confident-wrong on an airway item)</li>
+              <li>Confidence-weighted targeted remediation queue (W5) on the existing Targeted Quiz surface</li>
+              <li>Design the psychometric gating for AI-generated items</li>
+              <li>Publication-track output under Brad&rsquo;s byline &mdash; the &ldquo;evidence-based&rdquo; sales + CAPCE-accreditation asset</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-label">Confidence-Signal Caveats (Carry Into Every Analysis)</div>
+            <ul class="detail-list amber">
+              <li>Stored raw as <span class="mono">confidence_level_range</span>; the High/Med/Low enum is only a <em>derived</em> instructor label</li>
+              <li>Captured on Quiz / Unit / Exit only &mdash; <strong>absent on Simulator / EOPA / Adaptive</strong></li>
+              <li>Mandatory entry is <strong>client-side-only</strong> &mdash; filter <span class="mono">confidence_level_range &gt; 0</span> and quantify missingness before reporting</li>
+              <li>A confidence-aware CAT stopping rule is blocked until Adaptive captures confidence (needs new capture)</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 6: HONEST CONSTRAINTS ── -->
+  <div class="section" id="constraints">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#x26A0;</span>
+      <span class="section-title">Honest Constraints<span class="section-subtitle">Degradations to respect, not blockers to hide</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-warning">
+          <div class="callout-warning-title">&#9888; Set Expectations Honestly</div>
+          <div class="callout-warning-body">Neither feasibility pass found a single item that is outright not-feasible &mdash; the binding limits are <strong>degradations</strong>, not walls. Listed here so nobody over-promises.</div>
+        </div>
+
+        <div class="risk-card risk-card-high">
+          <div class="risk-card-header">
+            <span class="risk-card-title">NREMT matched outcomes &asymp; 225</span>
+            <span class="risk-badge risk-badge-high">Binding</span>
+          </div>
+          <div class="risk-body">The criterion of record is NREMT pass/fail, but only ~225 individually-matched outcomes exist today &mdash; low power for item-level prediction. Good for <strong>descriptive validity</strong>; too thin to make prediction a centerpiece. <span class="mono">nremt_attempts</span> also has no FK, no attempt number, no exam date, and a <span class="mono">'RECYCLED '</span> enum with a literal trailing space.</div>
+          <div class="risk-action"><strong>The lever (W17):</strong> Brad &mdash; a credentialed psychometrician with a company email &mdash; runs a day-one collection campaign across the 239 programs under a lightweight MOU/consent, growing N toward 800&ndash;1,500. Insist on <strong>individual-matched</strong> outcomes (aggregate program pass rates are far weaker), and fix the schema while building the pipeline. The same calls warm the accounts we later sell reporting to.</div>
+        </div>
+
+        <div class="risk-card risk-card-medium">
+          <div class="risk-card-header">
+            <span class="risk-card-title">No stored item statistics</span>
+            <span class="risk-badge risk-badge-medium">Build-from-scratch</span>
+          </div>
+          <div class="risk-body">No difficulty / discrimination / IRT parameters are persisted anywhere &mdash; discrimination is computed ad hoc in <span class="mono">UnitExamStudentService.php</span> and never saved. Everything is built from raw responses, with <strong>nothing pre-existing to validate against</strong>.</div>
+        </div>
+
+        <div class="risk-card risk-card-medium">
+          <div class="risk-card-header">
+            <span class="risk-card-title">Sparse per-item N &rarr; calibration exclusions</span>
+            <span class="risk-badge risk-badge-medium">Scope</span>
+          </div>
+          <div class="risk-body">Median item exposure is modest and many items are sparse. <strong>1PL bank-wide, 2PL where data supports, no full 3PL across all items.</strong> Very-low-N items are excluded for now; partial pooling over the hierarchy (W20) is the principled answer to sparse N &mdash; not guessing-parameter models.</div>
+        </div>
+
+        <div class="risk-card risk-card-medium">
+          <div class="risk-card-header">
+            <span class="risk-card-title">Timing is recent-only (Feb 2026)</span>
+            <span class="risk-badge risk-badge-medium">Blind spot</span>
+          </div>
+          <div class="risk-body">The <span class="mono">*_time_logs</span> tables only exist post-Feb-2026, so speededness / rapid-guessing / fatigue models have a large historical blind spot. The historical bulk cannot be retroactively cleaned for non-effort &mdash; timing filters apply to recent data only.</div>
+        </div>
+
+        <div class="risk-card risk-card-low">
+          <div class="risk-card-header">
+            <span class="risk-card-title">Other capture limits &mdash; named honestly</span>
+            <span class="risk-badge risk-badge-low">Label</span>
+          </div>
+          <div class="risk-body">
+            <strong>Confidence</strong> is absent on EOPA/Adaptive (blocks a confidence-aware CAT stop). <strong>Demographics</strong> are DOB + gender only &mdash; protected-class fairness DIF is capture-limited, so stay with curricular DIF framing. <strong>Bloom&rsquo;s</strong> taxonomy is absent. <strong>Text-match option keying</strong> has an early-data failure tail (quantify the NULL-key rate and exclude the tail). <strong>Mid-attempt answer changes are deleted</strong>, so the historical &ldquo;vacillation&rdquo; path isn&rsquo;t recoverable. And benchmarking &ldquo;national&rdquo; distributions are <strong>internal-bank-relative</strong>, not externally normed &mdash; label as such.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 7: SUMMER SEQUENCING ── -->
+  <div class="section" id="sequencing">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#x1F5D3;</span>
+      <span class="section-title">Summer Sequencing<span class="section-subtitle">Brad Yang &middot; Psychometrics Intern &middot; Jun 15 &ndash; Aug 21, 2026 &middot; ~200 hrs</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-info">
+          <div class="callout-info-title">One-Sentence Direction</div>
+          <div class="callout-info-body">Build the IRT calibration layer that doesn&rsquo;t exist yet, let item-quality flagging fall out of it, then stand up a real CAT in the CE/CAPCE product &mdash; with the metacognition study running as the parallel research/portfolio thread. Brad works entirely from <strong>anonymized, de-identified exports</strong> (no production access), keeping the ethics/NDA scope clean.</div>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-amber"></div>
+            <span class="phase-badge phase-4">Day 1 &middot; ongoing</span>
+            <div><span class="phase-name">Kick off the long pole (W17)</span><span class="phase-period">~2&ndash;4 hrs/wk background</span></div>
+            <div class="phase-desc">Start the NREMT acquisition campaign immediately &mdash; longest lead time, unlocks W13/W18/W19/W24. Insist on individual-matched outcomes; flag the <span class="mono">nremt_attempts</span> schema fixes to the dev team now.</div>
+          </div>
+
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-teal"></div>
+            <span class="phase-badge phase-1">Weeks 1&ndash;3 &middot; ~40 hrs</span>
+            <div><span class="phase-name">Tier 1 quick wins (no W6 dependency)</span></div>
+            <div class="phase-desc">Ship distinctive, demo-able value fast with zero new capture. Load the GA/KS exports in R / <span class="mono">mirt</span>; fit a 1PL baseline on Exit + Unit responses in Week 1; report the per-item response-count distribution.</div>
+            <ul class="phase-items">
+              <li class="phase-item">W1 confidence calibration</li>
+              <li class="phase-item">W4 miskey detector</li>
+              <li class="phase-item">W2 distractor trace (raw rates)</li>
+              <li class="phase-item">W5 remediation queue</li>
+            </ul>
+          </div>
+
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-blue"></div>
+            <span class="phase-badge phase-2">Weeks 3&ndash;6 &middot; ~50 hrs</span>
+            <div><span class="phase-name">The keystone + immediate children</span></div>
+            <div class="phase-desc"><strong>W6 uneven-N calibration tiering (1PL &rarr; 2PL)</strong> &mdash; the prerequisite for almost everything below. Then W7 fit + point-biserial flagging, and complete the ability-cut on W2.</div>
+            <ul class="phase-items">
+              <li class="phase-item">W6 calibration (keystone)</li>
+              <li class="phase-item">W7 Rasch fit flagging</li>
+              <li class="phase-item">W2 ability cut</li>
+            </ul>
+          </div>
+
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-purple"></div>
+            <span class="phase-badge phase-3">Weeks 6&ndash;9 &middot; ~50 hrs</span>
+            <div><span class="phase-name">The sellable institutional layer</span></div>
+            <div class="phase-desc">W15 benchmarking reports (label &ldquo;national&rdquo; honestly) &mdash; the natural payload of the W17 calls. W9 + W10 together (value-added with incoming-ability adjustment; budget time for partial transfer-history reconstruction). W13 cut-score validation at current N.</div>
+            <ul class="phase-items">
+              <li class="phase-item">W15 benchmarking</li>
+              <li class="phase-item">W9 + W10 value-added</li>
+              <li class="phase-item">W13 cut-score</li>
+            </ul>
+          </div>
+
+          <div class="timeline-phase">
+            <div class="timeline-dot dot-amber"></div>
+            <span class="phase-badge phase-4">Weeks 9&ndash;12 &middot; ~50 hrs</span>
+            <div><span class="phase-name">Evidence + closing the loop</span></div>
+            <div class="phase-desc">W18 pass-probability model (N-honest, CV intervals) &rarr; W24 white paper draft. W11 AI-item rubric (read-side signals now; queue the write-back migration). If time remains, W23 retirement ledger &mdash; the safety prereq before any future CAT.</div>
+            <ul class="phase-items">
+              <li class="phase-item">W18 pass-probability</li>
+              <li class="phase-item">W24 white paper</li>
+              <li class="phase-item">W11 AI-item rubric</li>
+              <li class="phase-item">W23 ledger</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout-purple" style="margin-top:24px;">
+          <div class="callout-purple-title">Explicitly Deferred Past Summer</div>
+          <div class="callout-purple-body"><strong>W16 CAT engine</strong> (needs W6 mature + a new live-logging migration) and the second-wave items <strong>W12 / W19 / W20 / W21 / W22</strong> &mdash; valuable but gated on W6 and on the transfer-history reconstruction. These become the natural fall roadmap once the foundation and the growing N are in place. The audition for the full-time psychometrician seat: a calibrated bank handed to the dev team for adaptive routing + an item-quality worklist + a working CE CAT prototype + a drafted metacognition analysis.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 8: SOURCE DOCUMENTS ── -->
+  <div class="section" id="docs">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#x1F4C1;</span>
+      <span class="section-title">Source Documents<span class="section-subtitle">brad-yang/ &amp; pscyhometrician/ working files</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="table-wrap">
+          <div class="table-label">Psychometric Working Corpus</div>
+          <table class="data-table">
+            <thead><tr><th>File</th><th>What it is</th></tr></thead>
+            <tbody>
+              <tr><td>psychometric-wishlist.md</td><td>The reconciled W1&ndash;W24 master wishlist &mdash; two independent feasibility passes (codex + gemini) verified against the <span class="mono">mededprep-c</span> schema, with conservative resolution and a ~200-hour summer sequencing plan.</td></tr>
+              <tr><td>data-inventory.md</td><td>Unified psychometric data inventory &mdash; the 60-second picture, gap-fills, and seven cross-cutting data-quality traps to carry into every analysis.</td></tr>
+              <tr><td>data-inventory-captured.md</td><td>Exhaustive &ldquo;what we capture now&rdquo; table by domain (58KB) &mdash; every signal mapped to its <span class="mono">table.column</span>, grain, coverage, bank, and source migration file.</td></tr>
+              <tr><td>kickoff-brief.md</td><td>Brad&rsquo;s Week-1 one-pager &mdash; the one-sentence direction, four dependency-ordered tracks, calibration ground rules, and Week-1 running start.</td></tr>
+              <tr><td>context-packet.md</td><td>Phase-0 ideation brief &mdash; platform ground truth, what we can measure today, hard constraints, and N-as-a-lever framing.</td></tr>
+              <tr><td>confidence-field-investigation.md</td><td>Full trace establishing the confidence signal is continuous 1&ndash;100 (<span class="mono">confidence_level_range</span>), not a 3-level enum &mdash; the correction that upgraded W1/W4/W5/W18.</td></tr>
+              <tr><td>distractor-data-investigation.md</td><td>Dev-ready SQL + schema map for selected-option storage across every bank, plus 7 open questions for the dev team.</td></tr>
+              <tr><td>pscyhometrician/brad-onboarding.html</td><td>Brad&rsquo;s onboarding page &mdash; project context, the data, and the four-track plan in presentable form.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">Psychometric capability &middot; ~10,600 items &middot; ~1.55M responses &middot; ~4,222 students &middot; IRT build summer 2026 &middot; Last updated: 2026-06-18</div>
+
+</div><!-- /main-inner -->
+
+<!-- ═══════ JAVASCRIPT ═══════ -->
+<script>
+  function toggleSection(header) {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.section-chevron');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    if (chevron) chevron.classList.toggle('open', !isOpen);
+    header.setAttribute('aria-expanded', String(!isOpen));
+    header.classList.toggle('active', !isOpen);
+  }
+
+  function toggleAll(open) {
+    document.querySelectorAll('.section-body').forEach(body => {
+      const header = body.previousElementSibling;
+      const chevron = header.querySelector('.section-chevron');
+      body.classList.toggle('open', open);
+      if (chevron) chevron.classList.toggle('open', open);
+      header.setAttribute('aria-expanded', String(open));
+      header.classList.toggle('active', open);
+    });
+  }
+
+  // Scroll-triggered section reveal
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -60px 0px', threshold: 0.05 });
+
+  document.querySelectorAll('.section').forEach(s => revealObserver.observe(s));
+
+  // Keyboard accessibility
+  document.querySelectorAll('.section-header').forEach(el => {
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

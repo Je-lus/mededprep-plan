@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Pulse CE - Post-Test</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#36C98D",
+                        "primary-hover": "#2DB87E",
+                        "primary-active": "#28A572",
+                        background: "#0A0A0A",
+                        surface: "#111111",
+                        "surface-elevated": "#1A1A1A",
+                        "surface-hover": "#1F1F1F",
+                        "border-subtle": "rgba(255, 255, 255, 0.08)",
+                        "border-default": "rgba(255, 255, 255, 0.12)",
+                        "border-strong": "rgba(255, 255, 255, 0.2)",
+                        error: "#E5484D",
+                        warning: "#F5A623",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Inter", "sans-serif"],
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+<style>body {
+    background-color: #0A0A0A;
+    color: #FFF;
+    font-family: "Inter", sans-serif;
+    -webkit-tap-highlight-color: transparent
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    vertical-align: middle
+    }
+.film-grain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.04;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuARbF4bbniZ2G3a5HOYZFYBWByEyqYYIXHkWCNi17wugY7zaVbBJz4x-Vl33M1zRpnoG8-LcGk4VT82LJx-rYV4SLi_-FOGQxTRMdLQDjNnFT46FpyHSTLl6SoNHo-NIN0Wr1pQ56kM3yLkz5jKIYF9e-bKYRIPRsZjT8Ln8QqZRcnRo-569WRUnM5744Jna5n5N8MrOnlRFsmbI7OUJD9NocLlISou4621jNiDraR6yfSnUU1i0k3qvzotlc6Lj6tzJ4q0hi0vg5vX)
+    }
+.green-glow-card {
+    box-shadow: 0 0 20px rgba(54, 201, 141, 0.05)
+    }
+.selected-option {
+    border-left: 4px solid #36C98D !important;
+    background-color: rgba(54, 201, 141, 0.08) !important;
+    border-color: rgba(54, 201, 141, 0.3) !important
+    }
+.progress-dot-active {
+    box-shadow: 0 0 8px #36C98D
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-white min-h-screen flex flex-col pb-24">
+<div class="film-grain"></div>
+<!-- Top App Bar (Shared Component Strategy) -->
+<header class="fixed top-0 w-full z-50 bg-[#0A0A0A] border-b border-white/10 shadow-[0_0_20px_rgba(54,201,141,0.05)] flex items-center justify-between px-4 h-16">
+<div class="flex items-center gap-3">
+<button class="active:scale-95 transition-transform p-1 hover:bg-white/5 rounded-full">
+<span class="material-symbols-outlined text-[#36C98D]">arrow_back</span>
+</button>
+<h1 class="font-headline font-semibold text-lg tracking-tight">Post-Test</h1>
+</div>
+<div class="flex items-center gap-2">
+<div class="text-[10px] font-label font-bold text-white/50 uppercase tracking-widest mr-1">85%</div>
+<div class="w-16 h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-[#36C98D] rounded-full" style="width: 85%;"></div>
+</div>
+<button class="active:scale-95 transition-transform p-1 hover:bg-white/5 rounded-full ml-2">
+<span class="material-symbols-outlined text-white/70">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="mt-16 flex-grow px-4 py-6 max-w-md mx-auto w-full">
+<!-- Question Meta -->
+<div class="flex justify-between items-center mb-6">
+<span class="text-primary font-bold text-sm tracking-wide font-label uppercase">Question 12 of 20</span>
+<div class="px-2.5 py-1 bg-warning/10 border border-warning/20 rounded-md">
+<span class="text-warning text-[11px] font-bold uppercase tracking-wider">70% to pass</span>
+</div>
+</div>
+<!-- Clinical Vignette -->
+<div class="mb-8">
+<h2 class="text-lg font-semibold leading-relaxed text-white/95">
+                During transport of a STEMI patient, you note new-onset Mobitz Type II second-degree AV block on the monitor. The patient is hemodynamically stable with a heart rate of 52 bpm. What is the most appropriate next step?
+            </h2>
+</div>
+<!-- Answer Options -->
+<div class="space-y-3 mb-10">
+<!-- Option A -->
+<button class="w-full text-left p-4 rounded-lg bg-surface border border-border-default hover:bg-surface-hover active:scale-[0.99] transition-all flex justify-between items-center group">
+<div class="flex gap-4 items-start">
+<span class="text-white/40 font-bold font-label mt-0.5">A</span>
+<span class="text-white/80 font-medium">Administer atropine 0.5mg IV</span>
+</div>
+</button>
+<!-- Option B (Selected/Active) -->
+<button class="w-full text-left p-4 rounded-lg bg-surface border border-border-default selected-option active:scale-[0.99] transition-all flex justify-between items-center group">
+<div class="flex gap-4 items-start">
+<span class="text-primary font-bold font-label mt-0.5">B</span>
+<span class="text-white font-semibold">Apply transcutaneous pacing pads and prepare for pacing</span>
+</div>
+<div class="bg-primary h-6 w-6 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(54,201,141,0.3)]">
+<span class="material-symbols-outlined text-background text-sm font-bold" style="font-variation-settings: 'wght' 700">check</span>
+</div>
+</button>
+<!-- Option C -->
+<button class="w-full text-left p-4 rounded-lg bg-surface border border-border-default hover:bg-surface-hover active:scale-[0.99] transition-all flex justify-between items-center group">
+<div class="flex gap-4 items-start">
+<span class="text-white/40 font-bold font-label mt-0.5">C</span>
+<span class="text-white/80 font-medium">Increase IV fluid rate and monitor</span>
+</div>
+</button>
+<!-- Option D -->
+<button class="w-full text-left p-4 rounded-lg bg-surface border border-border-default hover:bg-surface-hover active:scale-[0.99] transition-all flex justify-between items-center group">
+<div class="flex gap-4 items-start">
+<span class="text-white/40 font-bold font-label mt-0.5">D</span>
+<span class="text-white/80 font-medium">Request air medical transport</span>
+</div>
+</button>
+</div>
+<!-- Meta Actions -->
+<div class="flex justify-center mb-8">
+<button class="flex items-center gap-2 text-white/50 hover:text-white transition-colors py-2 px-4 rounded-full hover:bg-white/5">
+<span class="material-symbols-outlined text-lg">flag</span>
+<span class="text-sm font-medium">Flag for Review</span>
+</button>
+</div>
+<!-- Progress Tracker Dots -->
+<div class="flex flex-wrap justify-center gap-2 px-4">
+<!-- Simplified loop simulation -->
+<div class="w-2 h-2 rounded-full bg-primary/40"></div>
+<div class="w-2 h-2 rounded-full bg-primary/40"></div>
+<div class="w-2 h-2 rounded-full bg-primary/40"></div>
+<div class="w-2 h-2 rounded-full bg-primary/40"></div>
+<div class="w-2 h-2 rounded-full bg-primary/40"></div>
+<div class="w-2 h-2 rounded-full bg-primary/40"></div>
+<div class="w-2 h-2 rounded-full bg-primary/40"></div>
+<div class="w-2 h-2 rounded-full bg-primary/40"></div>
+<div class="w-2 h-2 rounded-full bg-primary/40"></div>
+<div class="w-2 h-2 rounded-full bg-primary/40"></div>
+<div class="w-2 h-2 rounded-full bg-primary/40"></div>
+<div class="w-2 h-2 rounded-full bg-primary progress-dot-active"></div>
+<div class="w-2 h-2 rounded-full bg-white/10"></div>
+<div class="w-2 h-2 rounded-full bg-white/10"></div>
+<div class="w-2 h-2 rounded-full bg-white/10"></div>
+<div class="w-2 h-2 rounded-full bg-white/10"></div>
+<div class="w-2 h-2 rounded-full bg-white/10"></div>
+<div class="w-2 h-2 rounded-full bg-white/10"></div>
+<div class="w-2 h-2 rounded-full bg-white/10"></div>
+<div class="w-2 h-2 rounded-full bg-white/10"></div>
+</div>
+</main>
+<!-- Bottom Navigation Buttons (Contextual for focused task) -->
+<nav class="fixed bottom-0 w-full bg-[#111111] border-t border-white/10 px-4 py-4 flex gap-4 z-50">
+<button class="flex-1 py-4 border border-border-default rounded-lg font-bold uppercase tracking-widest text-xs text-white/70 active:bg-white/5 transition-all">
+            Previous
+        </button>
+<button class="flex-[2] py-4 bg-primary text-background rounded-lg font-extrabold uppercase tracking-widest text-xs shadow-[0_4px_12px_rgba(54,201,141,0.2)] active:scale-[0.98] transition-all">
+            Next Question
+        </button>
+</nav>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-40 flex justify-around items-center h-16 pb-safe px-4 bg-[#111111] border-t border-white/10 rounded-t-xl shadow-[0_-4px_12px_rgba(0,0,0,0.5)]" style="bottom:60px;">
+<a href="../dashboard-variant-h-pulse.html" class="flex flex-col items-center justify-center text-white/45 active:scale-90 transition-transform" style="text-decoration:none">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label text-[10px] font-medium">Home</span>
+</a>
+<a href="../batch-4-learner-portal/40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center text-white/45 active:scale-90 transition-transform" style="text-decoration:none">
+<span class="material-symbols-outlined">school</span>
+<span class="font-label text-[10px] font-medium">Courses</span>
+</a>
+<a href="../batch-4-learner-portal/38-certificate-view-mobile.html" class="flex flex-col items-center justify-center text-white/45 active:scale-90 transition-transform" style="text-decoration:none">
+<span class="material-symbols-outlined">verified</span>
+<span class="font-label text-[10px] font-medium">Certs</span>
+</a>
+<a href="../batch-4-learner-portal/41-settings-mobile.html" class="flex flex-col items-center justify-center text-white/45 active:scale-90 transition-transform" style="text-decoration:none">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label text-[10px] font-medium">Profile</span>
+</a>
+</nav>
+<!-- Visual Polish: Atmospheric Glow -->
+<div class="fixed top-0 right-0 w-64 h-64 bg-primary/5 blur-[100px] pointer-events-none -z-10"></div>
+<div class="fixed bottom-0 left-0 w-48 h-48 bg-primary/5 blur-[80px] pointer-events-none -z-10"></div>
+<script>
+        // Micro-interaction for feedback
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', () => {
+                if (window.navigator.vibrate) {
+                    window.navigator.vibrate(5);
+                }
+            });
+        });
+
+        // Background Atmosphere Shift
+        const main = document.querySelector('main');
+        window.addEventListener('scroll', () => {
+            const scrollPos = window.scrollY;
+            main.style.transform = `translateY(${scrollPos * 0.05}px)`;
+        });
+    </script>
+</body></html>

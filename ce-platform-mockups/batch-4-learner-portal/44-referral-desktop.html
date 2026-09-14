@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Refer a Colleague | Pulse CE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --pulse-green: #36C98D;
+            --bg-base: #0A0A0A;
+            --surface-card: #111111;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base);
+            background-image: linear-gradient(180deg, rgba(54, 201, 141, 0.03) 0%, rgba(10, 10, 10, 1) 100%);
+            color: #e5e2e1;
+        }
+        .glass-card {
+            background: var(--surface-card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .interactive-glow:hover {
+            box-shadow: 0 0 20px rgba(54, 201, 141, 0.15);
+            border-color: rgba(54, 201, 141, 0.4);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#5ae6a7",
+                        "primary-container": "#36c98d",
+                        "on-primary": "#003823",
+                        "background": "#131313",
+                        "surface": "#131313",
+                        "surface-container-low": "#1c1b1b",
+                        "on-surface": "#e5e2e1",
+                        "on-surface-variant": "#bbcabf",
+                        "outline-variant": "#3d4a41"
+                    },
+                    "spacing": {
+                        "max-width": "1280px",
+                        "nav-height": "60px",
+                        "gap-default": "16px",
+                        "margin-desktop": "24px",
+                        "touch-target": "44px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                        "headline-xl": ["30px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                        "headline-lg": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen flex flex-col overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-background/85 backdrop-blur-md border-b border-outline-variant/30 shadow-[0_0_20px_rgba(54,201,141,0.15)]">
+<div class="flex justify-between items-center h-[60px] px-margin-desktop max-w-max-width mx-auto">
+<div class="font-headline-lg text-headline-lg font-black text-primary tracking-tight">Pulse CE</div>
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200" href="../dashboard-variant-h-pulse.html">Dashboard</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200" href="40-compliance-tracker-desktop.html">Courses</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="45-extended-practice-desktop.html">Practice</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="40-compliance-tracker-desktop.html">Compliance</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<div class="relative group">
+<div class="w-8 h-8 rounded-full overflow-hidden border-2 border-primary ring-2 ring-primary/20 cursor-pointer">
+<img alt="User profile avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4vkwbRnYZUvSqOm8_UqipBZujTEWaq8dQkIc0gMT3K6S7TAjGSJWmU_KPZ9ymV6fNsF6fgmLYtli2JpRrcyhOiCg7mS6XsTVwnvWg_UzXo3GV2pp2yjSVzl-GADwU5hUFWDxhCjfShRmVrsB1t9nGAH8gGux3dxYXEA5HIcWbgBf39hWHaOlhLGzlNgNTov8xFHL9HFfPcQK7qmxsf5m4nFYlkwqFpT5LIfoeCZqKbOh0gjXTh7nye5c6Kl9jW5_XEvWC9VHpmU8"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow pt-[80px] pb-[100px] px-margin-mobile md:px-margin-desktop max-w-max-width mx-auto w-full">
+<!-- Hero Section -->
+<section class="mb-10">
+<div class="glass-card rounded-xl p-6 md:p-10 relative overflow-hidden flex flex-col md:flex-row items-center gap-10">
+<!-- Decorative Glow -->
+<div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 blur-[100px] rounded-full"></div>
+<div class="flex-1 z-10">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full border border-primary/20 mb-4">
+<span class="material-symbols-outlined text-primary text-[16px]">group_add</span>
+<span class="font-label-caps text-label-caps text-primary uppercase">Referral Program</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-3">Refer a Colleague</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 max-w-lg">
+                        Help your team stay compliant and earn bonus Continuing Education Hours. Share your unique link and for every colleague who joins, you both get closer to your certification goals.
+                    </p>
+<div class="flex flex-col gap-4">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase ml-1">Your Unique Link</label>
+<div class="flex items-center bg-background border border-outline-variant/30 rounded-lg overflow-hidden p-1 focus-within:ring-1 ring-primary/50 transition-all">
+<input class="bg-transparent border-none outline-none text-primary font-medium px-4 flex-grow focus:ring-0" readonly="" type="text" value="https://pulsece.mededprep.com/ref/medic_882"/>
+<button class="bg-primary text-on-primary font-bold px-6 py-2 rounded-md hover:bg-primary/90 active:scale-95 transition-all" onclick="copyLink(this)">Copy</button>
+</div>
+<div class="flex items-center gap-3 mt-2">
+<span class="font-body-md text-body-md text-on-surface-variant mr-2">Share via:</span>
+<button class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:bg-primary/10 hover:text-primary transition-all interactive-glow" title="Email"><span class="material-symbols-outlined">mail</span></button>
+<button class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:bg-primary/10 hover:text-primary transition-all interactive-glow" title="SMS"><span class="material-symbols-outlined">chat_bubble</span></button>
+<button class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:bg-primary/10 hover:text-primary transition-all interactive-glow" title="LinkedIn"><span class="material-symbols-outlined">share</span></button>
+</div>
+</div>
+</div>
+<div class="w-full md:w-[320px] aspect-square rounded-2xl overflow-hidden glass-card relative flex items-center justify-center z-10 border-l-4 border-primary">
+<img class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-700" data-alt="A professional medical environment showing two paramedics in modern dark tactical uniforms discussing medical data on a glowing tablet interface. The background is a clean, dark high-tech medical simulation room with subtle green neon lights reflecting off glass surfaces. The mood is collaborative and professional, emphasizing a sophisticated medical education technology aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGmeD_s-feNEJ312NaFZcEpBRELkRswbuy6zI-27yKLBYSAUyUsYsNz1LkCJ6DCQL-Up0G8LILd7NuJd9Ef20_mObEHrewtMuvfbJSv-4uGfJ57p7GlnhgdTaFmU1iznm5ZtBvT4o5L9wwUDCwpSIcsLk2z2cPL0hddyGCwpJq4gTSononHJCS01ckuhtUQgnB-JvJfIkpJI85qYn2aYdNa8MIXYWRgrTxQerZjndy4qubtr0I0IkGS2xLAD-Afxb8abV3sSzuzSY"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="relative flex flex-col items-center">
+<div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-4 ring-4 ring-primary/10 animate-pulse">
+<span class="material-symbols-outlined text-primary text-4xl" data-weight="fill">cardiology</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface tracking-widest">PULSE NETWORK</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Row -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-gap-default mb-10">
+<div class="glass-card rounded-xl p-6 flex items-center gap-6 border-l-4 border-primary interactive-glow transition-all">
+<div class="w-14 h-14 rounded-xl bg-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">groups</span>
+</div>
+<div>
+<h3 class="font-headline-xl text-headline-xl text-on-surface">3 Referred</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Active colleagues in your network</p>
+</div>
+</div>
+<div class="glass-card rounded-xl p-6 flex items-center gap-6 border-l-4 border-primary interactive-glow transition-all">
+<div class="w-14 h-14 rounded-xl bg-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">verified</span>
+</div>
+<div>
+<h3 class="font-headline-xl text-headline-xl text-on-surface">1.5 CEH Earned</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Applied to your NCCP requirements</p>
+</div>
+</div>
+</section>
+<!-- Referral Status Table -->
+<section class="glass-card rounded-xl overflow-hidden border-t-0">
+<div class="px-6 py-4 border-b border-outline-variant/30 bg-surface-container-low flex justify-between items-center">
+<h2 class="font-headline-lg text-[18px] text-on-surface">Referral Status</h2>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Current Cycle</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant uppercase">Name</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant uppercase">Date Invited</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant uppercase">Status</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant uppercase">Reward</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20">
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-5 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">JD</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">John Doe</span>
+</td>
+<td class="px-6 py-5 font-body-md text-body-md text-on-surface-variant">Oct 12 2026</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-[12px] font-semibold border border-primary/20">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                    Completed Course
+                                </span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="font-body-md text-body-md text-primary font-bold">0.5 CEH</span>
+<span class="material-symbols-outlined text-primary-container text-[18px]" data-weight="fill" title="Earned badge">verified_user</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-5 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-xs">JS</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">Jane Smith</span>
+</td>
+<td class="px-6 py-5 font-body-md text-body-md text-on-surface-variant">Oct 15 2026</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-400/10 text-blue-400 text-[12px] font-semibold border border-blue-400/20">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+                                    Joined
+                                </span>
+</td>
+<td class="px-6 py-5 font-body-md text-body-md text-on-surface-variant italic">Pending</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-5 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-on-surface-variant/20 flex items-center justify-center text-on-surface-variant font-bold text-xs">MJ</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">Mike Johnson</span>
+</td>
+<td class="px-6 py-5 font-body-md text-body-md text-on-surface-variant">Oct 20 2026</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-highest text-on-surface-variant text-[12px] font-semibold border border-outline-variant/30">
+<span class="w-1.5 h-1.5 rounded-full bg-on-surface-variant"></span>
+                                    Pending
+                                </span>
+</td>
+<td class="px-6 py-5 font-body-md text-body-md text-on-surface-variant italic">Pending</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface/90 backdrop-blur-lg rounded-t-xl border-t border-outline-variant/30 shadow-[0_-4px_12px_rgba(0,0,0,0.5)]">
+<div class="flex justify-around items-center h-[60px] px-margin-mobile pb-safe">
+<a href="../dashboard-variant-h-pulse.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none"><span class="material-symbols-outlined">home</span><span class="font-label-caps text-label-caps mt-1">Home</span></a>
+<a href="40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-caps text-label-caps mt-1">Learn</span>
+</a>
+<a href="45-extended-practice-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none"><span class="material-symbols-outlined">fitness_center</span><span class="font-label-caps text-label-caps mt-1">Practice</span></a>
+<a href="40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors" style="text-decoration:none"><span class="material-symbols-outlined">verified_user</span><span class="font-label-caps text-label-caps mt-1">Compliance</span></a>
+<a href="41-settings-mobile.html" class="flex flex-col items-center justify-center text-primary bg-primary-container/10 rounded-xl p-2 shadow-[0_0_15px_rgba(54,201,141,0.2)] scale-95 transition-transform" style="text-decoration:none">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-caps text-label-caps mt-1">Profile</span>
+</a>
+</div>
+</nav>
+<!-- Footer -->
+<footer class="w-full py-8 mt-auto bg-surface-container-low border-t border-outline-variant/20">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop max-w-max-width mx-auto gap-gap-default">
+<div class="font-headline-lg text-headline-lg font-bold text-on-surface">Pulse CE</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Support Center</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">EMS Compliance</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Us</a>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant">
+                © 2024 MedEdPrep Pulse CE. All rights reserved.
+            </div>
+</div>
+</footer>
+<script>
+        function copyLink(btn) {
+            const input = btn.previousElementSibling;
+            input.select();
+            document.execCommand('copy');
+            
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            btn.classList.add('bg-primary-container');
+            
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.classList.remove('bg-primary-container');
+            }, 2000);
+        }
+
+        // Atmospheric micro-interaction: Subtle mouse glow
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.glass-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                }
+            });
+        });
+    </script>
+</body></html>

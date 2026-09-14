@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Welcome - Pulse CE</title>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#36C98D',
+                            hover: '#2DB87E'
+                        },
+                        background: '#0A0A0A',
+                        surface: {
+                            DEFAULT: '#111111',
+                            elevated: '#1A1A1A',
+                            hover: '#1F1F1F'
+                        },
+                        border: {
+                            subtle: 'rgba(255,255,255,0.08)',
+                            DEFAULT: 'rgba(255,255,255,0.12)',
+                            strong: 'rgba(255,255,255,0.2)'
+                        },
+                        text: {
+                            primary: '#FFFFFF',
+                            secondary: 'rgba(255,255,255,0.7)',
+                            tertiary: 'rgba(255,255,255,0.45)'
+                        },
+                        error: '#E5484D',
+                        warning: '#F5A623'
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "md": "0.375rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Inter", "sans-serif"],
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"]
+                    },
+                    backgroundImage: {
+                        'auth-gradient': 'linear-gradient(135deg, #0A0A0A 0%, #0D1A12 50%, #0F3D26 75%, #36C98D 100%)'
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(54,201,141,0.15)'
+                    }
+                }
+            }
+        }
+    </script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A;
+            color: #FFFFFF;
+        }
+        
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .film-grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.04;
+            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+        }
+
+        .auth-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10,10,10,1) 0%, rgba(13,26,18,0.3) 50%, rgba(15,61,38,0.15) 75%, rgba(54,201,141,0.08) 100%);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-6 antialiased selection:bg-primary/30 selection:text-white">
+<div class="auth-bg"></div>
+<div class="film-grain"></div>
+<main class="w-full max-w-[640px] z-10 animate-fade-in-up">
+<!-- Logo Header -->
+<header class="flex flex-col items-center mb-10 text-center">
+<div class="flex flex-col items-center gap-2 mb-8">
+<img alt="Pulse CE Logo" class="w-16 h-16 object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uiQuAMb-iPTR_teZtBbpKcjDXlkM3Bcp-UIgLeUUjUEF2W65wSPHVBpP3pJjeWAY99AvnhOqGgxUtccEez9Q_aKHcqrEifRFTh2nLLWFS6AqP6tvBEQ7Yf3QZCRVq_Z-wylzBiSmdPSZqxaOFU18n0RkBJ7ACE0Xhj44fyX-BQLkAhW9i0rnv9faoWKmBq24bp11kDJVtpSHiQLQSir6Yu_hQBp5OAGk2JX54sCzayhCS6WnsJEI3hXwS7Z"/>
+<div class="flex items-center gap-2">
+<span class="font-extrabold text-2xl tracking-tighter">PULSE</span>
+<span class="font-semibold text-[11px] tracking-[0.1em] text-text-secondary mt-1 uppercase">BY MEDEDPREP</span>
+</div>
+</div>
+<!-- Step Indicator -->
+<div class="flex items-center gap-3">
+<div class="w-12 h-1.5 bg-primary rounded-full shadow-glow"></div>
+<div class="w-12 h-1.5 bg-surface-elevated border border-border rounded-full"></div>
+<div class="w-12 h-1.5 bg-surface-elevated border border-border rounded-full"></div>
+</div>
+</header>
+<!-- Main Content Card Wrapper -->
+<div class="flex flex-col gap-8">
+<!-- Welcome Header -->
+<div class="text-center space-y-2">
+<h1 class="text-[30px] font-bold leading-[1.15] tracking-tight">Welcome to Pulse CE, Sarah!</h1>
+<p class="text-text-secondary text-base">Let's personalize your learning experience</p>
+</div>
+<!-- Certification Card -->
+<div class="bg-surface border border-border rounded-xl p-6 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<span class="text-text-tertiary text-xs uppercase font-medium tracking-wider">Your certification</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">local_police</span>
+<span class="text-white text-[20px] font-bold">Paramedic</span>
+</div>
+<div class="flex items-center gap-1.5 text-text-secondary text-sm mt-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span>Texas</span>
+</div>
+</div>
+<button class="text-primary hover:text-primary-hover text-sm font-medium transition-colors">Edit</button>
+</div>
+</div>
+<!-- Goals Section -->
+<div class="space-y-4">
+<h2 class="text-white text-[18px] font-semibold tracking-tight">What are your goals?</h2>
+<div class="grid grid-cols-1 gap-3">
+<!-- Selected Goal 1 -->
+<label class="group relative flex items-start gap-4 p-4 bg-primary/5 border border-primary rounded-xl cursor-pointer transition-all hover:bg-primary/10">
+<input checked="" class="hidden peer" type="checkbox"/>
+<div class="w-5 h-5 rounded-md border-2 border-primary bg-primary flex items-center justify-center mt-0.5 shadow-glow">
+<span class="material-symbols-outlined text-background text-[14px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">my_location</span>
+<span class="text-white font-medium">Complete recertification requirements</span>
+</div>
+</label>
+<!-- Selected Goal 2 -->
+<label class="group relative flex items-start gap-4 p-4 bg-primary/5 border border-primary rounded-xl cursor-pointer transition-all hover:bg-primary/10">
+<input checked="" class="hidden peer" type="checkbox"/>
+<div class="w-5 h-5 rounded-md border-2 border-primary bg-primary flex items-center justify-center mt-0.5 shadow-glow">
+<span class="material-symbols-outlined text-background text-[14px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">insights</span>
+<span class="text-white font-medium">Strengthen weak clinical areas</span>
+</div>
+</label>
+<!-- Unselected Goal 3 -->
+<label class="group relative flex items-start gap-4 p-4 bg-surface-elevated border border-border rounded-xl cursor-pointer transition-all hover:border-border-strong hover:bg-surface-hover">
+<input class="hidden peer" type="checkbox"/>
+<div class="w-5 h-5 rounded-md border-2 border-text-tertiary bg-transparent flex items-center justify-center mt-0.5 group-hover:border-text-secondary transition-colors">
+<span class="material-symbols-outlined text-transparent text-[14px] peer-checked:text-background" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-text-secondary">autorenew</span>
+<span class="text-text-secondary group-hover:text-white transition-colors">Stay current with protocol changes</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Spaced Retrieval Card -->
+<div class="bg-primary/5 border border-primary/20 rounded-xl p-5 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+<div class="flex flex-col gap-3 relative z-10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<h3 class="text-white font-semibold">Daily Knowledge Check</h3>
+</div>
+<p class="text-text-secondary text-sm leading-relaxed">
+                        Each time you log in, you'll answer one quick clinical question. This spaced retrieval technique strengthens long-term retention — think of it as a 30-second daily workout for your clinical knowledge.
+                    </p>
+<div class="flex items-center gap-1.5 text-text-tertiary text-xs font-medium mt-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Takes less than 30 seconds</span>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col items-center gap-4 mt-4">
+<button class="w-full h-12 bg-primary hover:bg-primary-hover text-background font-semibold rounded-lg transition-all shadow-glow hover:scale-[0.99] active:scale-[0.97] flex items-center justify-center gap-2" onclick="window.location='23-checkout-desktop.html'">
+                    Continue
+                    <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<a class="text-text-tertiary hover:text-white text-sm font-medium transition-colors" href="../dashboard-variant-h-pulse.html">Skip for now</a>
+</div>
+</div>
+</main>
+<script>
+        // Simple script to handle custom checkbox states if needed for interactivity demonstration
+        document.querySelectorAll('label input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const label = this.closest('label');
+                const checkIcon = label.querySelector('.material-symbols-outlined.text-background, .material-symbols-outlined.text-transparent');
+                const borderBox = label.querySelector('div.w-5');
+                const icon = label.querySelector('.flex.items-center.gap-3 .material-symbols-outlined');
+                const text = label.querySelector('.flex.items-center.gap-3 span.font-medium, .flex.items-center.gap-3 span.text-text-secondary');
+
+                if(this.checked) {
+                    label.className = "group relative flex items-start gap-4 p-4 bg-primary/5 border border-primary rounded-xl cursor-pointer transition-all hover:bg-primary/10";
+                    borderBox.className = "w-5 h-5 rounded-md border-2 border-primary bg-primary flex items-center justify-center mt-0.5 shadow-glow";
+                    checkIcon.className = "material-symbols-outlined text-background text-[14px]";
+                    icon.className = "material-symbols-outlined text-primary";
+                    text.className = "text-white font-medium";
+                } else {
+                    label.className = "group relative flex items-start gap-4 p-4 bg-surface-elevated border border-border rounded-xl cursor-pointer transition-all hover:border-border-strong hover:bg-surface-hover";
+                    borderBox.className = "w-5 h-5 rounded-md border-2 border-text-tertiary bg-transparent flex items-center justify-center mt-0.5 group-hover:border-text-secondary transition-colors";
+                    checkIcon.className = "material-symbols-outlined text-transparent text-[14px] peer-checked:text-background";
+                    icon.className = "material-symbols-outlined text-text-secondary";
+                    text.className = "text-text-secondary group-hover:text-white transition-colors";
+                }
+            });
+        });
+    </script>
+</body></html>

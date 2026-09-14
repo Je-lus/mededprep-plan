@@ -7,3 +7,8 @@ node_modules/
 *.key
 *.p12
 *.pfx
+
+# Data too large / duplicated elsewhere - never push
+june-q-data/
+footprint-report/
+.recovery/

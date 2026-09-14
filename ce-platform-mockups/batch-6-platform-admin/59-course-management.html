@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Course Management | Pulse CE Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+    body { background-color: #0A0A0A; color: rgba(255,255,255,0.87); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .pulse-glow { box-shadow: 0 0 15px rgba(54, 201, 141, 0.15); }
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 10px; }
+</style>
+<script>
+    tailwind.config = { darkMode: "class", theme: { extend: { fontFamily: { "sans": ["Inter"], "mono": ["JetBrains Mono"] } } } }
+</script>
+</head>
+<body class="flex min-h-screen overflow-hidden">
+
+<!-- ====== SIDEBAR ====== -->
+<aside class="fixed left-0 top-0 h-full w-[240px] bg-[#0e0e0e] border-r border-[rgba(255,255,255,0.06)] flex flex-col z-50">
+    <div class="p-5 pb-4">
+        <div class="flex items-center gap-2.5 mb-6">
+            <div class="w-8 h-8 rounded-lg bg-[#36C98D] flex items-center justify-center">
+                <span class="material-symbols-outlined text-[18px] text-[#0A0A0A]">favorite</span>
+            </div>
+            <div>
+                <div class="text-[15px] font-bold text-[rgba(255,255,255,0.87)] leading-none">Pulse CE</div>
+                <div class="text-[9px] font-semibold text-[#36C98D] uppercase tracking-[0.1em] mt-0.5">Platform Admin</div>
+            </div>
+        </div>
+        <nav class="space-y-0.5">
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="58-platform-dashboard.html">
+                <span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#36C98D] bg-[rgba(54,201,141,0.08)] border-l-2 border-[#36C98D] text-[13px] font-medium transition-colors" href="59-course-management.html">
+                <span class="material-symbols-outlined text-[20px]">school</span>Courses
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="60-course-editor.html">
+                <span class="material-symbols-outlined text-[20px]">edit_note</span>Course Editor
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="61-item-bank.html">
+                <span class="material-symbols-outlined text-[20px]">database</span>Item Bank
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="62-user-management.html">
+                <span class="material-symbols-outlined text-[20px]">group</span>Users
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="63-agency-management.html">
+                <span class="material-symbols-outlined text-[20px]">corporate_fare</span>Agencies
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="64-analytics-dashboard.html">
+                <span class="material-symbols-outlined text-[20px]">analytics</span>Analytics
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="65-capce-reporting.html">
+                <span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>CAPCE
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="66-content-pipeline.html">
+                <span class="material-symbols-outlined text-[20px]">account_tree</span>Content Pipeline
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="67-financial-reports.html">
+                <span class="material-symbols-outlined text-[20px]">payments</span>Financial
+            </a>
+        </nav>
+    </div>
+    <div class="mt-auto p-4 border-t border-[rgba(255,255,255,0.06)]">
+        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="../batch-3-auth-onboarding/16-login-desktop.html">
+            <span class="material-symbols-outlined text-[20px]">logout</span>Logout
+        </a>
+        <div class="flex items-center gap-3 mt-3 p-2 rounded-[12px] bg-[#111111]">
+            <div class="w-8 h-8 rounded-full bg-[rgba(54,201,141,0.15)] flex items-center justify-center text-[#36C98D] text-[11px] font-bold flex-shrink-0">PA</div>
+            <div class="overflow-hidden">
+                <p class="text-[12px] font-medium text-[rgba(255,255,255,0.87)] truncate">Admin User</p>
+                <p class="text-[10px] text-[rgba(255,255,255,0.4)] truncate">admin@pulsece.com</p>
+            </div>
+        </div>
+    </div>
+</aside>
+
+<!-- ====== MAIN ====== -->
+<main class="ml-[240px] w-[calc(100%-240px)] flex flex-col h-screen overflow-y-auto custom-scrollbar">
+    <!-- Header -->
+    <header class="flex justify-between items-center w-full px-8 h-14 bg-[#111111] border-b border-[rgba(255,255,255,0.06)] sticky top-0 z-40">
+        <div class="flex items-center gap-3">
+            <h1 class="text-[15px] font-semibold text-[rgba(255,255,255,0.87)]">Course Management</h1>
+            <span class="text-[12px] text-[rgba(255,255,255,0.4)]">/</span>
+            <span class="text-[12px] text-[rgba(255,255,255,0.4)]">All Courses</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="relative">
+                <span class="material-symbols-outlined text-[rgba(255,255,255,0.6)] text-[20px] cursor-pointer hover:text-[rgba(255,255,255,0.87)] transition-colors">notifications</span>
+                <span class="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#36C98D] rounded-full border border-[#111111]"></span>
+            </div>
+            <button class="bg-[#36C98D] text-[#0A0A0A] px-4 py-1.5 rounded-lg text-[12px] font-bold flex items-center gap-1.5 pulse-glow hover:brightness-110 transition-all">
+                <span class="material-symbols-outlined text-[16px]">add</span>Create Course
+            </button>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <div class="p-8 space-y-6 max-w-[1600px] mx-auto w-full">
+        <!-- Heading -->
+        <div class="flex justify-between items-end">
+            <div>
+                <h2 class="text-[24px] font-extrabold tracking-tight text-[rgba(255,255,255,0.87)] mb-1">Course Management</h2>
+                <p class="text-[rgba(255,255,255,0.6)] text-[14px]">Manage CE curriculum and monitor learner progress</p>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex items-center gap-8 border-b border-[rgba(255,255,255,0.06)]">
+            <button class="pb-3 px-1 text-[13px] font-bold text-[#36C98D] border-b-2 border-[#36C98D]">All (42)</button>
+            <button class="pb-3 px-1 text-[13px] font-medium text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] transition-colors">Published (28)</button>
+            <button class="pb-3 px-1 text-[13px] font-medium text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] transition-colors">Draft (8)</button>
+            <button class="pb-3 px-1 text-[13px] font-medium text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] transition-colors">Review (4)</button>
+            <button class="pb-3 px-1 text-[13px] font-medium text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] transition-colors">Archived (2)</button>
+        </div>
+
+        <!-- Filters Row -->
+        <div class="flex flex-wrap items-center gap-3">
+            <div class="relative flex-1 min-w-[300px]">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[rgba(255,255,255,0.4)] text-[20px]">search</span>
+                <input class="w-full bg-[#0e0e0e] border border-[rgba(255,255,255,0.1)] rounded-lg py-2 pl-10 pr-4 text-[13px] text-[rgba(255,255,255,0.87)] focus:border-[rgba(54,201,141,0.5)] focus:ring-0 outline-none transition-all placeholder:text-[rgba(255,255,255,0.3)]" placeholder="Search courses by title or keyword..." type="text"/>
+            </div>
+            <div class="flex gap-2">
+                <select class="bg-[#0e0e0e] border border-[rgba(255,255,255,0.1)] rounded-lg py-2 px-4 text-[12px] text-[rgba(255,255,255,0.87)] focus:border-[rgba(54,201,141,0.5)] focus:ring-0 outline-none min-w-[130px]">
+                    <option>NCCP Domain</option><option>Cardiology</option><option>Trauma</option><option>Medical</option>
+                </select>
+                <select class="bg-[#0e0e0e] border border-[rgba(255,255,255,0.1)] rounded-lg py-2 px-4 text-[12px] text-[rgba(255,255,255,0.87)] focus:border-[rgba(54,201,141,0.5)] focus:ring-0 outline-none min-w-[110px]">
+                    <option>Cert Level</option><option>Paramedic</option><option>AEMT</option><option>EMT</option>
+                </select>
+                <select class="bg-[#0e0e0e] border border-[rgba(255,255,255,0.1)] rounded-lg py-2 px-4 text-[12px] text-[rgba(255,255,255,0.87)] focus:border-[rgba(54,201,141,0.5)] focus:ring-0 outline-none min-w-[100px]">
+                    <option>Status</option><option>Published</option><option>Draft</option><option>Review</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="bg-[#111111] rounded-[12px] border border-[rgba(255,255,255,0.06)] overflow-hidden">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)]">
+                        <th class="px-5 py-3 text-[11px] font-bold text-[rgba(255,255,255,0.4)] tracking-wider uppercase">Course Title</th>
+                        <th class="px-4 py-3 text-[11px] font-bold text-[rgba(255,255,255,0.4)] tracking-wider uppercase">NCCP Domain</th>
+                        <th class="px-4 py-3 text-[11px] font-bold text-[rgba(255,255,255,0.4)] tracking-wider uppercase text-center">Cert Level</th>
+                        <th class="px-4 py-3 text-[11px] font-bold text-[rgba(255,255,255,0.4)] tracking-wider uppercase text-center">CE Hours</th>
+                        <th class="px-4 py-3 text-[11px] font-bold text-[rgba(255,255,255,0.4)] tracking-wider uppercase text-center">Enrolled</th>
+                        <th class="px-4 py-3 text-[11px] font-bold text-[rgba(255,255,255,0.4)] tracking-wider uppercase text-center">Rate</th>
+                        <th class="px-4 py-3 text-[11px] font-bold text-[rgba(255,255,255,0.4)] tracking-wider uppercase">Status</th>
+                        <th class="px-5 py-3 text-[11px] font-bold text-[rgba(255,255,255,0.4)] tracking-wider uppercase text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[rgba(255,255,255,0.03)]">
+                    <tr class="hover:bg-[rgba(255,255,255,0.02)] transition-colors cursor-pointer" onclick="window.location='60-course-editor.html'">
+                        <td class="px-5 py-3">
+                            <div class="flex flex-col">
+                                <span class="text-[13px] font-semibold text-[rgba(255,255,255,0.87)]">Advanced Cardiac Life Support Update 2026</span>
+                                <span class="text-[10px] text-[rgba(255,255,255,0.4)] font-mono">ID: CRSE-7742</span>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 text-[10px] font-bold">Cardiology</span></td>
+                        <td class="px-4 py-3 text-center text-[12px]">Paramedic</td>
+                        <td class="px-4 py-3 text-center text-[12px] font-medium">2.0</td>
+                        <td class="px-4 py-3 text-center text-[12px]">342</td>
+                        <td class="px-4 py-3 text-center">
+                            <div class="flex items-center justify-center gap-2">
+                                <span class="text-[12px] font-medium">87%</span>
+                                <div class="w-8 h-1 bg-[rgba(255,255,255,0.06)] rounded-full overflow-hidden"><div class="h-full bg-[#36C98D]" style="width:87%"></div></div>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3"><span class="flex items-center gap-1.5 text-[#36C98D] text-[11px] font-bold"><span class="w-1.5 h-1.5 rounded-full bg-[#36C98D] animate-pulse"></span>Published</span></td>
+                        <td class="px-5 py-3 text-right">
+                            <button class="p-1.5 hover:bg-[rgba(255,255,255,0.06)] rounded-lg transition-colors"><span class="material-symbols-outlined text-[16px] text-[rgba(255,255,255,0.6)]">edit</span></button>
+                            <button class="p-1.5 hover:bg-[rgba(255,255,255,0.06)] rounded-lg transition-colors"><span class="material-symbols-outlined text-[16px] text-[rgba(255,255,255,0.6)]">more_vert</span></button>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-[rgba(255,255,255,0.02)] transition-colors cursor-pointer" onclick="window.location='60-course-editor.html'">
+                        <td class="px-5 py-3"><span class="text-[13px] font-semibold text-[rgba(255,255,255,0.87)]">Pediatric Assessment Triangle</span></td>
+                        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 text-[10px] font-bold">OB/Peds</span></td>
+                        <td class="px-4 py-3 text-center text-[12px]">All</td>
+                        <td class="px-4 py-3 text-center text-[12px] font-medium">1.0</td>
+                        <td class="px-4 py-3 text-center text-[12px]">189</td>
+                        <td class="px-4 py-3 text-center text-[12px] font-medium">92%</td>
+                        <td class="px-4 py-3"><span class="flex items-center gap-1.5 text-[#36C98D] text-[11px] font-bold">Published</span></td>
+                        <td class="px-5 py-3 text-right"><button class="p-1.5 hover:bg-[rgba(255,255,255,0.06)] rounded-lg"><span class="material-symbols-outlined text-[16px] text-[rgba(255,255,255,0.6)]">edit</span></button></td>
+                    </tr>
+                    <tr class="hover:bg-[rgba(255,255,255,0.02)] transition-colors cursor-pointer" onclick="window.location='60-course-editor.html'">
+                        <td class="px-5 py-3"><span class="text-[13px] font-semibold text-[rgba(255,255,255,0.87)]">Trauma Triage Decision Making</span></td>
+                        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-red-500/10 text-red-400 text-[10px] font-bold">Trauma</span></td>
+                        <td class="px-4 py-3 text-center text-[12px]">EMT</td>
+                        <td class="px-4 py-3 text-center text-[12px] font-medium">1.5</td>
+                        <td class="px-4 py-3 text-center text-[12px]">267</td>
+                        <td class="px-4 py-3 text-center text-[12px] font-medium">78%</td>
+                        <td class="px-4 py-3"><span class="flex items-center gap-1.5 text-[#36C98D] text-[11px] font-bold">Published</span></td>
+                        <td class="px-5 py-3 text-right"><button class="p-1.5 hover:bg-[rgba(255,255,255,0.06)] rounded-lg"><span class="material-symbols-outlined text-[16px] text-[rgba(255,255,255,0.6)]">edit</span></button></td>
+                    </tr>
+                    <tr class="hover:bg-[rgba(255,255,255,0.02)] transition-colors cursor-pointer opacity-60" onclick="window.location='60-course-editor.html'">
+                        <td class="px-5 py-3"><span class="text-[13px] font-semibold">Airway Management Essentials</span></td>
+                        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-[rgba(255,255,255,0.06)] text-[rgba(255,255,255,0.6)] text-[10px] font-bold">Airway</span></td>
+                        <td class="px-4 py-3 text-center text-[12px]">AEMT</td>
+                        <td class="px-4 py-3 text-center text-[12px]">1.5</td>
+                        <td class="px-4 py-3 text-center text-[12px]">156</td>
+                        <td class="px-4 py-3 text-center text-[12px]">85%</td>
+                        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-lg bg-[rgba(255,255,255,0.06)] text-[rgba(255,255,255,0.6)] text-[10px] font-bold uppercase">Draft</span></td>
+                        <td class="px-5 py-3 text-right"><button class="p-1.5 hover:bg-[rgba(255,255,255,0.06)] rounded-lg"><span class="material-symbols-outlined text-[16px] text-[rgba(255,255,255,0.6)]">edit</span></button></td>
+                    </tr>
+                    <tr class="hover:bg-[rgba(255,255,255,0.02)] transition-colors cursor-pointer" onclick="window.location='60-course-editor.html'">
+                        <td class="px-5 py-3"><span class="text-[13px] font-semibold text-[rgba(255,255,255,0.87)]">Geriatric Emergency Care</span></td>
+                        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-bold">Medical</span></td>
+                        <td class="px-4 py-3 text-center text-[12px]">EMT</td>
+                        <td class="px-4 py-3 text-center text-[12px] font-medium">1.0</td>
+                        <td class="px-4 py-3 text-center text-[12px]">203</td>
+                        <td class="px-4 py-3 text-center text-[12px] font-medium">91%</td>
+                        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-lg bg-amber-500/10 text-amber-500 text-[10px] font-bold uppercase">Review</span></td>
+                        <td class="px-5 py-3 text-right"><button class="p-1.5 hover:bg-[rgba(255,255,255,0.06)] rounded-lg"><span class="material-symbols-outlined text-[16px] text-[rgba(255,255,255,0.6)]">edit</span></button></td>
+                    </tr>
+                    <tr class="hover:bg-[rgba(255,255,255,0.02)] transition-colors cursor-pointer opacity-60" onclick="window.location='60-course-editor.html'">
+                        <td class="px-5 py-3"><span class="text-[13px] font-semibold">Pharmacology for Paramedics</span></td>
+                        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-bold">Medical</span></td>
+                        <td class="px-4 py-3 text-center text-[12px]">Paramedic</td>
+                        <td class="px-4 py-3 text-center text-[12px]">2.0</td>
+                        <td class="px-4 py-3 text-center text-[12px]">98</td>
+                        <td class="px-4 py-3 text-center text-[12px]">0%</td>
+                        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-lg bg-[rgba(255,255,255,0.06)] text-[rgba(255,255,255,0.6)] text-[10px] font-bold uppercase">Draft</span></td>
+                        <td class="px-5 py-3 text-right"><button class="p-1.5 hover:bg-[rgba(255,255,255,0.06)] rounded-lg"><span class="material-symbols-outlined text-[16px] text-[rgba(255,255,255,0.6)]">edit</span></button></td>
+                    </tr>
+                    <tr class="hover:bg-[rgba(255,255,255,0.02)] transition-colors cursor-pointer" onclick="window.location='60-course-editor.html'">
+                        <td class="px-5 py-3"><span class="text-[13px] font-semibold text-[rgba(255,255,255,0.87)]">Scene Safety and Hazmat Awareness</span></td>
+                        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-orange-500/10 text-orange-400 text-[10px] font-bold">Operations</span></td>
+                        <td class="px-4 py-3 text-center text-[12px]">All</td>
+                        <td class="px-4 py-3 text-center text-[12px] font-medium">0.5</td>
+                        <td class="px-4 py-3 text-center text-[12px]">412</td>
+                        <td class="px-4 py-3 text-center text-[12px] font-medium">94%</td>
+                        <td class="px-4 py-3"><span class="text-[#36C98D] text-[11px] font-bold">Published</span></td>
+                        <td class="px-5 py-3 text-right"><button class="p-1.5 hover:bg-[rgba(255,255,255,0.06)] rounded-lg"><span class="material-symbols-outlined text-[16px] text-[rgba(255,255,255,0.6)]">edit</span></button></td>
+                    </tr>
+                    <tr class="hover:bg-[rgba(255,255,255,0.02)] transition-colors cursor-pointer" onclick="window.location='60-course-editor.html'">
+                        <td class="px-5 py-3"><span class="text-[13px] font-semibold text-[rgba(255,255,255,0.87)]">Stroke Recognition and Management</span></td>
+                        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-bold">Medical</span></td>
+                        <td class="px-4 py-3 text-center text-[12px]">AEMT</td>
+                        <td class="px-4 py-3 text-center text-[12px] font-medium">1.0</td>
+                        <td class="px-4 py-3 text-center text-[12px]">178</td>
+                        <td class="px-4 py-3 text-center text-[12px] font-medium">82%</td>
+                        <td class="px-4 py-3"><span class="text-[#36C98D] text-[11px] font-bold">Published</span></td>
+                        <td class="px-5 py-3 text-right"><button class="p-1.5 hover:bg-[rgba(255,255,255,0.06)] rounded-lg"><span class="material-symbols-outlined text-[16px] text-[rgba(255,255,255,0.6)]">edit</span></button></td>
+                    </tr>
+                    <tr class="hover:bg-[rgba(255,255,255,0.02)] transition-colors cursor-pointer" onclick="window.location='60-course-editor.html'">
+                        <td class="px-5 py-3"><span class="text-[13px] font-semibold text-[rgba(255,255,255,0.87)]">Neonatal Resuscitation</span></td>
+                        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 text-[10px] font-bold">OB/Peds</span></td>
+                        <td class="px-4 py-3 text-center text-[12px]">Paramedic</td>
+                        <td class="px-4 py-3 text-center text-[12px] font-medium">1.5</td>
+                        <td class="px-4 py-3 text-center text-[12px]">67</td>
+                        <td class="px-4 py-3 text-center text-[12px] font-medium">76%</td>
+                        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-lg bg-amber-500/10 text-amber-500 text-[10px] font-bold uppercase">Review</span></td>
+                        <td class="px-5 py-3 text-right"><button class="p-1.5 hover:bg-[rgba(255,255,255,0.06)] rounded-lg"><span class="material-symbols-outlined text-[16px] text-[rgba(255,255,255,0.6)]">edit</span></button></td>
+                    </tr>
+                    <tr class="hover:bg-[rgba(255,255,255,0.02)] transition-colors cursor-pointer" onclick="window.location='60-course-editor.html'">
+                        <td class="px-5 py-3"><span class="text-[13px] font-semibold text-[rgba(255,255,255,0.87)]">EMS Documentation Best Practices</span></td>
+                        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-orange-500/10 text-orange-400 text-[10px] font-bold">Operations</span></td>
+                        <td class="px-4 py-3 text-center text-[12px]">EMT</td>
+                        <td class="px-4 py-3 text-center text-[12px] font-medium">0.5</td>
+                        <td class="px-4 py-3 text-center text-[12px]">289</td>
+                        <td class="px-4 py-3 text-center text-[12px] font-medium">88%</td>
+                        <td class="px-4 py-3"><span class="text-[#36C98D] text-[11px] font-bold">Published</span></td>
+                        <td class="px-5 py-3 text-right"><button class="p-1.5 hover:bg-[rgba(255,255,255,0.06)] rounded-lg"><span class="material-symbols-outlined text-[16px] text-[rgba(255,255,255,0.6)]">edit</span></button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Pagination -->
+            <div class="px-5 py-3 flex items-center justify-between border-t border-[rgba(255,255,255,0.06)]">
+                <span class="text-[12px] text-[rgba(255,255,255,0.4)]">Showing 1-10 of 42</span>
+                <div class="flex items-center gap-1">
+                    <button class="p-1 rounded-lg text-[rgba(255,255,255,0.4)] disabled:opacity-30" disabled><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+                    <button class="w-7 h-7 rounded-lg bg-[#36C98D] text-[#0A0A0A] font-bold text-[12px]">1</button>
+                    <button class="w-7 h-7 rounded-lg hover:bg-[rgba(255,255,255,0.06)] text-[12px] text-[rgba(255,255,255,0.6)]">2</button>
+                    <button class="w-7 h-7 rounded-lg hover:bg-[rgba(255,255,255,0.06)] text-[12px] text-[rgba(255,255,255,0.6)]">3</button>
+                    <span class="px-1 text-[rgba(255,255,255,0.4)] text-[12px]">...</span>
+                    <button class="w-7 h-7 rounded-lg hover:bg-[rgba(255,255,255,0.06)] text-[12px] text-[rgba(255,255,255,0.6)]">5</button>
+                    <button class="p-1 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.06)]"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-[#111111] rounded-[12px] border border-[rgba(255,255,255,0.06)] p-5 flex flex-col gap-1">
+                <span class="text-[10px] font-bold text-[rgba(255,255,255,0.4)] uppercase tracking-wider">Total Enrollments</span>
+                <span class="text-[24px] font-extrabold text-[rgba(255,255,255,0.87)]">2,142</span>
+                <span class="text-[10px] text-[#36C98D] flex items-center gap-1 font-medium">
+                    <span class="material-symbols-outlined text-[14px]">trending_up</span>+12.4% vs last month
+                </span>
+            </div>
+            <div class="bg-[#111111] rounded-[12px] border border-[rgba(255,255,255,0.06)] p-5 flex flex-col gap-1">
+                <span class="text-[10px] font-bold text-[rgba(255,255,255,0.4)] uppercase tracking-wider">Average Completion</span>
+                <span class="text-[24px] font-extrabold text-[rgba(255,255,255,0.87)]">84.2%</span>
+                <div class="w-full h-1.5 bg-[rgba(255,255,255,0.06)] rounded-full mt-2">
+                    <div class="h-full bg-[#36C98D] rounded-full" style="width:84.2%"></div>
+                </div>
+            </div>
+            <div class="bg-[#111111] rounded-[12px] border border-[rgba(255,255,255,0.06)] p-5 flex flex-col gap-1">
+                <span class="text-[10px] font-bold text-[rgba(255,255,255,0.4)] uppercase tracking-wider">CE Credits Issued</span>
+                <span class="text-[24px] font-extrabold text-[rgba(255,255,255,0.87)]">418.5</span>
+                <span class="text-[10px] text-[rgba(255,255,255,0.4)] font-medium">In the last 30 days</span>
+            </div>
+            <div class="bg-[#111111] rounded-[12px] border border-[rgba(255,255,255,0.06)] p-5 flex flex-col justify-center items-center gap-3 cursor-pointer hover:border-[rgba(54,201,141,0.3)] transition-all group">
+                <div class="w-10 h-10 rounded-full bg-[rgba(54,201,141,0.08)] flex items-center justify-center text-[#36C98D] group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined">analytics</span>
+                </div>
+                <span class="text-[12px] font-bold">View Curriculum Analytics</span>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

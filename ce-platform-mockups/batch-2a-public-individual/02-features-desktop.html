@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulse CE — Features (Desktop)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0A0A0A; --surface: #111111; --surface-elevated: #1A1A1A;
+      --border-subtle: rgba(255,255,255,0.08); --border-default: rgba(255,255,255,0.12);
+      --border-strong: rgba(255,255,255,0.2);
+      --text-primary: #FFFFFF; --text-secondary: rgba(255,255,255,0.7);
+      --text-tertiary: rgba(255,255,255,0.45);
+      --green: #36C98D; --green-hover: #2DB87E; --green-dim: rgba(54,201,141,0.12);
+      --green-border: rgba(54,201,141,0.3); --amber: #F5A623; --red: #E5484D;
+      --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
+      --radius-pill: 9999px;
+      --shadow-card: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg); color: var(--text-primary);
+      min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; mix-blend-mode: overlay; opacity: 0.5; z-index: 0;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+    /* NAV — same as landing */
+    .top-nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 64px;
+      background: rgba(10,10,10,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: linear-gradient(135deg, #36C98D, #2ba876);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .brand-icon svg { width: 20px; height: 20px; }
+    .brand-text { display: flex; flex-direction: column; }
+    .brand-pulse { font-size: 17px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.02em; line-height: 1; }
+    .brand-sub { font-size: 10px; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; line-height: 1; margin-top: 2px; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { text-decoration: none; font-size: 14px; font-weight: 500; color: var(--text-secondary); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a.active { color: var(--text-primary); }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .btn-ghost { background: none; border: none; color: var(--text-secondary); font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; padding: 8px 16px; }
+    .btn-primary { background: var(--green); color: #0A0A0A; border: none; padding: 10px 24px; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+    .btn-primary:hover { background: var(--green-hover); }
+    .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border-strong); padding: 10px 24px; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+    .btn-large { padding: 14px 32px; font-size: 16px; }
+
+    /* HERO */
+    .hero { position: relative; padding: 100px 0 80px; text-align: center; overflow: hidden; }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, #0A0A0A 0%, #0D1A12 40%, #0F3D26 70%, rgba(54,201,141,0.25) 100%);
+      z-index: -1;
+    }
+    .hero h1 { font-size: 56px; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; max-width: 700px; margin: 0 auto 20px; }
+    .hero h1 .accent { color: var(--green); }
+    .hero p { font-size: 18px; color: var(--text-secondary); max-width: 560px; margin: 0 auto; line-height: 1.6; }
+
+    /* SECTIONS */
+    section { padding: 96px 0; position: relative; z-index: 1; }
+    .section-label { font-size: 12px; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+    .section-title { font-size: 36px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 16px; }
+    .section-subtitle { font-size: 18px; color: var(--text-secondary); line-height: 1.6; max-width: 600px; margin-bottom: 48px; }
+
+    /* FEATURE ROW (alternating image+text) */
+    .feature-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+      align-items: center; margin-bottom: 96px;
+    }
+    .feature-row:last-child { margin-bottom: 0; }
+    .feature-row.reverse { direction: rtl; }
+    .feature-row.reverse > * { direction: ltr; }
+    .feature-text .section-label { margin-bottom: 8px; }
+    .feature-text h3 { font-size: 30px; font-weight: 700; line-height: 1.25; margin-bottom: 16px; }
+    .feature-text p { font-size: 16px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; }
+    .feature-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill {
+      background: var(--green-dim); border: 1px solid var(--green-border);
+      border-radius: var(--radius-pill); padding: 6px 14px;
+      font-size: 13px; font-weight: 500; color: var(--green);
+    }
+
+    /* FEATURE VISUAL (mockup cards) */
+    .feature-visual {
+      background: var(--surface); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl); padding: 32px; position: relative; overflow: hidden;
+    }
+
+    /* Adaptive Engine Visual — difficulty curve */
+    .curve-chart {
+      width: 100%; height: 200px; position: relative;
+      border-left: 2px solid var(--border-default);
+      border-bottom: 2px solid var(--border-default);
+    }
+    .curve-chart .axis-label {
+      position: absolute; font-size: 11px; color: var(--text-tertiary); font-weight: 500;
+    }
+    .curve-chart .x-label { bottom: -24px; left: 50%; transform: translateX(-50%); }
+    .curve-chart .y-label { top: 50%; left: -48px; transform: rotate(-90deg) translateX(-50%); transform-origin: 0 0; }
+    .curve-line {
+      position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+    }
+    .curve-line svg { width: 100%; height: 100%; }
+    .data-point {
+      position: absolute; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green); box-shadow: 0 0 8px rgba(54,201,141,0.5);
+    }
+
+    /* Radar Chart Visual */
+    .radar-wrap { text-align: center; }
+    .radar-chart {
+      width: 280px; height: 280px; margin: 0 auto 24px; position: relative;
+    }
+    .radar-chart svg { width: 100%; height: 100%; }
+    .domain-scores { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .domain-bar { }
+    .domain-bar .label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
+    .domain-bar .label span:first-child { color: var(--text-secondary); }
+    .domain-bar .label span:last-child { color: var(--green); font-weight: 600; }
+    .domain-bar .bar { height: 6px; background: var(--surface-elevated); border-radius: 3px; overflow: hidden; }
+    .domain-bar .bar .fill { height: 100%; background: var(--green); border-radius: 3px; }
+
+    /* Forgetting curve visual */
+    .curve-visual { padding: 16px 0; }
+    .curve-visual svg { width: 100%; height: 180px; }
+    .curve-legend { display: flex; gap: 24px; margin-top: 16px; }
+    .curve-legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-secondary); }
+    .curve-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    /* Micro-learning cards */
+    .micro-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .micro-card {
+      background: var(--surface); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: 32px; transition: all 0.25s ease;
+    }
+    .micro-card:hover { border-color: var(--border-default); transform: translateY(-2px); }
+    .micro-icon {
+      width: 48px; height: 48px; border-radius: var(--radius-md);
+      background: var(--green-dim); display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .micro-icon svg { width: 24px; height: 24px; color: var(--green); }
+    .micro-card h4 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+    .micro-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* CTA */
+    .cta-section { position: relative; padding: 80px 0; text-align: center; overflow: hidden; }
+    .cta-section::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(54,201,141,0.05), rgba(54,201,141,0.12));
+      border-top: 1px solid var(--green-border); border-bottom: 1px solid var(--green-border);
+    }
+    .cta-section h2 { font-size: 36px; font-weight: 700; margin-bottom: 16px; position: relative; z-index: 1; }
+    .cta-section p { font-size: 16px; color: var(--text-secondary); margin-bottom: 32px; position: relative; z-index: 1; }
+    .cta-section .btn-primary { position: relative; z-index: 1; }
+    .cta-fine { font-size: 13px; color: var(--text-tertiary); margin-top: 16px; position: relative; z-index: 1; }
+
+    /* FOOTER */
+    footer { padding: 64px 0 32px; border-top: 1px solid var(--border-subtle); position: relative; z-index: 1; }
+    .footer-grid { display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 48px; margin-bottom: 48px; }
+    .footer-brand p { font-size: 13px; color: var(--text-tertiary); line-height: 1.6; max-width: 240px; margin-top: 16px; }
+    .footer-col h4 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 16px; }
+    .footer-col a { display: block; font-size: 14px; color: var(--text-tertiary); text-decoration: none; margin-bottom: 10px; }
+    .footer-col a:hover { color: var(--text-primary); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 24px; border-top: 1px solid var(--border-subtle); }
+    .footer-bottom span { font-size: 13px; color: var(--text-tertiary); }
+    .capce-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--green-dim); border: 1px solid var(--green-border); border-radius: var(--radius-sm); padding: 4px 12px; font-size: 11px; font-weight: 600; color: var(--green); }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="top-nav">
+    <a href="01-landing-desktop.html" class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M3 12h4l3-6 4 12 3-6h4"/></svg>
+      </div>
+      <div class="brand-text"><span class="brand-pulse">PULSE</span><span class="brand-sub">BY MEDEDPREP</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="#" class="active">Features</a>
+      <a href="04-catalog-desktop.html">Courses</a>
+      <a href="03-pricing-desktop.html">Pricing</a>
+      <a href="../batch-2b-agency-b2b/15-for-agencies.html">For Agencies</a>
+    </div>
+    <div class="nav-actions">
+      <a href="../batch-3-auth-onboarding/16-login-desktop.html" class="btn-ghost" style="text-decoration:none;">Log In</a>
+      <a href="../batch-3-auth-onboarding/17-register-desktop.html" class="btn-primary" style="text-decoration:none;">Start Free Trial</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1>CE That <span class="accent">Adapts to You</span></h1>
+      <p>No more one-size-fits-all modules. Pulse CE uses psychometric science to personalize every learning experience for EMS professionals.</p>
+    </div>
+  </section>
+
+  <!-- ADAPTIVE ENGINE -->
+  <section>
+    <div class="container">
+      <div class="feature-row">
+        <div class="feature-text">
+          <div class="section-label">Adaptive Engine</div>
+          <h3>Every Question Calibrated.<br>Every Assessment Unique.</h3>
+          <p>Powered by Item Response Theory (IRT) and Computerized Adaptive Testing (CAT), Pulse CE adjusts question difficulty in real-time based on your demonstrated ability. No two assessments are the same.</p>
+          <p>Unlike traditional CE quizzes where everyone gets the same 10 questions, our engine selects each question based on your previous answers — always at the edge of your knowledge.</p>
+          <div class="feature-pills">
+            <span class="pill">IRT-Calibrated Items</span>
+            <span class="pill">Real-Time Adaptation</span>
+            <span class="pill">10,600+ Question Bank</span>
+          </div>
+        </div>
+        <div class="feature-visual">
+          <div style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; font-weight: 500;">ADAPTIVE DIFFICULTY — LIVE ASSESSMENT</div>
+          <div class="curve-chart">
+            <span class="axis-label y-label">Difficulty</span>
+            <span class="axis-label x-label">Question Number</span>
+            <svg viewBox="0 0 400 180" fill="none" style="width:100%;height:100%;">
+              <path d="M 0 140 Q 40 130, 80 100 T 160 80 T 240 50 T 320 60 T 400 40" stroke="#36C98D" stroke-width="2.5" fill="none" opacity="0.8"/>
+              <path d="M 0 140 Q 40 130, 80 100 T 160 80 T 240 50 T 320 60 T 400 40 L 400 180 L 0 180 Z" fill="url(#grad1)" opacity="0.15"/>
+              <defs><linearGradient id="grad1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#36C98D"/><stop offset="1" stop-color="#36C98D" stop-opacity="0"/></linearGradient></defs>
+              <circle cx="0" cy="140" r="4" fill="#36C98D"/><circle cx="40" cy="130" r="4" fill="#36C98D"/>
+              <circle cx="80" cy="100" r="4" fill="#36C98D"/><circle cx="120" cy="90" r="4" fill="#36C98D"/>
+              <circle cx="160" cy="80" r="4" fill="#36C98D"/><circle cx="200" cy="65" r="4" fill="#36C98D"/>
+              <circle cx="240" cy="50" r="4" fill="#36C98D"/><circle cx="280" cy="55" r="4" fill="#36C98D"/>
+              <circle cx="320" cy="60" r="4" fill="#36C98D"/><circle cx="360" cy="45" r="4" fill="#36C98D"/>
+              <circle cx="400" cy="40" r="4" fill="#36C98D"/>
+              <!-- Ability estimate line -->
+              <line x1="0" y1="60" x2="400" y2="55" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="6 4"/>
+              <text x="405" y="58" fill="rgba(255,255,255,0.4)" font-size="10" font-family="Inter">θ est.</text>
+            </svg>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 24px; font-size: 12px;">
+            <span style="color: var(--text-tertiary);">Question 1</span>
+            <span style="color: var(--green); font-weight: 600;">Ability: 1.42 logits</span>
+            <span style="color: var(--text-tertiary);">Question 15</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGNOSTIC REPORTS -->
+  <section style="background: var(--surface);">
+    <div class="container">
+      <div class="feature-row reverse">
+        <div class="feature-text">
+          <div class="section-label">Diagnostic Reports</div>
+          <h3>Know Exactly Where You Stand</h3>
+          <p>After every assessment, get a detailed diagnostic breakdown across all NCCP knowledge domains. See your strengths, identify your weaknesses, and track improvement over time.</p>
+          <p>Your competency radar updates continuously as you complete more assessments, giving you and your training officer a living picture of clinical readiness.</p>
+          <div class="feature-pills">
+            <span class="pill">6 NCCP Domains</span>
+            <span class="pill">Trend Tracking</span>
+            <span class="pill">Exportable Reports</span>
+          </div>
+        </div>
+        <div class="feature-visual" style="text-align: center;">
+          <div style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 20px; font-weight: 500;">COMPETENCY RADAR — YOUR PROFILE</div>
+          <!-- Radar chart mockup -->
+          <svg viewBox="0 0 300 280" width="300" height="280" style="margin: 0 auto;">
+            <!-- Grid -->
+            <polygon points="150,30 250,90 250,190 150,250 50,190 50,90" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <polygon points="150,60 220,105 220,175 150,220 80,175 80,105" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <polygon points="150,90 190,120 190,160 150,190 110,160 110,120" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <!-- Axes -->
+            <line x1="150" y1="30" x2="150" y2="250" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <line x1="50" y1="90" x2="250" y2="190" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <line x1="50" y1="190" x2="250" y2="90" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <!-- Data -->
+            <polygon points="150,48 232,100 220,185 150,230 72,170 80,100" fill="rgba(54,201,141,0.15)" stroke="#36C98D" stroke-width="2"/>
+            <!-- Labels -->
+            <text x="150" y="20" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11" font-family="Inter">Airway</text>
+            <text x="262" y="90" text-anchor="start" fill="rgba(255,255,255,0.7)" font-size="11" font-family="Inter">Cardiology</text>
+            <text x="262" y="195" text-anchor="start" fill="rgba(255,255,255,0.7)" font-size="11" font-family="Inter">Medical</text>
+            <text x="150" y="268" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11" font-family="Inter">Trauma</text>
+            <text x="38" y="195" text-anchor="end" fill="rgba(255,255,255,0.7)" font-size="11" font-family="Inter">OB/Peds</text>
+            <text x="38" y="90" text-anchor="end" fill="rgba(255,255,255,0.7)" font-size="11" font-family="Inter">Operations</text>
+            <!-- Dots -->
+            <circle cx="150" cy="48" r="4" fill="#36C98D"/><circle cx="232" cy="100" r="4" fill="#36C98D"/>
+            <circle cx="220" cy="185" r="4" fill="#36C98D"/><circle cx="150" cy="230" r="4" fill="#36C98D"/>
+            <circle cx="72" cy="170" r="4" fill="#36C98D"/><circle cx="80" cy="100" r="4" fill="#36C98D"/>
+          </svg>
+          <div class="domain-scores" style="margin-top: 20px;">
+            <div class="domain-bar"><div class="label"><span>Airway</span><span>92%</span></div><div class="bar"><div class="fill" style="width:92%"></div></div></div>
+            <div class="domain-bar"><div class="label"><span>Cardiology</span><span>85%</span></div><div class="bar"><div class="fill" style="width:85%"></div></div></div>
+            <div class="domain-bar"><div class="label"><span>Medical</span><span>78%</span></div><div class="bar"><div class="fill" style="width:78%"></div></div></div>
+            <div class="domain-bar"><div class="label"><span>Trauma</span><span>71%</span></div><div class="bar"><div class="fill" style="width:71%;background:var(--amber)"></div></div></div>
+            <div class="domain-bar"><div class="label"><span>OB/Peds</span><span>65%</span></div><div class="bar"><div class="fill" style="width:65%;background:var(--amber)"></div></div></div>
+            <div class="domain-bar"><div class="label"><span>Operations</span><span>88%</span></div><div class="bar"><div class="fill" style="width:88%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPACED RETRIEVAL -->
+  <section>
+    <div class="container">
+      <div class="feature-row">
+        <div class="feature-text">
+          <div class="section-label">Spaced Retrieval</div>
+          <h3>The Forgetting Curve, Defeated</h3>
+          <p>Your brain forgets 70% of new information within 24 hours. Pulse CE's spaced retrieval system sends you precisely-timed review questions that strengthen memory at the exact moment of forgetting.</p>
+          <p>3 questions per day. 60 seconds each. Personalized to your knowledge gaps and timed using cognitive science. It's the difference between cramming and actually knowing.</p>
+          <div class="feature-pills">
+            <span class="pill">Personalized Timing</span>
+            <span class="pill">Confidence-Weighted</span>
+            <span class="pill">NCCP-Aligned</span>
+          </div>
+        </div>
+        <div class="feature-visual">
+          <div style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; font-weight: 500;">KNOWLEDGE RETENTION OVER TIME</div>
+          <svg viewBox="0 0 420 200" style="width:100%; height:200px;">
+            <!-- Axes -->
+            <line x1="40" y1="170" x2="400" y2="170" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+            <line x1="40" y1="20" x2="40" y2="170" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+            <!-- Y axis labels -->
+            <text x="35" y="28" text-anchor="end" fill="rgba(255,255,255,0.4)" font-size="10" font-family="Inter">100%</text>
+            <text x="35" y="98" text-anchor="end" fill="rgba(255,255,255,0.4)" font-size="10" font-family="Inter">50%</text>
+            <text x="35" y="173" text-anchor="end" fill="rgba(255,255,255,0.4)" font-size="10" font-family="Inter">0%</text>
+            <!-- X axis labels -->
+            <text x="40" y="188" fill="rgba(255,255,255,0.4)" font-size="10" font-family="Inter">Day 1</text>
+            <text x="160" y="188" fill="rgba(255,255,255,0.4)" font-size="10" font-family="Inter">Week 1</text>
+            <text x="280" y="188" fill="rgba(255,255,255,0.4)" font-size="10" font-family="Inter">Month 1</text>
+            <text x="370" y="188" fill="rgba(255,255,255,0.4)" font-size="10" font-family="Inter">Month 3</text>
+            <!-- Without spaced retrieval (red declining curve) -->
+            <path d="M 40 25 Q 80 70, 120 120 T 200 150 T 300 160 T 400 165" stroke="#E5484D" stroke-width="2" fill="none" opacity="0.7" stroke-dasharray="6 3"/>
+            <path d="M 40 25 Q 80 70, 120 120 T 200 150 T 300 160 T 400 165 L 400 170 L 40 170 Z" fill="#E5484D" opacity="0.05"/>
+            <!-- With Pulse CE (green stable curve) -->
+            <path d="M 40 25 Q 60 35, 80 45 T 120 40 T 160 48 T 200 42 T 240 46 T 280 40 T 320 44 T 360 38 T 400 35" stroke="#36C98D" stroke-width="2.5" fill="none"/>
+            <path d="M 40 25 Q 60 35, 80 45 T 120 40 T 160 48 T 200 42 T 240 46 T 280 40 T 320 44 T 360 38 T 400 35 L 400 170 L 40 170 Z" fill="#36C98D" opacity="0.06"/>
+            <!-- Review markers on green line -->
+            <circle cx="80" cy="45" r="3" fill="#36C98D"/><circle cx="120" cy="40" r="3" fill="#36C98D"/>
+            <circle cx="160" cy="48" r="3" fill="#36C98D"/><circle cx="200" cy="42" r="3" fill="#36C98D"/>
+            <circle cx="280" cy="40" r="3" fill="#36C98D"/><circle cx="360" cy="38" r="3" fill="#36C98D"/>
+          </svg>
+          <div class="curve-legend">
+            <div class="curve-legend-item"><div class="curve-legend-dot" style="background: var(--green);"></div> With Pulse CE</div>
+            <div class="curve-legend-item"><div class="curve-legend-dot" style="background: var(--red);"></div> Without Spaced Retrieval</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MICROLEARNING SECTION -->
+  <section style="background: var(--surface);">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <div class="section-label">Microlearning</div>
+        <h2 class="section-title">Designed for 24/48 Shifts</h2>
+        <p class="section-subtitle" style="margin-left:auto; margin-right:auto;">Every feature built around one reality: EMS professionals learn between emergencies, not in classrooms.</p>
+      </div>
+      <div class="micro-grid">
+        <div class="micro-card">
+          <div class="micro-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h4>15-Minute Segments</h4>
+          <p>Every lesson is structured into interruptible 15-minute segments. Start between calls, finish during downtime. Full state persistence means you never lose progress.</p>
+        </div>
+        <div class="micro-card">
+          <div class="micro-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+          </div>
+          <h4>Mobile-First</h4>
+          <p>Built for the device in your pocket. Dark mode default saves battery on OLED screens and reduces eye strain during night shifts. Touch-optimized for one-handed use.</p>
+        </div>
+        <div class="micro-card">
+          <div class="micro-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/><path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/><path d="M10.71 5.05A16 16 0 0 1 22.56 9"/><path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12" y2="20"/></svg>
+          </div>
+          <h4>Offline Ready</h4>
+          <p>Download lessons before your shift. Study anywhere — even in the rig with no signal. Progress syncs automatically when you reconnect.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Experience Adaptive CE</h2>
+      <p>Join 2,400+ EMS professionals who chose smarter continuing education.</p>
+      <a href="../batch-3-auth-onboarding/17-register-desktop.html" class="btn-primary btn-large" style="text-decoration:none;">Start Free Trial</a>
+      <div class="cta-fine">14 days free &middot; No credit card required &middot; Cancel anytime</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="01-landing-desktop.html" class="brand">
+            <div class="brand-icon" style="width:28px;height:28px;"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:16px;height:16px;"><path d="M3 12h4l3-6 4 12 3-6h4"/></svg></div>
+            <div class="brand-text"><span class="brand-pulse" style="font-size:15px;">PULSE</span><span class="brand-sub" style="font-size:9px;">BY MEDEDPREP</span></div>
+          </a>
+          <p>Adaptive continuing education for EMS professionals. CAPCE accredited.</p>
+        </div>
+        <div class="footer-col"><h4>Product</h4><a href="02-features-desktop.html">Features</a><a href="04-catalog-desktop.html">Courses</a><a href="03-pricing-desktop.html">Pricing</a><a href="../batch-2b-agency-b2b/15-for-agencies.html">For Agencies</a></div>
+        <div class="footer-col"><h4>Company</h4><a href="#">About</a><a href="#">Blog</a><a href="#">Careers</a><a href="#">Contact</a></div>
+        <div class="footer-col"><h4>Support</h4><a href="../batch-7-system/help-faq.html">Help Center</a><a href="06-verify-desktop.html">Verification</a><a href="../batch-7-system/terms-of-service.html">Terms</a><a href="../batch-7-system/privacy-policy.html">Privacy</a></div>
+        <div class="footer-col"><h4>Connect</h4><a href="#">LinkedIn</a><a href="#">Twitter / X</a><a href="#">Instagram</a><a href="#">YouTube</a></div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 MedEdPrep, Inc. All rights reserved.</span>
+        <span class="capce-badge">CAPCE Accredited Provider</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

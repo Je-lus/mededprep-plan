@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RightSite Health — Negotiation Brief</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --accent: #1d4ed8;
+    --accent-soft: #e7eefc;
+    --ink: #0f172a;
+    --ink-soft: #475569;
+    --ink-faint: #94a3b8;
+    --line: #e6eaf0;
+    --line-soft: #f0f3f7;
+    --bg: #fbfcfd;
+    --card: #ffffff;
+    --good: #047857;
+    --lms: #ea580c;
+    --radius: 16px;
+    --shadow: 0 1px 2px rgba(15,23,42,.04), 0 10px 30px rgba(15,23,42,.05);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 40px 28px 80px; }
+
+  /* ---- Title ---- */
+  .eyebrow {
+    display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:.72rem;
+    letter-spacing:.08em; text-transform:uppercase;
+    background: var(--accent-soft); color: var(--accent); padding: 5px 12px; border-radius: 999px;
+  }
+  h1.title { font-size: 1.7rem; margin: 14px 0 4px; letter-spacing: -.022em; font-weight: 800; }
+  .situation { color: var(--ink-soft); font-size: .98rem; margin: 0; }
+
+  /* ---- Headline takeaway ---- */
+  .headline {
+    margin: 28px 0 32px; padding: 24px 28px; background: var(--card);
+    border:1px solid var(--line); border-left: 4px solid var(--accent);
+    border-radius: var(--radius); box-shadow: var(--shadow);
+    font-size: 1.22rem; line-height: 1.5; font-weight: 500; letter-spacing:-.01em;
+  }
+  .headline b { font-weight: 800; color: var(--accent); }
+  .headline .save { color: var(--good); font-weight: 800; }
+
+  .section-label {
+    font-size: .74rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 800;
+    color: var(--ink-faint); margin: 0 0 14px;
+  }
+
+  /* ---- Scenario cards ---- */
+  .scenarios { display:grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 38px; }
+  @media (max-width: 760px){ .scenarios { grid-template-columns: 1fr; } }
+  .scn {
+    background: var(--card); border:1.5px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 20px; cursor: pointer; transition: all .16s ease;
+    position: relative;
+  }
+  .scn:hover { border-color: #c3d2f0; transform: translateY(-1px); }
+  .scn.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow); }
+  .scn .role {
+    font-size: .72rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .scn .name { font-size: 1.15rem; font-weight: 800; margin: 2px 0 2px; letter-spacing:-.01em; }
+  .scn .tag { font-size: .8rem; color: var(--ink-soft); margin-bottom: 16px; min-height: 2.4em; }
+  .scn.active .name { color: var(--accent); }
+  .scn .badge {
+    position:absolute; top: 16px; right: 16px; font-size:.64rem; font-weight:800; letter-spacing:.06em;
+    text-transform:uppercase; padding: 3px 8px; border-radius: 999px;
+  }
+  .scn .badge.target { background: var(--accent); color:#fff; }
+  .scn .inputs { display:flex; flex-direction:column; gap: 7px; padding: 14px 0; border-top:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); }
+  .scn .inrow { display:flex; justify-content:space-between; align-items:baseline; font-size:.86rem; }
+  .scn .inrow .k { color: var(--ink-soft); }
+  .scn .inrow .v { font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing:-.01em; }
+  .scn .outputs { padding-top: 14px; display:flex; flex-direction:column; gap: 9px; }
+  .scn .outrow { display:flex; justify-content:space-between; align-items:baseline; }
+  .scn .outrow .k { font-size:.74rem; color: var(--ink-faint); text-transform:uppercase; letter-spacing:.04em; font-weight:700; }
+  .scn .outrow .v { font-weight: 800; font-size: 1.02rem; font-variant-numeric: tabular-nums; letter-spacing:-.01em; }
+  .scn .outrow .v.sv { color: var(--good); }
+
+  /* ---- Chart block ---- */
+  .chart-wrap { display:grid; grid-template-columns: 1.7fr 1fr; gap: 18px; margin-bottom: 40px; }
+  @media (max-width: 760px){ .chart-wrap { grid-template-columns: 1fr; } }
+  .chart-card {
+    background: var(--card); border:1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 22px;
+  }
+  .chart-card h3 { margin: 0 0 2px; font-size: 1rem; letter-spacing:-.01em; }
+  .chart-card .csub { font-size: .8rem; color: var(--ink-soft); margin-bottom: 16px; }
+  .chart-box { position: relative; height: 280px; }
+  .chart-box.sm { height: 200px; }
+  .split-legend { margin-top: 14px; display:flex; flex-direction:column; gap:8px; }
+  .split-legend .lrow { display:flex; align-items:center; justify-content:space-between; font-size:.82rem; }
+  .split-legend .lleft { display:flex; align-items:center; gap:8px; color: var(--ink-soft); }
+  .split-legend .sw { width:11px; height:11px; border-radius:3px; }
+  .split-legend .lval { font-weight:700; font-variant-numeric: tabular-nums; }
+
+  /* ---- Table ---- */
+  .table-card {
+    background: var(--card); border:1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 22px; overflow-x:auto; margin-bottom: 40px;
+  }
+  table { width:100%; border-collapse: collapse; font-size:.86rem; font-variant-numeric: tabular-nums; }
+  th, td { padding: 10px 12px; text-align:right; white-space:nowrap; }
+  th:first-child, td:first-child { text-align:left; }
+  thead th { font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; color: var(--ink-faint);
+    border-bottom: 1.5px solid var(--line); font-weight:800; padding-bottom: 12px; }
+  tbody tr { border-bottom: 1px solid var(--line-soft); }
+  tbody tr:last-child { border-bottom: none; }
+  td.emph { font-weight: 800; color: var(--ink); }
+  td.cum { color: var(--accent); font-weight: 700; }
+  td.save { color: var(--good); font-weight: 700; }
+  td.muted { color: var(--ink-faint); }
+  tfoot td { border-top: 2px solid var(--line); font-weight: 800; padding-top: 13px; }
+  .col-our { background: rgba(29,78,216,.035); }
+
+  /* ---- Playbook ---- */
+  .playbook { display:grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 36px; }
+  @media (max-width: 760px){ .playbook { grid-template-columns: 1fr; } }
+  .pb-card {
+    background: var(--card); border:1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 24px;
+  }
+  .pb-card.full { grid-column: 1 / -1; }
+  .pb-card h4 { margin: 0 0 4px; font-size: .96rem; letter-spacing:-.01em; }
+  .pb-card .h4sub { font-size:.8rem; color: var(--ink-faint); margin-bottom: 16px; }
+  .core-move {
+    background: var(--accent-soft); border-radius: 12px; padding: 16px 18px; margin-bottom: 0;
+    font-size: .95rem; color: var(--ink); font-weight: 500;
+  }
+  .core-move b { color: var(--accent); font-weight: 800; }
+  ul.scripts { list-style:none; margin: 0; padding: 0; display:flex; flex-direction:column; gap: 12px; }
+  ul.scripts li {
+    padding: 13px 16px; border-radius: 11px; background: var(--line-soft);
+    font-size: .9rem; line-height: 1.45; border-left: 3px solid var(--accent);
+  }
+  ul.scripts li.line { border-left-color: var(--good); }
+  ul.scripts li .if { display:block; font-size:.72rem; font-weight:800; text-transform:uppercase;
+    letter-spacing:.05em; color: var(--accent); margin-bottom: 3px; }
+  ul.scripts li.line .if { color: var(--good); }
+
+  /* ---- Live controls ---- */
+  .controls {
+    background: var(--card); border:1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 22px 24px; margin-bottom: 22px;
+  }
+  .controls .ch { display:flex; align-items:baseline; justify-content:space-between; margin-bottom: 18px; }
+  .controls .ch h4 { margin:0; font-size:.96rem; }
+  .controls .ch .reset { border:0; background:transparent; color: var(--accent); cursor:pointer;
+    font-size:.8rem; font-weight:700; }
+  .lvgrid { display:grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  @media (max-width: 560px){ .lvgrid { grid-template-columns: 1fr; } }
+  .ctrl-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom: 8px; }
+  .ctrl-head label { font-size:.85rem; font-weight:700; }
+  .ctrl-head .val { font-variant-numeric: tabular-nums; font-weight:800; font-size:.9rem; color: var(--accent);
+    background: var(--accent-soft); padding: 2px 9px; border-radius: 7px; }
+  input[type=range] {
+    width:100%; -webkit-appearance:none; appearance:none; height: 6px; border-radius: 999px;
+    background: var(--line); outline:none; margin: 0;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance:none; appearance:none; width:19px; height:19px; border-radius:50%;
+    background: var(--accent); cursor:pointer; border: 3px solid #fff; box-shadow: 0 1px 5px rgba(29,78,216,.45);
+  }
+  input[type=range]::-moz-range-thumb {
+    width:19px; height:19px; border-radius:50%; background: var(--accent); cursor:pointer;
+    border: 3px solid #fff; box-shadow: 0 1px 5px rgba(29,78,216,.45);
+  }
+  .hint { font-size:.74rem; color: var(--ink-faint); margin-top: 6px; }
+
+  details.adjust {
+    background: var(--card); border:1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); overflow:hidden; margin-bottom: 28px;
+  }
+  details.adjust summary { cursor:pointer; padding: 18px 24px; font-weight:700; font-size:.92rem; list-style:none; }
+  details.adjust summary::-webkit-details-marker { display:none; }
+  details.adjust summary::before { content:"▸"; color: var(--accent); margin-right: 8px; display:inline-block; }
+  details.adjust[open] summary::before { content:"▾"; }
+  details.adjust summary .sm { font-weight:500; color: var(--ink-faint); font-size:.82rem; margin-left:6px; }
+  details.adjust .body { padding: 4px 24px 24px; }
+  .adjgrid { display:grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  @media (max-width: 560px){ .adjgrid { grid-template-columns: 1fr; } }
+  .switch-row { display:flex; align-items:center; justify-content:space-between; }
+  .switch-row .sl { font-size:.85rem; font-weight:700; }
+  .switch { position:relative; width:44px; height:24px; flex:none; }
+  .switch input { display:none; }
+  .switch .track { position:absolute; inset:0; background: var(--line); border-radius:999px; transition:.18s; cursor:pointer; }
+  .switch .track::after { content:""; position:absolute; left:3px; top:3px; width:18px; height:18px; background:#fff;
+    border-radius:50%; transition:.18s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+  .switch input:checked + .track { background: var(--accent); }
+  .switch input:checked + .track::after { transform: translateX(20px); }
+
+  .disclaimer { font-size:.74rem; color: var(--ink-faint); margin-top: 8px; text-align:center; }
+  .calc-link { font-size:.78rem; color: var(--ink-faint); text-align:center; margin-top: 6px; }
+  .calc-link a { color: var(--accent); text-decoration:none; font-weight:600; }
+
+  /* ---- Print ---- */
+  @media print {
+    @page { margin: 12mm; }
+    body { background:#fff; }
+    .wrap { max-width:none; padding: 0; }
+    .no-print { display:none !important; }
+    .headline, .scn, .chart-card, .table-card, .pb-card {
+      box-shadow:none; break-inside: avoid;
+    }
+    .headline { font-size: 1.05rem; padding: 14px 16px; margin: 14px 0 18px; }
+    h1.title { font-size: 1.3rem; }
+    .scenarios { gap: 10px; margin-bottom: 22px; }
+    .scn { padding: 12px; }
+    .scn:hover { transform:none; }
+    .playbook { gap: 12px; margin-bottom: 0; }
+    .pb-card { padding: 16px; }
+    .chart-wrap { margin-bottom: 22px; page-break-inside: avoid; }
+    .chart-box { height: 200px; }
+    .table-card { margin-bottom: 22px; padding: 14px; }
+    .section-label { margin-bottom: 8px; }
+    ul.scripts li { padding: 8px 12px; }
+    .core-move { padding: 10px 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 1. TITLE + SITUATION -->
+  <span class="eyebrow">MedEdPrep × RightSite Health · Call Prep</span>
+  <h1 class="title">RightSite Health — Custom Training Build</h1>
+  <p class="situation">Pricing the RightSite Health interactive training-module engagement — call prep, Tue Jun 23. Houston (4,000) Year 1, Dallas (4,000) Year 2, expansion after.</p>
+
+  <!-- 2. HEADLINE TAKEAWAY -->
+  <div class="headline" id="headline"></div>
+
+  <!-- 3. SCENARIO CARDS -->
+  <p class="section-label">The three numbers — click to drive the page</p>
+  <div class="scenarios" id="scenarios"></div>
+
+  <!-- 4. CHART -->
+  <p class="section-label">The savings story</p>
+  <div class="chart-wrap">
+    <div class="chart-card">
+      <h3>What RightSite pays us vs a commercial LMS</h3>
+      <div class="csub" id="cmpSub">Same 8,000 people, two vendors — across 10 years</div>
+      <div class="chart-box"><canvas id="cmpChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>Where our revenue comes from</h3>
+      <div class="csub">10-year split by line item</div>
+      <div class="chart-box sm"><canvas id="splitChart"></canvas></div>
+      <div class="split-legend" id="splitLegend"></div>
+    </div>
+  </div>
+
+  <!-- 5. TABLE -->
+  <p class="section-label">Year by year</p>
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Certs issued</th>
+          <th class="col-our">Our revenue</th>
+          <th class="col-our">Cumulative</th>
+          <th>LMS alternative</th>
+          <th>RightSite saves</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+      <tfoot id="tfoot"></tfoot>
+    </table>
+  </div>
+
+  <!-- 6. PLAYBOOK -->
+  <p class="section-label">Negotiation playbook — what to say</p>
+  <div class="playbook">
+    <div class="pb-card full">
+      <h4>The core move</h4>
+      <div class="core-move">
+        <b>Anchor high on the build, keep per-cert modest, trade every concession.</b>
+        The build is a one-time number that doesn't compound and costs us little to discount —
+        so it's what you give ground on. The per-cert gets multiplied "×4,000 forever" in their
+        head, so it's your recurring engine — protect it. Never give a concession for free; pull
+        something back every time.
+      </div>
+    </div>
+
+    <div class="pb-card">
+      <h4>Concession scripts</h4>
+      <div class="h4sub">Trade — don't give. Each drop buys a commitment.</div>
+      <ul class="scripts">
+        <li><span class="if">Build → $32K</span>"I can come down to $32K on the build if we lock Dallas in at signing."</li>
+        <li><span class="if">Hold $5/cert</span>"I'll hold $5 a cert if we commit to a 2-year platform term."</li>
+        <li><span class="if">Build → $30K</span>"$30K build works if you can do 50% up front."</li>
+      </ul>
+    </div>
+
+    <div class="pb-card">
+      <h4>Talking lines</h4>
+      <div class="h4sub">The framing that wins the room.</div>
+      <ul class="scripts">
+        <li class="line"><span class="if">Reframe the cost</span>"A commercial LMS runs $5–10 per user per month — $240,000 to $480,000 a year for Houston alone. We charge $5 per certificate issued. You only pay when someone actually finishes."</li>
+        <li class="line"><span class="if">Reframe the build</span>"The build is a small one-time cost. What you're really buying is the hosted platform — and Dallas, and every department after it, is just a re-skin of what we've already built."</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 7. LIVE CONTROLS -->
+  <div class="controls no-print">
+    <div class="ch">
+      <h4>Sandbox a number, live</h4>
+      <button class="reset" id="resetBtn">Reset to active scenario</button>
+    </div>
+    <div class="lvgrid">
+      <div>
+        <div class="ctrl-head">
+          <label>One-time build fee</label>
+          <span class="val" id="buildVal">$33,000</span>
+        </div>
+        <input type="range" id="build" min="0" max="50000" step="1000" value="33000">
+        <div class="hint">Charged Year 1 only. The number you trade down.</div>
+      </div>
+      <div>
+        <div class="ctrl-head">
+          <label>Per-certificate fee</label>
+          <span class="val" id="certVal">$5.00</span>
+        </div>
+        <input type="range" id="cert" min="0" max="15" step="0.5" value="5">
+        <div class="hint">Per completion, every year. Your recurring engine — protect it.</div>
+      </div>
+    </div>
+  </div>
+
+  <details class="adjust no-print">
+    <summary>Adjust assumptions <span class="sm">— completion, turnover, recert, LMS rate, Dallas timing</span></summary>
+    <div class="body">
+      <div class="adjgrid">
+        <div>
+          <div class="ctrl-head"><label>Annual platform floor</label><span class="val" id="floorVal">$7,000</span></div>
+          <input type="range" id="floor" min="0" max="20000" step="500" value="7000">
+          <div class="hint">Flat hosting/admin minimum, every active year.</div>
+        </div>
+        <div>
+          <div class="ctrl-head"><label>Completion rate</label><span class="val" id="complVal">90%</span></div>
+          <input type="range" id="compl" min="50" max="100" step="1" value="90">
+          <div class="hint">% of eligible personnel who actually complete.</div>
+        </div>
+        <div>
+          <div class="ctrl-head"><label>Annual new-hire turnover</label><span class="val" id="turnVal">8%</span></div>
+          <input type="range" id="turn" min="0" max="20" step="1" value="8">
+          <div class="hint">Drives recurring certs from new staff each year.</div>
+        </div>
+        <div>
+          <div class="ctrl-head"><label>LMS comparison rate</label><span class="val" id="lmsVal">$7.00/user/mo</span></div>
+          <input type="range" id="lms" min="5" max="10" step="0.5" value="7">
+          <div class="hint">Commercial per-seat LMS — the savings benchmark.</div>
+        </div>
+        <div>
+          <div class="ctrl-head"><label>Dallas launch year</label><span class="val" id="dallasVal">Year 2</span></div>
+          <input type="range" id="dallas" min="2" max="5" step="1" value="2">
+          <div class="hint">When the second department comes online.</div>
+        </div>
+        <div style="display:flex; align-items:flex-end;">
+          <div class="switch-row" style="width:100%;">
+            <span class="sl">Annual recertification</span>
+            <label class="switch"><input type="checkbox" id="recert"><span class="track"></span></label>
+          </div>
+        </div>
+      </div>
+      <div class="hint" style="margin-top:14px;">Recert OFF = onboard once + new hires each year. ON = full headcount recertifies annually. Per-cert rollout fee for Dallas (and any later department) is waived here to match the conservative open; the first department's standup is always build-covered.</div>
+    </div>
+  </details>
+
+  <p class="disclaimer">Illustrative planning numbers for internal call prep — not a quote or commitment. Math identical to the full pricing model.</p>
+  <p class="calc-link no-print"><a href="pricing-model.html">Open the full sandbox calculator →</a></p>
+
+</div>
+
+<script>
+/* ============================================================
+   MATH — identical engine to pricing-model.html
+   ============================================================ */
+const HORIZON = 10;
+const fmt$ = (n) => '$' + Math.round(n).toLocaleString('en-US');
+const fmt$k = (n) => {
+  if (Math.abs(n) >= 1000000) return '$' + (n/1000000).toFixed(2) + 'M';
+  if (Math.abs(n) >= 1000) return '$' + (n/1000).toFixed(n>=100000?0:1) + 'K';
+  return '$' + Math.round(n);
+};
+const fmtN = (n) => Math.round(n).toLocaleString('en-US');
+
+const SCENARIOS = {
+  anchor: { build: 45000, cert: 7, floor: 9000 },
+  likely: { build: 33000, cert: 5, floor: 7000 },
+  floor:  { build: 28000, cert: 5, floor: 6000 },
+};
+const SCN_META = [
+  { key:'anchor', role:'Open here', name:'Anchor', tag:'Lead with this. It is a visible number that does not compound — and costs us little to give back.', badge:null },
+  { key:'likely', role:'Settle around here', name:'Likely', tag:'The realistic landing spot. This is the target — plan the room around it.', badge:'target' },
+  { key:'floor',  role:'Walk-away',  name:'Floor', tag:'Do not go below this. If they push past it, the per-cert and term have to move first.', badge:null },
+];
+
+// Live, editable assumption state (defaults match pricing-model.html)
+const state = {
+  build: 33000, cert: 5, floor: 7000, rollout: 8000,
+  compl: 90, turn: 8, recert: false, lms: 7,
+  dallas: 2,
+  depts: [
+    { name: 'Houston', hc: 4000, start: 1 },
+    { name: 'Dallas',  hc: 4000, start: 2 },
+  ],
+};
+let activeScenario = 'likely';
+
+// Build the department set (first launcher is build-covered → no rollout fee).
+function computeDepartments(s) {
+  const depts = s.depts.map(d => ({ ...d }));
+  let firstIdx = 0, firstStart = Infinity;
+  depts.forEach((d, i) => { if (d.start < firstStart) { firstStart = d.start; firstIdx = i; } });
+  depts.forEach((d, i) => { d.buildCovered = (i === firstIdx); });
+  return depts;
+}
+
+// Core model — same formulas as the calculator.
+function model(s) {
+  const depts = computeDepartments(s);
+  const compl = s.compl / 100;
+  const turn = s.turn / 100;
+  const rows = [];
+  let cumOur = 0, cumLms = 0;
+
+  for (let y = 1; y <= HORIZON; y++) {
+    let certs = 0, rolloutRev = 0, activeHc = 0;
+    depts.forEach(d => {
+      if (y < d.start) return;
+      activeHc += d.hc;
+      if (y === d.start) {
+        certs += d.hc * compl;
+        if (!d.buildCovered) rolloutRev += s.rollout;
+      } else {
+        certs += s.recert ? (d.hc * compl) : (d.hc * turn * compl);
+      }
+    });
+    const anyLive = activeHc > 0;
+    const buildRev = (y === 1) ? s.build : 0;
+    const certRev = certs * s.cert;
+    const floorRev = anyLive ? s.floor : 0;
+    const ourTotal = buildRev + rolloutRev + certRev + floorRev;
+    cumOur += ourTotal;
+    const lms = activeHc * s.lms * 12;
+    cumLms += lms;
+    rows.push({ y, activeHc, certs, buildRev, rolloutRev, certRev, floorRev, ourTotal, cumOur, lms, savings: lms - ourTotal, cumSave: cumLms - cumOur });
+  }
+  return rows;
+}
+
+/* For each scenario card, run the model with that scenario's three prices
+   but the CURRENT shared assumptions (completion, turnover, lms, dallas, recert). */
+function scenarioState(key) {
+  const sc = SCENARIOS[key];
+  return {
+    ...state,
+    build: sc.build, cert: sc.cert, floor: sc.floor,
+  };
+}
+function scenarioSummary(key) {
+  const rows = model(scenarioState(key));
+  const last = rows[rows.length-1];
+  return {
+    year1: rows[0].ourTotal,
+    tenYrRev: last.cumOur,
+    tenYrSave: last.cumSave,
+    inputs: SCENARIOS[key],
+  };
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+let cmpChart, splitChart;
+
+function renderHeadline() {
+  const a = SCENARIOS.anchor, l = SCENARIOS.likely, f = SCENARIOS.floor;
+  const sum = scenarioSummary(activeScenario);
+  document.getElementById('headline').innerHTML =
+    `Open at <b>${fmt$k(a.build)}</b>. They'll push. Settle around <b>${fmt$k(l.build)} + $${l.cert}/cert</b>. ` +
+    `Don't go below <b>${fmt$k(f.build)}</b>. Whatever you land on, you save RightSite ` +
+    `<span class="save">~${fmt$k(sum.tenYrSave)}</span> over 10 years vs a commercial LMS.`;
+}
+
+function renderScenarios() {
+  const wrap = document.getElementById('scenarios');
+  wrap.innerHTML = SCN_META.map(m => {
+    const s = scenarioSummary(m.key);
+    const i = s.inputs;
+    return `
+      <div class="scn ${m.key===activeScenario?'active':''}" data-key="${m.key}">
+        ${m.badge ? `<span class="badge ${m.badge}">Target</span>` : ''}
+        <div class="role">${m.role}</div>
+        <div class="name">${m.name}</div>
+        <div class="tag">${m.tag}</div>
+        <div class="inputs">
+          <div class="inrow"><span class="k">Build (one-time)</span><span class="v">${fmt$(i.build)}</span></div>
+          <div class="inrow"><span class="k">Per certificate</span><span class="v">$${i.cert.toFixed(2)}</span></div>
+          <div class="inrow"><span class="k">Platform floor / yr</span><span class="v">${fmt$(i.floor)}</span></div>
+        </div>
+        <div class="outputs">
+          <div class="outrow"><span class="k">Year-1 total</span><span class="v">${fmt$(s.year1)}</span></div>
+          <div class="outrow"><span class="k">10-yr revenue (us)</span><span class="v">${fmt$k(s.tenYrRev)}</span></div>
+          <div class="outrow"><span class="k">10-yr savings (them)</span><span class="v sv">${fmt$k(s.tenYrSave)}</span></div>
+        </div>
+      </div>`;
+  }).join('');
+  wrap.querySelectorAll('.scn').forEach(el => {
+    el.addEventListener('click', () => setScenario(el.dataset.key));
+  });
+}
+
+function renderTable(rows) {
+  const tb = document.getElementById('tbody');
+  tb.innerHTML = rows.map(r => `
+    <tr>
+      <td>Year ${r.y}</td>
+      <td class="muted">${fmtN(r.certs)}</td>
+      <td class="emph col-our">${fmt$(r.ourTotal)}</td>
+      <td class="cum col-our">${fmt$(r.cumOur)}</td>
+      <td class="muted">${fmt$(r.lms)}</td>
+      <td class="save">${fmt$(r.savings)}</td>
+    </tr>`).join('');
+  const last = rows[rows.length-1];
+  const sumCerts = rows.reduce((s,r)=>s+r.certs,0);
+  const sumLms = rows.reduce((s,r)=>s+r.lms,0);
+  document.getElementById('tfoot').innerHTML = `
+    <tr>
+      <td>10-yr total</td>
+      <td class="muted">${fmtN(sumCerts)}</td>
+      <td class="emph col-our">${fmt$(last.cumOur)}</td>
+      <td class="cum col-our">${fmt$(last.cumOur)}</td>
+      <td class="muted">${fmt$(sumLms)}</td>
+      <td class="save">${fmt$(last.cumSave)}</td>
+    </tr>`;
+}
+
+const baseChartOpts = (extra={}) => ({
+  responsive: true, maintainAspectRatio: false,
+  interaction: { mode: 'index', intersect: false },
+  plugins: {
+    legend: { labels: { boxWidth: 12, boxHeight: 12, font: { size: 11 }, usePointStyle: true } },
+    tooltip: { callbacks: { label: (c) => c.dataset.label + ': ' + fmt$(c.parsed.y) } },
+  },
+  scales: {
+    x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+    y: { grid: { color: '#eef2f7' }, ticks: { font: { size: 11 }, callback: v => fmt$k(v) }, beginAtZero: true },
+  },
+  ...extra,
+});
+
+function renderCharts(rows) {
+  const labels = rows.map(r => 'Y' + r.y);
+
+  const cmpData = {
+    labels,
+    datasets: [
+      { type:'bar', label: 'Commercial LMS', data: rows.map(r=>r.lms), backgroundColor: 'rgba(234,88,12,.85)', borderRadius:4 },
+      { type:'bar', label: 'With MedEdPrep', data: rows.map(r=>r.ourTotal), backgroundColor: 'rgba(29,78,216,.9)', borderRadius:4 },
+    ],
+  };
+
+  // Revenue split (build / per-cert / floor) over 10 years
+  const sumBuild = rows.reduce((s,r)=>s+r.buildRev,0);
+  const sumCert  = rows.reduce((s,r)=>s+r.certRev,0);
+  const sumFloor = rows.reduce((s,r)=>s+r.floorRev,0);
+  const splitCols = ['#1e3a8a', '#1d4ed8', '#93c5fd'];
+  const splitData = {
+    labels: ['Build (one-time)', 'Per-certificate', 'Platform floor'],
+    datasets: [{ data: [sumBuild, sumCert, sumFloor], backgroundColor: splitCols, borderWidth: 0 }],
+  };
+  const splitTotal = sumBuild + sumCert + sumFloor;
+  document.getElementById('splitLegend').innerHTML =
+    splitData.labels.map((lab,i) => {
+      const v = splitData.datasets[0].data[i];
+      const pct = splitTotal ? Math.round(v/splitTotal*100) : 0;
+      return `<div class="lrow"><span class="lleft"><span class="sw" style="background:${splitCols[i]}"></span>${lab}</span>` +
+             `<span class="lval">${fmt$k(v)} · ${pct}%</span></div>`;
+    }).join('');
+
+  if (!cmpChart) {
+    cmpChart = new Chart(document.getElementById('cmpChart'), { type:'bar', data: cmpData, options: baseChartOpts() });
+    splitChart = new Chart(document.getElementById('splitChart'), {
+      type:'doughnut', data: splitData,
+      options: {
+        responsive:true, maintainAspectRatio:false, cutout:'62%',
+        plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label:(c)=> c.label + ': ' + fmt$(c.parsed) } } },
+      },
+    });
+  } else {
+    cmpChart.data = cmpData; cmpChart.update();
+    splitChart.data = splitData; splitChart.update();
+  }
+}
+
+function recompute() {
+  const rows = model(state);
+  renderHeadline();
+  renderScenarios();
+  renderTable(rows);
+  renderCharts(rows);
+  // keep comparison subtitle honest about active headcount
+  const live = rows[rows.length-1].activeHc;
+  document.getElementById('cmpSub').textContent = `Same ${fmtN(live)} people, two vendors — across 10 years`;
+}
+
+/* ============================================================
+   CONTROLS
+   ============================================================ */
+function setScenario(key) {
+  activeScenario = key;
+  const sc = SCENARIOS[key];
+  state.build = sc.build; state.cert = sc.cert; state.floor = sc.floor;
+  syncControls();
+  recompute();
+}
+
+function syncControls() {
+  document.getElementById('build').value = state.build;
+  document.getElementById('cert').value = state.cert;
+  document.getElementById('floor').value = state.floor;
+  document.getElementById('buildVal').textContent = fmt$(state.build);
+  document.getElementById('certVal').textContent = '$' + state.cert.toFixed(2);
+  document.getElementById('floorVal').textContent = fmt$(state.floor);
+  document.getElementById('complVal').textContent = state.compl + '%';
+  document.getElementById('turnVal').textContent = state.turn + '%';
+  document.getElementById('lmsVal').textContent = '$' + state.lms.toFixed(2) + '/user/mo';
+  document.getElementById('dallasVal').textContent = 'Year ' + state.dallas;
+}
+
+function bindRange(id, key, opts={}) {
+  const el = document.getElementById(id);
+  el.addEventListener('input', () => {
+    state[key] = parseFloat(el.value);
+    if (opts.onChange) opts.onChange();
+    syncControls();
+    recompute();
+  });
+}
+bindRange('build', 'build');
+bindRange('cert', 'cert');
+bindRange('floor', 'floor');
+bindRange('compl', 'compl');
+bindRange('turn', 'turn');
+bindRange('lms', 'lms');
+bindRange('dallas', 'dallas', { onChange: () => { state.depts[1].start = state.dallas; } });
+document.getElementById('recert').addEventListener('change', e => { state.recert = e.target.checked; recompute(); });
+document.getElementById('resetBtn').addEventListener('click', () => setScenario(activeScenario));
+
+/* ============================================================
+   INIT — default active = LIKELY
+   ============================================================ */
+setScenario('likely');
+</script>
+</body>
+</html>

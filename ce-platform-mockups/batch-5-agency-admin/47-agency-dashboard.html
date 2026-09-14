@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulse CE — Agency Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0A0A0A;
+      --surface: #111111;
+      --surface-el: #1A1A1A;
+      --surface-hover: #1F1F1F;
+      --border-subtle: rgba(255,255,255,0.08);
+      --border-default: rgba(255,255,255,0.12);
+      --border-strong: rgba(255,255,255,0.2);
+      --text-1: #FFFFFF;
+      --text-2: rgba(255,255,255,0.7);
+      --text-3: rgba(255,255,255,0.45);
+      --green: #36C98D;
+      --green-dim: rgba(54,201,141,0.12);
+      --green-glow: rgba(54,201,141,0.08);
+      --amber: #F5A623;
+      --amber-dim: rgba(245,166,35,0.15);
+      --red: #E5484D;
+      --red-dim: rgba(229,72,77,0.15);
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --radius-pill: 9999px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-1);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #0A0A0A 0%, #0D1A12 50%, #0F3D26 75%, #36C98D 100%);
+      opacity: 0.07;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      opacity: 0.5;
+      z-index: 0;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width: 240px;
+      min-height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border-subtle);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+    }
+    .sidebar-brand {
+      padding: 0 20px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 8px;
+    }
+    .brand-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .brand-icon {
+      width: 32px; height: 32px;
+      background: var(--green);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .brand-icon svg { width: 20px; height: 20px; }
+    .brand-text { display: flex; flex-direction: column; }
+    .brand-pulse { font-size: 15px; font-weight: 700; color: var(--text-1); letter-spacing: 0.02em; line-height: 1; }
+    .brand-sub { font-size: 9px; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; line-height: 1; margin-top: 2px; }
+    .agency-name { font-size: 12px; color: var(--text-3); font-weight: 500; }
+
+    .sidebar-nav { flex: 1; padding: 8px 0; }
+    .nav-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 20px; height: 40px;
+      font-size: 13px; font-weight: 500;
+      color: var(--text-2);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border-left: 3px solid transparent;
+      text-decoration: none;
+    }
+    .nav-item:hover { color: var(--text-1); background: rgba(255,255,255,0.04); }
+    .nav-item.active {
+      color: var(--green);
+      background: var(--green-glow);
+      border-left-color: var(--green);
+    }
+    .nav-item svg { width: 18px; height: 18px; opacity: 0.6; flex-shrink: 0; }
+    .nav-item.active svg { opacity: 1; color: var(--green); }
+    .nav-sep { height: 1px; background: var(--border-subtle); margin: 8px 20px; }
+
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .sidebar-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--green), #2ba876);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: #0A0A0A;
+    }
+    .sidebar-user { display: flex; flex-direction: column; }
+    .sidebar-user-name { font-size: 13px; font-weight: 600; color: var(--text-1); }
+    .sidebar-user-role { font-size: 11px; color: var(--text-3); }
+
+    /* ===== MAIN ===== */
+    .main { margin-left: 240px; flex: 1; position: relative; z-index: 1; }
+    .topbar {
+      position: sticky; top: 0; z-index: 40;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 56px;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .topbar-title { font-size: 15px; font-weight: 600; color: var(--text-1); }
+    .topbar-actions { display: flex; align-items: center; gap: 12px; }
+    .topbar-icon {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 1px solid var(--border-subtle);
+      background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text-2); position: relative;
+    }
+    .topbar-icon svg { width: 16px; height: 16px; }
+    .topbar-icon:hover { border-color: var(--border-default); color: var(--text-1); background: var(--surface-el); }
+    .notif-dot { position: absolute; top: 6px; right: 6px; width: 7px; height: 7px; background: var(--green); border-radius: 50%; border: 1.5px solid var(--surface); }
+
+    .content { padding: 24px 32px 48px; max-width: 1280px; }
+
+    /* ===== WELCOME ===== */
+    .welcome { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+    .welcome-greeting { font-size: 22px; font-weight: 300; color: var(--text-1); }
+    .welcome-greeting strong { font-weight: 600; }
+    .welcome-date { font-size: 13px; color: var(--text-3); margin-top: 4px; }
+    .quick-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: var(--radius-md);
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      transition: all 0.15s ease; border: 1px solid transparent;
+      text-decoration: none;
+    }
+    .btn-primary { background: var(--green); color: #0A0A0A; border-color: var(--green); }
+    .btn-primary:hover { background: #2DB87E; }
+    .btn-outline { background: transparent; color: var(--text-2); border-color: var(--border-default); }
+    .btn-outline:hover { border-color: var(--text-3); color: var(--text-1); background: rgba(255,255,255,0.04); }
+    .btn svg { width: 14px; height: 14px; }
+
+    /* ===== STAT CARDS ===== */
+    .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      transition: border-color 0.2s ease;
+    }
+    .stat-card:hover { border-color: var(--border-default); }
+    .stat-label { font-size: 12px; font-weight: 500; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+    .stat-value { font-size: 32px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+    .stat-trend { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 500; }
+    .stat-trend.up { color: var(--green); }
+    .stat-trend.down { color: var(--red); }
+    .stat-trend.warn { color: var(--amber); }
+    .stat-sub { font-size: 11px; color: var(--text-3); margin-top: 4px; }
+
+    .stat-ring-wrap { display: flex; align-items: center; gap: 16px; }
+    .stat-ring {
+      width: 56px; height: 56px; position: relative;
+    }
+    .stat-ring svg { width: 56px; height: 56px; transform: rotate(-90deg); }
+    .stat-ring-track { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 5; }
+    .stat-ring-fill { fill: none; stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 0.6s ease; }
+
+    /* ===== TWO COLUMN ===== */
+    .two-col { display: grid; grid-template-columns: 3fr 2fr; gap: 20px; margin-bottom: 24px; }
+
+    /* ===== TABLE ===== */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .card-title { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; }
+    .card-link { font-size: 12px; color: var(--green); text-decoration: none; font-weight: 500; }
+    .card-link:hover { text-decoration: underline; }
+
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      text-align: left; font-size: 11px; font-weight: 600; color: var(--text-3);
+      text-transform: uppercase; letter-spacing: 0.05em;
+      padding: 10px 16px; border-bottom: 1px solid var(--border-subtle);
+    }
+    td {
+      padding: 12px 16px; font-size: 13px; color: var(--text-2);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    .provider-name { font-weight: 600; color: var(--text-1); }
+    .badge {
+      display: inline-flex; align-items: center;
+      padding: 3px 8px; border-radius: var(--radius-pill);
+      font-size: 11px; font-weight: 600;
+    }
+    .badge-green { background: var(--green-dim); color: var(--green); }
+    .badge-amber { background: var(--amber-dim); color: var(--amber); }
+    .badge-red { background: var(--red-dim); color: var(--red); }
+    .badge-outline { background: transparent; border: 1px solid var(--border-default); color: var(--text-2); }
+
+    .hours { font-variant-numeric: tabular-nums; }
+    .hours-green { color: var(--green); }
+    .hours-amber { color: var(--amber); }
+    .hours-red { color: var(--red); }
+
+    /* ===== TIMELINE ===== */
+    .timeline { padding: 16px 20px; }
+    .timeline-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 5px; top: 12px;
+      width: 1px; height: calc(100% - 4px);
+      background: var(--border-default);
+    }
+    .timeline-item:last-child::before { display: none; }
+    .timeline-dot {
+      width: 11px; height: 11px; border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      margin-top: 3px;
+      box-shadow: 0 0 6px rgba(54,201,141,0.3);
+    }
+    .timeline-content {}
+    .timeline-date { font-size: 13px; font-weight: 600; color: var(--text-1); }
+    .timeline-desc { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+    .timeline-count {
+      display: inline-flex; align-items: center;
+      padding: 2px 6px; border-radius: var(--radius-pill);
+      background: var(--green-dim); color: var(--green);
+      font-size: 11px; font-weight: 600; margin-left: 6px;
+    }
+
+    /* ===== ACTIVITY FEED ===== */
+    .activity-list { padding: 0 20px 16px; }
+    .activity-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-icon {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .activity-icon.green { background: var(--green-dim); color: var(--green); }
+    .activity-icon.amber { background: var(--amber-dim); color: var(--amber); }
+    .activity-icon svg { width: 16px; height: 16px; }
+    .activity-text { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+    .activity-text strong { color: var(--text-1); font-weight: 600; }
+    .activity-text .ceh { color: var(--green); font-weight: 600; }
+    .activity-time { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+    .filter-pills { display: flex; gap: 4px; }
+    .filter-pill {
+      padding: 5px 12px; border-radius: var(--radius-pill);
+      font-size: 12px; font-weight: 500; cursor: pointer;
+      background: transparent; color: var(--text-3);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.15s ease;
+    }
+    .filter-pill:hover { color: var(--text-2); border-color: var(--border-default); }
+    .filter-pill.active { background: var(--green-dim); color: var(--green); border-color: rgba(54,201,141,0.2); }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 7v6c0 5.25 3.75 10.13 9 11.25C17.25 23.13 21 18.25 21 13V7l-9-5z"/><polyline points="6 13 9 13 10.5 10 13.5 16 15 13 18 13"/></svg>
+      </div>
+      <div class="brand-text">
+        <span class="brand-pulse">PULSE</span>
+        <span class="brand-sub">BY MEDEDPREP</span>
+      </div>
+    </div>
+    <div class="agency-name">Metro Fire Rescue — Training</div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="nav-item active" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a class="nav-item" href="48-agency-onboarding.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+      Onboarding
+    </a>
+    <a class="nav-item" href="49-provider-roster.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Provider Roster
+    </a>
+    <a class="nav-item" href="51-course-assignments.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
+      Assignments
+    </a>
+    <a class="nav-item" href="53-agency-analytics.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Analytics
+    </a>
+    <a class="nav-item" href="54-compliance-report.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Compliance
+    </a>
+    <a class="nav-item" href="55-agency-billing.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Billing
+    </a>
+    <div class="nav-sep"></div>
+    <a class="nav-item" href="56-agency-settings.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Settings
+    </a>
+    <a class="nav-item" href="57-capce-reporting-log.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      CAPCE Log
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-avatar">MT</div>
+    <div class="sidebar-user">
+      <span class="sidebar-user-name">Lt. Mike Torres</span>
+      <span class="sidebar-user-role">Training Officer</span>
+    </div>
+  </div>
+  <a href="../batch-3-auth-onboarding/16-login-desktop.html" class="flex items-center gap-2 px-3 py-2 text-sm rounded-lg" style="color: rgba(255,255,255,0.6); display:flex; align-items:center; gap:8px; padding:8px 20px; font-size:13px; text-decoration:none;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+    Logout
+  </a>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <header class="topbar">
+    <span class="topbar-title">Agency Dashboard</span>
+    <div class="topbar-actions">
+      <div class="topbar-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <div class="topbar-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="notif-dot"></span>
+      </div>
+      <div class="topbar-icon" style="background: linear-gradient(135deg, var(--green), #2ba876); border-color: transparent;">
+        <span style="font-size: 11px; font-weight: 700; color: #0A0A0A;">MT</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="content">
+    <!-- Welcome -->
+    <div class="welcome">
+      <div>
+        <div class="welcome-greeting">Good morning, <strong>Lt. Torres</strong></div>
+        <div class="welcome-date">Monday, May 19, 2026</div>
+      </div>
+      <div class="quick-actions">
+        <a class="btn btn-primary" href="48-agency-onboarding.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          Add Provider
+        </a>
+        <a class="btn btn-outline" href="51-course-assignments.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+          Create Assignment
+        </a>
+        <a class="btn btn-outline" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export Report
+        </a>
+      </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Providers</div>
+        <div class="stat-value" style="color: var(--text-1);">87</div>
+        <div class="stat-trend up">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          +3 this month
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Compliance Rate</div>
+        <div class="stat-ring-wrap">
+          <div class="stat-ring">
+            <svg viewBox="0 0 36 36">
+              <circle class="stat-ring-track" cx="18" cy="18" r="15.5"/>
+              <circle class="stat-ring-fill" cx="18" cy="18" r="15.5" stroke="#36C98D" stroke-dasharray="97.4" stroke-dashoffset="17.5"/>
+            </svg>
+          </div>
+          <div>
+            <div class="stat-value" style="color: var(--green); font-size: 28px;">82%</div>
+            <div class="stat-sub">Goal: 95%</div>
+          </div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Overdue Providers</div>
+        <div class="stat-value" style="color: var(--red);">7</div>
+        <div class="stat-trend down">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          3 critical
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg Retention Score</div>
+        <div class="stat-value" style="color: var(--amber);">74%</div>
+        <div class="stat-trend warn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Competency metric
+        </div>
+      </div>
+    </div>
+
+    <!-- Two Column: At Risk + Deadlines -->
+    <div class="two-col">
+      <!-- Providers at Risk -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Providers at Risk
+          </div>
+          <a class="card-link" href="49-provider-roster.html">View All &rarr;</a>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Provider</th><th>Cert Level</th><th>CE Hours</th><th>Deadline</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr style="cursor:pointer;" onclick="window.location='50-provider-detail.html'">
+              <td class="provider-name"><a href="50-provider-detail.html" style="color:inherit;text-decoration:none;">Johnson, Alex</a></td>
+              <td><span class="badge badge-green">Paramedic</span></td>
+              <td class="hours hours-red">12 / 40 hrs</td>
+              <td>Sep 22, 2026</td>
+              <td><span class="badge badge-red">Critical</span></td>
+            </tr>
+            <tr style="cursor:pointer;" onclick="window.location='50-provider-detail.html'">
+              <td class="provider-name"><a href="50-provider-detail.html" style="color:inherit;text-decoration:none;">Williams, Dana</a></td>
+              <td><span class="badge badge-outline">EMT</span></td>
+              <td class="hours hours-amber">18 / 20 hrs</td>
+              <td>Jul 15, 2026</td>
+              <td><span class="badge badge-amber">At Risk</span></td>
+            </tr>
+            <tr style="cursor:pointer;" onclick="window.location='50-provider-detail.html'">
+              <td class="provider-name"><a href="50-provider-detail.html" style="color:inherit;text-decoration:none;">Patel, Ravi</a></td>
+              <td><span class="badge badge-green">Paramedic</span></td>
+              <td class="hours hours-amber">22 / 40 hrs</td>
+              <td>Aug 30, 2026</td>
+              <td><span class="badge badge-amber">At Risk</span></td>
+            </tr>
+            <tr style="cursor:pointer;" onclick="window.location='50-provider-detail.html'">
+              <td class="provider-name"><a href="50-provider-detail.html" style="color:inherit;text-decoration:none;">Garcia, Maria</a></td>
+              <td><span class="badge badge-outline">AEMT</span></td>
+              <td class="hours hours-amber">8 / 30 hrs</td>
+              <td>Oct 1, 2026</td>
+              <td><span class="badge badge-amber">Behind</span></td>
+            </tr>
+            <tr style="cursor:pointer;" onclick="window.location='50-provider-detail.html'">
+              <td class="provider-name"><a href="50-provider-detail.html" style="color:inherit;text-decoration:none;">Kim, Soo-Jin</a></td>
+              <td><span class="badge badge-outline">EMT</span></td>
+              <td class="hours hours-red">15 / 20 hrs</td>
+              <td>Jun 30, 2026</td>
+              <td><span class="badge badge-red">Critical</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Upcoming Deadlines -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Upcoming Deadlines</div>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Jun 30, 2026 <span class="timeline-count">3</span></div>
+              <div class="timeline-desc">Kim, Lee, Park — recertification due</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Jul 15, 2026 <span class="timeline-count">5</span></div>
+              <div class="timeline-desc">Williams, Adams, Brown, Clark, Evans</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Aug 30, 2026 <span class="timeline-count">8</span></div>
+              <div class="timeline-desc">Patel, Nguyen, + 6 others</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">Sep 22, 2026 <span class="timeline-count">12</span></div>
+              <div class="timeline-desc">Johnson, Martinez, + 10 others</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Recent Activity</div>
+        <div class="filter-pills">
+          <span class="filter-pill active">Today</span>
+          <span class="filter-pill">This Week</span>
+          <span class="filter-pill">This Month</span>
+        </div>
+      </div>
+      <div class="activity-list">
+        <div class="activity-item">
+          <div class="activity-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div>
+            <div class="activity-text"><strong>Sarah Chen</strong> completed <strong>ACLS Cardiac Emergencies</strong> — earned <span class="ceh">2.0 CEH</span></div>
+            <div class="activity-time">2 hours ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div>
+            <div class="activity-text"><strong>Alex Johnson</strong> started <strong>Pediatric Assessment Triangle</strong></div>
+            <div class="activity-time">4 hours ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 7v6c0 5.25 3.75 10.13 9 11.25C17.25 23.13 21 18.25 21 13V7l-9-5z"/></svg>
+          </div>
+          <div>
+            <div class="activity-text">CAPCE report submitted for <strong>3 providers</strong></div>
+            <div class="activity-time">Yesterday</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon amber">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+          </div>
+          <div>
+            <div class="activity-text">New assignment <strong>Q2 Trauma Update</strong> created</div>
+            <div class="activity-time">Yesterday</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

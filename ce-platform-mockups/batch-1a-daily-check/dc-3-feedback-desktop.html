@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daily Check: Feedback &amp; Rationale</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "warning": "#F5A623",
+                      "bg-base": "#0A0A0A",
+                      "secondary": "#69dca3",
+                      "on-surface-variant": "#bbcabf",
+                      "surface-elevated": "#1A1A1A",
+                      "border-strong": "rgba(255, 255, 255, 0.2)",
+                      "surface-variant": "#2f3632",
+                      "inverse-primary": "#006c47",
+                      "on-secondary-container": "#00311d",
+                      "inverse-surface": "#dde4dd",
+                      "tertiary": "#ffbeac",
+                      "on-primary-fixed-variant": "#005235",
+                      "on-secondary-fixed": "#002112",
+                      "surface-container-high": "#252c27",
+                      "on-tertiary": "#5c1904",
+                      "on-secondary-fixed-variant": "#005234",
+                      "error-container": "#93000a",
+                      "outline": "#86948a",
+                      "surface": "#0e1511",
+                      "on-secondary": "#003823",
+                      "border-subtle": "rgba(255, 255, 255, 0.08)",
+                      "surface-dim": "#0e1511",
+                      "secondary-fixed-dim": "#69dca3",
+                      "on-primary-container": "#004f33",
+                      "surface-container-low": "#161d19",
+                      "on-primary-fixed": "#002113",
+                      "primary-fixed-dim": "#51dea0",
+                      "on-tertiary-container": "#772d16",
+                      "error": "#E5484D",
+                      "surface-tint": "#51dea0",
+                      "on-background": "#dde4dd",
+                      "primary": "#5ae6a7",
+                      "surface-container-lowest": "#09100c",
+                      "surface-default": "#111111",
+                      "on-tertiary-fixed-variant": "#7a2f18",
+                      "background": "#0e1511",
+                      "surface-bright": "#343b36",
+                      "secondary-container": "#28a470",
+                      "surface-container": "#1a211d",
+                      "inverse-on-surface": "#2b322d",
+                      "on-tertiary-fixed": "#3a0a00",
+                      "surface-container-highest": "#2f3632",
+                      "on-error-container": "#ffdad6",
+                      "on-primary": "#003823",
+                      "on-error": "#690005",
+                      "tertiary-fixed-dim": "#ffb59f",
+                      "tertiary-container": "#ff9677",
+                      "tertiary-fixed": "#ffdbd1",
+                      "primary-fixed": "#71fbbb",
+                      "on-surface": "#dde4dd",
+                      "surface-hover": "#1F1F1F",
+                      "outline-variant": "#3d4a41",
+                      "secondary-fixed": "#86f9be",
+                      "primary-container": "#36c98d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-margin": "20px",
+                      "3xl": "48px",
+                      "xs": "4px",
+                      "4xl": "64px",
+                      "lg": "16px",
+                      "sm": "8px",
+                      "2xl": "32px",
+                      "xl": "24px",
+                      "md": "12px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "display-md": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "title-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.15",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "36px",
+                              {
+                                      "lineHeight": "1.15",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-md": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.15",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-md": [
+                              "30px",
+                              {
+                                      "lineHeight": "1.15",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "60px",
+                              {
+                                      "lineHeight": "1.15",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "title-lg": [
+                              "20px",
+                              {
+                                      "lineHeight": "1.25",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .pulse-gradient {
+            background: linear-gradient(135deg, #0A0A0A 0%, #0D1A12 50%, #0F3D26 75%, #36C98D 100%);
+        }
+        .film-grain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="bg-bg-base text-on-surface min-h-screen flex flex-col relative overflow-x-hidden antialiased">
+<div class="fixed inset-0 w-full h-full pointer-events-none z-[-1] pulse-gradient"></div>
+<div class="fixed inset-0 w-full h-full pointer-events-none z-[-1] film-grain"></div>
+<!-- TopNavBar -->
+<nav class="bg-bg-base/80 backdrop-blur-md border-b border-border-subtle fixed top-0 w-full z-50 h-16">
+<div class="flex justify-between items-center px-gutter w-full max-w-full h-full max-w-[1280px] mx-auto">
+<div class="font-headline-sm text-headline-sm tracking-tight text-on-surface">PULSE BY MEDEDPREP</div>
+<div class="hidden md:flex items-center gap-xl">
+<a class="text-on-surface-variant font-medium hover:text-on-surface transition-colors" href="../dashboard-variant-h-pulse.html">Dashboard</a>
+<a class="text-on-surface-variant font-medium hover:text-on-surface transition-colors" href="../batch-4-learner-portal/40-compliance-tracker-desktop.html">Learn</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md py-4 active:scale-95 transition-transform" href="#">Daily Check</a>
+<a class="text-on-surface-variant font-medium hover:text-on-surface transition-colors" href="../batch-4-learner-portal/37-diagnostic-report-desktop.html">Progress</a>
+<a class="text-on-surface-variant font-medium hover:text-on-surface transition-colors" href="../batch-4-learner-portal/41-settings-desktop.html">Profile</a>
+</div>
+<div class="flex items-center gap-sm">
+<button aria-label="notifications" class="p-sm text-primary dark:text-primary hover:bg-surface-elevated/50 transition-all duration-200 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-elevated border border-border-subtle overflow-hidden ml-sm cursor-pointer hover:ring-2 hover:ring-primary transition-all duration-200">
+<img alt="User Initials Avatar" class="w-full h-full object-cover" data-alt="A close up, cinematic portrait of a medical professional used as a generic user avatar. Professional lighting, dark background, serious and focused expression. High resolution, high contrast, matching the clinical premium aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtKI9AL0TioknjkWJL0qzuksFpVtLgtp77bQonKcgg8xo9MA4mpvAhGmMdVaX5iDLDJBy6ywhdtoRx-_75KnQEBUeWL_He7qJ-JVp0Y5iP4x-zhD_peR3BDJOjjS7KJyskiHcAfH0Y9Y8DAlJxpMIXjJXjvyAaSDZXWIr0Tiz_05KjSxMQkugGJ-IOyF6Jp-z5wASx8TO5tQ-EFst9ufSRxVf5uoud-AokjhDNYsCRPvS-JowELw5g3O98cbJ0qZgailWZJyS2wnqM"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow pt-24 pb-3xl px-container-margin w-full max-w-[680px] mx-auto z-10 flex flex-col">
+<!-- Header -->
+<div class="flex justify-between items-baseline mb-xl">
+<h1 class="font-headline-md text-headline-md text-on-surface">Daily Check</h1>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="../dashboard-variant-h-pulse.html">Not now</a>
+</div>
+<!-- Domain Row -->
+<div class="flex justify-between items-center mb-md">
+<span class="bg-surface-elevated border border-border-subtle text-primary font-label-caps text-label-caps px-sm py-[2px] rounded uppercase tracking-wider">CARDIOLOGY</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Question 1 of 1 today</span>
+</div>
+<!-- Result Banner -->
+<div class="mb-sm rounded-xl p-container-margin" style="background-color: rgba(54, 201, 141, 0.06); border: 1px solid rgba(54, 201, 141, 0.2);">
+<div class="flex items-center gap-sm mb-xs">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-bg-base text-[16px]" data-icon="check" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="font-body-md text-body-md font-semibold text-primary">Correct!</span>
+</div>
+<p class="font-body-sm text-[13px] font-medium text-on-surface-variant ml-8">You answered: B) Right coronary artery</p>
+</div>
+<!-- Confidence Calibration -->
+<div class="flex items-center gap-sm mb-xl ml-sm">
+<span class="font-body-sm text-[12px] text-on-surface-variant">Your confidence: Somewhat Sure</span>
+<span class="w-1 h-1 rounded-full bg-primary"></span>
+<span class="font-body-sm text-[12px] text-primary">Well calibrated</span>
+</div>
+<!-- Rationale Card -->
+<div class="bg-surface-default rounded-xl p-xl mb-xl border border-border-subtle relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-[2px]" style="background-color: rgba(54, 201, 141, 0.3);"></div>
+<div class="flex items-center gap-sm mb-md pl-xs">
+<span class="material-symbols-outlined text-primary" data-icon="menu_book">menu_book</span>
+<h2 class="font-title-lg text-[14px] text-on-surface font-semibold">Clinical Rationale</h2>
+</div>
+<hr class="border-t border-border-subtle mb-md ml-xs"/>
+<p class="font-body-sm text-[14px] leading-[1.65] text-on-surface-variant ml-xs">
+                ST elevation in leads II, III, and aVF indicates an inferior wall myocardial infarction. The inferior wall is supplied by the right coronary artery (RCA) in approximately 85% of patients. The RCA also typically supplies the SA node and AV node, which is why inferior MIs may present with bradycardia or heart blocks.
+            </p>
+</div>
+<!-- Retention Stability -->
+<div class="mb-2xl">
+<div class="flex justify-between items-center mb-xs">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">RETENTION STABILITY</span>
+</div>
+<div class="w-full bg-surface-elevated h-1.5 rounded-full overflow-hidden border border-border-subtle mb-xs">
+<div class="bg-primary h-full rounded-full" style="width: 72%; box-shadow: 0 0 10px rgba(54, 201, 141, 0.3);"></div>
+</div>
+<span class="font-label-sm text-label-sm text-primary block text-right">72% — Strengthening</span>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-row gap-md mt-auto pt-lg">
+<a href="../batch-4-learner-portal/46-topic-deep-dive-desktop.html" class="flex-1 bg-primary text-bg-base font-body-md text-body-md font-semibold py-3 px-xl rounded-full hover:bg-opacity-90 transition-all active:scale-95" style="text-decoration:none;box-shadow: 0 0 20px rgba(54, 201, 141, 0.15);">Deep Dive — Inferior MI
+            </a>
+<button onclick="window.location='dc-4-complete-desktop.html'" class="flex-1 bg-transparent border border-border-strong text-on-surface-variant font-body-md text-body-md font-medium py-3 px-xl rounded-full hover:bg-surface-elevated transition-all active:scale-95">
+                Not now
+            </button>
+</div>
+</main>
+</body></html>

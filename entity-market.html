@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedEdPrep &mdash; Market Landscape</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0e14;
+    --bg-surface: #111820;
+    --bg-card: #151c25;
+    --bg-card-hover: #1a2331;
+    --bg-elevated: #1e2733;
+    --border: #243040;
+    --border-subtle: #1c2535;
+    --text-primary: #e8edf4;
+    --text-secondary: #8899aa;
+    --text-muted: #5a6a7a;
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+    --teal-glow: rgba(45,212,191,0.06);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.12);
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.12);
+    --orange: #fb923c;
+    --orange-dim: rgba(251,146,60,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.12);
+    --nav-width: 240px;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg-base);
+    background-image: radial-gradient(circle at 1px 1px, rgba(45,212,191,0.02) 1px, transparent 0);
+    background-size: 40px 40px;
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--purple), var(--blue), var(--teal));
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+    z-index: 200;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* NAV */
+  nav {
+    width: var(--nav-width);
+    min-width: var(--nav-width);
+    background: rgba(17,24,32,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  nav::-webkit-scrollbar { width: 0; }
+
+  .nav-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .nav-brand-name {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--teal), #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-brand-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links { flex: 1; padding: 4px 0; }
+  .nav-section-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-muted);
+    padding: 14px 24px 6px;
+  }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    position: relative;
+  }
+  nav a:hover {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.04);
+    border-left-color: var(--teal);
+  }
+  nav a.active {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.06);
+    border-left-color: var(--teal);
+  }
+  nav a .nav-icon {
+    font-size: 15px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .nav-divider, hr.nav-divider {
+    height: 1px; border: none;
+    background: var(--border);
+    margin: 8px 16px;
+  }
+  .nav-footer {
+    padding: 20px 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .nav-footer-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .nav-footer-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  /* HERO */
+  .hero {
+    margin-left: var(--nav-width);
+    padding: 64px 56px 48px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #080c12 0%, #0d1520 30%, #0a1420 60%, #080e18 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: 10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(45,212,191,0.07) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: 20%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(167,139,250,0.05) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--teal);
+    vertical-align: middle;
+    margin-left: 12px;
+    opacity: 0.4;
+  }
+
+  .hero-headline {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f0f4f8 25%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: var(--teal-dim);
+    color: var(--teal);
+    margin-bottom: 16px;
+    vertical-align: middle;
+  }
+  .hero-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--teal);
+  }
+
+  .hero-narrative {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-top: 16px;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+  .hero-narrative strong { color: var(--text-primary); }
+
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    align-self: start;
+  }
+  .hero-metric {
+    background: var(--bg-surface);
+    padding: 20px 22px;
+    transition: background 0.2s;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .hero-metric:nth-child(1) { animation-delay: 0.05s; }
+  .hero-metric:nth-child(2) { animation-delay: 0.1s; }
+  .hero-metric:nth-child(3) { animation-delay: 0.15s; }
+  .hero-metric:nth-child(4) { animation-delay: 0.2s; }
+  .hero-metric:hover { background: var(--bg-card); }
+  .hero-metric-value {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .c-teal { color: var(--teal); }
+  .c-purple { color: var(--purple); }
+  .c-blue { color: var(--blue); }
+  .c-green { color: var(--green); }
+  .c-amber { color: var(--amber); }
+  .c-pink { color: var(--pink); }
+  .c-red { color: var(--red); }
+  .hero-metric-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .hero-metric-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* MAIN */
+  .main-inner {
+    margin-left: var(--nav-width);
+    padding: 40px 56px 80px;
+    max-width: 1300px;
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .section[id] { scroll-margin-top: 24px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+    padding: 16px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .section-header::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: transparent;
+    transition: background 0.2s;
+    border-radius: 3px 0 0 3px;
+  }
+  .section-header:hover { background: var(--bg-card-hover); }
+  .section-header.active::before {
+    background: linear-gradient(180deg, var(--teal), var(--purple));
+  }
+  .section-header.active {
+    border-color: rgba(45,212,191,0.15);
+    background: linear-gradient(135deg, rgba(45,212,191,0.03) 0%, var(--bg-card) 40%);
+  }
+
+  .section-icon { font-size: 20px; width: 24px; text-align: center; flex-shrink: 0; }
+  .section-title { font-size: 16px; font-weight: 700; color: var(--text-primary); flex: 1; }
+  .section-subtitle { font-size: 12px; font-weight: 500; color: var(--text-muted); margin-left: 10px; }
+  .section-chevron {
+    color: var(--text-muted);
+    font-size: 11px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+  .section-chevron.open { transform: rotate(180deg); }
+
+  .section-body {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    opacity: 0;
+  }
+  .section-body.open { max-height: 99999px; opacity: 1; }
+  .section-inner { padding: 24px 0 0; }
+
+  /* CALLOUTS */
+  .callout-warning {
+    background: linear-gradient(135deg, rgba(251,191,36,0.06) 0%, var(--bg-card) 60%);
+    border: 1px solid rgba(251,191,36,0.25);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-warning-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--amber);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .callout-warning-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-warning-body strong { color: var(--text-primary); }
+  .callout-warning-body em { color: var(--amber); font-style: normal; }
+
+  .callout-info {
+    background: linear-gradient(135deg, rgba(45,212,191,0.06) 0%, var(--bg-card) 60%);
+    border: 1px solid rgba(45,212,191,0.2);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-info-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .callout-info-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-info-body strong { color: var(--text-primary); }
+
+  .callout-red {
+    background: linear-gradient(135deg, rgba(248,113,113,0.04) 0%, var(--bg-card) 50%);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .callout-red-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+  .callout-red-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout-red-body strong { color: var(--text-primary); }
+  .callout-red-body a { color: var(--teal); }
+
+  /* CARDS */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: #344050; }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .card-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .card-body strong { color: var(--text-primary); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+  /* COMPETITOR DEEP-DIVE CARDS */
+  .comp-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .comp-card:hover { border-color: rgba(45,212,191,0.2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .comp-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; flex-wrap: wrap; }
+  .comp-card-icon {
+    width: 38px; height: 38px;
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .comp-card-name { font-size: 16px; font-weight: 800; color: var(--text-primary); flex: 1; line-height: 1.3; }
+  .comp-card-owner { font-size: 11px; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
+  .threat-badge {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; padding: 4px 10px; border-radius: 20px; white-space: nowrap;
+  }
+  .threat-high { background: var(--red-dim); color: var(--red); }
+  .threat-medium { background: var(--amber-dim); color: var(--amber); }
+  .threat-structural { background: var(--purple-dim); color: var(--purple); }
+  .comp-card-lede { font-size: 13px; color: var(--text-secondary); line-height: 1.65; margin: 12px 0 16px; }
+  .comp-card-lede strong { color: var(--text-primary); }
+  .sw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .sw-col-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; margin-bottom: 8px;
+  }
+  .sw-col-label.str { color: var(--green); }
+  .sw-col-label.weak { color: var(--red); }
+
+  .detail-list {
+    list-style: none;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .detail-list li {
+    padding: 4px 0;
+    color: var(--text-secondary);
+    display: flex; align-items: baseline; gap: 8px; line-height: 1.5;
+  }
+  .detail-list li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+  .detail-list.teal li::before { background: var(--teal); }
+  .detail-list.green li::before { background: var(--green); }
+  .detail-list.red li::before { background: var(--red); }
+  .detail-list.amber li::before { background: var(--amber); }
+  .detail-list li strong { color: var(--text-primary); }
+
+  /* TABLES */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .data-table th {
+    text-align: left;
+    color: var(--text-muted);
+    padding: 9px 12px;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table td {
+    padding: 10px 12px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .data-table td:first-child { color: var(--text-primary); font-weight: 600; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.015); }
+  .data-table .yes { color: var(--green); font-weight: 600; }
+  .data-table .no { color: var(--text-muted); }
+  .data-table .partial { color: var(--amber); font-weight: 600; }
+  .data-table .me { color: var(--teal); font-weight: 700; }
+  .data-table th.col-me, .data-table td.col-me { background: rgba(45,212,191,0.04); }
+  .data-table tr.col-me td { background: rgba(45,212,191,0.04); }
+  .data-table tr.col-me:hover td { background: rgba(45,212,191,0.07); }
+
+  .table-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .table-wrap.scroll { overflow-x: auto; }
+  .table-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-muted);
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  /* TAG PILLS */
+  .pill {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    padding: 3px 9px; border-radius: 20px;
+    letter-spacing: 0.03em;
+  }
+
+  /* CONTROLS */
+  .controls {
+    display: flex; gap: 8px;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+  }
+  .controls button {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .controls button:hover { color: var(--teal); border-color: var(--teal); background: var(--teal-dim); }
+
+  /* PAGE FOOTER */
+  .page-footer {
+    font-size: 11px; color: var(--text-muted);
+    text-align: right;
+    margin-top: 48px; padding-top: 20px;
+    border-top: 1px solid var(--border-subtle);
+    font-weight: 500;
+  }
+
+  /* MINI STAT GRID */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .stat-cell { background: var(--bg-card); padding: 18px 20px; }
+  .stat-cell-value { font-size: 22px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+  .stat-cell-label { font-size: 12px; color: var(--text-secondary); margin-top: 6px; font-weight: 500; }
+  .stat-cell-note { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    .hero-content { grid-template-columns: 1fr; gap: 32px; }
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: 1fr 1fr; }
+    .stat-row { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 900px) {
+    nav { display: none; }
+    .hero { margin-left: 0; padding: 40px 24px 32px; }
+    .main-inner { margin-left: 0; padding: 24px 20px 60px; }
+    .hero-headline { font-size: 26px; }
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .grid-auto { grid-template-columns: 1fr; }
+    .sw-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .hero-metrics { grid-template-columns: 1fr; }
+    .stat-row { grid-template-columns: 1fr; }
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-base); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a4a5a; }
+
+  /* PRINT */
+  @media print {
+    nav { display: none; }
+    body { background: white; color: #111; }
+    body::before { display: none; }
+    .hero, .main-inner { margin-left: 0; }
+    .section { opacity: 1 !important; transform: none !important; }
+    .section-body { max-height: none !important; opacity: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-name">MedEdPrep</div>
+    <div class="nav-brand-sub">Founder Command Center</div>
+  </div>
+  <div class="nav-links">
+    <div class="nav-section-label">Overview</div>
+    <a href="hub.html"><span class="nav-icon">&#x2B21;</span> Hub</a>
+    <a href="dashboard.html"><span class="nav-icon">&#x25A3;</span> Dashboard</a>
+    <a href="action-center.html"><span class="nav-icon">&#x26A1;</span> Action Center</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">Entities</div>
+    <a href="entity-company-a.html"><span class="nav-icon">&#x1F393;</span> Co. A &mdash; Education</a>
+    <a href="entity-company-c.html"><span class="nav-icon">&#x1F3AF;</span> Co. C &mdash; Certification</a>
+    <a href="entity-nonprofit.html"><span class="nav-icon">&#x2764;</span> Foundation (501c3)</a>
+    <a href="entity-market.html" class="active"><span class="nav-icon">&#x1F4CA;</span> Market Landscape</a>
+    <a href="entity-ce-market.html"><span class="nav-icon">&#x1F4D6;</span> CE Market</a>
+    <a href="entity-ip-vault.html"><span class="nav-icon">&#x1F512;</span> IP &amp; The Vault</a>
+    <a href="entity-psychometric.html"><span class="nav-icon">&#x1F9E0;</span> Psychometric &amp; Data</a>
+    <a href="entity-timeline.html"><span class="nav-icon">&#x23F3;</span> Timeline</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">This Page</div>
+    <a href="#overview"><span class="nav-icon">&#x2192;</span> Market Overview</a>
+    <a href="#matrix"><span class="nav-icon">&#x2192;</span> Competitor Matrix</a>
+    <a href="#deep-dives"><span class="nav-icon">&#x2192;</span> Competitor Deep Dives</a>
+    <a href="#positioning"><span class="nav-icon">&#x2605;</span> MedEdPrep Position</a>
+    <a href="#ce-field"><span class="nav-icon">&#x2192;</span> CE Provider Field</a>
+    <a href="#nremt"><span class="nav-icon">&#x2192;</span> NREMT Redesign</a>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-footer-label">Last updated</div>
+    <div class="nav-footer-date">May 21, 2026</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Competitive Intelligence</div>
+      <h1 class="hero-headline">Market Landscape</h1>
+      <div>
+        <span class="hero-badge"><span class="dot"></span> EMS Education &amp; Certification</span>
+      </div>
+      <p class="hero-narrative">The EMS assessment market is dominated by three incumbents &mdash; <strong>Platinum / EMSTesting</strong>, <strong>Ascend Learning&rsquo;s JB Learning + Fisdap</strong>, and <strong>Pearson&rsquo;s Brady / MyLab</strong> &mdash; plus a fragmented field of 40+ continuing-education providers. None ships true IRT-based adaptive testing, none offers free standalone accreditation compliance, and none pairs a B2C channel with institutional reach. MedEdPrep&rsquo;s moat is the combination: psychometric rigor on 10,600+ items, CoAssist as a free compliance loss-leader, and a unified platform spanning test prep, clinicals, engagement, and CE.</p>
+    </div>
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="hero-metric-value c-teal">3</div>
+        <div class="hero-metric-label">Incumbent assessment platforms</div>
+        <div class="hero-metric-note">Platinum &middot; Fisdap &middot; MyLab Brady</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-purple">40+</div>
+        <div class="hero-metric-label">EMS CE providers mapped</div>
+        <div class="hero-metric-note">Zero offer adaptive / psychometric CE</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-blue">0</div>
+        <div class="hero-metric-label">Competitors with real IRT</div>
+        <div class="hero-metric-note">Platinum markets &ldquo;CAT&rdquo; &mdash; uses CTT</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value c-green">12&ndash;18 mo</div>
+        <div class="hero-metric-label">Structural advantage window</div>
+        <div class="hero-metric-note">Before any credible response</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-inner">
+
+  <div class="controls">
+    <button onclick="toggleAll(true)">Expand All</button>
+    <button onclick="toggleAll(false)">Collapse All</button>
+  </div>
+
+  <!-- SECTION 1: OVERVIEW -->
+  <div class="section visible" id="overview">
+    <div class="section-header active" onclick="toggleSection(this)" aria-expanded="true" tabindex="0" role="button">
+      <span class="section-icon">&#x1F4CA;</span>
+      <span class="section-title">Market Overview<span class="section-subtitle">How the EMS education market is structured</span></span>
+      <span class="section-chevron open">&#9662;</span>
+    </div>
+    <div class="section-body open">
+      <div class="section-inner">
+
+        <div class="callout-info">
+          <div class="callout-info-title">The Shape of the Market</div>
+          <div class="callout-info-body">EMS education breaks into three layers: <strong>textbooks</strong> (Brady/Pearson and JB Learning split ~85&ndash;90% of adoptions), <strong>institutional assessment + clinical tracking</strong> (Platinum, Fisdap, and the publisher MyLab/Navigate companions), and <strong>continuing education</strong> (40+ providers selling CE hours). MedEdPrep is the only entrant building across all three layers on a single psychometric data spine, and the only one selling to both institutions (B2B) and individual students (B2C).</div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-cell">
+            <div class="stat-cell-value c-teal">~1,800&ndash;2,200</div>
+            <div class="stat-cell-label">EMS programs in the U.S.</div>
+            <div class="stat-cell-note">EMR, EMT, AEMT, Paramedic combined</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-cell-value c-purple">~557K</div>
+            <div class="stat-cell-label">NREMT-certified providers</div>
+            <div class="stat-cell-note">All require NREMT-recognized CE</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-cell-value c-blue">~250&ndash;300K</div>
+            <div class="stat-cell-label">Annual NREMT attempts</div>
+            <div class="stat-cell-note">Across all certification levels</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-cell-value c-green">100+</div>
+            <div class="stat-cell-label">MedEdPrep active programs</div>
+            <div class="stat-cell-note">Target: 200+ within 12 months</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">Two Publishers Own the Textbook Layer</div>
+            <div class="card-body"><strong>Brady (Pearson)</strong> and <strong>Jones &amp; Bartlett (Ascend / KKR)</strong> split the EMS textbook market roughly 50/50, together controlling an estimated 85&ndash;90% of adoptions &mdash; Brady historically stronger in EMT, J&amp;B in paramedic. Each bundles a digital companion (MyLab Brady, Navigate) that pulls programs into a publisher-locked workflow. The textbook decision drives everything downstream.</div>
+          </div>
+          <div class="card">
+            <div class="card-title">Assessment Is Where MedEdPrep Competes</div>
+            <div class="card-body"><strong>Platinum / EMSTesting</strong> is the strongest independent assessment platform; <strong>Fisdap</strong> dominates clinical tracking and readiness exams; publisher companions handle chapter quizzes. All run on Classical Test Theory. None ships item-level IRT calibration, real adaptive delivery, or multi-dimensional diagnostic reporting &mdash; the gap MedEdPrep is built around.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: COMPETITOR MATRIX -->
+  <div class="section" id="matrix">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#x1F4CB;</span>
+      <span class="section-title">Competitor Matrix<span class="section-subtitle">Where MedEdPrep stands against the field</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-info">
+          <div class="callout-info-title">Tier 1 &mdash; Direct Competitors</div>
+          <div class="callout-info-body">These sell to both programs/instructors and students, competing with MedEdPrep on both the B2B and B2C sides. Tier 2 (EMTprep, MedicTests, Pocket Prep, Limmer / LC-Ready, etc.) sell only student prep; Tier 3 publishers (Kaplan, JBL TestPrep, Mometrix) have EMS content but aren&rsquo;t EMS-first.</div>
+        </div>
+
+        <div class="table-wrap scroll">
+          <div class="table-label">Tier 1 Direct Competitors &mdash; Instructor Testing + Student Prep</div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Company</th><th>Owner</th><th>Levels</th><th>Adaptive</th><th>B2C</th><th>Pricing</th><th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Platinum / EMSTesting</td>
+                <td>Independent</td>
+                <td>EMR&ndash;PP, Fire</td>
+                <td class="partial">&ldquo;CAT&rdquo; (CTT)</td>
+                <td class="no">No</td>
+                <td>$500 school + $26&ndash;105/student + $475 AccredAssist</td>
+                <td>~25 employees, founded 2002. ~$4&ndash;8M revenue. TEI support. Pearson distribution.</td>
+              </tr>
+              <tr>
+                <td>JB Learning &mdash; Navigate + Fisdap</td>
+                <td>Ascend Learning (KKR)</td>
+                <td>EMR&ndash;Paramedic</td>
+                <td class="no">No (CTT)</td>
+                <td class="partial">Navigate TestPrep</td>
+                <td>~$400&ndash;550+/student fully bundled</td>
+                <td>Two separate platforms, two logins, no integration. Fisdap = clinical tracking + readiness exams.</td>
+              </tr>
+              <tr>
+                <td>Brady / Pearson &mdash; MyLab Brady</td>
+                <td>Pearson plc</td>
+                <td>EMR&ndash;Paramedic</td>
+                <td class="no">No (branching)</td>
+                <td class="no">No</td>
+                <td>$44&ndash;130/student (incl. eText)</td>
+                <td>Textbook companion, not standalone assessment. EMS &lt;0.5% of Pearson revenue.</td>
+              </tr>
+              <tr class="col-me">
+                <td class="me">MedEdPrep</td>
+                <td class="me">The Vault (planned)</td>
+                <td class="me">EMR&ndash;PP</td>
+                <td class="me">IRT engine (live Nov 2025)</td>
+                <td class="me">Yes</td>
+                <td class="me">$26/student flat, no school fee</td>
+                <td class="me">10,600+ items, 1.55M responses. CoAssist free. Pulse engagement. Adaptive CE.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrap scroll">
+          <div class="table-label">Capability Comparison &mdash; Where MedEdPrep Stands Out</div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Capability</th>
+                <th class="col-me">MedEdPrep</th>
+                <th>Platinum</th>
+                <th>JB / Fisdap</th>
+                <th>Brady / Pearson</th>
+                <th>Limmer / LC-Ready</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Real adaptive (IRT-based)</td><td class="col-me yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+              <tr><td>Instructor test bank</td><td class="col-me yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="partial">Partial</td></tr>
+              <tr><td>Student self-study prep</td><td class="col-me yes">Yes</td><td class="no">No</td><td class="yes">Yes</td><td class="no">No</td><td class="yes">Yes</td></tr>
+              <tr><td>Gamified learning (Pulse)</td><td class="col-me yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+              <tr><td>Accreditation compliance</td><td class="col-me yes">CoAssist (free)</td><td class="partial">AccredAssist ($475)</td><td class="partial">Fisdap (locked)</td><td class="no">No</td><td class="no">No</td></tr>
+              <tr><td>CAPCE-accredited CE delivery</td><td class="col-me yes">Yes</td><td class="no">Workshops only</td><td class="partial">Recert.com</td><td class="no">No</td><td class="partial">Yes</td></tr>
+              <tr><td>Multi-dimensional diagnostics</td><td class="col-me yes">Industry-leading</td><td class="partial">Score reports</td><td class="partial">Topic-level</td><td class="no">% correct</td><td class="no">No</td></tr>
+              <tr><td>Free for programs</td><td class="col-me yes">CoAssist: Yes</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+              <tr><td>10K+ items / 1.55M responses</td><td class="col-me yes">Yes</td><td class="no">~5K est.</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+              <tr><td>Bifactor psychometric model</td><td class="col-me yes">First mover</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+              <tr><td>Textbook-independent</td><td class="col-me yes">Yes</td><td class="yes">Yes</td><td class="no">No (Navigate)</td><td class="no">No (MyLab)</td><td class="partial">Partial</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: DEEP DIVES -->
+  <div class="section" id="deep-dives">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#x1F50D;</span>
+      <span class="section-title">Competitor Deep Dives<span class="section-subtitle">Platinum &middot; JB / Fisdap &middot; Brady / Pearson</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <!-- PLATINUM -->
+        <div class="comp-card">
+          <div class="comp-card-header">
+            <span class="comp-card-icon" style="background:var(--teal-dim);color:var(--teal);">&#x1F3DB;</span>
+            <span class="comp-card-name">Platinum Educational Group / EMSTesting
+              <div class="comp-card-owner">Independent &middot; Jenison, MI &middot; founded 2002 &middot; ~25 employees</div>
+            </span>
+            <span class="threat-badge threat-high">Most Displaceable</span>
+          </div>
+          <p class="comp-card-lede">The strongest <strong>independent</strong> EMS assessment company &mdash; not owned by a publisher or PE firm. Three products: <strong>EMSTesting</strong> (exam bank), <strong>Platinum Planner</strong> (clinical scheduling), and <strong>AccredAssist</strong> (CoAEMSP compliance). Estimated ~$4&ndash;8M revenue, with valuation analyses landing in the <strong>$20M&ndash;$40M</strong> range on EMS-ed-tech multiples. Occupies exactly the instructor-facing exam-bank position MedEdPrep targets &mdash; making it the competitor most likely to be displaced. Pearson resells EMSTesting through its channel, so a future Pearson acquisition is a credible watch item.</p>
+          <div class="sw-grid">
+            <div>
+              <div class="sw-col-label str">&#9650; Strengths</div>
+              <ul class="detail-list green">
+                <li><strong>Deep instructor muscle memory</strong> &mdash; directors who&rsquo;ve used it 10+ years can build an exam in 10 minutes</li>
+                <li>Purpose-built for EMS; large pre-validated bank trusted by educators</li>
+                <li>Three-product ecosystem creates switching cost</li>
+                <li>Free-for-schools Planner model removes the budget-approval barrier</li>
+                <li>24 years of conference relationships and distribution</li>
+              </ul>
+            </div>
+            <div>
+              <div class="sw-col-label weak">&#9660; Weaknesses</div>
+              <ul class="detail-list red">
+                <li><strong>&ldquo;CAT&rdquo; is CTT</strong> &mdash; P-values, KR-20, point-biserial; no published IRT, no theta estimation</li>
+                <li>Institutional-only; students can&rsquo;t review what they got wrong</li>
+                <li>No B2C channel, no classroom engagement layer</li>
+                <li>AccredAssist ($475) requires a Platinum subscription &mdash; vs. free, standalone CoAssist</li>
+                <li>CAPCE for workshops only (Nov 2025) &mdash; no online CE delivery</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- JB / FISDAP -->
+        <div class="comp-card">
+          <div class="comp-card-header">
+            <span class="comp-card-icon" style="background:var(--blue-dim);color:var(--blue);">&#x1F4DA;</span>
+            <span class="comp-card-name">JB Learning / Public Safety Group / Fisdap
+              <div class="comp-card-owner">Ascend Learning (KKR-backed, $2B+ revenue) &middot; Navigate + Fisdap + Recert</div>
+            </span>
+            <span class="threat-badge threat-medium">High Presence / Low Response</span>
+          </div>
+          <p class="comp-card-lede">The <strong>largest entity in EMS education by footprint</strong> &mdash; textbooks (AAOS &ldquo;Orange Book,&rdquo; Nancy Caroline), Navigate courseware, Fisdap testing + clinical tracking, and Recert.com CE. A cradle-to-career lock-in no one else can replicate. But the products were acquired separately and <strong>remain architecturally disconnected</strong>: Navigate and Fisdap have separate logins, separate data models, and no automated data flow. That integration gap is the structural weakness MedEdPrep&rsquo;s unified platform exploits.</p>
+          <div class="sw-grid">
+            <div>
+              <div class="sw-col-label str">&#9650; Strengths</div>
+              <ul class="detail-list green">
+                <li><strong>Textbook&rarr;CE ecosystem lock-in</strong> &mdash; the only end-to-end pipeline in the market</li>
+                <li>~50&ndash;60% of paramedic programs use a JBL primary text</li>
+                <li>Fisdap predictive-validity research (r ~ 0.3&ndash;0.5) is a strong sales asset</li>
+                <li>Mature clinical tracking; Ascend / KKR financial resources</li>
+                <li>NAEMT partnership (Recert) lends CE credibility</li>
+              </ul>
+            </div>
+            <div>
+              <div class="sw-col-label weak">&#9660; Weaknesses</div>
+              <ul class="detail-list red">
+                <li><strong>Navigate &ne; Fisdap</strong> &mdash; two products, two logins, no integration</li>
+                <li>Classical Test Theory only &mdash; documented, not speculation</li>
+                <li>Navigate is publisher-locked to JBL textbooks</li>
+                <li>Consistently negative student sentiment on Fisdap UX</li>
+                <li>PE operating model optimizes margin, not innovation &mdash; slow cadence</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- BRADY / PEARSON -->
+        <div class="comp-card">
+          <div class="comp-card-header">
+            <span class="comp-card-icon" style="background:var(--purple-dim);color:var(--purple);">&#x1F4D8;</span>
+            <span class="comp-card-name">Brady / Pearson / MyLab Brady
+              <div class="comp-card-owner">Pearson plc (~$4.7B revenue) &middot; Brady is a publishing imprint, not a separate entity</div>
+            </span>
+            <span class="threat-badge threat-structural">Biggest Structural Risk</span>
+          </div>
+          <p class="comp-card-lede">The biggest <strong>structural</strong> risk &mdash; Pearson&rsquo;s scale, textbook install base (~45&ndash;55% of programs), and theoretical ability to build adaptive testing into MyLab. In practice, <strong>EMS is &lt;0.5% of Pearson revenue</strong> (~$20&ndash;50M), so EMS-specific innovation velocity is near zero. Brady&rsquo;s brand power lives in its authors (Limmer, Bledsoe, Mistovich), not the corporate structure. MyLab Brady is a textbook companion, not a standalone assessment platform &mdash; every Brady program still needs a separate tool for comprehensive, entrance, and exit exams. The danger is measured in years, not quarters.</p>
+          <div class="sw-grid">
+            <div>
+              <div class="sw-col-label str">&#9650; Strengths</div>
+              <ul class="detail-list green">
+                <li><strong>Textbook distribution lock-in</strong> &mdash; every adoption is a built-in MyLab channel</li>
+                <li>Generational brand recognition; author authority</li>
+                <li>Enterprise LMS integration (Canvas, Blackboard, D2L)</li>
+                <li>Inclusive Access / First-Day removes the &ldquo;will students buy?&rdquo; problem</li>
+                <li>Pearson VUE psychometric expertise exists (in a separate division)</li>
+              </ul>
+            </div>
+            <div>
+              <div class="sw-col-label weak">&#9660; Weaknesses</div>
+              <ul class="detail-list red">
+                <li><strong>&ldquo;Adaptive&rdquo; is branching logic</strong> &mdash; pretest/posttest, no IRT, no CAT</li>
+                <li>No standalone assessment &mdash; can&rsquo;t do comprehensive/entrance/exit exams</li>
+                <li>No diagnostic reporting beyond % correct per chapter</li>
+                <li>Publisher-locked to Brady; no B2C path; no CE play</li>
+                <li>Innovation velocity near zero &mdash; EMS too small to prioritize</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout-warning">
+          <div class="callout-warning-title">&#9888; The Consolidation Watch Item</div>
+          <div class="callout-warning-body">The single most dangerous scenario is <strong>Pearson acquiring Platinum outright</strong> (not just the existing distribution deal) and folding EMSTesting into MyLab Brady &mdash; textbook + assessment in one platform. Probability is low (~5&ndash;8% over two years) and integration would take 12&ndash;24 months even if it happened. Trigger signals to monitor: a Pearson&ndash;Platinum acquisition, Platinum hiring psychometric talent and publishing IRT documentation, Platinum launching a student-facing product, or AccredAssist going free <em>and</em> standalone.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: POSITIONING -->
+  <div class="section" id="positioning">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#x2605;</span>
+      <span class="section-title">MedEdPrep Competitive Positioning<span class="section-subtitle">The moat and the differentiators</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-info">
+          <div class="callout-info-title">The Core Positioning</div>
+          <div class="callout-info-body">MedEdPrep does not win on any single feature &mdash; it wins on the <strong>combination no incumbent can assemble</strong>: psychometric rigor (IRT engine + bifactor model on a 1.55M-response dataset), a free standalone compliance loss-leader (CoAssist), dual B2B + B2C channels, and a unified platform spanning test prep, clinicals, engagement, and CE. The strategy is <strong>complement, don&rsquo;t compete</strong>: run alongside the incumbents, then expand scope through demonstrated superiority &mdash; never force a binary switch.</div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-title"><span class="pill" style="background:var(--teal-dim);color:var(--teal);">Data Moat</span></div>
+            <div class="card-body" style="margin-top:10px;"><strong>10,600+ items, 1.55M calibrated responses.</strong> Enables IRT parameter estimation and diagnostic precision competitors cannot replicate without years of equivalent response data. Writing questions is easy; calibrating them through live student data takes years.</div>
+          </div>
+          <div class="card">
+            <div class="card-title"><span class="pill" style="background:var(--purple-dim);color:var(--purple);">Dual Channel</span></div>
+            <div class="card-body" style="margin-top:10px;"><strong>B2B + B2C.</strong> Sells to institutions and to individual students. Every incumbent is institutional-only. Students buy MedEdPrep even at programs running Platinum or Fisdap &mdash; then advocate to instructors.</div>
+          </div>
+          <div class="card">
+            <div class="card-title"><span class="pill" style="background:var(--blue-dim);color:var(--blue);">Free Compliance Wedge</span></div>
+            <div class="card-body" style="margin-top:10px;"><strong>CoAssist is free, standalone, vendor-agnostic.</strong> AccredAssist needs a Platinum subscription; Fisdap reports need Fisdap. Programs adopt CoAssist without switching testing &mdash; then discover MedEdPrep&rsquo;s assessment from inside the ecosystem.</div>
+          </div>
+          <div class="card">
+            <div class="card-title"><span class="pill" style="background:var(--amber-dim);color:var(--amber);">Engagement Layer</span></div>
+            <div class="card-body" style="margin-top:10px;"><strong>Pulse</strong> fills the gap between exam days &mdash; live games, leaderboards, XP, streaks, study tracking. Incumbents are invisible between testing events; Pulse is present in every class and study session, generating habit and data.</div>
+          </div>
+          <div class="card">
+            <div class="card-title"><span class="pill" style="background:var(--pink-dim);color:var(--pink);">Psychometric Depth</span></div>
+            <div class="card-body" style="margin-top:10px;"><strong>Multi-dimensional diagnostics</strong> by domain, cognitive level, confidence, timing, and stamina &mdash; plus 1M+ metacognition-tagged responses. The closest competitor (EMSTesting&rsquo;s MTO drill-down) is textbook-structured, not psychometrically derived.</div>
+          </div>
+          <div class="card">
+            <div class="card-title"><span class="pill" style="background:var(--green-dim);color:var(--green);">Price &amp; Independence</span></div>
+            <div class="card-body" style="margin-top:10px;"><strong>$26/student flat, no school fee, publisher-agnostic.</strong> 3&ndash;5x cheaper than a typical Platinum program ($2,475&ndash;4,125/yr) and works with any textbook &mdash; unlike Navigate (JBL-only) and MyLab (Brady-only). Hold price in Year 1; chase market share.</div>
+          </div>
+        </div>
+
+        <div class="callout-info" style="margin-top:24px;">
+          <div class="callout-info-title">The Displacement Strategy</div>
+          <div class="callout-info-body"><strong>Phase 1 &mdash; Wedge (now&ndash;Q3 2026):</strong> CoAssist (free) and B2C student adoption get MedEdPrep inside programs without forcing a vendor switch. <strong>Phase 2 &mdash; Parallel Pilot (Q3&ndash;Q4 2026):</strong> &ldquo;Run us alongside Platinum / Fisdap for one cohort&rdquo; &mdash; low risk, the diagnostic gap becomes visible. <strong>Phase 3 &mdash; Conversion (Q1 2027+):</strong> programs that piloted see the data-quality difference and consolidate. Target SEO: &ldquo;Fisdap alternative.&rdquo; Move fast &mdash; the window is real but finite.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: CE PROVIDER FIELD -->
+  <div class="section" id="ce-field">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#x1F4D6;</span>
+      <span class="section-title">The CE Provider Field<span class="section-subtitle">40+ providers &mdash; a fragmented, undifferentiated market</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-red">
+          <div class="callout-red-title">The Defining Finding</div>
+          <div class="callout-red-body"><strong>Zero of the 40+ EMS CE providers offer adaptive or psychometric continuing education.</strong> Verified across the entire field during the 2026-04-14 market mapping (full interactive map at <a href="entity-ce-market.html">entity-ce-market.html</a>). Every provider sells CE hours &mdash; video courses, reading modules, or test-only activities &mdash; with no adaptive delivery, no IRT-based assessment, and no diagnostic competency reporting. MedEdPrep would be the first CAPCE-accredited provider combining all three.</div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-cell">
+            <div class="stat-cell-value c-purple">40+</div>
+            <div class="stat-cell-label">EMS CE providers mapped</div>
+            <div class="stat-cell-note">Across all formats and scales</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-cell-value c-red">0</div>
+            <div class="stat-cell-label">With adaptive / psychometric CE</div>
+            <div class="stat-cell-note">A clean structural vacuum</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-cell-value c-blue">~557K</div>
+            <div class="stat-cell-label">CE-required certificants</div>
+            <div class="stat-cell-note">Online CE caps removed in 2023</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-cell-value c-green">~$1B</div>
+            <div class="stat-cell-label">Vector Solutions valuation</div>
+            <div class="stat-cell-note">The PE-scale incumbent (public safety)</div>
+          </div>
+        </div>
+
+        <div class="table-wrap scroll">
+          <div class="table-label">Representative CE Providers</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>Provider</th><th>Owner / Model</th><th>Pricing</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Vector Solutions (EMS1 Academy)</td>
+                <td>Francisco Partners / Leeds Equity (PE)</td>
+                <td>Custom enterprise</td>
+                <td>~$1B valuation. 2M+ first responders, 10K+ agencies. 250+ CAPCE hours. Fire-first DNA, expanded to EMS.</td>
+              </tr>
+              <tr>
+                <td>Recert.com</td>
+                <td>Public Safety Group / NAEMT</td>
+                <td>$61.95/year</td>
+                <td>200+ scenario-based courses. Format 3 only (self-paced). Est. $2.5&ndash;7M CE revenue. Benefits from the JBL pipeline.</td>
+              </tr>
+              <tr>
+                <td>Limmer Education (LC-Ready)</td>
+                <td>Independent (Dan Limmer)</td>
+                <td>$15&ndash;75/course</td>
+                <td>CAPCE Provider Spotlight Feb 2026. Brand authority from the Brady textbook. Owns the NREMT-remediation niche.</td>
+              </tr>
+              <tr>
+                <td>GA EMS Academy</td>
+                <td>CrewSolutions, Inc.</td>
+                <td>$40</td>
+                <td>1-person operation, Georgia state-approved only, NOT CAPCE-accredited. Direct local (Georgia) competitor &mdash; lifestyle business.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout-info">
+          <div class="callout-info-title">Why the Vacuum Exists &mdash; and Why It&rsquo;s Defensible</div>
+          <div class="callout-info-body">CAPCE has confirmed <strong>assessment-only CE is allowed</strong> (0.25 CEH minimum, auto-reporting), and NREMT permanently removed online CE caps in 2023. The structural conditions all favor adaptive CE. No competitor offers it because they lack the psychometric infrastructure &mdash; the same data spine (Companies A and C) that powers MedEdPrep&rsquo;s diagnostic loop. MedEdPrep&rsquo;s CE play sells CE hours that <strong>also generate diagnostic data</strong>, closing the gap-identification-to-remediation loop no hours-only provider can match.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: NREMT REDESIGN -->
+  <div class="section" id="nremt">
+    <div class="section-header" onclick="toggleSection(this)" aria-expanded="false" tabindex="0" role="button">
+      <span class="section-icon">&#x1F501;</span>
+      <span class="section-title">Market Context: The NREMT Exam Redesign<span class="section-subtitle">The largest exam restructuring in NREMT history</span></span>
+      <span class="section-chevron">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+
+        <div class="callout-warning">
+          <div class="callout-warning-title">&#9888; Fully Live April 7, 2025</div>
+          <div class="callout-warning-body">The National Registry replaced its legacy content areas (Airway / Trauma / Cardiology / Medical / OB-Pediatrics) with a new <strong>four-domain framework</strong> across all levels simultaneously, expanded <strong>Technology-Enhanced Items (TEIs)</strong> to every level, and &mdash; effective July 1, 2024 &mdash; permanently discontinued the ALS psychomotor exam, making <strong>cognitive testing the only gate</strong> for AEMT and Paramedic candidates.</div>
+        </div>
+
+        <div class="table-wrap">
+          <div class="table-label">New Four-Domain Framework (EMT weighting)</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>Domain</th><th>Weight</th><th>Covers</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Primary Assessment &amp; Clinical Decision-Making</td><td class="me">Heaviest &mdash; ~half the exam</td><td>Scene size-up, primary survey, initial decision-making</td></tr>
+              <tr><td>Medical / Trauma Management</td><td>Significant</td><td>Condition-specific assessment and treatment</td></tr>
+              <tr><td>Resuscitation &amp; Ventilation</td><td>Moderate</td><td>Airway management, cardiac arrest, ventilation strategies</td></tr>
+              <tr><td>EMS Operations</td><td>Moderate</td><td>Scene management, triage, transport, crew resource management</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">What It Means for MedEdPrep</div>
+            <ul class="detail-list teal">
+              <li><strong>Content mapping:</strong> all 10,600+ items remapped to the four-domain structure; legacy tags retained for history</li>
+              <li><strong>TEI validation:</strong> Pulse&rsquo;s 10 question types (drag-drop, ordering, multi-select, classification) directly match the NREMT&rsquo;s TEI expansion</li>
+              <li><strong>Diagnostics realigned:</strong> reports now speak the new domain language programs and accreditors evaluate against</li>
+              <li><strong>Cognitive-only gate</strong> elevates diagnostic feedback from valuable to singular &mdash; it&rsquo;s now the primary readiness tool</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">The Competitive Window It Opens</div>
+            <div class="card-body">Neither Platinum / EMSTesting, Fisdap, nor MyLab Brady has published documentation confirming alignment with the new four-domain structure. Fisdap&rsquo;s unit exams were historically built on the legacy domains; whether they&rsquo;ve been remapped is unconfirmed. Competitors still shipping only multiple-choice are now <strong>visibly misaligned with the actual exam format</strong>. This creates a window where MedEdPrep can be the first platform demonstrably aligned to the redesigned exam &mdash; in both content taxonomy and item types.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">Competitive intelligence &middot; 03-market-landscape/ &middot; competitor-matrix &middot; deep dives (Platinum, JB/Fisdap, Brady/Pearson) &middot; positioning analysis &middot; intel refresh &middot; Last updated: 2026-05-21</div>
+
+</div><!-- /main-inner -->
+
+<!-- JAVASCRIPT -->
+<script>
+  function toggleSection(header) {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.section-chevron');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    if (chevron) chevron.classList.toggle('open', !isOpen);
+    header.setAttribute('aria-expanded', String(!isOpen));
+    header.classList.toggle('active', !isOpen);
+  }
+
+  function toggleAll(open) {
+    document.querySelectorAll('.section-body').forEach(body => {
+      const header = body.previousElementSibling;
+      const chevron = header.querySelector('.section-chevron');
+      body.classList.toggle('open', open);
+      if (chevron) chevron.classList.toggle('open', open);
+      header.setAttribute('aria-expanded', String(open));
+      header.classList.toggle('active', open);
+    });
+  }
+
+  // Scroll-triggered section reveal
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -60px 0px', threshold: 0.05 });
+
+  document.querySelectorAll('.section').forEach(s => revealObserver.observe(s));
+
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  sections.forEach(s => navObserver.observe(s));
+
+  // Smooth scroll for in-page links (and auto-open the target section)
+  document.querySelectorAll('nav a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (target) {
+        e.preventDefault();
+        const body = target.querySelector('.section-body');
+        const header = target.querySelector('.section-header');
+        if (body && !body.classList.contains('open')) toggleSection(header);
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Keyboard accessibility
+  document.querySelectorAll('.section-header').forEach(el => {
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

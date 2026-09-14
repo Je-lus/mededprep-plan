@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certification Level Badges — Variant A</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(165deg, #000000 0%, #071a12 40%, #0a2a1a 70%, #0d1f17 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 80px;
+      padding: 60px 24px;
+      overflow-x: hidden;
+    }
+
+    /* Subtle background texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 600px 400px at 20% 30%, rgba(16, 185, 129, 0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 500px 350px at 80% 60%, rgba(59, 130, 246, 0.03) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .section {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 28px;
+    }
+
+    .section-subtitle {
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.25);
+      margin-top: -18px;
+      margin-bottom: 28px;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    /* ─── Base Badge ─── */
+    .badge {
+      position: relative;
+      width: 100px;
+      padding: 14px 8px 16px;
+      border-radius: 10px;
+      cursor: default;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+
+      /* Glass base */
+      background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        rgba(255, 255, 255, 0.02) 50%,
+        rgba(0, 0, 0, 0.1) 100%
+      );
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+
+      /* Border — set per-color via custom properties */
+      border: 1.5px solid var(--badge-color);
+    }
+
+    /* Inner light reflection at top */
+    .badge::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--badge-color-bright, rgba(255,255,255,0.3)) 50%,
+        transparent 100%
+      );
+      opacity: 0.6;
+      border-radius: 0 0 50% 50%;
+    }
+
+    /* Subtle inner gradient shine */
+    .badge::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 9px;
+      background: linear-gradient(
+        160deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        transparent 40%
+      );
+      pointer-events: none;
+    }
+
+    .badge-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .badge-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .badge-label {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--badge-color);
+    }
+
+    .badge-subtitle {
+      font-size: 7px;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--badge-color);
+      opacity: 0.6;
+      margin-top: -2px;
+    }
+
+    /* ─── Color Variants ─── */
+
+    /* EMR — Gray */
+    .badge--emr {
+      --badge-color: #6B7280;
+      --badge-color-bright: rgba(107, 114, 128, 0.5);
+      box-shadow:
+        0 0 12px rgba(107, 114, 128, 0.15),
+        0 0 30px rgba(107, 114, 128, 0.08),
+        inset 0 0 20px rgba(107, 114, 128, 0.04);
+    }
+
+    /* EMT — Blue */
+    .badge--emt {
+      --badge-color: #3B82F6;
+      --badge-color-bright: rgba(59, 130, 246, 0.6);
+      box-shadow:
+        0 0 15px rgba(59, 130, 246, 0.2),
+        0 0 40px rgba(59, 130, 246, 0.1),
+        0 0 80px rgba(59, 130, 246, 0.04),
+        inset 0 0 20px rgba(59, 130, 246, 0.05);
+    }
+
+    /* AEMT — Emerald */
+    .badge--aemt {
+      --badge-color: #10B981;
+      --badge-color-bright: rgba(16, 185, 129, 0.6);
+      box-shadow:
+        0 0 15px rgba(16, 185, 129, 0.2),
+        0 0 40px rgba(16, 185, 129, 0.1),
+        0 0 80px rgba(16, 185, 129, 0.04),
+        inset 0 0 20px rgba(16, 185, 129, 0.05);
+    }
+
+    /* PMDC — Amber */
+    .badge--pmdc {
+      --badge-color: #F59E0B;
+      --badge-color-bright: rgba(245, 158, 11, 0.6);
+      box-shadow:
+        0 0 15px rgba(245, 158, 11, 0.2),
+        0 0 40px rgba(245, 158, 11, 0.1),
+        0 0 80px rgba(245, 158, 11, 0.04),
+        inset 0 0 20px rgba(245, 158, 11, 0.05);
+    }
+
+    /* CC — Rose (muted / coming soon) */
+    .badge--cc {
+      --badge-color: rgba(244, 63, 94, 0.35);
+      --badge-color-bright: rgba(244, 63, 94, 0.2);
+      box-shadow:
+        0 0 10px rgba(244, 63, 94, 0.06),
+        0 0 25px rgba(244, 63, 94, 0.03),
+        inset 0 0 15px rgba(244, 63, 94, 0.02);
+      opacity: 0.65;
+    }
+    .badge--cc .badge-label {
+      color: rgba(244, 63, 94, 0.45);
+    }
+    .badge--cc .badge-subtitle {
+      color: rgba(244, 63, 94, 0.35);
+    }
+
+    /* ─── Selected / Active State ─── */
+    .badge--selected {
+      transform: scale(1.1);
+      z-index: 2;
+    }
+
+    .badge--selected.badge--emt {
+      border-color: #60A5FA;
+      --badge-color: #60A5FA;
+      --badge-color-bright: rgba(96, 165, 250, 0.8);
+      box-shadow:
+        0 0 20px rgba(59, 130, 246, 0.4),
+        0 0 50px rgba(59, 130, 246, 0.2),
+        0 0 100px rgba(59, 130, 246, 0.08),
+        0 0 150px rgba(59, 130, 246, 0.04),
+        inset 0 0 30px rgba(59, 130, 246, 0.08);
+      background: linear-gradient(
+        145deg,
+        rgba(59, 130, 246, 0.1) 0%,
+        rgba(59, 130, 246, 0.03) 50%,
+        rgba(0, 0, 0, 0.1) 100%
+      );
+    }
+
+    .badge--selected .badge-label {
+      text-shadow: 0 0 12px var(--badge-color);
+    }
+
+    /* ─── Hover interaction ─── */
+    .badge:not(.badge--cc):hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 0 20px color-mix(in srgb, var(--badge-color) 30%, transparent),
+        0 0 50px color-mix(in srgb, var(--badge-color) 15%, transparent),
+        0 0 80px color-mix(in srgb, var(--badge-color) 06%, transparent),
+        inset 0 0 25px color-mix(in srgb, var(--badge-color) 06%, transparent);
+    }
+
+    .badge--selected:hover {
+      transform: scale(1.1) translateY(-2px) !important;
+    }
+
+    /* ─── Animations ─── */
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
+    }
+
+    .badge--selected {
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+
+    /* ─── Divider ─── */
+    .divider {
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ Locked Row ═══ -->
+  <div class="section">
+    <div class="section-title">Your Certification Level</div>
+    <div class="badge-row">
+
+      <!-- EMR -->
+      <div class="badge badge--emr">
+        <div class="badge-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" style="color: var(--badge-color)"/>
+            <path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" style="color: var(--badge-color)"/>
+            <circle cx="10" cy="13" r="1.5" fill="currentColor" style="color: var(--badge-color)"/>
+          </svg>
+        </div>
+        <span class="badge-label">EMR</span>
+      </div>
+
+      <!-- EMT -->
+      <div class="badge badge--emt">
+        <div class="badge-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" style="color: var(--badge-color)"/>
+            <path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" style="color: var(--badge-color)"/>
+            <circle cx="10" cy="13" r="1.5" fill="currentColor" style="color: var(--badge-color)"/>
+          </svg>
+        </div>
+        <span class="badge-label">EMT</span>
+      </div>
+
+      <!-- AEMT -->
+      <div class="badge badge--aemt">
+        <div class="badge-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" style="color: var(--badge-color)"/>
+            <path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" style="color: var(--badge-color)"/>
+            <circle cx="10" cy="13" r="1.5" fill="currentColor" style="color: var(--badge-color)"/>
+          </svg>
+        </div>
+        <span class="badge-label">AEMT</span>
+      </div>
+
+      <!-- PMDC -->
+      <div class="badge badge--pmdc">
+        <div class="badge-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" style="color: var(--badge-color)"/>
+            <path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" style="color: var(--badge-color)"/>
+            <circle cx="10" cy="13" r="1.5" fill="currentColor" style="color: var(--badge-color)"/>
+          </svg>
+        </div>
+        <span class="badge-label">PMDC</span>
+      </div>
+
+      <!-- CC (Coming Soon) -->
+      <div class="badge badge--cc">
+        <div class="badge-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" style="color: var(--badge-color)"/>
+            <path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" style="color: var(--badge-color)"/>
+            <circle cx="10" cy="13" r="1.5" fill="currentColor" style="color: var(--badge-color)"/>
+          </svg>
+        </div>
+        <span class="badge-label">CC</span>
+        <span class="badge-subtitle">Coming Soon</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══ Selected Row (EMT active) ═══ -->
+  <div class="section">
+    <div class="section-title">Selected State</div>
+    <div class="section-subtitle">EMT badge active / unlocked</div>
+    <div class="badge-row">
+
+      <!-- EMR — locked -->
+      <div class="badge badge--emr">
+        <div class="badge-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" style="color: var(--badge-color)"/>
+            <path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" style="color: var(--badge-color)"/>
+            <circle cx="10" cy="13" r="1.5" fill="currentColor" style="color: var(--badge-color)"/>
+          </svg>
+        </div>
+        <span class="badge-label">EMR</span>
+      </div>
+
+      <!-- EMT — SELECTED / ACTIVE -->
+      <div class="badge badge--emt badge--selected">
+        <div class="badge-icon">
+          <!-- Checkmark icon instead of lock -->
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5" fill="none" style="color: var(--badge-color)"/>
+            <path d="M6.5 10.5l2.5 2.5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" style="color: var(--badge-color)"/>
+          </svg>
+        </div>
+        <span class="badge-label">EMT</span>
+      </div>
+
+      <!-- AEMT — locked -->
+      <div class="badge badge--aemt">
+        <div class="badge-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" style="color: var(--badge-color)"/>
+            <path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" style="color: var(--badge-color)"/>
+            <circle cx="10" cy="13" r="1.5" fill="currentColor" style="color: var(--badge-color)"/>
+          </svg>
+        </div>
+        <span class="badge-label">AEMT</span>
+      </div>
+
+      <!-- PMDC — locked -->
+      <div class="badge badge--pmdc">
+        <div class="badge-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" style="color: var(--badge-color)"/>
+            <path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" style="color: var(--badge-color)"/>
+            <circle cx="10" cy="13" r="1.5" fill="currentColor" style="color: var(--badge-color)"/>
+          </svg>
+        </div>
+        <span class="badge-label">PMDC</span>
+      </div>
+
+      <!-- CC — coming soon -->
+      <div class="badge badge--cc">
+        <div class="badge-icon">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" style="color: var(--badge-color)"/>
+            <path d="M7 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" style="color: var(--badge-color)"/>
+            <circle cx="10" cy="13" r="1.5" fill="currentColor" style="color: var(--badge-color)"/>
+          </svg>
+        </div>
+        <span class="badge-label">CC</span>
+        <span class="badge-subtitle">Coming Soon</span>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

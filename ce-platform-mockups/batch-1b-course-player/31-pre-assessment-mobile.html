@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Pulse CE - Pre-Assessment</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: "#36C98D",
+                            hover: "#2DB87E",
+                            active: "#28A572",
+                            subtle: "rgba(54, 201, 141, 0.12)",
+                        },
+                        surface: {
+                            DEFAULT: "#111111",
+                            elevated: "#1A1A1A",
+                            hover: "#1F1F1F",
+                        },
+                        background: "#0A0A0A",
+                        border: {
+                            subtle: "rgba(255, 255, 255, 0.08)",
+                            default: "rgba(255, 255, 255, 0.12)",
+                            strong: "rgba(255, 255, 255, 0.2)",
+                        }
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Inter", "sans-serif"],
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>body {
+    background-color: #0A0A0A;
+    color: #FFF;
+    font-family: "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden
+    }
+.glass-card {
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2)
+    }
+.active-glow {
+    box-shadow: 0 0 20px rgba(54, 201, 141, 0.15)
+    }
+.pulse-border {
+    border-left: 4px solid #36C98D
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.grain-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    opacity: 0.04;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCpWp3NJ_17pjCHRZj5M_wGgdcmMGzjJaQNHcvgAD-bsOHkW8zQ5kjB5qiqf4dER3B391XXeOeYwmFdxtDsQ2wZnnGzSVAJDetxd0Ya9HOAoah0a37Qdl1bQtIjaphFCFIOKZQ9ZwH-du-L94JTx2MbzCKTUjRkmYj93rWA2xxd41_7xTlsUhJ_k4V7McpBZZMy7LBMWj9K75iGVyplbriJrDjUaRq-up6sYW0iZ2wZWx9j5-7OQJuk4HKasFwvNwx74Jf5QajI2eNl)
+    }
+/* Custom safe area for mobile notch */
+.pb-safe {
+    padding-bottom: env(safe-area-inset-bottom)
+    }
+.pt-safe {
+    padding-top: env(safe-area-inset-top)
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-white min-h-screen flex flex-col">
+<div class="grain-overlay"></div>
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-[#0A0A0A] border-b border-white/10 shadow-[0_0_20px_rgba(54,201,141,0.15)] h-16 flex flex-col justify-end pt-safe">
+<div class="flex justify-between items-center px-4 h-12">
+<button class="p-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-white/70">arrow_back</span>
+</button>
+<h1 class="font-headline font-semibold text-lg tracking-tight text-white">Pre-Assessment</h1>
+<button class="p-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-white/70">menu</span>
+</button>
+</div>
+<!-- Progress Bar at bottom of header -->
+<div class="w-full h-[3px] bg-white/10 overflow-hidden">
+<div class="h-full bg-primary w-[10%] transition-all duration-1000 ease-out"></div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow pt-24 pb-32 px-4 max-w-[390px] mx-auto w-full">
+<!-- Breadcrumb / Status -->
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-medium text-white/45 uppercase tracking-widest">Question 3 of 18</span>
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded uppercase tracking-wider border border-primary/20">
+                Cardiac Assessment
+            </span>
+</div>
+<!-- Clinical Vignette Card -->
+<div class="glass-card rounded-xl p-5 mb-6 active-glow">
+<h2 class="text-sm font-semibold text-primary mb-3 flex items-center gap-2 uppercase tracking-tight">
+<span class="material-symbols-outlined text-sm">clinical_notes</span>
+                Clinical Vignette
+            </h2>
+<p class="text-[15px] leading-relaxed text-white/90 font-medium">
+                A 58-year-old male presents with crushing substernal chest pain radiating to the left arm, diaphoresis, and nausea. His 12-lead ECG shows ST-elevation in leads II, III, and aVF. Which coronary artery is most likely occluded?
+            </p>
+</div>
+<!-- Answer Options -->
+<div class="space-y-3 mb-8">
+<button class="w-full text-left glass-card hover:bg-surface-elevated active:bg-surface-hover rounded-xl p-4 transition-all duration-200 group border-l-0" onclick="selectOption(this)">
+<div class="flex items-center">
+<div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/45 group-hover:text-white group-hover:border-primary/50 transition-colors mr-3 font-bold text-xs uppercase">A</div>
+<span class="text-sm font-medium text-white/80 group-hover:text-white">Left anterior descending</span>
+</div>
+</button>
+<button class="w-full text-left glass-card hover:bg-surface-elevated active:bg-surface-hover rounded-xl p-4 transition-all duration-200 group border-l-0" onclick="selectOption(this)">
+<div class="flex items-center">
+<div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/45 group-hover:text-white group-hover:border-primary/50 transition-colors mr-3 font-bold text-xs uppercase">B</div>
+<span class="text-sm font-medium text-white/80 group-hover:text-white">Right coronary artery</span>
+</div>
+</button>
+<button class="w-full text-left glass-card hover:bg-surface-elevated active:bg-surface-hover rounded-xl p-4 transition-all duration-200 group border-l-0" onclick="selectOption(this)">
+<div class="flex items-center">
+<div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/45 group-hover:text-white group-hover:border-primary/50 transition-colors mr-3 font-bold text-xs uppercase">C</div>
+<span class="text-sm font-medium text-white/80 group-hover:text-white">Left circumflex</span>
+</div>
+</button>
+<button class="w-full text-left glass-card hover:bg-surface-elevated active:bg-surface-hover rounded-xl p-4 transition-all duration-200 group border-l-0" onclick="selectOption(this)">
+<div class="flex items-center">
+<div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/45 group-hover:text-white group-hover:border-primary/50 transition-colors mr-3 font-bold text-xs uppercase">D</div>
+<span class="text-sm font-medium text-white/80 group-hover:text-white">Left main coronary</span>
+</div>
+</button>
+</div>
+<!-- Confidence Selection -->
+<div class="mb-8">
+<label class="block text-[10px] font-bold text-white/45 uppercase tracking-[0.2em] mb-3 text-center">Confidence Level</label>
+<div class="flex justify-between gap-1 overflow-x-auto pb-2 scrollbar-hide">
+<button class="px-3 py-2 rounded-full border border-white/10 bg-surface text-[10px] font-bold text-white/45 transition-all whitespace-nowrap active:scale-95" onclick="selectConfidence(this)">Guessing</button>
+<button class="px-3 py-2 rounded-full border border-white/10 bg-surface text-[10px] font-bold text-white/45 transition-all whitespace-nowrap active:scale-95" onclick="selectConfidence(this)">Low</button>
+<button class="px-3 py-2 rounded-full border-primary/40 bg-primary/10 text-primary text-[10px] font-extrabold transition-all whitespace-nowrap active:scale-95 shadow-[0_0_10px_rgba(54,201,141,0.1)]" onclick="selectConfidence(this)">Moderate</button>
+<button class="px-3 py-2 rounded-full border border-white/10 bg-surface text-[10px] font-bold text-white/45 transition-all whitespace-nowrap active:scale-95" onclick="selectConfidence(this)">High</button>
+<button class="px-3 py-2 rounded-full border border-white/10 bg-surface text-[10px] font-bold text-white/45 transition-all whitespace-nowrap active:scale-95" onclick="selectConfidence(this)">Certain</button>
+</div>
+</div>
+<!-- Action Button -->
+<button class="w-full h-12 bg-primary hover:bg-primary-hover active:scale-95 active:bg-primary-active text-black font-bold rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+            Submit Answer
+            <span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 bg-[#111111] flex justify-around items-center px-4 py-3 pb-safe border-t border-white/10 shadow-2xl">
+<a href="../dashboard-variant-h-pulse.html" class="flex flex-col items-center justify-center text-white/45 active:scale-90 transition-transform" style="text-decoration:none">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="font-label text-[10px] uppercase font-semibold tracking-widest mt-1">Home</span>
+</a>
+<a href="../batch-4-learner-portal/40-compliance-tracker-mobile.html" class="flex flex-col items-center justify-center text-primary bg-primary/10 rounded-lg py-1 px-4 active:scale-90 transition-transform" style="text-decoration:none">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+<span class="font-label text-[10px] uppercase font-semibold tracking-widest mt-1">Courses</span>
+</a>
+<a href="../batch-4-learner-portal/38-certificate-view-mobile.html" class="flex flex-col items-center justify-center text-white/45 active:scale-90 transition-transform" style="text-decoration:none">
+<span class="material-symbols-outlined text-[24px]">workspace_premium</span>
+<span class="font-label text-[10px] uppercase font-semibold tracking-widest mt-1">Certs</span>
+</a>
+<a href="../batch-4-learner-portal/41-settings-mobile.html" class="flex flex-col items-center justify-center text-white/45 active:scale-90 transition-transform" style="text-decoration:none">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="font-label text-[10px] uppercase font-semibold tracking-widest mt-1">Profile</span>
+</a>
+</nav>
+<script>
+        function selectOption(el) {
+            // Remove selection from others
+            document.querySelectorAll('.space-y-3 button').forEach(btn => {
+                btn.classList.remove('pulse-border', 'border-primary/50', 'bg-primary/5');
+                btn.querySelector('.w-8').classList.remove('bg-primary/20', 'border-primary/50', 'text-primary');
+                btn.querySelector('span').classList.remove('text-primary');
+            });
+            
+            // Add selection to current
+            el.classList.add('pulse-border', 'border-primary/50', 'bg-primary/5');
+            const iconBox = el.querySelector('.w-8');
+            iconBox.classList.add('bg-primary/20', 'border-primary/50', 'text-primary');
+            el.querySelector('span').classList.add('text-primary');
+        }
+
+        function selectConfidence(el) {
+            // Remove selection from others
+            document.querySelectorAll('.overflow-x-auto button').forEach(btn => {
+                btn.classList.remove('border-primary/40', 'bg-primary/10', 'text-primary', 'font-extrabold', 'shadow-[0_0_10px_rgba(54,201,141,0.1)]');
+                btn.classList.add('border-white/10', 'bg-surface', 'text-white/45', 'font-bold');
+            });
+
+            // Add selection to current
+            el.classList.remove('border-white/10', 'bg-surface', 'text-white/45', 'font-bold');
+            el.classList.add('border-primary/40', 'bg-primary/10', 'text-primary', 'font-extrabold', 'shadow-[0_0_10px_rgba(54,201,141,0.1)]');
+        }
+    </script>
+</body></html>

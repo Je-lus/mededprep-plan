@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: #0A0A0A;
+            color: #FFFFFF;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(54, 201, 141, 0.3);
+            border-radius: 10px;
+        }
+        .grain-overlay {
+            pointer-events: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+        }
+        .green-glow {
+            box-shadow: 0 0 20px rgba(54, 201, 141, 0.15);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: "#36C98D",
+                            hover: "#2DB87E",
+                            active: "#28A572",
+                            subtle: "rgba(54, 201, 141, 0.12)"
+                        },
+                        background: "#0A0A0A",
+                        surface: {
+                            DEFAULT: "#111111",
+                            elevated: "#1A1A1A",
+                            hover: "#1F1F1F"
+                        },
+                        border: {
+                            subtle: "rgba(255, 255, 255, 0.08)",
+                            default: "rgba(255, 255, 255, 0.12)",
+                            strong: "rgba(255, 255, 255, 0.2)"
+                        },
+                        error: "#E5484D",
+                        warning: "#F5A623",
+                    },
+                    fontFamily: {
+                        headline: ["Inter", "sans-serif"],
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-white antialiased overflow-hidden">
+<div class="grain-overlay"></div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-white/12 shadow-[0_0_20px_rgba(54,201,141,0.15)] flex justify-between items-center h-16 px-4 md:px-6">
+<div class="flex items-center gap-6">
+<div class="text-lg font-display font-bold tracking-tight text-primary flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shield</span>
+<div class="flex flex-col leading-none">
+<span>PULSE</span>
+<span class="text-[8px] font-semibold uppercase tracking-widest text-primary/70">BY MEDEDPREP</span>
+</div>
+</div>
+<div class="hidden md:block h-6 w-px bg-white/12"></div>
+<h1 class="hidden lg:block font-headline font-semibold text-base text-secondary">Cardiac Emergencies: Advanced Assessment</h1>
+</div>
+<div class="flex-1 max-w-md mx-8 hidden sm:block">
+<div class="flex justify-between items-center mb-1.5">
+<span class="text-[10px] font-bold text-primary uppercase tracking-wider">Course Progress</span>
+<span class="text-[10px] font-bold text-primary">85%</span>
+</div>
+<div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full transition-all duration-1000" style="width: 85%"></div>
+</div>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-white/12 text-sm font-semibold hover:bg-surface-hover transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-sm">logout</span>
+            Exit Course
+        </button>
+</header>
+<!-- SideNavBar (Collapsed) -->
+<nav class="fixed left-0 top-16 h-[calc(100vh-64px)] w-16 bg-surface border-r border-white/12 flex flex-col items-center py-6 gap-8 z-40">
+<!-- Completed Segments -->
+<div class="group relative flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+<div class="absolute left-full ml-4 px-2 py-1 bg-surface-elevated border border-white/12 rounded text-[10px] opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity pointer-events-none z-50">Pre-Assessment</div>
+</div>
+<div class="group relative flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">radio_button_checked</span>
+<div class="absolute left-full ml-4 px-2 py-1 bg-surface-elevated border border-white/12 rounded text-[10px] opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity pointer-events-none z-50">Segment 1</div>
+</div>
+<div class="group relative flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">radio_button_checked</span>
+<div class="absolute left-full ml-4 px-2 py-1 bg-surface-elevated border border-white/12 rounded text-[10px] opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity pointer-events-none z-50">Segment 2</div>
+</div>
+<div class="group relative flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">radio_button_checked</span>
+<div class="absolute left-full ml-4 px-2 py-1 bg-surface-elevated border border-white/12 rounded text-[10px] opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity pointer-events-none z-50">Segment 3</div>
+</div>
+<div class="group relative flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">radio_button_checked</span>
+<div class="absolute left-full ml-4 px-2 py-1 bg-surface-elevated border border-white/12 rounded text-[10px] opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity pointer-events-none z-50">Segment 4</div>
+</div>
+<!-- Active Post-Test -->
+<div class="group relative flex items-center justify-center w-full border-l-4 border-primary bg-primary-subtle py-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">emergency_home</span>
+<div class="absolute left-full ml-4 px-2 py-1 bg-surface-elevated border border-white/12 rounded text-[10px] opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity pointer-events-none z-50">Post-Test</div>
+</div>
+<!-- Upcoming -->
+<div class="group relative flex items-center justify-center cursor-pointer opacity-40">
+<span class="material-symbols-outlined text-tertiary">workspace_premium</span>
+<div class="absolute left-full ml-4 px-2 py-1 bg-surface-elevated border border-white/12 rounded text-[10px] opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity pointer-events-none z-50">Results</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-16 mt-16 h-[calc(100vh-64px)] overflow-y-auto custom-scrollbar p-6 md:p-12">
+<div class="max-w-[720px] mx-auto pb-24">
+<!-- Header Section -->
+<header class="mb-8">
+<div class="flex items-center gap-2 mb-2">
+<span class="px-2 py-0.5 bg-primary/20 text-primary text-[10px] font-bold rounded uppercase tracking-widest border border-primary/30">Post-Test</span>
+<span class="text-white/40 text-[10px] uppercase tracking-widest font-bold">Summative Assessment</span>
+</div>
+<h2 class="text-3xl font-extrabold tracking-tight mb-2">Post-Test</h2>
+<p class="text-white/60 font-medium">20 questions — 70% required to pass</p>
+</header>
+<!-- Info Banner -->
+<div class="mb-10 bg-warning/5 border-l-4 border-warning p-4 rounded-r-xl flex gap-4 items-start">
+<span class="material-symbols-outlined text-warning mt-0.5">info</span>
+<div>
+<h4 class="text-sm font-bold text-warning mb-1">Passing Requirements</h4>
+<p class="text-xs text-white/80 leading-relaxed">
+                        You must answer at least 14/20 questions correctly (70%) to successfully complete this course and earn your 1.0 CEH certificate. This test is timed and your first attempt will be recorded for compliance.
+                    </p>
+</div>
+</div>
+<!-- Question Card -->
+<section class="bg-surface border border-white/12 rounded-xl overflow-hidden shadow-2xl relative">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<div class="p-6 md:p-8">
+<div class="flex justify-between items-center mb-6">
+<span class="text-[11px] font-bold text-primary uppercase tracking-widest">Question 12 of 20</span>
+<div class="flex gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-primary"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-primary"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-primary/20"></div>
+</div>
+</div>
+<p class="text-lg font-medium leading-relaxed mb-10 text-white/95">
+                        During transport of a STEMI patient, you note new-onset Mobitz Type II second-degree AV block on the monitor. The patient is hemodynamically stable with a heart rate of 52 bpm. What is the most appropriate next step?
+                    </p>
+<!-- Options Grid -->
+<div class="space-y-4">
+<!-- Option A -->
+<div class="group cursor-pointer flex items-center p-4 rounded-lg border border-white/12 bg-white/5 hover:bg-white/10 transition-all active:scale-[0.99]">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center font-bold text-white/40 group-hover:text-white/60 border border-white/10 mr-4">A</div>
+<span class="text-sm font-medium text-white/80">Administer Atropine 1mg IV push immediately</span>
+</div>
+<!-- Option B (Selected) -->
+<div class="group cursor-pointer flex items-center p-4 rounded-lg border-2 border-primary bg-primary-subtle transition-all active:scale-[0.99] green-glow">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center font-bold text-black mr-4">B</div>
+<span class="text-sm font-bold text-white">Apply transcutaneous pacing pads and prepare for pacing</span>
+<span class="material-symbols-outlined ml-auto text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<!-- Option C -->
+<div class="group cursor-pointer flex items-center p-4 rounded-lg border border-white/12 bg-white/5 hover:bg-white/10 transition-all active:scale-[0.99]">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center font-bold text-white/40 group-hover:text-white/60 border border-white/10 mr-4">C</div>
+<span class="text-sm font-medium text-white/80">Initiate Dopamine infusion at 5 mcg/kg/min</span>
+</div>
+<!-- Option D -->
+<div class="group cursor-pointer flex items-center p-4 rounded-lg border border-white/12 bg-white/5 hover:bg-white/10 transition-all active:scale-[0.99]">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center font-bold text-white/40 group-hover:text-white/60 border border-white/10 mr-4">D</div>
+<span class="text-sm font-medium text-white/80">Monitor closely and continue transport without intervention</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Navigation Controls -->
+<div class="mt-12 flex flex-col items-center gap-8">
+<!-- Dot Tracker -->
+<div class="flex gap-2.5">
+<!-- Dots 1-11 (Completed) -->
+<script>
+                        for(let i=0; i<11; i++) {
+                            document.write('<div class="w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(54,201,141,0.4)]"></div>');
+                        }
+                    </script>
+<!-- Current Dot (12) -->
+<div class="w-2.5 h-2.5 rounded-full bg-primary ring-4 ring-primary/20 scale-125"></div>
+<!-- Dots 13-20 (Remaining) -->
+<script>
+                        for(let i=0; i<8; i++) {
+                            document.write('<div class="w-2.5 h-2.5 rounded-full bg-white/20"></div>');
+                        }
+                    </script>
+</div>
+<div class="flex justify-between items-center w-full">
+<button class="flex items-center gap-2 px-6 py-3 rounded-xl border border-white/12 font-bold text-sm text-white/60 hover:text-white hover:bg-surface-hover transition-all">
+<span class="material-symbols-outlined text-sm">arrow_back_ios</span>
+                        Previous
+                    </button>
+<button class="flex items-center gap-2 px-10 py-3 rounded-xl bg-primary hover:bg-primary-hover text-black font-extrabold text-sm transition-all shadow-lg active:translate-y-0.5">
+                        Next Question
+                        <span class="material-symbols-outlined text-sm">arrow_forward_ios</span>
+</button>
+</div>
+<button class="flex items-center gap-1.5 text-xs font-bold text-white/40 hover:text-white/80 transition-colors uppercase tracking-widest mt-4">
+<span class="material-symbols-outlined text-sm">flag</span>
+                    Flag for Review
+                </button>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom Navigation (Hidden on MD up as per system) -->
+<nav class="fixed bottom-0 w-full md:hidden z-50 bg-surface border-t border-white/12 shadow-2xl flex justify-around items-center h-16 pb-safe">
+<a href="../dashboard-variant-h-pulse.html" class="flex flex-col items-center gap-1 text-tertiary" style="text-decoration:none">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label text-xs font-medium">Home</span>
+</a>
+<a href="../batch-4-learner-portal/40-compliance-tracker-mobile.html" class="flex flex-col items-center gap-1 text-primary" style="text-decoration:none">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">school</span>
+<span class="font-label text-xs font-medium">Courses</span>
+</a>
+<a href="../batch-4-learner-portal/38-certificate-view-mobile.html" class="flex flex-col items-center gap-1 text-tertiary" style="text-decoration:none">
+<span class="material-symbols-outlined">verified</span>
+<span class="font-label text-xs font-medium">Certs</span>
+</a>
+<a href="../batch-4-learner-portal/41-settings-mobile.html" class="flex flex-col items-center gap-1 text-tertiary" style="text-decoration:none">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label text-xs font-medium">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple Interaction logic
+        document.querySelectorAll('.group.cursor-pointer').forEach(option => {
+            option.addEventListener('click', function() {
+                // Clear previous selection states (Visual only for prototype)
+                document.querySelectorAll('.group.cursor-pointer').forEach(el => {
+                    el.classList.remove('border-2', 'border-primary', 'bg-primary-subtle', 'green-glow');
+                    el.classList.add('border', 'border-white/12', 'bg-white/5');
+                    const check = el.querySelector('.material-symbols-outlined[style*="FILL"]');
+                    if (check) check.remove();
+                    const circle = el.querySelector('.bg-primary.text-black');
+                    if(circle) {
+                        circle.classList.remove('bg-primary', 'text-black');
+                        circle.classList.add('bg-surface', 'text-white/40');
+                    }
+                });
+
+                // Apply new state
+                this.classList.remove('border', 'border-white/12', 'bg-white/5');
+                this.classList.add('border-2', 'border-primary', 'bg-primary-subtle', 'green-glow');
+                
+                const indicator = this.querySelector('.rounded-lg');
+                indicator.classList.remove('bg-surface', 'text-white/40');
+                indicator.classList.add('bg-primary', 'text-black');
+
+                const checkIcon = document.createElement('span');
+                checkIcon.className = 'material-symbols-outlined ml-auto text-primary';
+                checkIcon.style.fontVariationSettings = "'FILL' 1";
+                checkIcon.textContent = 'check_circle';
+                this.appendChild(checkIcon);
+            });
+        });
+    </script>
+</body></html>

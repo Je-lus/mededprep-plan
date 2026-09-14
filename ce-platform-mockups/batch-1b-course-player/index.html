@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batch 1B: Course Player Flow — Pulse CE Mockups</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #0A0A0A;
+      color: #FFFFFF;
+      min-height: 100vh;
+      padding: 48px 32px;
+    }
+    .header {
+      max-width: 960px;
+      margin: 0 auto 48px;
+    }
+    .header h1 {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .header h1 span { color: #36C98D; }
+    .header p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+    }
+    .header .meta {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .header .meta span {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: rgba(54, 201, 141, 0.12);
+      color: #36C98D;
+    }
+    .grid {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .screen-pair {
+      background: #111111;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .screen-pair h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .screen-pair .route {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 8px;
+    }
+    .screen-pair .desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .screen-pair .progress-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #36C98D;
+      margin-bottom: 16px;
+    }
+    .screen-pair .progress-bar {
+      width: 80px;
+      height: 4px;
+      background: #1A1A1A;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .screen-pair .progress-fill {
+      height: 100%;
+      background: #36C98D;
+      border-radius: 2px;
+    }
+    .links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: #1A1A1A;
+      transition: all 0.2s ease;
+    }
+    .links a:hover {
+      border-color: #36C98D;
+      background: rgba(54, 201, 141, 0.08);
+    }
+    .links a.mobile {
+      border-color: rgba(245, 166, 35, 0.3);
+    }
+    .links a.mobile:hover {
+      border-color: #F5A623;
+      background: rgba(245, 166, 35, 0.08);
+    }
+    .stitch-link {
+      max-width: 960px;
+      margin: 48px auto 0;
+      text-align: center;
+    }
+    .stitch-link a {
+      font-size: 14px;
+      color: #36C98D;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .stitch-link a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Batch 1B: <span>Course Player Flow</span></h1>
+    <p>6 screens showing one learner progressing through "Cardiac Emergencies: Advanced Assessment" (1.0 CEH, 4 segments). Each screen shares persistent state with consistent left-rail nav and advancing progress bar.</p>
+    <div class="meta">
+      <span>6 Screens</span>
+      <span>12 Files (Desktop + Mobile)</span>
+      <span>Pulse CE Design System</span>
+      <span>Generated 2026-05-19</span>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <div class="screen-pair">
+      <h2>Screen 31: Pre-Assessment</h2>
+      <div class="route">/learn/:courseSlug/pre-assessment</div>
+      <div class="desc">Adaptive 15-20 question assessment with confidence rating per item. Question 3/18 shown with 2x2 answer grid and confidence pills.</div>
+      <div class="progress-label">
+        <div class="progress-bar"><div class="progress-fill" style="width:10%"></div></div>
+        10% Progress
+      </div>
+      <div class="links">
+        <a href="31-pre-assessment-desktop.html">Desktop (1280px)</a>
+        <a href="31-pre-assessment-mobile.html" class="mobile">Mobile (390px)</a>
+      </div>
+    </div>
+
+    <div class="screen-pair">
+      <h2>Screen 32: Video Segment</h2>
+      <div class="route">/learn/:courseSlug/segment/:segmentId</div>
+      <div class="desc">65/35 split-pane video player with contextual notes panel. Timestamped HIGH YIELD, KEY CONCEPT, and CLINICAL PEARL annotations. Instructor: Dr. Sarah Chen.</div>
+      <div class="progress-label">
+        <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
+        40% Progress
+      </div>
+      <div class="links">
+        <a href="32-video-segment-desktop.html">Desktop (1280px)</a>
+        <a href="32-video-segment-mobile.html" class="mobile">Mobile (390px)</a>
+      </div>
+    </div>
+
+    <div class="screen-pair">
+      <h2>Screen 33: Knowledge Check</h2>
+      <div class="route">/learn/:courseSlug/segment/:segmentId/check</div>
+      <div class="desc">Formative assessment with immediate feedback. Shows incorrect answer state (red) with correct answer highlighted (green), clinical rationale, and learning objective tag.</div>
+      <div class="progress-label">
+        <div class="progress-bar"><div class="progress-fill" style="width:55%"></div></div>
+        55% Progress
+      </div>
+      <div class="links">
+        <a href="33-knowledge-check-desktop.html">Desktop (1280px)</a>
+        <a href="33-knowledge-check-mobile.html" class="mobile">Mobile (390px)</a>
+      </div>
+    </div>
+
+    <div class="screen-pair">
+      <h2>Screen 34: Post-Test</h2>
+      <div class="route">/learn/:courseSlug/post-test</div>
+      <div class="desc">20-question summative assessment with 70% passing score. Question 12/20 shown with answer selection, dot navigator, and "Flag for Review" option.</div>
+      <div class="progress-label">
+        <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
+        85% Progress
+      </div>
+      <div class="links">
+        <a href="34-post-test-desktop.html">Desktop (1280px)</a>
+        <a href="34-post-test-mobile.html" class="mobile">Mobile (390px)</a>
+      </div>
+    </div>
+
+    <div class="screen-pair">
+      <h2>Screen 35: Results</h2>
+      <div class="route">/learn/:courseSlug/results</div>
+      <div class="desc">Pass state (84%, 17/20) with score breakdown by learning objective. Pre-to-post comparison showing +22% improvement from 62% to 84%.</div>
+      <div class="progress-label">
+        <div class="progress-bar"><div class="progress-fill" style="width:95%"></div></div>
+        ~95% Progress
+      </div>
+      <div class="links">
+        <a href="35-results-desktop.html">Desktop (1280px)</a>
+        <a href="35-results-mobile.html" class="mobile">Mobile (390px)</a>
+      </div>
+    </div>
+
+    <div class="screen-pair">
+      <h2>Screen 36: Completion</h2>
+      <div class="route">/learn/:courseSlug/complete</div>
+      <div class="desc">Celebration state with confetti, certificate preview (CAPCE #CE-2026-0847), share prompt, and "Next: Pediatric Respiratory Emergencies" recommendation.</div>
+      <div class="progress-label">
+        <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+        100% Complete
+      </div>
+      <div class="links">
+        <a href="36-completion-desktop.html">Desktop (1280px)</a>
+        <a href="36-completion-mobile.html" class="mobile">Mobile (390px)</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="stitch-link">
+    <a href="https://stitch.withgoogle.com/projects/11889911021680120036" target="_blank">Open in Google Stitch &rarr;</a>
+  </div>
+</body>
+</html>

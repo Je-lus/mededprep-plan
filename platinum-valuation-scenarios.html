@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Platinum Educational Group — Valuation Scenarios</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0f1419;
+    color: #e8eaed;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .page {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 48px 64px;
+  }
+
+  /* ── Header ── */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 56px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .header-left h1 {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #e8eaed 0%, #9aa0a6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+  }
+
+  .header-left .subtitle {
+    font-size: 14px;
+    color: #9aa0a6;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+  }
+
+  .header-right {
+    text-align: right;
+  }
+
+  .header-right .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #5f6368;
+    margin-bottom: 4px;
+  }
+
+  .header-right .value {
+    font-size: 14px;
+    color: #9aa0a6;
+  }
+
+  .company-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 16px;
+  }
+
+  .meta-pill {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 13px;
+    color: #9aa0a6;
+  }
+
+  .meta-pill strong {
+    color: #e8eaed;
+    font-weight: 600;
+  }
+
+  /* ── Products row ── */
+  .products-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .product-tag {
+    background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(99,102,241,0.04));
+    border: 1px solid rgba(99,102,241,0.2);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #a5b4fc;
+    letter-spacing: 0.2px;
+  }
+
+  .arr-badge {
+    margin-top: 16px;
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(16,185,129,0.04));
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #6ee7b7;
+  }
+
+  /* ── Section titles ── */
+  .section-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #5f6368;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+
+  /* ── Valuation scenarios ── */
+  .scenarios-section {
+    margin-bottom: 56px;
+  }
+
+  .scenarios-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  .scenario-card {
+    position: relative;
+    border-radius: 16px;
+    padding: 32px 28px;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+  }
+
+  .scenario-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .scenario-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+
+  /* Floor */
+  .scenario-floor {
+    background: linear-gradient(180deg, rgba(59,130,246,0.08) 0%, rgba(59,130,246,0.02) 100%);
+    border: 1px solid rgba(59,130,246,0.15);
+  }
+  .scenario-floor::before {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  }
+
+  /* Mid */
+  .scenario-mid {
+    background: linear-gradient(180deg, rgba(16,185,129,0.08) 0%, rgba(16,185,129,0.02) 100%);
+    border: 1px solid rgba(16,185,129,0.15);
+  }
+  .scenario-mid::before {
+    background: linear-gradient(90deg, #10b981, #34d399);
+  }
+
+  /* Strategic */
+  .scenario-strategic {
+    background: linear-gradient(180deg, rgba(245,158,11,0.08) 0%, rgba(245,158,11,0.02) 100%);
+    border: 1px solid rgba(245,158,11,0.15);
+  }
+  .scenario-strategic::before {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  }
+
+  .scenario-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .scenario-floor .scenario-label { color: #60a5fa; }
+  .scenario-mid .scenario-label { color: #34d399; }
+  .scenario-strategic .scenario-label { color: #fbbf24; }
+
+  .scenario-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #e8eaed;
+    margin-bottom: 20px;
+  }
+
+  .scenario-formula {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #9aa0a6;
+  }
+
+  .scenario-formula .rev {
+    font-weight: 600;
+    color: #e8eaed;
+  }
+
+  .scenario-formula .mult {
+    font-weight: 600;
+  }
+
+  .scenario-floor .scenario-formula .mult { color: #60a5fa; }
+  .scenario-mid .scenario-formula .mult { color: #34d399; }
+  .scenario-strategic .scenario-formula .mult { color: #fbbf24; }
+
+  .scenario-range {
+    margin: 20px 0;
+  }
+
+  .range-bar {
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    position: relative;
+  }
+
+  .scenario-floor .range-bar {
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: #dbeafe;
+  }
+
+  .scenario-mid .range-bar {
+    background: linear-gradient(135deg, #065f46, #10b981);
+    color: #d1fae5;
+  }
+
+  .scenario-strategic .range-bar {
+    background: linear-gradient(135deg, #92400e, #f59e0b);
+    color: #fef3c7;
+  }
+
+  .scenario-context {
+    margin-top: 16px;
+    font-size: 13px;
+    color: #9aa0a6;
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* ── Visual bar chart ── */
+  .bar-chart-section {
+    margin-bottom: 56px;
+  }
+
+  .bar-chart {
+    position: relative;
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    padding: 0 40px;
+  }
+
+  .bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .bar-wrapper {
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .bar {
+    width: 60px;
+    border-radius: 6px 6px 0 0;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .bar-low {
+    opacity: 0.6;
+  }
+
+  .bar-high {
+    opacity: 1;
+  }
+
+  .bar-floor { background: linear-gradient(180deg, #60a5fa, #1e40af); }
+  .bar-mid { background: linear-gradient(180deg, #34d399, #065f46); }
+  .bar-strategic { background: linear-gradient(180deg, #fbbf24, #92400e); }
+
+  .bar-label-top {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .bar-floor .bar-label-top { color: #60a5fa; }
+  .bar-mid .bar-label-top { color: #34d399; }
+  .bar-strategic .bar-label-top { color: #fbbf24; }
+
+  .bar-group-label {
+    margin-top: 12px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    color: #9aa0a6;
+  }
+
+  .bar-axis {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .axis-labels {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .axis-label {
+    font-size: 10px;
+    color: #5f6368;
+    text-align: right;
+    padding-right: 8px;
+  }
+
+  .axis-gridlines {
+    position: absolute;
+    left: 40px;
+    right: 40px;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+
+  .gridline {
+    height: 1px;
+    background: rgba(255,255,255,0.04);
+  }
+
+  /* ── Bottom grid ── */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  /* ── Market multiples ── */
+  .multiples-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 28px;
+  }
+
+  .multiple-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .multiple-row:last-child {
+    border-bottom: none;
+  }
+
+  .multiple-name {
+    font-size: 13px;
+    color: #9aa0a6;
+    max-width: 200px;
+    line-height: 1.4;
+  }
+
+  .multiple-value {
+    font-size: 15px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mv-low { color: #60a5fa; }
+  .mv-mid { color: #34d399; }
+  .mv-high { color: #fbbf24; }
+
+  /* ── Value drivers ── */
+  .drivers-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 28px;
+  }
+
+  .driver-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+  }
+
+  .driver-bar-track {
+    width: 80px;
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .driver-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #10b981, #34d399);
+  }
+
+  .driver-text {
+    font-size: 13px;
+    color: #e8eaed;
+    line-height: 1.3;
+  }
+
+  /* ── Value risks ── */
+  .risks-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 28px;
+  }
+
+  .risk-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+  }
+
+  .risk-icon {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .risk-high { background: #ef4444; }
+  .risk-med { background: #f59e0b; }
+
+  .risk-text {
+    font-size: 13px;
+    color: #9aa0a6;
+    line-height: 1.3;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-text {
+    font-size: 11px;
+    color: #5f6368;
+    letter-spacing: 0.3px;
+  }
+
+  .footer-badge {
+    font-size: 11px;
+    color: #5f6368;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 4px 10px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── Responsive fallback fonts ── */
+  @font-face {
+    font-family: 'Inter';
+    src: local('Inter');
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <div class="header">
+    <div class="header-left">
+      <h1>Platinum Educational Group</h1>
+      <div class="subtitle">Competitive Valuation Analysis</div>
+      <div class="company-meta">
+        <div class="meta-pill"><strong>Grandville, MI</strong> &mdash; Founded 2002</div>
+        <div class="meta-pill"><strong>~25</strong> employees &mdash; Bootstrapped</div>
+      </div>
+      <div class="products-row">
+        <span class="product-tag">EMSTesting</span>
+        <span class="product-tag">Platinum Planner</span>
+        <span class="product-tag">Platinum Tests</span>
+      </div>
+      <div class="arr-badge">Est. Revenue: $4M &ndash; $6M ARR</div>
+    </div>
+    <div class="header-right">
+      <div class="label">Analysis Date</div>
+      <div class="value">May 2026</div>
+      <div style="margin-top: 16px;">
+        <div class="label">Classification</div>
+        <div class="value">Internal / Strategic</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VALUATION SCENARIOS ── -->
+  <div class="scenarios-section">
+    <div class="section-title">Valuation Scenarios</div>
+    <div class="scenarios-grid">
+
+      <!-- Floor -->
+      <div class="scenario-card scenario-floor">
+        <div class="scenario-label">Floor</div>
+        <div class="scenario-name">Small Private EdTech</div>
+        <div class="scenario-formula">
+          <span class="rev">$4M</span>
+          <span>&times;</span>
+          <span class="mult">3&ndash;4x</span>
+          <span>multiple</span>
+        </div>
+        <div class="scenario-range">
+          <div class="range-bar">$12M &ndash; $16M</div>
+        </div>
+        <div class="scenario-context">"Standard small private SaaS discount"</div>
+      </div>
+
+      <!-- Mid -->
+      <div class="scenario-card scenario-mid">
+        <div class="scenario-label">Mid</div>
+        <div class="scenario-name">Vertical Healthcare SaaS</div>
+        <div class="scenario-formula">
+          <span class="rev">$5&ndash;6M</span>
+          <span>&times;</span>
+          <span class="mult">5&ndash;6x</span>
+          <span>multiple</span>
+        </div>
+        <div class="scenario-range">
+          <div class="range-bar">$25M &ndash; $36M</div>
+        </div>
+        <div class="scenario-context">"High switching costs, sticky B2B contracts, 24-year installed base"</div>
+      </div>
+
+      <!-- Strategic -->
+      <div class="scenario-card scenario-strategic">
+        <div class="scenario-label">Strategic</div>
+        <div class="scenario-name">Pearson / Lexipol Acquisition</div>
+        <div class="scenario-formula">
+          <span class="rev">$6&ndash;7M</span>
+          <span>&times;</span>
+          <span class="mult">8&ndash;10x</span>
+          <span>multiple</span>
+        </div>
+        <div class="scenario-range">
+          <div class="range-bar">$48M &ndash; $70M</div>
+        </div>
+        <div class="scenario-context">"Buyer pays for installed base, Pearson relationship, market position"</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── WATERFALL BAR CHART ── -->
+  <div class="bar-chart-section">
+    <div class="section-title">Valuation Range Comparison ($M)</div>
+    <div class="bar-chart">
+      <div class="axis-labels">
+        <div class="axis-label">$70M</div>
+        <div class="axis-label">$52M</div>
+        <div class="axis-label">$35M</div>
+        <div class="axis-label">$17M</div>
+        <div class="axis-label">$0</div>
+      </div>
+      <div class="axis-gridlines">
+        <div class="gridline"></div>
+        <div class="gridline"></div>
+        <div class="gridline"></div>
+        <div class="gridline"></div>
+        <div class="gridline"></div>
+      </div>
+
+      <!-- Floor bars -->
+      <div class="bar-group">
+        <div class="bar-wrapper">
+          <div class="bar bar-low bar-floor" style="height: calc(12 / 70 * 180px);">
+            <div class="bar-label-top">$12M</div>
+          </div>
+          <div class="bar bar-high bar-floor" style="height: calc(16 / 70 * 180px);">
+            <div class="bar-label-top">$16M</div>
+          </div>
+        </div>
+        <div class="bar-group-label">Floor</div>
+      </div>
+
+      <!-- Mid bars -->
+      <div class="bar-group">
+        <div class="bar-wrapper">
+          <div class="bar bar-low bar-mid" style="height: calc(25 / 70 * 180px);">
+            <div class="bar-label-top">$25M</div>
+          </div>
+          <div class="bar bar-high bar-mid" style="height: calc(36 / 70 * 180px);">
+            <div class="bar-label-top">$36M</div>
+          </div>
+        </div>
+        <div class="bar-group-label">Mid</div>
+      </div>
+
+      <!-- Strategic bars -->
+      <div class="bar-group">
+        <div class="bar-wrapper">
+          <div class="bar bar-low bar-strategic" style="height: calc(48 / 70 * 180px);">
+            <div class="bar-label-top">$48M</div>
+          </div>
+          <div class="bar bar-high bar-strategic" style="height: calc(70 / 70 * 180px);">
+            <div class="bar-label-top">$70M</div>
+          </div>
+        </div>
+        <div class="bar-group-label">Strategic</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BOTTOM GRID ── -->
+  <div class="bottom-grid">
+
+    <!-- Market Multiples -->
+    <div class="multiples-card">
+      <div class="section-title">Market Multiple Context</div>
+      <div class="multiple-row">
+        <div class="multiple-name">Median SaaS EV/Revenue (2026)</div>
+        <div class="multiple-value mv-low">3.4x</div>
+      </div>
+      <div class="multiple-row">
+        <div class="multiple-name">Vertical Healthcare SaaS premium</div>
+        <div class="multiple-value mv-mid">+25&ndash;30%</div>
+      </div>
+      <div class="multiple-row">
+        <div class="multiple-name">EdTech SaaS infrastructure</div>
+        <div class="multiple-value mv-high">11.5&ndash;13.9x</div>
+      </div>
+      <div class="multiple-row">
+        <div class="multiple-name">Healthcare PE deal median</div>
+        <div class="multiple-value mv-high">11.5&ndash;13.5x</div>
+      </div>
+    </div>
+
+    <!-- Value Drivers -->
+    <div class="drivers-card">
+      <div class="section-title">Key Value Drivers</div>
+      <div class="driver-item">
+        <div class="driver-bar-track"><div class="driver-bar-fill" style="width: 100%;"></div></div>
+        <div class="driver-text">24 years in market</div>
+      </div>
+      <div class="driver-item">
+        <div class="driver-bar-track"><div class="driver-bar-fill" style="width: 90%;"></div></div>
+        <div class="driver-text">5,500+ validated question items</div>
+      </div>
+      <div class="driver-item">
+        <div class="driver-bar-track"><div class="driver-bar-fill" style="width: 95%;"></div></div>
+        <div class="driver-text">337M response data points</div>
+      </div>
+      <div class="driver-item">
+        <div class="driver-bar-track"><div class="driver-bar-fill" style="width: 85%;"></div></div>
+        <div class="driver-text">Pearson/Brady distribution channel</div>
+      </div>
+      <div class="driver-item">
+        <div class="driver-bar-track"><div class="driver-bar-fill" style="width: 75%;"></div></div>
+        <div class="driver-text">EMS + Nursing + Allied Health breadth</div>
+      </div>
+      <div class="driver-item">
+        <div class="driver-bar-track"><div class="driver-bar-fill" style="width: 88%;"></div></div>
+        <div class="driver-text">B2B institutional contracts (high switching cost)</div>
+      </div>
+    </div>
+
+    <!-- Value Risks -->
+    <div class="risks-card">
+      <div class="section-title">Key Value Risks</div>
+      <div class="risk-item">
+        <div class="risk-icon risk-high"></div>
+        <div class="risk-text">No adaptive / IRT technology</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-icon risk-high"></div>
+        <div class="risk-text">No diagnostic reporting</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-icon risk-med"></div>
+        <div class="risk-text">No compliance tooling</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-icon risk-med"></div>
+        <div class="risk-text">No CE market presence</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-icon risk-high"></div>
+        <div class="risk-text">Small team (key-person risk)</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-icon risk-med"></div>
+        <div class="risk-text">Commoditizable question bank</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <div class="footer">
+    <div class="footer-text">MedEdPrep Internal Analysis &mdash; Not for external distribution</div>
+    <div class="footer-badge">CONFIDENTIAL</div>
+  </div>
+
+</div>
+</body>
+</html>

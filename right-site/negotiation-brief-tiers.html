@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RightSite Health — Pricing Negotiation Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Newsreader:ital,opsz@1,6..72&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16201d;
+    --ink-soft:#46544f;
+    --ink-faint:#7b8884;
+    --paper:#f6f4ee;
+    --paper-2:#fbfaf6;
+    --card:#ffffff;
+    --line:#e3e0d6;
+    --accent:#0f6e5c;        /* restrained deep emerald */
+    --accent-soft:#e4f0ec;
+    --accent-ink:#0a5446;
+    --gold:#b8893f;
+    --shadow-sm:0 1px 2px rgba(22,32,29,.04), 0 2px 6px rgba(22,32,29,.05);
+    --shadow-md:0 10px 30px -12px rgba(22,32,29,.18), 0 4px 12px -6px rgba(22,32,29,.10);
+    --shadow-lg:0 30px 60px -20px rgba(15,110,92,.28), 0 12px 28px -12px rgba(22,32,29,.18);
+    --radius:22px;
+    --radius-sm:13px;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    background-image:
+      radial-gradient(1100px 620px at 82% -8%, rgba(15,110,92,.10), transparent 60%),
+      radial-gradient(900px 600px at 6% 4%, rgba(184,137,63,.07), transparent 55%);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    padding:0 24px 90px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:30px 0 0;flex-wrap:wrap;gap:14px;
+  }
+  .brand{display:flex;align-items:center;gap:11px;font-weight:600;letter-spacing:.01em}
+  .brand .pulse{
+    width:34px;height:34px;border-radius:10px;
+    background:linear-gradient(150deg,var(--accent),#13836d);
+    display:grid;place-items:center;color:#fff;box-shadow:var(--shadow-sm);
+  }
+  .brand .pulse svg{width:20px;height:20px;display:block}
+  .brand small{display:block;font-size:11.5px;color:var(--ink-faint);font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+  .situation{
+    font-size:13px;color:var(--ink-soft);
+    background:var(--paper-2);border:1px solid var(--line);
+    padding:9px 16px;border-radius:999px;box-shadow:var(--shadow-sm);
+  }
+  .situation b{color:var(--accent-ink);font-weight:600}
+
+  /* ---------- hero ---------- */
+  .hero{padding:64px 0 50px;max-width:960px}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent-ink);background:var(--accent-soft);
+    padding:6px 14px;border-radius:999px;margin-bottom:26px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(15,110,92,.15);animation:beat 2.4s ease-in-out infinite}
+  @keyframes beat{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.35);opacity:.55}}
+  h1.hero-h{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(30px,4.6vw,55px);
+    line-height:1.08;
+    letter-spacing:-.02em;
+    color:var(--ink);
+  }
+  h1.hero-h .lead{color:var(--accent-ink);font-weight:600}
+  h1.hero-h .big{
+    display:block;margin-top:.32em;
+    font-family:'Newsreader',serif;font-style:italic;font-weight:500;
+    font-size:clamp(34px,5.6vw,68px);
+    letter-spacing:-.025em;line-height:1;
+    background:linear-gradient(120deg,var(--accent) 10%,#15a386 60%,var(--gold));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero-sub{margin-top:24px;font-size:17px;color:var(--ink-soft);max-width:680px}
+  .hero-sub b{color:var(--ink);font-weight:600}
+
+  /* ---------- cards ---------- */
+  .grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:24px;align-items:stretch;margin-top:14px;
+  }
+  .card{
+    position:relative;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);padding:30px 28px 32px;
+    box-shadow:var(--shadow-sm);
+    transition:transform .42s cubic-bezier(.2,.8,.25,1), box-shadow .42s cubic-bezier(.2,.8,.25,1), border-color .42s;
+    display:flex;flex-direction:column;
+    opacity:0;transform:translateY(26px);
+  }
+  .card.in{opacity:1;transform:none}
+  .card:hover{transform:translateY(-9px);box-shadow:var(--shadow-md);border-color:#cfd6cf}
+  .card .label{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint)}
+  .card .tag{margin-top:7px;font-size:13.5px;color:var(--ink-soft);font-style:italic;font-family:'Newsreader',serif;font-size:16px}
+
+  .card.featured{
+    border:1.5px solid var(--accent);
+    box-shadow:var(--shadow-lg);
+    transform:translateY(-14px);
+    background:linear-gradient(180deg,#ffffff,#fdfffe);
+  }
+  .card.featured.in{transform:translateY(-14px)}
+  .card.featured:hover{transform:translateY(-24px)}
+  .badge{
+    position:absolute;top:-15px;left:50%;transform:translateX(-50%);
+    background:linear-gradient(135deg,var(--accent),#15937a);
+    color:#fff;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    padding:8px 18px;border-radius:999px;white-space:nowrap;
+    box-shadow:0 8px 20px -6px rgba(15,110,92,.55);
+  }
+  .badge::before{content:"★ ";color:#ffe7a8}
+
+  .prices{margin:24px 0 6px;border-top:1px dashed var(--line);padding-top:18px}
+  .price-row{display:flex;align-items:baseline;justify-content:space-between;padding:7px 0;font-size:14px}
+  .price-row .k{color:var(--ink-soft)}
+  .price-row .v{font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .price-row .v .u{color:var(--ink-faint);font-weight:500;font-size:12.5px}
+
+  .headline-num{
+    margin-top:20px;padding:18px 0 6px;border-top:1px solid var(--line);
+    text-align:left;
+  }
+  .headline-num .y1lbl{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+  .headline-num .y1{
+    font-family:'Fraunces',serif;font-weight:600;
+    font-size:42px;line-height:1;letter-spacing:-.02em;color:var(--ink);
+    margin-top:4px;font-variant-numeric:tabular-nums;
+  }
+  .card.featured .headline-num .y1{color:var(--accent-ink)}
+
+  .outcomes{margin-top:18px;display:grid;gap:9px}
+  .outcome{
+    display:flex;align-items:center;justify-content:space-between;
+    background:var(--paper-2);border:1px solid var(--line);border-radius:11px;
+    padding:10px 14px;font-size:13px;
+  }
+  .card.featured .outcome{background:var(--accent-soft);border-color:#cce3dc}
+  .outcome .ok{color:var(--ink-soft);display:flex;align-items:center;gap:7px}
+  .outcome .ov{font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .outcome.save .ov{color:var(--accent-ink)}
+
+  /* sparkline */
+  .spark{margin-top:22px}
+  .spark .cap{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;margin-bottom:7px}
+  .spark svg{width:100%;height:38px;display:block;overflow:visible}
+  .spark path.line{fill:none;stroke:var(--accent);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .spark path.area{fill:url(#sgrad);opacity:.5}
+  .spark circle{fill:var(--accent)}
+
+  /* ---------- playbook ---------- */
+  .section{margin-top:84px}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:26px}
+  .sec-head h2{
+    font-family:'Fraunces',serif;font-weight:600;font-size:clamp(23px,3vw,32px);
+    letter-spacing:-.015em;color:var(--ink);
+  }
+  .sec-head .num{font-family:'Newsreader',serif;font-style:italic;font-size:18px;color:var(--accent);font-weight:500}
+  .sec-head .rule{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+
+  .chips{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .chip{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius-sm);
+    padding:20px 22px;box-shadow:var(--shadow-sm);
+    transition:transform .3s, box-shadow .3s, border-color .3s;
+  }
+  .chip:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:#cfd6cf}
+  .chip .if{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+  .chip .if-text{font-size:15.5px;color:var(--ink);margin-top:5px;font-weight:500}
+  .chip .arrow{display:flex;align-items:center;gap:9px;margin:14px 0;color:var(--ink-faint)}
+  .chip .arrow .ln{flex:1;height:1px;background:var(--line)}
+  .chip .arrow svg{width:18px;height:18px;color:var(--accent)}
+  .chip .then{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink)}
+  .chip .then-text{font-size:15.5px;color:var(--ink);margin-top:5px;font-weight:500}
+  .chip .then-text b{font-family:'Fraunces',serif;font-weight:600;color:var(--accent-ink)}
+
+  .quotes{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:14px}
+  .quote{
+    position:relative;background:linear-gradient(180deg,#ffffff,#fcfbf7);
+    border:1px solid var(--line);border-left:3px solid var(--accent);
+    border-radius:var(--radius-sm);padding:30px 30px 28px 34px;box-shadow:var(--shadow-sm);
+  }
+  .quote::before{
+    content:"\201C";position:absolute;top:2px;left:18px;
+    font-family:'Fraunces',serif;font-size:78px;line-height:1;color:var(--accent-soft);
+  }
+  .quote p{position:relative;font-family:'Newsreader',serif;font-style:italic;font-size:20px;line-height:1.42;color:var(--ink)}
+  .quote p .hl{font-style:normal;font-weight:600;color:var(--accent-ink);background:linear-gradient(transparent 62%,rgba(15,110,92,.14) 0);padding:0 2px}
+
+  footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    font-size:12.5px;color:var(--ink-faint)}
+  footer b{color:var(--ink-soft);font-weight:600}
+
+  /* staggered reveal helper for non-card sections */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.25,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:920px){
+    .grid{grid-template-columns:1fr;gap:30px}
+    .card.featured,.card.featured.in{transform:none}
+    .card.featured:hover{transform:translateY(-9px)}
+    .badge{top:-14px}
+    .chips{grid-template-columns:1fr}
+    .quotes{grid-template-columns:1fr}
+  }
+
+  /* ---------- print ---------- */
+  @media print{
+    @page{margin:14mm}
+    body{background:#fff;padding:0;color:#000}
+    body{background-image:none}
+    .situation{box-shadow:none}
+    .card,.chip,.quote{box-shadow:none !important;break-inside:avoid;transform:none !important;opacity:1 !important}
+    .card.featured{box-shadow:none !important}
+    .hero{padding:18px 0 24px}
+    .section{margin-top:34px}
+    h1.hero-h .big{-webkit-text-fill-color:var(--accent-ink);color:var(--accent-ink)}
+    .grid{gap:12px}
+    .reveal{opacity:1 !important;transform:none !important}
+    .eyebrow .dot{animation:none}
+    footer{margin-top:30px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- top bar -->
+  <div class="topbar">
+    <div class="brand">
+      <span class="pulse" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l2-6 4 12 2.5-7H22"/></svg>
+      </span>
+      <span>MedEdPrep
+        <small>Call-Prep Brief</small>
+      </span>
+    </div>
+    <div class="situation">Pricing the RightSite Health training build — call prep, <b>Tue Jun 23</b>.</div>
+  </div>
+
+  <!-- hero -->
+  <header class="hero reveal">
+    <span class="eyebrow"><span class="dot"></span> Negotiation Positions</span>
+    <h1 class="hero-h">
+      <span class="lead">Open at $45K.</span> Settle around $33K&nbsp;+&nbsp;$5/cert. Don't go below $28K.
+      <span class="big">RightSite saves ~$6.2M over 10 years vs a commercial LMS.</span>
+    </h1>
+    <p class="hero-sub">Whatever you land on, the savings story holds. Anchor high on the one-time build, keep per-cert modest, and <b>trade every concession</b>. Three positions, one familiar shape below.</p>
+  </header>
+
+  <!-- pricing cards -->
+  <main class="grid" id="grid">
+
+    <!-- ANCHOR -->
+    <section class="card" data-i="0">
+      <div class="label">Anchor</div>
+      <div class="tag">Open here</div>
+      <div class="prices">
+        <div class="price-row"><span class="k">Build (one-time)</span><span class="v">$45,000</span></div>
+        <div class="price-row"><span class="k">Per certificate</span><span class="v">$7</span></div>
+        <div class="price-row"><span class="k">Platform floor</span><span class="v">$9,000<span class="u"> /yr</span></span></div>
+      </div>
+      <div class="headline-num">
+        <div class="y1lbl">Year-1 total</div>
+        <div class="y1">$79,200</div>
+      </div>
+      <div class="outcomes">
+        <div class="outcome"><span class="ok">10-yr MedEdPrep revenue</span><span class="ov">~$228K</span></div>
+        <div class="outcome save"><span class="ok">10-yr RightSite savings</span><span class="ov">~$6.16M</span></div>
+      </div>
+      <div class="spark">
+        <div class="cap">Cumulative revenue · 10 yr</div>
+        <svg viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="sgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0f6e5c" stop-opacity=".35"/><stop offset="100%" stop-color="#0f6e5c" stop-opacity="0"/></linearGradient></defs>
+          <path class="area" d="M0,33 L24,29 48,26 72,23 96,21 120,18 144,15 168,12 192,9 200,8 L200,40 L0,40 Z"/>
+          <path class="line" d="M0,33 24,29 48,26 72,23 96,21 120,18 144,15 168,12 192,9 200,8"/>
+          <circle cx="200" cy="8" r="2.6"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- LIKELY (featured) -->
+    <section class="card featured" data-i="1">
+      <span class="badge">Recommended — your target</span>
+      <div class="label">Likely</div>
+      <div class="tag">Where this should land</div>
+      <div class="prices">
+        <div class="price-row"><span class="k">Build (one-time)</span><span class="v">$33,000</span></div>
+        <div class="price-row"><span class="k">Per certificate</span><span class="v">$5</span></div>
+        <div class="price-row"><span class="k">Platform floor</span><span class="v">$7,000<span class="u"> /yr</span></span></div>
+      </div>
+      <div class="headline-num">
+        <div class="y1lbl">Year-1 total</div>
+        <div class="y1">$58,000</div>
+      </div>
+      <div class="outcomes">
+        <div class="outcome"><span class="ok">10-yr MedEdPrep revenue</span><span class="ov">~$171K</span></div>
+        <div class="outcome save"><span class="ok">10-yr RightSite savings</span><span class="ov">~$6.21M</span></div>
+      </div>
+      <div class="spark">
+        <div class="cap">Cumulative revenue · 10 yr</div>
+        <svg viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true">
+          <path class="area" d="M0,34 L24,31 48,28 72,25 96,23 120,20 144,17 168,14 192,11 200,10 L200,40 L0,40 Z"/>
+          <path class="line" d="M0,34 24,31 48,28 72,25 96,23 120,20 144,17 168,14 192,11 200,10"/>
+          <circle cx="200" cy="10" r="2.6"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- FLOOR -->
+    <section class="card" data-i="2">
+      <div class="label">Floor</div>
+      <div class="tag">Walk-away — don't go below</div>
+      <div class="prices">
+        <div class="price-row"><span class="k">Build (one-time)</span><span class="v">$28,000</span></div>
+        <div class="price-row"><span class="k">Per certificate</span><span class="v">$5</span></div>
+        <div class="price-row"><span class="k">Platform floor</span><span class="v">$6,000<span class="u"> /yr</span></span></div>
+      </div>
+      <div class="headline-num">
+        <div class="y1lbl">Year-1 total</div>
+        <div class="y1">$52,000</div>
+      </div>
+      <div class="outcomes">
+        <div class="outcome"><span class="ok">10-yr MedEdPrep revenue</span><span class="ov">~$156K</span></div>
+        <div class="outcome save"><span class="ok">10-yr RightSite savings</span><span class="ov">~$6.23M</span></div>
+      </div>
+      <div class="spark">
+        <div class="cap">Cumulative revenue · 10 yr</div>
+        <svg viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true">
+          <path class="area" d="M0,35 L24,32 48,30 72,27 96,25 120,22 144,19 168,16 192,13 200,12 L200,40 L0,40 Z"/>
+          <path class="line" d="M0,35 24,32 48,30 72,27 96,25 120,22 144,19 168,16 192,13 200,12"/>
+          <circle cx="200" cy="12" r="2.6"/>
+        </svg>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- concession moves -->
+  <section class="section">
+    <div class="sec-head reveal">
+      <span class="num">01</span>
+      <h2>Concession moves</h2>
+      <span class="rule"></span>
+    </div>
+    <div class="chips">
+      <div class="chip reveal">
+        <div class="if">If</div>
+        <div class="if-text">They lock Dallas in at signing</div>
+        <div class="arrow"><span class="ln"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="ln"></span></div>
+        <div class="then">Then</div>
+        <div class="then-text">Build down to <b>$32K</b></div>
+      </div>
+      <div class="chip reveal">
+        <div class="if">If</div>
+        <div class="if-text">They commit to a 2-year platform term</div>
+        <div class="arrow"><span class="ln"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="ln"></span></div>
+        <div class="then">Then</div>
+        <div class="then-text">Hold per-cert at <b>$5</b></div>
+      </div>
+      <div class="chip reveal">
+        <div class="if">If</div>
+        <div class="if-text">They pay 50% up front</div>
+        <div class="arrow"><span class="ln"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="ln"></span></div>
+        <div class="then">Then</div>
+        <div class="then-text">Build at <b>$30K</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- talking lines -->
+  <section class="section">
+    <div class="sec-head reveal">
+      <span class="num">02</span>
+      <h2>Talking lines</h2>
+      <span class="rule"></span>
+    </div>
+    <div class="quotes">
+      <blockquote class="quote reveal">
+        <p>A commercial LMS runs $5–10 per user per month — <span class="hl">$240K to $480K a year for Houston alone</span>. We charge $5 per certificate issued. You only pay when someone actually finishes.</p>
+      </blockquote>
+      <blockquote class="quote reveal">
+        <p>The build is a small one-time cost. What you're really buying is the hosted platform — <span class="hl">every department after the first is just a re-skin</span> of what we've already built.</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <footer>
+    <span><b>MedEdPrep</b> · Confidential negotiation prep · Not for distribution</span>
+    <span>Target: <b>Likely</b> — $33K&nbsp;+&nbsp;$5/cert · Floor: <b>$28K</b></span>
+  </footer>
+
+</div>
+
+<script>
+  // staggered card reveal
+  const cards = document.querySelectorAll('.card');
+  const reveals = document.querySelectorAll('.reveal');
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const el = e.target;
+        const i = el.dataset.i ? parseInt(el.dataset.i,10) : 0;
+        el.style.transitionDelay = (i*110)+'ms';
+        el.classList.add('in');
+        io.unobserve(el);
+      }
+    });
+  },{threshold:.18});
+
+  cards.forEach(c=>io.observe(c));
+
+  // reveal sections with light cascade per group
+  const io2 = new IntersectionObserver((entries)=>{
+    entries.forEach((e,idx)=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io2.unobserve(e.target); }
+    });
+  },{threshold:.14});
+  reveals.forEach((r,i)=>{ r.style.transitionDelay = ((i%4)*70)+'ms'; io2.observe(r); });
+
+  // fallback: ensure everything shows if observer never fires
+  window.addEventListener('load',()=>{
+    setTimeout(()=>{
+      document.querySelectorAll('.card:not(.in),.reveal:not(.in)').forEach(el=>el.classList.add('in'));
+    },1400);
+  });
+</script>
+</body>
+</html>

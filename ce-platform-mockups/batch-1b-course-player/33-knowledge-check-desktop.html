@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pulse CE - Knowledge Check Results</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#36C98D",
+                        "primary-hover": "#2DB87E",
+                        "primary-active": "#28A572",
+                        "primary-subtle": "rgba(54, 201, 141, 0.12)",
+                        background: "#0A0A0A",
+                        surface: "#111111",
+                        "surface-elevated": "#1A1A1A",
+                        "surface-hover": "#1F1F1F",
+                        border: {
+                            subtle: "rgba(255, 255, 255, 0.08)",
+                            default: "rgba(255, 255, 255, 0.12)",
+                            strong: "rgba(255, 255, 255, 0.2)"
+                        },
+                        error: "#E5484D",
+                        warning: "#F5A623",
+                        success: "#36C98D",
+                        secondary: "rgba(255, 255, 255, 0.7)",
+                        tertiary: "rgba(255, 255, 255, 0.45)"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        "2xl": "12px",
+                        "3xl": "16px",
+                        full: "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Inter", "sans-serif"],
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>body {
+    background-color: #0A0A0A;
+    color: #FFF;
+    font-family: "Inter", sans-serif;
+    overflow-x: hidden
+    }
+.grain-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBZtJoiwxanPY5Bul9Dc9C_jrW9ukrbV_pTK-IsLhmWVcVw_Xtgu-D5qBrrzz7yeN0dbll33RuT8NBOxMby5oriSd2WGqN0IYnka_VfjgyBMME6_CCJXegJj9HgEI3R8OnXNX5qFMmv3IcZmysnIHhWnjOqiz3v5xN6AVOLquFx06-goop3SxBPQaBgp-rRVD6n5ia60SkX8bIlSvsW6HcPVbM3Fg9or_SYQaUjXQTnInIfBKMmiJtJn5kafXM4QDeyRugmq0pGmns4);
+    opacity: 0.04;
+    filter: contrast(150%) brightness(1000%)
+    }
+.glow-effect {
+    box-shadow: 0 0 20px rgba(54, 201, 141, 0.15)
+    }
+.card-left-border {
+    border-left: 4px solid #36C98D
+    }
+.error-left-border {
+    border-left: 4px solid #E5484D
+    }
+.pulse-gradient {
+    background: linear-gradient(135deg, rgba(10, 10, 10, 0.8) 0%, rgba(13, 26, 18, 0.9) 50%, rgba(15, 61, 38, 0.3) 100%)
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.active-dot {
+    box-shadow: 0 0 10px rgba(54, 201, 141, 0.6)
+    }</style>
+</head>
+<body class="pulse-gradient min-h-screen">
+<div class="grain-overlay"></div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-white/12 shadow-[0_0_20px_rgba(54,201,141,0.15)] flex justify-between items-center h-16 px-4 md:px-6">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center gap-2">
+<div class="w-8 h-8 flex items-center justify-center bg-primary-subtle rounded-lg border border-primary/20">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">ecg_heart</span>
+</div>
+<div class="flex flex-col">
+<span class="text-lg font-display font-bold tracking-tight leading-tight">PULSE <span class="text-white/50">CE</span></span>
+<span class="text-[8px] font-semibold tracking-widest text-primary leading-none uppercase">by MedEdPrep</span>
+</div>
+</div>
+<div class="hidden md:flex h-8 w-[1px] bg-white/10 mx-2"></div>
+<h1 class="hidden md:block text-primary font-headline font-semibold text-base">Cardiac Emergencies: Advanced Assessment</h1>
+</div>
+<div class="flex items-center gap-6 flex-1 max-w-md mx-8">
+<div class="flex-1 hidden sm:block">
+<div class="flex justify-between items-center mb-1.5">
+<span class="text-[10px] font-bold text-tertiary uppercase tracking-wider">Progress: 55%</span>
+<span class="bg-primary-subtle text-primary text-[10px] font-bold px-2 py-0.5 rounded border border-primary/20 uppercase">1.0 CEH</span>
+</div>
+<div class="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[55%] rounded-full shadow-[0_0_8px_rgba(54,201,141,0.4)]"></div>
+</div>
+</div>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition-colors cursor-pointer active:opacity-80">
+<span class="text-secondary font-headline font-medium text-sm">Exit Course</span>
+<span class="material-symbols-outlined text-tertiary text-sm">logout</span>
+</button>
+</header>
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-16 h-[calc(100vh-64px)] w-16 bg-surface border-r border-white/12 flex flex-col items-center py-6 gap-8 z-40">
+<!-- Step 1: Pre-Assessment -->
+<div class="group relative flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+<div class="absolute left-full ml-4 px-2 py-1 bg-surface-elevated rounded border border-white/10 text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Pre-Assessment</div>
+</div>
+<!-- Step 2: Segment 1 (Active) -->
+<div class="group relative flex flex-col items-center justify-center cursor-pointer">
+<div class="w-10 h-10 flex items-center justify-center border-l-4 border-primary bg-primary-subtle text-primary rounded-r-md">
+<div class="w-2.5 h-2.5 bg-primary rounded-full active-dot"></div>
+</div>
+<div class="absolute left-full ml-4 px-2 py-1 bg-surface-elevated rounded border border-white/10 text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Initial Assessment</div>
+</div>
+<!-- Step 3: Pharmacology -->
+<div class="group relative flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-tertiary hover:text-secondary transition-colors text-2xl">emergency_home</span>
+<div class="absolute left-full ml-4 px-2 py-1 bg-surface-elevated rounded border border-white/10 text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Pharmacology</div>
+</div>
+<!-- Step 4: Intervention -->
+<div class="group relative flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-tertiary hover:text-secondary transition-colors text-2xl">medical_services</span>
+<div class="absolute left-full ml-4 px-2 py-1 bg-surface-elevated rounded border border-white/10 text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Intervention</div>
+</div>
+<!-- Step 5: Summary -->
+<div class="group relative flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-tertiary hover:text-secondary transition-colors text-2xl">workspace_premium</span>
+<div class="absolute left-full ml-4 px-2 py-1 bg-surface-elevated rounded border border-white/10 text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Summary</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="ml-16 pt-24 pb-24 px-6 flex justify-center">
+<div class="w-full max-w-[720px] space-y-8">
+<!-- Header Section -->
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-2xl font-bold text-white tracking-tight">Knowledge Check</h2>
+<p class="text-sm text-secondary font-medium mt-1">Segment 1: Initial Assessment — 3 questions</p>
+</div>
+<!-- Progress Dots -->
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-primary" title="Question 1: Correct"></div>
+<div class="w-3 h-3 rounded-full bg-primary" title="Question 2: Correct"></div>
+<div class="w-3 h-3 rounded-full border-2 border-primary bg-background flex items-center justify-center" title="Question 3: Current">
+<div class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Question Card -->
+<section class="bg-surface border-l-4 border-primary rounded-2xl p-6 md:p-8 shadow-xl relative overflow-hidden">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-3">
+<span class="text-xs font-bold text-tertiary uppercase tracking-widest">Question 3 of 3</span>
+<span class="bg-surface-elevated text-secondary text-[10px] font-bold px-2 py-0.5 rounded border border-white/10 uppercase">Segment 1 Check</span>
+</div>
+<div class="flex items-center gap-2 text-error">
+<span class="text-xs font-bold uppercase tracking-tighter">Reviewing Attempt</span>
+<span class="material-symbols-outlined text-lg">history</span>
+</div>
+</div>
+<p class="text-lg md:text-xl font-medium leading-relaxed text-white mb-8">
+                    You arrive on scene to find a 72-year-old female in acute respiratory distress with bilateral rales, JVD, and pink frothy sputum. Her BP is 88/54. What is your priority intervention?
+                </p>
+<!-- Options -->
+<div class="space-y-4">
+<!-- Option A (Incorrect Selection) -->
+<div class="relative group cursor-default">
+<div class="p-5 rounded-xl border border-error bg-error/10 flex items-center justify-between transition-all">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-error/20 border border-error/30">
+<span class="text-sm font-bold text-error">A</span>
+</div>
+<span class="text-secondary font-medium">Administer sublingual nitroglycerin</span>
+</div>
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">cancel</span>
+</div>
+<div class="absolute -right-2 top-1/2 -translate-y-1/2 bg-error text-white text-[9px] font-black px-1.5 py-0.5 rounded rotate-12 shadow-lg">YOUR CHOICE</div>
+</div>
+<!-- Option B (Correct Answer) -->
+<div class="p-5 rounded-xl border-2 border-primary bg-primary-subtle flex items-center justify-between shadow-[0_0_15px_rgba(54,201,141,0.1)]">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-primary border border-primary">
+<span class="text-sm font-bold text-white">B</span>
+</div>
+<span class="text-white font-semibold">Initiate CPAP at 10 cmH2O</span>
+</div>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<!-- Option C (Dimmed) -->
+<div class="p-5 rounded-xl border border-white/5 bg-white/[0.02] opacity-40 flex items-center gap-4">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-white/10 border border-white/10">
+<span class="text-sm font-bold text-tertiary">C</span>
+</div>
+<span class="text-tertiary font-medium">Establish bilateral IV access with 18g catheters</span>
+</div>
+<!-- Option D (Dimmed) -->
+<div class="p-5 rounded-xl border border-white/5 bg-white/[0.02] opacity-40 flex items-center gap-4">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-white/10 border border-white/10">
+<span class="text-sm font-bold text-tertiary">D</span>
+</div>
+<span class="text-tertiary font-medium">Perform a 12-lead ECG to rule out STEMI</span>
+</div>
+</div>
+<!-- Feedback Section -->
+<div class="mt-10 pt-8 border-t border-white/10">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+<div class="flex items-center gap-3">
+<div class="px-3 py-1 bg-error/10 text-error rounded-full flex items-center gap-2 border border-error/20">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">close</span>
+<span class="text-[10px] font-black uppercase tracking-widest">Incorrect</span>
+</div>
+<div class="text-primary font-bold text-sm">Correct Answer: B</div>
+</div>
+<div class="px-3 py-1 bg-primary-subtle text-primary rounded-full border border-primary/20 text-[10px] font-bold uppercase tracking-widest">
+                            LO 1.3: Hemodynamic Management
+                        </div>
+</div>
+<div class="bg-background/80 rounded-xl p-5 border border-white/5">
+<h4 class="text-xs font-bold text-tertiary uppercase tracking-widest mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">menu_book</span> Rationale
+                        </h4>
+<p class="text-sm text-secondary leading-relaxed">
+                            The patient presents with signs of cardiogenic pulmonary edema. While Nitroglycerin is standard for reducing preload, it is strictly contraindicated when systolic BP is below 90 mmHg (this patient is 88/54). Priority management must focus on ventilatory support with CPAP to drive fluid out of the alveoli and improve oxygenation without further compromising hemodynamic stability.
+                        </p>
+</div>
+</div>
+<!-- Action Button -->
+<div class="mt-10">
+<button class="w-full h-14 bg-primary hover:bg-primary-hover active:bg-primary-active text-background font-bold text-base rounded-xl transition-all shadow-[0_4px_15px_rgba(54,201,141,0.2)] flex items-center justify-center gap-2 group">
+                        Continue to Segment 2
+                        <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+</button>
+<div class="text-center mt-3">
+<span class="text-[11px] font-bold text-tertiary uppercase tracking-widest">Checkpoint Score: <span class="text-primary">2/3 correct</span> (67%)</span>
+</div>
+</div>
+</section>
+<!-- Bottom Illustration/Visual Context -->
+<div class="grid grid-cols-2 gap-4 h-32 opacity-20 pointer-events-none">
+<div class="rounded-xl overflow-hidden grayscale contrast-125">
+<img class="w-full h-full object-cover" data-alt="A professional medical environment showing an advanced ambulance interior with heart monitoring equipment and medical supplies. The lighting is clinical and focused, emphasizing a high-pressure emergency medical services setting. The visual style is modern, cinematic, and dark-toned, reflecting a serious professional training atmosphere for EMTs and paramedics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC53r-x4HS3LKMf1fdVuRwf5QPn4_95KmgEBq8AgolLKqxMa7iZqlRmF-KOhvpQuvXrbV-8OA-M1m3fdGRhu86t2ZKueSepREmVc0X32g2ITAKfg39MKGhUPkPWjo2cBv0W5fmh_4QQXemmMawJgt8qv1rgMKugVpHu984-f-eHmLluiKZbT4S5Ww5QhXsdcIdzHFQQw8jzrZJtxpu9AMTBv0_U0BjoBw5v9UnG1J4lL7xMjmv86O-HSvtmi5qVEj4Ttbb_jDLaC1zD"/>
+</div>
+<div class="rounded-xl overflow-hidden grayscale contrast-125">
+<img class="w-full h-full object-cover" data-alt="Close-up of a high-fidelity cardiac monitor display showing complex EKG waveforms in a dark medical setting. The screen glows with sharp green and white lines against a deep black background. The mood is clinical, professional, and technologically advanced, suitable for a premium medical education platform focused on cardiac emergency assessment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKVFNNEHj2yyAStKZVlI0QJDl0t5_yi7-nqxXSZlC2uVNtarRrJG2qpZjQPBleF6IY5SEcze2zyakG9sOzIkASnQ6_IruRs06V0ricclx7Xd52neS10cmYCIlc6Yfukaybpxj3s9YWy85oIqaS6_chCBi8Uv6tIqN6gqXSacccu2dzFrj0QpCKimeBDBpEEMeZnJYjbEPE-G80G9nJwRM3oHg4nmmxKMIDwKOZo9lJLESGD1nXLBhFw7jPqMjFkNWRlamjn705ZDJw"/>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Navigation Shell -->
+<nav class="fixed bottom-0 w-full md:hidden z-50 bg-surface border-t border-white/12 h-16 flex justify-around items-center pb-safe shadow-2xl">
+<a href="../dashboard-variant-h-pulse.html" class="flex flex-col items-center gap-1 text-tertiary" style="text-decoration:none">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-label font-medium uppercase tracking-tighter">Home</span>
+</a>
+<a href="../batch-4-learner-portal/40-compliance-tracker-mobile.html" class="flex flex-col items-center gap-1 text-primary" style="text-decoration:none">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">school</span>
+<span class="text-[10px] font-label font-medium uppercase tracking-tighter">Courses</span>
+</a>
+<a href="../batch-4-learner-portal/38-certificate-view-mobile.html" class="flex flex-col items-center gap-1 text-tertiary" style="text-decoration:none">
+<span class="material-symbols-outlined">verified</span>
+<span class="text-[10px] font-label font-medium uppercase tracking-tighter">Certs</span>
+</a>
+<a href="../batch-4-learner-portal/41-settings-mobile.html" class="flex flex-col items-center gap-1 text-tertiary" style="text-decoration:none">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-label font-medium uppercase tracking-tighter">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions and subtle effects
+        document.addEventListener('DOMContentLoaded', () => {
+            // Subtle parallax for background gradient based on mouse position
+            window.addEventListener('mousemove', (e) => {
+                const moveX = (e.clientX / window.innerWidth) * 10;
+                const moveY = (e.clientY / window.innerHeight) * 10;
+                document.body.style.backgroundPosition = `${moveX}% ${moveY}%`;
+            });
+
+            // Button click ripple effect
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.addEventListener('mousedown', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                btn.addEventListener('mouseup', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login - Pulse CE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#36C98D',
+                            hover: '#2DB87E',
+                        },
+                        background: '#0A0A0A',
+                        surface: {
+                            DEFAULT: '#111111',
+                            elevated: '#1A1A1A',
+                            hover: '#1F1F1F',
+                        },
+                        text: {
+                            primary: '#FFFFFF',
+                            secondary: 'rgba(255,255,255,0.7)',
+                            tertiary: 'rgba(255,255,255,0.45)',
+                        },
+                        border: {
+                            subtle: 'rgba(255,255,255,0.08)',
+                            DEFAULT: 'rgba(255,255,255,0.12)',
+                            strong: 'rgba(255,255,255,0.2)',
+                        }
+                    },
+                    borderRadius: {
+                        'DEFAULT': '0.25rem',
+                        'md': '0.375rem',
+                        'lg': '0.5rem',
+                        'xl': '0.75rem',
+                        '2xl': '1rem',
+                        'full': '9999px'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        headline: ['Inter', 'sans-serif'],
+                        display: ['Inter', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                        label: ['Inter', 'sans-serif']
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0A0A;
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Ambient Background */
+        .auth-background {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: linear-gradient(135deg, #0A0A0A 0%, #0D1A12 50%, #0F3D26 75%, #36C98D 100%);
+            opacity: 0.2;
+        }
+
+        /* Film Grain Overlay */
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            opacity: 0.04;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Custom Input Styles */
+        .input-field {
+            background-color: #1A1A1A;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 0.5rem;
+            height: 3rem;
+            color: #FFFFFF;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #36C98D;
+            box-shadow: 0 0 0 1px #36C98D;
+        }
+
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        /* Primary Button Style */
+        .btn-primary {
+            background-color: #36C98D;
+            color: #0A0A0A;
+            font-weight: 600;
+            height: 3rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 20px rgba(54, 201, 141, 0.15);
+        }
+
+        .btn-primary:hover {
+            background-color: #2DB87E;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 24px rgba(54, 201, 141, 0.25);
+        }
+
+        /* Outline Button Style */
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #FFFFFF;
+            font-weight: 500;
+            height: 3rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="antialiased">
+<!-- Background Elements -->
+<div class="auth-background"></div>
+<div class="noise-overlay"></div>
+<!-- Main Content Container -->
+<main class="flex-1 flex flex-col items-center justify-center p-4 relative z-10">
+<!-- Auth Card -->
+<div class="w-full max-w-[480px] bg-surface border border-border rounded-2xl p-10 shadow-[0_8px_24px_rgba(0,0,0,0.4)] backdrop-blur-sm">
+<!-- Header Section -->
+<div class="flex flex-col items-center mb-10">
+<div class="flex items-center gap-3 mb-6">
+<img alt="Pulse CE Logo" class="w-8 h-8 rounded-md" src="data:image/png;base64,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"/>
+<div class="flex flex-col">
+<span class="text-white text-xl font-bold tracking-tight leading-none">PULSE</span>
+<span class="text-primary text-[11px] font-semibold uppercase tracking-[0.1em] leading-tight">BY MEDEDPREP</span>
+</div>
+</div>
+<h1 class="text-white text-2xl font-semibold mb-2 text-center">Welcome back</h1>
+<p class="text-text-secondary text-sm text-center">Sign in to continue your training</p>
+</div>
+<!-- Login Form -->
+<form class="space-y-6">
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="block text-text-secondary text-sm font-medium" for="email">Email address</label>
+<input class="input-field" id="email" placeholder="you@agency.com" required="" type="email"/>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="block text-text-secondary text-sm font-medium" for="password">Password</label>
+<a class="text-primary text-sm font-medium hover:text-primary-hover transition-colors" href="#">Forgot password?</a>
+</div>
+<div class="relative">
+<input class="input-field pr-12" id="password" placeholder="Enter your password" required="" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-3 top-1/2 -translate-y-1/2 text-text-tertiary hover:text-text-secondary transition-colors flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Submit Button -->
+<button class="btn-primary mt-8" type="submit">
+                    Sign In
+                </button>
+</form>
+<!-- Divider -->
+<div class="relative flex items-center py-6">
+<div class="flex-grow border-t border-border"></div>
+<span class="flex-shrink-0 mx-4 text-text-tertiary text-sm">or</span>
+<div class="flex-grow border-t border-border"></div>
+</div>
+<!-- Social Login -->
+<button class="btn-outline" type="button">
+<svg class="w-5 h-5" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+                Continue with Google
+            </button>
+</div>
+<!-- Registration Link -->
+<div class="mt-8 text-center text-sm">
+<span class="text-text-secondary">Don't have an account?</span>
+<a class="text-primary font-medium ml-1 hover:text-primary-hover transition-colors" href="17-register-desktop.html">Create one</a>
+</div>
+</main>
+<!-- Footer Tagline -->
+<footer class="py-6 w-full text-center relative z-10">
+<p class="text-[rgba(255,255,255,0.3)] text-xs font-medium tracking-wide">Train. Track. Perform.</p>
+</footer>
+<script>
+        // Simple password toggle interaction
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.querySelector('button[aria-label="Toggle password visibility"]');
+            const passwordInput = document.getElementById('password');
+            const iconSpan = toggleBtn.querySelector('span');
+
+            if (toggleBtn && passwordInput) {
+                toggleBtn.addEventListener('click', () => {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    iconSpan.textContent = type === 'password' ? 'visibility' : 'visibility_off';
+                });
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Purchase Confirmation - PULSE CE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#36C98D",
+                        "primary-hover": "#2DB87E",
+                        background: "#0A0A0A",
+                        surface: "#111111",
+                        "surface-elevated": "#1A1A1A",
+                        "border-subtle": "rgba(255,255,255,0.08)",
+                        "border-default": "rgba(255,255,255,0.12)",
+                        "text-secondary": "rgba(255,255,255,0.7)",
+                        "text-tertiary": "rgba(255,255,255,0.45)",
+                    },
+                    fontFamily: {
+                        headline: ["Inter", "sans-serif"],
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+<style>body {
+    background-color: #0A0A0A;
+    color: white;
+    font-family: "Inter", sans-serif;
+    overflow-x: hidden
+    }
+.grain-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuAmV3vvjszvpWN1tPe763s85lDip8F6t9UuoF8uCagd09fdZh0Y1CIW6A5GE6q8e7uZujwOnRu0rvZWIZsypVRfWz7zO8P4QnQpbZ7bLT9grElLujB5gD0GECvu83DNU2tWwZejviy_f8pJGQllotLWptPwxyHzRt8FNG5H14C-sRI9dOTUkkxMknFyXsxIkUZSqDx0faQwO2q4OKANyILlmQvih7BSC_LRTvTspMtuqNZkr9fU0V6XpruZHK5dePbGt0HKTPx1P1Nf);
+    opacity: 0.04;
+    pointer-events: none
+    }
+.green-glow-bg {
+    background: radial-gradient(circle at top, rgba(54, 201, 141, 0.15) 0%, rgba(10, 10, 10, 0) 70%)
+    }
+.btn-glow {
+    box-shadow: 0 0 20px rgba(54, 201, 141, 0.2)
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.success-glow {
+    box-shadow: 0 0 30px rgba(54, 201, 141, 0.3)
+    }</style>
+</head>
+<body class="min-h-screen relative flex flex-col items-center">
+<!-- Background Effects -->
+<div class="fixed inset-0 grain-overlay z-0"></div>
+<div class="fixed inset-0 green-glow-bg z-0"></div>
+<!-- Header (Suppressed Nav for Transactional Flow) -->
+<header class="w-full h-20 flex items-center justify-center relative z-10 px-6">
+<div class="flex flex-col items-center">
+<div class="flex items-center gap-2">
+<img alt="PULSE" class="w-8 h-8" src="https://lh3.googleusercontent.com/aida/ADBb0uiQuAMb-iPTR_teZtBbpKcjDXlkM3Bcp-UIgLeUUjUEF2W65wSPHVBpP3pJjeWAY99AvnhOqGgxUtccEez9Q_aKHcqrEifRFTh2nLLWFS6AqP6tvBEQ7Yf3QZCRVq_Z-wylzBiSmdPSZqxaOFU18n0RkBJ7ACE0Xhj44fyX-BQLkAhW9i0rnv9faoWKmBq24bp11kDJVtpSHiQLQSir6Yu_hQBp5OAGk2JX54sCzayhCS6WnsJEI3hXwS7Z"/>
+<span class="text-white font-extrabold tracking-tighter text-2xl">PULSE</span>
+</div>
+<span class="text-[10px] font-bold tracking-[0.2em] text-primary uppercase mt-0.5">BY MEDEDPREP</span>
+</div>
+</header>
+<!-- Content Canvas -->
+<main class="w-full max-w-[390px] px-4 pb-24 relative z-10">
+<!-- Success Animation Area -->
+<div class="flex flex-col items-center mt-8 mb-10">
+<div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center success-glow mb-6 animate-float">
+<span class="material-symbols-outlined text-background text-4xl font-bold">check</span>
+</div>
+<h1 class="text-white text-2xl font-bold tracking-tight mb-2">You're all set!</h1>
+<p class="text-text-secondary text-sm">Your course is ready</p>
+</div>
+<!-- Receipt Card -->
+<div class="bg-surface border border-border-default rounded-[16px] p-5 mb-6 overflow-hidden relative">
+<div class="flex justify-between items-start mb-6">
+<div>
+<span class="text-text-tertiary text-[11px] font-bold tracking-widest block mb-1">ORDER CONFIRMATION</span>
+<span class="text-text-secondary text-sm">#PCE-2026-0847</span>
+</div>
+<div class="bg-primary/10 border border-primary/20 text-primary px-2 py-1 rounded-full text-[10px] font-bold">
+                    2.0 CEH
+                </div>
+</div>
+<h2 class="text-white text-[16px] font-semibold leading-snug mb-6">
+                Advanced Cardiac Life Support (ACLS) Review
+            </h2>
+<!-- 2x2 Grid -->
+<div class="grid grid-cols-2 gap-y-4 gap-x-2 mb-6">
+<div>
+<span class="text-text-tertiary text-[10px] uppercase font-medium block">Instructor</span>
+<span class="text-white text-sm">Dr. James Wilson</span>
+</div>
+<div>
+<span class="text-text-tertiary text-[10px] uppercase font-medium block">Duration</span>
+<span class="text-white text-sm">4h 30min</span>
+</div>
+<div>
+<span class="text-text-tertiary text-[10px] uppercase font-medium block">Domain</span>
+<span class="text-white text-sm">Cardiology</span>
+</div>
+<div>
+<span class="text-text-tertiary text-[10px] uppercase font-medium block">Level</span>
+<span class="text-white text-sm">Paramedic</span>
+</div>
+</div>
+<div class="border-t border-border-subtle pt-4 space-y-2 mb-4">
+<div class="flex justify-between text-sm">
+<span class="text-text-secondary">Subtotal</span>
+<span class="text-white">$34.99</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-text-secondary">Discount</span>
+<span class="text-primary">-$5.00</span>
+</div>
+<div class="flex justify-between pt-2 border-t border-dashed border-border-subtle">
+<span class="text-white font-bold">Total</span>
+<span class="text-white font-bold">$29.99</span>
+</div>
+</div>
+<div class="pt-2 space-y-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-text-tertiary">credit_card</span>
+<span class="text-text-tertiary text-xs">Visa ...4242</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-text-tertiary">mail</span>
+<span class="text-text-tertiary text-xs">Receipt sent to sarah.chen@fdny.gov</span>
+</div>
+</div>
+</div>
+<!-- Next Steps Section -->
+<div class="mb-8 px-2">
+<h3 class="text-text-tertiary text-[11px] font-bold tracking-widest mb-4 uppercase">What to expect</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[14px] font-bold">check</span>
+</div>
+<span class="text-white text-sm">Pre-assessment</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[14px] font-bold">check</span>
+</div>
+<span class="text-white text-sm">Video lessons</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[14px] font-bold">check</span>
+</div>
+<span class="text-white text-sm">Post-test &amp; certificate</span>
+</div>
+</div>
+</div>
+<!-- Primary CTA -->
+<a href="../dashboard-variant-h-pulse.html" class="w-full h-[52px] bg-primary text-background font-bold text-base rounded-lg flex items-center justify-center gap-2 btn-glow active:scale-[0.98] transition-all mb-4" style="text-decoration:none;">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+            Start Learning
+        </a>
+<!-- Secondary CTAs -->
+<div class="flex gap-3">
+<button class="flex-1 h-12 border border-border-default text-white font-semibold text-sm rounded-lg active:bg-white/5 transition-colors flex items-center justify-center">
+                View Receipt
+            </button>
+<button class="flex-1 h-12 border border-border-default text-white font-semibold text-sm rounded-lg active:bg-white/5 transition-colors flex items-center justify-center" onclick="window.location='../dashboard-variant-h-pulse.html'">
+                Dashboard
+            </button>
+</div>
+</main>
+<!-- Micro-interaction Script -->
+<script>
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('touchstart', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('touchend', () => {
+                button.classList.remove('scale-95');
+            });
+        });
+
+        // Simple parallax effect on background gradient based on device orientation if available
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', (event) => {
+                const glow = document.querySelector('.green-glow-bg');
+                const x = event.gamma / 5; // Left/Right
+                const y = event.beta / 5;  // Front/Back
+                glow.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        }
+    </script>
+</body></html>

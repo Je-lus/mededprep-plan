@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notifications | Pulse CE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#3c4a40",
+                        "secondary": "#bbcabd",
+                        "inverse-primary": "#006c47",
+                        "background": "#0A0A0A", // Explicitly requested background
+                        "outline": "#86948a",
+                        "on-tertiary-fixed": "#291800",
+                        "on-primary": "#003823",
+                        "surface-tint": "#51dea0",
+                        "primary": "#36C98D", // Signature Green
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "tertiary-fixed-dim": "#ffb955",
+                        "outline-variant": "#3d4a41",
+                        "surface-dim": "#131313",
+                        "on-surface-variant": "#bbcabf",
+                        "surface-container-high": "#2a2a2a",
+                        "on-primary-container": "#004f33",
+                        "surface-variant": "#353534",
+                        "error": "#ffb4ab",
+                        "inverse-on-surface": "#313030",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary": "#452b00",
+                        "error-container": "#93000a",
+                        "on-background": "#e5e2e1",
+                        "on-secondary-container": "#aab9ac",
+                        "on-secondary": "#26332a",
+                        "inverse-surface": "#e5e2e1",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-low": "#1c1b1b",
+                        "on-tertiary-container": "#603d00",
+                        "on-primary-fixed": "#002113",
+                        "surface-container": "#111111", // Explicitly requested card color
+                        "on-secondary-fixed": "#111e16",
+                        "on-surface": "#e5e2e1",
+                        "primary-fixed": "#71fbbb",
+                        "on-primary-fixed-variant": "#005235",
+                        "tertiary": "#ffc370",
+                        "surface-bright": "#3a3939",
+                        "primary-container": "#36c98d",
+                        "secondary-fixed-dim": "#bbcabd",
+                        "surface-container-highest": "#353534",
+                        "primary-fixed-dim": "#51dea0",
+                        "on-error": "#690005",
+                        "surface": "#111111",
+                        "tertiary-fixed": "#ffddb4",
+                        "tertiary-container": "#f0a21e",
+                        "on-secondary-fixed-variant": "#3c4a40",
+                        "secondary-fixed": "#d7e7d9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "touch-target": "44px",
+                        "max-width": "1280px",
+                        "nav-height": "60px",
+                        "margin-mobile": "16px",
+                        "gap-default": "16px",
+                        "margin-desktop": "24px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                        "headline-xl": ["30px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                        "headline-lg": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0A0A;
+            background-image: linear-gradient(to bottom right, rgba(54, 201, 141, 0.02) 0%, transparent 100%);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .unread-tint {
+            background-color: rgba(54, 201, 141, 0.08);
+        }
+        .pulse-glow {
+            box-shadow: 0 0 20px rgba(54, 201, 141, 0.05);
+        }
+        .tab-indicator::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #36C98D;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- TopNavBar (Shared Component Implementation) -->
+<nav class="fixed top-0 w-full z-50 bg-background/85 backdrop-blur-md border-b border-outline-variant/30 shadow-[0_0_20px_rgba(54,201,141,0.05)]">
+<div class="flex justify-between items-center h-[60px] px-margin-desktop max-w-max-width mx-auto">
+<div class="font-headline-lg text-headline-lg text-primary tracking-tight">Pulse CE</div>
+<!-- Desktop Links -->
+<div class="hidden md:flex items-center gap-8 font-body-md text-body-md">
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="../dashboard-variant-h-pulse.html">Dashboard</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="40-compliance-tracker-desktop.html">Learn</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="45-extended-practice-desktop.html">Practice</a>
+<a class="text-on-surface-variant font-body-md hover:text-primary transition-colors" href="40-compliance-tracker-desktop.html">Compliance</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors hover:bg-white/5 px-2 py-1 rounded" href="41-settings-desktop.html">Profile</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary active:scale-95 transition-transform" data-icon="notifications">notifications</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/50">
+<img alt="User profile avatar" data-alt="A professional close-up headshot of a healthcare worker in medical scrubs. The lighting is clean and clinical with a modern dark background aesthetic. The image conveys expertise, readiness, and precision, matching the Pulse CE green and dark theme palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrLS74gC84n3O0qcKqeJfANiP1Vy1mZHHDudPWUVghUNPDeA0-RPqGzF2mEu1QcWw0X0L_rb1f3etgOqtRRVI45euZbB_pGfPpEK-n8tSR-LEMvJvD22WvflrxUOdD_5c_S3tV-d407DYqYXX-NCwAziJA-0sgwqXaHCwyGldjnMOgM56XcYIVZGEBoy6iuq_42LPR-_UodnKtDgZ2EV76aQR3ztFoe8KSeRkX0UhIiUfbHHvQMG55p5VL_U02OxLvJ_bI7AjyBP0"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-[100px] pb-20 px-margin-desktop max-w-4xl mx-auto">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-2">Notifications</h1>
+<p class="text-on-surface-variant font-body-md text-body-md">Stay updated with your latest assignments and clinical requirements.</p>
+</div>
+<button class="text-primary font-bold font-body-md text-body-md hover:bg-primary/10 px-4 py-2 rounded-lg transition-all active:scale-95 self-start">
+                Mark all as read
+            </button>
+</header>
+<!-- Filter Tabs -->
+<div class="flex items-center gap-6 border-b border-outline-variant/30 mb-8 overflow-x-auto whitespace-nowrap scrollbar-hide">
+<button class="relative pb-3 text-primary font-bold font-body-md text-body-md tab-indicator">All</button>
+<button class="pb-3 text-on-surface-variant hover:text-on-surface font-body-md text-body-md transition-colors">Assignments</button>
+<button class="pb-3 text-on-surface-variant hover:text-on-surface font-body-md text-body-md transition-colors">Deadlines</button>
+<button class="pb-3 text-on-surface-variant hover:text-on-surface font-body-md text-body-md transition-colors">Completions</button>
+<button class="pb-3 text-on-surface-variant hover:text-on-surface font-body-md text-body-md transition-colors">Announcements</button>
+</div>
+<!-- Notification List -->
+<div class="space-y-4">
+<!-- Item 1: Unread Assignment -->
+<div class="group relative flex items-start gap-4 p-4 rounded-xl unread-tint border-l-4 border-primary shadow-lg transition-all hover:brightness-110 cursor-pointer">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-on-surface">New Protocol Update: ACLS 2024</h3>
+<span class="text-on-surface-variant text-[12px]">2m ago</span>
+</div>
+<p class="text-on-surface-variant font-body-md text-body-md mt-1">Assigned by Chief Sullivan. Review the updated cardiovascular life support guidelines.</p>
+</div>
+<div class="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+</div>
+<!-- Item 2: Unread Deadline -->
+<div class="group relative flex items-start gap-4 p-4 rounded-xl unread-tint border-l-4 border-primary shadow-lg transition-all hover:brightness-110 cursor-pointer">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-error/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined" data-icon="timer">timer</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-on-surface">Certification Expiration</h3>
+<span class="text-on-surface-variant text-[12px]">1h ago</span>
+</div>
+<p class="text-on-surface-variant font-body-md text-body-md mt-1">Your NREMT-P expires in 30 days. Complete your NCCP hours to avoid lapse.</p>
+</div>
+<div class="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+</div>
+<!-- Item 3: Read Completion -->
+<div class="group relative flex items-start gap-4 p-4 rounded-xl bg-surface border border-outline-variant/10 transition-all hover:bg-surface-bright/20 cursor-pointer">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-outline-variant/20 flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-on-surface">Advanced Airway Management</h3>
+<span class="text-on-surface-variant text-[12px]">Yesterday</span>
+</div>
+<p class="text-on-surface-variant font-body-md text-body-md mt-1">1.5 CEH credits added to your transcript successfully.</p>
+</div>
+</div>
+<!-- Item 4: Read Announcement -->
+<div class="group relative flex items-start gap-4 p-4 rounded-xl bg-surface border border-outline-variant/10 transition-all hover:bg-surface-bright/20 cursor-pointer">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-outline-variant/20 flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-on-surface">System Maintenance</h3>
+<span class="text-on-surface-variant text-[12px]">2 days ago</span>
+</div>
+<p class="text-on-surface-variant font-body-md text-body-md mt-1">Pulse CE will be offline for 2 hours this Sunday for platform optimization.</p>
+</div>
+</div>
+<!-- Additional Items for visual depth -->
+<div class="group relative flex items-start gap-4 p-4 rounded-xl bg-surface border border-outline-variant/10 transition-all hover:bg-surface-bright/20 cursor-pointer">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-outline-variant/20 flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-on-surface">Skill Assessment Unlocked</h3>
+<span class="text-on-surface-variant text-[12px]">3 days ago</span>
+</div>
+<p class="text-on-surface-variant font-body-md text-body-md mt-1">The "Trauma Assessment Level 2" is now available for your rank.</p>
+</div>
+</div>
+</div>
+<!-- Empty State Mockup (Hidden by default) -->
+<div class="hidden flex flex-col items-center justify-center py-20 text-center" id="empty-state">
+<div class="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-outline text-[40px]" data-icon="notifications_off">notifications_off</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">All caught up!</h2>
+<p class="text-on-surface-variant font-body-md text-body-md max-w-xs mx-auto">No new notifications at this time. Check back later for assignments.</p>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-outline-variant bg-background">
+<div class="max-w-max-width mx-auto px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gap-default">
+<div class="font-headline-lg text-headline-lg text-primary">Pulse CE</div>
+<div class="flex flex-wrap justify-center gap-6 font-body-md text-body-md text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">EMS Compliance Standards</a>
+<a class="hover:text-primary transition-colors" href="#">Contact Support</a>
+</div>
+<div class="text-on-surface-variant font-body-md text-body-md">
+                © 2024 MedEdPrep Pulse CE. All rights reserved.
+            </div>
+</div>
+</footer>
+<!-- Interactive script for micro-interactions -->
+<script>
+        document.querySelectorAll('.cursor-pointer').forEach(item => {
+            item.addEventListener('click', function() {
+                // Mock marking as read
+                const dot = this.querySelector('.bg-primary.w-2.h-2');
+                if (dot) {
+                    dot.classList.add('opacity-0', 'scale-0', 'transition-all', 'duration-300');
+                    this.classList.remove('unread-tint', 'border-l-4', 'border-primary');
+                    this.classList.add('bg-surface', 'border', 'border-outline-variant/10');
+                }
+            });
+        });
+
+        // Tab selection logic
+        const tabs = document.querySelectorAll('button.font-body-md');
+        tabs.forEach(tab => {
+            if (tab.innerText !== 'Mark all as read') {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => {
+                        t.classList.remove('text-primary', 'font-bold', 'tab-indicator');
+                        t.classList.add('text-on-surface-variant');
+                    });
+                    this.classList.add('text-primary', 'font-bold', 'tab-indicator');
+                    this.classList.remove('text-on-surface-variant');
+                });
+            }
+        });
+    </script>
+</body></html>

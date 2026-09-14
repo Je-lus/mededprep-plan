@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulse CE — Help & FAQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #0A0A0A;
+      --bg-surface: #111111;
+      --bg-surface-elevated: #1A1A1A;
+      --bg-surface-hover: #1F1F1F;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-default: rgba(255, 255, 255, 0.12);
+      --border-strong: rgba(255, 255, 255, 0.2);
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-tertiary: rgba(255, 255, 255, 0.45);
+      --green: #36C98D;
+      --green-dim: rgba(54, 201, 141, 0.12);
+      --green-glow: rgba(54, 201, 141, 0.08);
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --radius-pill: 9999px;
+      --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+      --shadow-glow: 0 0 20px rgba(54, 201, 141, 0.15);
+      --transition: 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #0A0A0A 0%, #0D1A12 50%, #0F3D26 75%, #36C98D 100%);
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      opacity: 0.5;
+      z-index: 0;
+    }
+
+    /* ===== TOP NAV ===== */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 60px;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+    .brand-wordmark { display: flex; flex-direction: column; }
+    .brand-pulse { font-size: 17px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.02em; line-height: 1; }
+    .brand-sub { font-size: 11px; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; line-height: 1; margin-top: 2px; }
+
+    .pill-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg-surface);
+      border-radius: var(--radius-pill);
+      padding: 4px;
+      border: 1px solid var(--border-subtle);
+    }
+    .pill-nav a {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      padding: 7px 18px;
+      border-radius: var(--radius-pill);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .pill-nav a:hover { color: var(--text-primary); background: var(--bg-surface-hover); }
+    .pill-nav a.active { background: var(--green); color: #0A0A0A; font-weight: 600; }
+
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .nav-icon-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s ease; color: var(--text-secondary);
+    }
+    .nav-icon-btn:hover { border-color: var(--border-default); color: var(--text-primary); background: var(--bg-surface-elevated); }
+    .nav-icon-btn svg { width: 18px; height: 18px; }
+    .avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--green), #2ba876);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; color: #0A0A0A; cursor: pointer;
+    }
+    .avatar:hover { box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--green); }
+
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 48px 32px 80px;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+    .search-wrap {
+      max-width: 640px;
+      margin: 0 auto 12px;
+      position: relative;
+    }
+    .search-wrap svg {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: var(--text-tertiary);
+    }
+    .search-wrap input {
+      width: 100%;
+      height: 52px;
+      padding: 0 20px 0 52px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-pill);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .search-wrap input::placeholder { color: var(--text-tertiary); }
+    .search-wrap input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(54, 201, 141, 0.15);
+    }
+    .hero-sub {
+      font-size: 14px;
+      color: var(--text-tertiary);
+    }
+
+    /* ===== CATEGORY CARDS ===== */
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .cat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-decoration: none;
+      display: block;
+    }
+    .cat-card:hover {
+      border-color: rgba(54, 201, 141, 0.3);
+      background: var(--bg-surface-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card);
+    }
+    .cat-icon {
+      width: 40px; height: 40px;
+      border-radius: var(--radius-md);
+      background: var(--green-dim);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px;
+    }
+    .cat-icon svg { width: 20px; height: 20px; color: var(--green); }
+    .cat-name { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+    .cat-count { font-size: 12px; color: var(--text-tertiary); }
+
+    /* last row center alignment for 2 cards */
+    .categories .cat-card:nth-child(4) { grid-column: 1; }
+    .categories .cat-card:nth-child(5) { grid-column: 2; }
+
+    /* ===== POPULAR QUESTIONS ===== */
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-left: 16px;
+      border-left: 4px solid var(--green);
+    }
+    .section-heading h2 { font-size: 20px; font-weight: 600; }
+
+    .faq-list { margin-bottom: 48px; }
+    .faq-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+    .faq-item:hover { border-color: var(--border-default); }
+    .faq-item.open { border-color: rgba(54, 201, 141, 0.2); }
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      cursor: pointer;
+      gap: 16px;
+    }
+    .faq-question span {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .faq-question svg {
+      width: 18px; height: 18px;
+      color: var(--text-tertiary);
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+    .faq-item.open .faq-question svg { transform: rotate(180deg); color: var(--green); }
+    .faq-answer {
+      display: none;
+      padding: 0 20px 20px;
+      border-top: 1px solid rgba(54, 201, 141, 0.15);
+      margin-top: -2px;
+      padding-top: 16px;
+    }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-answer p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ===== CONTACT BANNER ===== */
+    .contact-banner {
+      background: linear-gradient(135deg, rgba(54, 201, 141, 0.08) 0%, rgba(54, 201, 141, 0.03) 100%);
+      border: 1px solid rgba(54, 201, 141, 0.2);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .contact-info h3 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+    .contact-info p { font-size: 14px; color: var(--text-secondary); }
+    .contact-actions { display: flex; gap: 12px; flex-shrink: 0; }
+    .btn-outline {
+      padding: 10px 20px;
+      border: 1px solid var(--green);
+      border-radius: var(--radius-md);
+      background: transparent;
+      color: var(--green);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-outline:hover { background: var(--green-dim); }
+    .btn-solid {
+      padding: 10px 20px;
+      border: none;
+      border-radius: var(--radius-md);
+      background: var(--green);
+      color: #0A0A0A;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-solid:hover { background: #2DB87E; box-shadow: var(--shadow-glow); }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 32px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-left { font-size: 12px; color: var(--text-tertiary); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: var(--text-tertiary); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--green); }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      .top-nav { padding: 0 16px; }
+      .pill-nav { display: none; }
+      .main-content { padding: 32px 16px 60px; }
+      .hero h1 { font-size: 28px; }
+      .categories { grid-template-columns: 1fr 1fr; }
+      .categories .cat-card:nth-child(4) { grid-column: auto; }
+      .categories .cat-card:nth-child(5) { grid-column: auto; }
+      .contact-banner { flex-direction: column; text-align: center; }
+      .contact-actions { width: 100%; }
+      .contact-actions .btn-outline,
+      .contact-actions .btn-solid { flex: 1; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .categories { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== TOP NAV ===== -->
+  <nav class="top-nav">
+    <a href="../batch-2a-public-individual/01-landing-desktop.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 36 36" fill="none">
+        <path d="M18 2C10 2 4 7 4 14v8c0 4 6 12 14 12s14-8 14-12v-8c0-7-6-12-14-12z" fill="#36C98D" opacity="0.15"/>
+        <path d="M18 4C11 4 6 8.5 6 14v7c0 3.5 5.5 11 12 11s12-7.5 12-11v-7c0-5.5-5-10-12-10z" stroke="#36C98D" stroke-width="1.5" fill="none"/>
+        <polyline points="8,20 12,20 14,14 17,26 20,17 22,20 28,20" stroke="#36C98D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="brand-wordmark">
+        <span class="brand-pulse">PULSE</span>
+        <span class="brand-sub">BY MEDEDPREP</span>
+      </div>
+    </a>
+
+    <div class="pill-nav">
+      <a href="../batch-2a-public-individual/01-landing-desktop.html">Home</a>
+      <a href="../batch-2a-public-individual/04-catalog-desktop.html">Courses</a>
+      <a href="../batch-2a-public-individual/03-pricing-desktop.html">Pricing</a>
+      <a href="help-faq.html" class="active">Help</a>
+    </div>
+
+    <div class="nav-actions">
+      <button class="nav-icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+      <div class="avatar">JD</div>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-content">
+
+    <!-- Hero -->
+    <section class="hero">
+      <h1>How can we help?</h1>
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Search for answers...">
+      </div>
+      <p class="hero-sub">Or browse categories below</p>
+    </section>
+
+    <!-- Category Cards -->
+    <section class="categories">
+      <a href="#" class="cat-card">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+        </div>
+        <div class="cat-name">Getting Started</div>
+        <div class="cat-count">8 articles</div>
+      </a>
+
+      <a href="#" class="cat-card">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div class="cat-name">Courses & Content</div>
+        <div class="cat-count">12 articles</div>
+      </a>
+
+      <a href="#" class="cat-card">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+        </div>
+        <div class="cat-name">CE Credits & Certificates</div>
+        <div class="cat-count">10 articles</div>
+      </a>
+
+      <a href="#" class="cat-card">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+        </div>
+        <div class="cat-name">Billing & Subscriptions</div>
+        <div class="cat-count">7 articles</div>
+      </a>
+
+      <a href="#" class="cat-card">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <div class="cat-name">Technical Support</div>
+        <div class="cat-count">6 articles</div>
+      </a>
+    </section>
+
+    <!-- Popular Questions -->
+    <div class="section-heading">
+      <h2>Popular Questions</h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item open">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>How do I earn CE credits?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>CE credits are earned by completing approved continuing education courses on the Pulse CE platform. Each course specifies the number of CE hours (CEH) awarded upon completion. You must watch or complete all required lesson content and pass the post-assessment with a minimum score of 70% to receive credit. Credits are automatically reported to CAPCE within 24 hours of completion, and you can download your certificate immediately from your dashboard.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>What certifications are accepted?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>Pulse CE is accredited through CAPCE (Commission on Accreditation for Pre-Hospital Continuing Education). Our courses are accepted for EMT, AEMT, and Paramedic recertification through NREMT. Many state EMS offices also accept CAPCE-accredited CE. Check with your state EMS office for specific requirements.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>How does the adaptive learning system work?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>Pulse CE uses psychometric-driven adaptive technology to personalize your learning experience. The system tracks your performance across EMS knowledge domains and uses spaced retrieval to surface questions at optimal intervals. Courses adapt in difficulty based on your demonstrated competency, ensuring you spend time on areas that need the most improvement.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>Can I access courses offline?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>Yes. Pulse CE supports offline access for downloaded course content. You can download lessons for offline study via the mobile app. Your progress syncs automatically when you reconnect. Note that post-assessments and certificate generation require an internet connection.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>How do I download my certificate?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>After completing a course and passing the assessment, your certificate is generated automatically. Navigate to Dashboard > CE Credits > Completed Courses, then click the download icon next to the relevant course. Certificates are available as PDF files and include your CAPCE activity number.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>What is the refund policy?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>We offer a 30-day money-back guarantee on subscription plans. If you've completed fewer than 3 courses and are not satisfied, contact support for a full refund. Individual course purchases are non-refundable once the course has been started. See our full Refund Policy for details.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>How do I update my payment method?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>Go to Settings > Billing > Payment Methods. You can add, remove, or update your credit/debit card or other payment methods. Changes take effect on your next billing cycle. If a payment fails, you'll receive an email notification with a link to update your information.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>Who do I contact for technical issues?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>For technical issues, use the Live Chat feature (available Mon-Fri, 8am-8pm EST) or email support@pulsece.com. For urgent issues affecting course access during your study time, include your device type, browser version, and a screenshot of any error messages. Our support team typically responds within 2 hours during business hours.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Banner -->
+    <div class="contact-banner">
+      <div class="contact-info">
+        <h3>Still need help?</h3>
+        <p>Our support team typically responds within 2 hours during business hours.</p>
+      </div>
+      <div class="contact-actions">
+        <button class="btn-outline">Email Support</button>
+        <button class="btn-solid">Live Chat</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-left">&copy; 2026 MedEdPrep. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="terms-of-service.html">Terms of Service</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="refund-policy.html">Refund Policy</a>
+    </div>
+  </footer>
+
+</body>
+</html>

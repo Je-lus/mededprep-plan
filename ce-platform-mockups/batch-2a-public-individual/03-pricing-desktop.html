@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulse CE — Pricing (Desktop)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0A0A0A; --surface: #111111; --surface-elevated: #1A1A1A;
+      --border-subtle: rgba(255,255,255,0.08); --border-default: rgba(255,255,255,0.12);
+      --border-strong: rgba(255,255,255,0.2);
+      --text-primary: #FFFFFF; --text-secondary: rgba(255,255,255,0.7);
+      --text-tertiary: rgba(255,255,255,0.45);
+      --green: #36C98D; --green-hover: #2DB87E; --green-dim: rgba(54,201,141,0.12);
+      --green-border: rgba(54,201,141,0.3); --amber: #F5A623; --red: #E5484D;
+      --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
+      --radius-pill: 9999px;
+    }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    body::after { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; mix-blend-mode: overlay; opacity: 0.5; z-index: 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+    /* NAV */
+    .top-nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 64px; background: rgba(10,10,10,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-icon { width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #36C98D, #2ba876); display: flex; align-items: center; justify-content: center; }
+    .brand-icon svg { width: 20px; height: 20px; }
+    .brand-text { display: flex; flex-direction: column; }
+    .brand-pulse { font-size: 17px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.02em; line-height: 1; }
+    .brand-sub { font-size: 10px; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; line-height: 1; margin-top: 2px; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { text-decoration: none; font-size: 14px; font-weight: 500; color: var(--text-secondary); }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a.active { color: var(--text-primary); }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .btn-ghost { background: none; border: none; color: var(--text-secondary); font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; padding: 8px 16px; }
+    .btn-primary { background: var(--green); color: #0A0A0A; border: none; padding: 10px 24px; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+    .btn-primary:hover { background: var(--green-hover); }
+    .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border-strong); padding: 10px 24px; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+    .btn-outline:hover { border-color: var(--green); color: var(--green); }
+    .btn-large { padding: 14px 32px; font-size: 16px; }
+    .btn-full { width: 100%; }
+
+    /* HERO */
+    .hero { position: relative; padding: 100px 0 60px; text-align: center; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, #0A0A0A 0%, #0D1A12 40%, #0F3D26 70%, rgba(54,201,141,0.25) 100%); z-index: -1; }
+    .hero h1 { font-size: 56px; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 20px; }
+    .hero h1 .accent { color: var(--green); }
+    .hero p { font-size: 18px; color: var(--text-secondary); max-width: 560px; margin: 0 auto 32px; line-height: 1.6; }
+
+    /* Toggle */
+    .toggle-wrap { display: flex; align-items: center; justify-content: center; gap: 16px; }
+    .toggle-label { font-size: 15px; font-weight: 500; color: var(--text-tertiary); cursor: pointer; }
+    .toggle-label.active { color: var(--text-primary); }
+    .toggle-track {
+      width: 52px; height: 28px; border-radius: 14px;
+      background: var(--green); cursor: pointer; position: relative;
+      border: none;
+    }
+    .toggle-track::after {
+      content: ''; position: absolute; width: 22px; height: 22px;
+      border-radius: 50%; background: white; top: 3px; left: 3px;
+      transition: transform 0.2s;
+    }
+
+    /* PRICING CARDS */
+    section { padding: 96px 0; position: relative; z-index: 1; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1000px; margin: 0 auto; }
+    .pricing-card {
+      background: var(--surface); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl); padding: 36px; position: relative;
+      display: flex; flex-direction: column;
+    }
+    .pricing-card.featured {
+      border-color: var(--green-border);
+      box-shadow: 0 0 40px rgba(54,201,141,0.1), inset 0 1px 0 rgba(54,201,141,0.2);
+    }
+    .pricing-card .badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--green); color: #0A0A0A; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      padding: 4px 14px; border-radius: var(--radius-pill);
+    }
+    .pricing-card .plan-name { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+    .pricing-card .plan-desc { font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px; }
+    .pricing-card .price { margin-bottom: 8px; }
+    .pricing-card .price .amount { font-size: 48px; font-weight: 800; letter-spacing: -0.02em; }
+    .pricing-card .price .period { font-size: 16px; color: var(--text-tertiary); font-weight: 400; }
+    .pricing-card .annual { font-size: 13px; color: var(--green); margin-bottom: 24px; }
+    .pricing-card .features { list-style: none; margin-bottom: 32px; flex-grow: 1; }
+    .pricing-card .features li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.4;
+    }
+    .pricing-card .features li .check { color: var(--green); font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .pricing-card .features li.section-label-feat {
+      font-size: 12px; font-weight: 600; color: var(--text-tertiary);
+      text-transform: uppercase; letter-spacing: 0.05em; margin-top: 8px; margin-bottom: 8px;
+      padding-top: 8px; border-top: 1px solid var(--border-subtle);
+    }
+
+    /* BUNDLES */
+    .section-label { font-size: 12px; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+    .section-title { font-size: 36px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+    .section-subtitle { font-size: 18px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 48px; }
+
+    .bundles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .bundle-card {
+      background: var(--surface); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: 28px;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      position: relative;
+    }
+    .bundle-card .badge { position: absolute; top: -10px; right: 16px; background: var(--green); color: #0A0A0A; font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 3px 10px; border-radius: var(--radius-pill); }
+    .bundle-card .ceh { font-size: 36px; font-weight: 800; color: var(--green); margin-bottom: 4px; }
+    .bundle-card .ceh-label { font-size: 13px; color: var(--text-tertiary); font-weight: 500; margin-bottom: 4px; }
+    .bundle-card .bundle-name { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+    .bundle-card .bundle-price { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+    .bundle-card .bundle-desc { font-size: 13px; color: var(--text-tertiary); margin-bottom: 20px; }
+    .bundle-card .btn-outline { width: 100%; text-align: center; }
+
+    /* FAQ */
+    .faq-list { max-width: 760px; margin: 0 auto; }
+    .faq-item {
+      background: var(--surface); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); margin-bottom: 12px; overflow: hidden;
+    }
+    .faq-question {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px; cursor: pointer; font-size: 16px; font-weight: 600;
+      background: none; border: none; color: var(--text-primary);
+      width: 100%; text-align: left; font-family: inherit;
+    }
+    .faq-question:hover { background: var(--surface-elevated); }
+    .faq-chevron { color: var(--text-tertiary); font-size: 20px; transition: transform 0.2s; }
+    .faq-answer {
+      padding: 0 24px 20px; font-size: 14px; color: var(--text-secondary); line-height: 1.7;
+    }
+    .faq-item.closed .faq-answer { display: none; }
+    .faq-item.closed .faq-chevron { transform: rotate(0deg); }
+    .faq-item:not(.closed) .faq-chevron { transform: rotate(180deg); }
+
+    /* CTA */
+    .cta-section { position: relative; padding: 80px 0; text-align: center; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(54,201,141,0.05), rgba(54,201,141,0.12)); border-top: 1px solid var(--green-border); border-bottom: 1px solid var(--green-border); }
+    .cta-section h2 { font-size: 36px; font-weight: 700; margin-bottom: 16px; position: relative; z-index: 1; }
+    .cta-section p { font-size: 16px; color: var(--text-secondary); margin-bottom: 32px; position: relative; z-index: 1; }
+    .cta-section .btn-primary { position: relative; z-index: 1; }
+    .cta-fine { font-size: 13px; color: var(--text-tertiary); margin-top: 16px; position: relative; z-index: 1; }
+
+    /* FOOTER */
+    footer { padding: 64px 0 32px; border-top: 1px solid var(--border-subtle); position: relative; z-index: 1; }
+    .footer-grid { display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 48px; margin-bottom: 48px; }
+    .footer-brand p { font-size: 13px; color: var(--text-tertiary); line-height: 1.6; max-width: 240px; margin-top: 16px; }
+    .footer-col h4 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 16px; }
+    .footer-col a { display: block; font-size: 14px; color: var(--text-tertiary); text-decoration: none; margin-bottom: 10px; }
+    .footer-col a:hover { color: var(--text-primary); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 24px; border-top: 1px solid var(--border-subtle); }
+    .footer-bottom span { font-size: 13px; color: var(--text-tertiary); }
+    .capce-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--green-dim); border: 1px solid var(--green-border); border-radius: var(--radius-sm); padding: 4px 12px; font-size: 11px; font-weight: 600; color: var(--green); }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="top-nav">
+    <a href="01-landing-desktop.html" class="brand">
+      <div class="brand-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M3 12h4l3-6 4 12 3-6h4"/></svg></div>
+      <div class="brand-text"><span class="brand-pulse">PULSE</span><span class="brand-sub">BY MEDEDPREP</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="02-features-desktop.html">Features</a>
+      <a href="04-catalog-desktop.html">Courses</a>
+      <a href="#" class="active">Pricing</a>
+      <a href="../batch-2b-agency-b2b/15-for-agencies.html">For Agencies</a>
+    </div>
+    <div class="nav-actions">
+      <a href="../batch-3-auth-onboarding/16-login-desktop.html" class="btn-ghost" style="text-decoration:none;">Log In</a>
+      <a href="../batch-3-auth-onboarding/17-register-desktop.html" class="btn-primary" style="text-decoration:none;">Start Free Trial</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1>Invest in CE <span class="accent">That Lasts</span></h1>
+      <p>Simple pricing. No hidden fees. Every plan includes CAPCE-accredited content and adaptive assessments.</p>
+      <div class="toggle-wrap">
+        <span class="toggle-label active">Individual</span>
+        <button class="toggle-track"></button>
+        <span class="toggle-label">Agency</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING CARDS -->
+  <section style="padding-top: 48px;">
+    <div class="container">
+      <div class="pricing-grid">
+        <!-- FREE -->
+        <div class="pricing-card">
+          <div class="plan-name">Free</div>
+          <div class="plan-desc">Explore the platform</div>
+          <div class="price"><span class="amount">$0</span><span class="period"> /forever</span></div>
+          <div class="annual">&nbsp;</div>
+          <ul class="features">
+            <li><span class="check">&#10003;</span> 3 spaced retrieval questions/day</li>
+            <li><span class="check">&#10003;</span> 1 free assessment per month</li>
+            <li><span class="check">&#10003;</span> Basic diagnostic report</li>
+            <li><span class="check">&#10003;</span> Knowledge decay tracking</li>
+            <li><span class="check">&#10003;</span> Mobile app access</li>
+          </ul>
+          <a href="../batch-3-auth-onboarding/17-register-desktop.html" class="btn-outline btn-full" style="text-decoration:none;text-align:center;">Get Started</a>
+        </div>
+
+        <!-- PRO -->
+        <div class="pricing-card featured">
+          <span class="badge">Most Popular</span>
+          <div class="plan-name">Pro</div>
+          <div class="plan-desc">For serious professionals</div>
+          <div class="price"><span class="amount">$29</span><span class="period"> /month</span></div>
+          <div class="annual">or $279/year (save 20%)</div>
+          <ul class="features">
+            <li class="section-label-feat">Everything in Free, plus:</li>
+            <li><span class="check">&#10003;</span> Unlimited adaptive assessments</li>
+            <li><span class="check">&#10003;</span> Full course library access</li>
+            <li><span class="check">&#10003;</span> Advanced diagnostic reports</li>
+            <li><span class="check">&#10003;</span> Competency radar tracking</li>
+            <li><span class="check">&#10003;</span> Unlimited spaced retrieval</li>
+            <li><span class="check">&#10003;</span> Downloadable certificates</li>
+            <li><span class="check">&#10003;</span> Offline mode</li>
+            <li><span class="check">&#10003;</span> Priority support</li>
+          </ul>
+          <a href="../batch-3-auth-onboarding/17-register-desktop.html" class="btn-primary btn-full" style="text-decoration:none;text-align:center;">Start Free Trial</a>
+        </div>
+
+        <!-- AGENCY -->
+        <div class="pricing-card">
+          <div class="plan-name">Agency</div>
+          <div class="plan-desc">For departments &amp; agencies</div>
+          <div class="price"><span class="amount">Custom</span></div>
+          <div class="annual">Volume-based pricing</div>
+          <ul class="features">
+            <li class="section-label-feat">Everything in Pro, plus:</li>
+            <li><span class="check">&#10003;</span> Team management dashboard</li>
+            <li><span class="check">&#10003;</span> Bulk seat licensing</li>
+            <li><span class="check">&#10003;</span> Compliance tracking &amp; reporting</li>
+            <li><span class="check">&#10003;</span> Custom content integration</li>
+            <li><span class="check">&#10003;</span> SSO / SAML authentication</li>
+            <li><span class="check">&#10003;</span> Dedicated account manager</li>
+            <li><span class="check">&#10003;</span> API access</li>
+          </ul>
+          <a href="../batch-2b-agency-b2b/15-for-agencies.html" class="btn-outline btn-full" style="text-decoration:none;text-align:center;">Contact Sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUNDLES -->
+  <section style="background: var(--surface);">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <div class="section-label">CE Hour Bundles</div>
+        <h2 class="section-title">Buy Exactly What You Need</h2>
+        <p class="section-subtitle" style="margin-left:auto;margin-right:auto;">Need specific hours? One-time purchase, no subscription required.</p>
+      </div>
+      <div class="bundles-grid">
+        <div class="bundle-card">
+          <div class="ceh">10</div>
+          <div class="ceh-label">CE Hours</div>
+          <div class="bundle-name">Quick Recert</div>
+          <div class="bundle-price">$49</div>
+          <div class="bundle-desc">Perfect for topping off your hours</div>
+          <button class="btn-outline" onclick="window.location='../batch-3-auth-onboarding/23-checkout-desktop.html'">Purchase</button>
+        </div>
+        <div class="bundle-card">
+          <div class="ceh">20</div>
+          <div class="ceh-label">CE Hours</div>
+          <div class="bundle-name">Half Cycle</div>
+          <div class="bundle-price">$89</div>
+          <div class="bundle-desc">Cover half your recert requirement</div>
+          <button class="btn-outline" onclick="window.location='../batch-3-auth-onboarding/23-checkout-desktop.html'">Purchase</button>
+        </div>
+        <div class="bundle-card">
+          <span class="badge">Best Value</span>
+          <div class="ceh">40</div>
+          <div class="ceh-label">CE Hours</div>
+          <div class="bundle-name">Full Cycle</div>
+          <div class="bundle-price">$149</div>
+          <div class="bundle-desc">Complete recertification coverage</div>
+          <button class="btn-outline" onclick="window.location='../batch-3-auth-onboarding/23-checkout-desktop.html'">Purchase</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">Is Pulse CE CAPCE accredited?<span class="faq-chevron">&#9662;</span></button>
+          <div class="faq-answer">Yes. Pulse CE is an accredited provider through the Commission on Accreditation for Prehospital Continuing Education (CAPCE). Every course and assessment on our platform carries CAPCE-accredited CE hours that count toward NREMT recertification and state relicensure.</div>
+        </div>
+        <div class="faq-item closed">
+          <button class="faq-question">How do CE hours work with the subscription?<span class="faq-chevron">&#9662;</span></button>
+          <div class="faq-answer">Your Pro subscription gives you unlimited access to all courses and assessments. CE hours are earned as you complete content — there's no limit on how many you can earn per month. Hours are automatically reported to CAPCE.</div>
+        </div>
+        <div class="faq-item closed">
+          <button class="faq-question">Can I use this for NREMT recertification?<span class="faq-chevron">&#9662;</span></button>
+          <div class="faq-answer">Absolutely. All CE hours earned through Pulse CE are CAPCE-accredited and accepted for NREMT recertification. Our courses are mapped to NCCP content areas, making it easy to fulfill distribution requirements.</div>
+        </div>
+        <div class="faq-item closed">
+          <button class="faq-question">What's the cancellation policy?<span class="faq-chevron">&#9662;</span></button>
+          <div class="faq-answer">Cancel anytime with no penalties. Your access continues through the end of your billing period. All certificates earned are yours permanently — they're never revoked if you cancel.</div>
+        </div>
+        <div class="faq-item closed">
+          <button class="faq-question">Do you offer group discounts?<span class="faq-chevron">&#9662;</span></button>
+          <div class="faq-answer">Yes! Our Agency plan offers volume-based pricing for departments and organizations. Contact our sales team for a custom quote based on your team size and needs.</div>
+        </div>
+        <div class="faq-item closed">
+          <button class="faq-question">How does the free trial work?<span class="faq-chevron">&#9662;</span></button>
+          <div class="faq-answer">Start with 14 days of full Pro access — no credit card required. You'll have unlimited access to all courses, assessments, and features. At the end of your trial, choose to subscribe or continue with the free tier.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Start Learning Smarter Today</h2>
+      <p>14 days of Pro access, completely free. No credit card required.</p>
+      <a href="../batch-3-auth-onboarding/17-register-desktop.html" class="btn-primary btn-large" style="text-decoration:none;">Start Free Trial</a>
+      <div class="cta-fine">Cancel anytime &middot; Keep all earned certificates</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="01-landing-desktop.html" class="brand"><div class="brand-icon" style="width:28px;height:28px;"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:16px;height:16px;"><path d="M3 12h4l3-6 4 12 3-6h4"/></svg></div><div class="brand-text"><span class="brand-pulse" style="font-size:15px;">PULSE</span><span class="brand-sub" style="font-size:9px;">BY MEDEDPREP</span></div></a>
+          <p>Adaptive continuing education for EMS professionals. CAPCE accredited.</p>
+        </div>
+        <div class="footer-col"><h4>Product</h4><a href="02-features-desktop.html">Features</a><a href="04-catalog-desktop.html">Courses</a><a href="03-pricing-desktop.html">Pricing</a><a href="../batch-2b-agency-b2b/15-for-agencies.html">For Agencies</a></div>
+        <div class="footer-col"><h4>Company</h4><a href="#">About</a><a href="#">Blog</a><a href="#">Careers</a><a href="#">Contact</a></div>
+        <div class="footer-col"><h4>Support</h4><a href="../batch-7-system/help-faq.html">Help Center</a><a href="06-verify-desktop.html">Verification</a><a href="../batch-7-system/terms-of-service.html">Terms</a><a href="../batch-7-system/privacy-policy.html">Privacy</a></div>
+        <div class="footer-col"><h4>Connect</h4><a href="#">LinkedIn</a><a href="#">Twitter / X</a><a href="#">Instagram</a><a href="#">YouTube</a></div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 MedEdPrep, Inc. All rights reserved.</span>
+        <span class="capce-badge">CAPCE Accredited Provider</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

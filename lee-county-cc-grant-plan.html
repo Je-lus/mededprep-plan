@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Critical Care Paramedic Cohort — Funding & Proposal Plan | Lee County EMS</title>
+<style>
+  :root{
+    --ink:#13202b; --muted:#5c6b78; --line:#e2e8ee; --bg:#f6f8fa; --card:#ffffff;
+    --pulse:#c8102e; --pulse-dk:#9c0c23; --accent:#0d6e6e; --gold:#b6862c;
+    --good:#1f8a4c; --warn:#b6862c; --bad:#b23b3b;
+    --shadow:0 1px 2px rgba(19,32,43,.06),0 8px 24px rgba(19,32,43,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px}
+
+  /* Header */
+  header.hero{
+    background:linear-gradient(135deg,#13202b 0%,#1b2f3e 60%,#21404f 100%);
+    color:#fff;padding:46px 0 40px;border-bottom:4px solid var(--pulse);
+  }
+  .hero .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;
+    letter-spacing:.14em;text-transform:uppercase;color:#9fd0d0;margin-bottom:14px;
+  }
+  .hero .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--pulse);box-shadow:0 0 0 4px rgba(200,16,46,.25)}
+  .hero h1{margin:0 0 10px;font-size:30px;line-height:1.2;font-weight:800;letter-spacing:-.01em}
+  .hero p.sub{margin:0;font-size:16px;color:#c7d6e1;max-width:680px}
+  .hero .meta{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px}
+  .hero .chip{
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
+    padding:6px 12px;border-radius:999px;font-size:12.5px;color:#e6eef4;font-weight:600;
+  }
+
+  main{padding:34px 0 60px}
+
+  /* The headline play */
+  .play{
+    background:var(--card);border:1px solid var(--line);border-left:5px solid var(--pulse);
+    border-radius:14px;padding:24px 26px;box-shadow:var(--shadow);margin-bottom:26px;
+  }
+  .play h2{margin:0 0 6px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--pulse)}
+  .play .formula{font-size:20px;font-weight:800;line-height:1.4;margin:6px 0 14px}
+  .play .formula b{color:var(--pulse-dk)}
+  .play p{margin:0 0 10px;color:var(--muted)}
+  .play p:last-child{margin-bottom:0}
+  .play .why{color:var(--ink)}
+
+  .callout{
+    border-radius:10px;padding:14px 16px;font-size:14.5px;margin:18px 0;display:flex;gap:12px;align-items:flex-start;
+  }
+  .callout .ic{flex:0 0 auto;font-size:18px;line-height:1.4}
+  .callout.warn{background:#fdf6e7;border:1px solid #ecd9a8;color:#6b5212}
+  .callout.info{background:#eef6f6;border:1px solid #cfe5e5;color:#13474a}
+  .callout b{color:inherit}
+
+  section{margin-bottom:30px}
+  h2.sec{font-size:20px;font-weight:800;letter-spacing:-.01em;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+  h2.sec .num{
+    flex:0 0 auto;width:26px;height:26px;border-radius:7px;background:var(--ink);color:#fff;
+    font-size:13px;font-weight:800;display:grid;place-items:center;
+  }
+  .sec-sub{color:var(--muted);margin:0 0 16px;font-size:14.5px}
+
+  /* Ranked table */
+  .tbl{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);font-size:14px}
+  .tbl th{background:#f0f3f6;text-align:left;padding:11px 12px;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;border-bottom:1px solid var(--line)}
+  .tbl td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl tr.top td{background:#fbf4f5}
+  .rank{font-weight:800;color:var(--pulse-dk);font-size:15px}
+  .src{font-weight:700}
+  .src small{display:block;font-weight:500;color:var(--muted);font-size:12px;margin-top:2px}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:700;white-space:nowrap}
+  .pill.high{background:#e4f4ea;color:var(--good)}
+  .pill.med{background:#fbf1da;color:var(--warn)}
+  .pill.low{background:#f7e3e3;color:var(--bad)}
+  .catch{color:var(--muted);font-size:13px}
+
+  /* Steps */
+  .steps{display:grid;gap:14px}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow);display:flex;gap:14px;align-items:flex-start}
+  .step .n{flex:0 0 auto;width:30px;height:30px;border-radius:8px;background:var(--accent);color:#fff;font-weight:800;display:grid;place-items:center}
+  .step h3{margin:0 0 3px;font-size:15.5px}
+  .step p{margin:0;color:var(--muted);font-size:14px}
+  .step .tag{display:inline-block;margin-top:7px;font-size:12px;font-weight:700;color:var(--accent);background:#e9f3f3;padding:2px 9px;border-radius:6px}
+  .step code{background:#eef1f4;padding:1px 6px;border-radius:5px;font-size:13px;color:var(--ink)}
+
+  /* Proposal packet */
+  .doc{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+  .doc .doc-head{background:#13202b;color:#fff;padding:16px 22px}
+  .doc .doc-head .t{font-weight:800;font-size:15px;letter-spacing:.02em}
+  .doc .doc-head .m{font-size:12.5px;color:#a9bccb;margin-top:3px}
+  .doc-body{padding:8px 24px 22px}
+  .block{border-bottom:1px dashed var(--line);padding:18px 0}
+  .block:last-child{border-bottom:none}
+  .block .h{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+  .block .h .bn{flex:0 0 auto;font-size:12px;font-weight:800;color:#fff;background:var(--pulse);width:22px;height:22px;border-radius:6px;display:grid;place-items:center}
+  .block .h h4{margin:0;font-size:15px}
+  .block .h .note{font-size:12px;color:var(--muted);margin-left:auto;font-style:italic}
+  .sample{background:#f7f9fb;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:13px 15px;font-size:13.5px;color:#27343d;margin-top:6px}
+  .sample .lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);display:block;margin-bottom:5px}
+  .fill{background:#fff5cc;padding:0 4px;border-radius:3px;font-style:italic;color:#7a5c00}
+  ul.tight{margin:8px 0 0;padding-left:20px}
+  ul.tight li{margin-bottom:5px}
+
+  /* Checklist */
+  .checklist{display:grid;gap:10px}
+  .ck{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 15px;display:flex;gap:12px;align-items:flex-start;box-shadow:var(--shadow)}
+  .ck .box{flex:0 0 auto;width:20px;height:20px;border:2px solid var(--accent);border-radius:5px;margin-top:2px}
+  .ck.star{border-left:4px solid var(--gold)}
+  .ck.star .box{border-color:var(--gold);background:var(--gold);position:relative}
+  .ck.star .box::after{content:"★";position:absolute;inset:0;color:#fff;font-size:12px;display:grid;place-items:center}
+  .ck .txt{font-size:14px}
+  .ck .txt b{color:var(--ink)}
+  .ck .txt span{color:var(--muted)}
+  .ck .gate{display:inline-block;font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.05em;margin-left:6px}
+  .ck .fed{color:var(--pulse-dk)}
+
+  /* Open questions */
+  .q{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow)}
+  .q .who{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.05em}
+  .q .who.researching{color:var(--pulse-dk)}
+  .q p{margin:4px 0 0;font-size:14px}
+  .q .tag-r{display:inline-block;font-size:11px;font-weight:700;background:#f7e3e3;color:var(--bad);padding:2px 8px;border-radius:5px;margin-left:6px}
+
+  footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font-size:13px;text-align:center}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  @media print{
+    body{background:#fff}
+    .step,.tbl,.doc,.ck,.q,.play{box-shadow:none}
+    header.hero{background:#13202b !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .pill,.hero .chip,.block .h .bn,.step .n,.doc .doc-head{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+  @media(max-width:640px){
+    .hero h1{font-size:24px}
+    .tbl{font-size:12.5px}
+    .tbl td,.tbl th{padding:9px 8px}
+    .block .h .note{display:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> MedEdPrep · Funding Strategy Brief</div>
+    <h1>Critical Care Paramedic Cohort — Funding &amp; Proposal Plan</h1>
+    <p class="sub">How Lee County EMS can fund ~13 medics through a Critical Care Paramedic certification using an outside grant — built around the captain's exact ask: <em>a named grant + a named program = high approval odds.</em></p>
+    <div class="meta">
+      <span class="chip">Prepared for: Sam &amp; the Lee County cohort</span>
+      <span class="chip">Employer: Lee County (county EMS)</span>
+      <span class="chip">Cohort: ~13 paramedics</span>
+      <span class="chip">Program: MedEdPrep CCP</span>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- THE PLAY -->
+  <div class="play">
+    <h2>The recommended play</h2>
+    <div class="formula"><b>Florida EMS County Grant</b> funding a <b>MedEdPrep accredited CCP-C cohort</b> — money Lee County already receives every year, with no match and no deadline.</div>
+    <p class="why">Lee County automatically receives an annual EMS Trust Fund county distribution (§401.113(2)(a), F.S.) with <b>no application window, no competitive scoring, and no cash match</b>. Training is a documented allowable use: a Florida county (Levy) put "Paramedic tuition and travel for instruction" directly on its county-grant budget page. The path is simply a budget line — "Training – CCP-C tuition (MedEdPrep)" — plus a Board of County Commissioners resolution certifying the cohort "improves and expands" the EMS system. This satisfies the captain's ask cleanly: a <b>named grant</b> (EMS County Grant) + a <b>named program</b> (MedEdPrep CCP-C), where the department controls the money.</p>
+    <div class="callout info">
+      <span class="ic">✅</span>
+      <div><b>Verified by follow-up research (June 2026):</b> Three eligibility unknowns were run down. <b>County Grant</b> — confirmed fundable for training, with FL precedent. <b>Matching Grant</b> — confirmed it has a dedicated training scoring track; strong fallback. <b>AFG and CareerSource</b> — both turned out to be <b>blocked for a county-government EMS division</b> (see ranking below). The plan is now built on the two Florida DOH paths.</div>
+    </div>
+    <div class="callout warn">
+      <span class="ic">📋</span>
+      <div><b>The one soft spot</b> on the County Grant: funds must "improve and expand" EMS and cannot cover "on-going costs." A one-time cohort that <b>adds a new clinical capability</b> (critical-care transport) fits; a recurring annual CE line would not. One email to FL DOH settles the judgment call — see Section 2.</div>
+    </div>
+  </div>
+
+  <!-- RANKED -->
+  <section>
+    <h2 class="sec"><span class="num">1</span> Ranked funding paths</h2>
+    <p class="sec-sub">Ordered by realistic odds × low effort for a motivated medic working up the chain of command. Paths where <b>the department applies</b> are favored — that's what the captain wants.</p>
+    <table class="tbl">
+      <thead>
+        <tr><th>#</th><th>Source</th><th>Who applies</th><th>Effort</th><th>Odds</th><th>The catch</th></tr>
+      </thead>
+      <tbody>
+        <tr class="top">
+          <td class="rank">1</td>
+          <td class="src">FL EMS County Grant <small>45% EMS Trust Fund county distribution</small></td>
+          <td>Lee County BoCC / EMS</td>
+          <td><span class="pill high">Low</span></td>
+          <td><span class="pill high">High</span></td>
+          <td class="catch"><b>No match, no deadline, no competition.</b> Money the county already gets. FL precedent (Levy County funded paramedic tuition). Needs a BCC resolution + budget line.</td>
+        </tr>
+        <tr>
+          <td class="rank">2</td>
+          <td class="src">FL EMS Matching Grant <small>FL DOH Bureau of EMS — DH 1767</small></td>
+          <td>Licensed county EMS</td>
+          <td><span class="pill med">Med</span></td>
+          <td><span class="pill med">Med</span></td>
+          <td class="catch">Has a <b>dedicated training scoring track</b> (Item 12). 75% state / 25% dept cash. Scored on patient-outcome impact, so frame around CCT outcomes. Next window ~Q3 2026.</td>
+        </tr>
+        <tr>
+          <td class="rank">3</td>
+          <td class="src">Dept training / tuition budget <small>Lee County HR Policy 211</small></td>
+          <td>The department</td>
+          <td><span class="pill high">Low</span></td>
+          <td><span class="pill high">High</span></td>
+          <td class="catch">Backbone + the <b>25% cash-match source</b> if the Matching Grant is used. Sam's first internal conversation regardless.</td>
+        </tr>
+        <tr>
+          <td class="rank">4</td>
+          <td class="src">Air-medical sponsorship <small>Air Methods / GMR / PHI</small></td>
+          <td>The employer (B2B)</td>
+          <td><span class="pill low">High</span></td>
+          <td><span class="pill low">Low</span></td>
+          <td class="catch">MedEdPrep biz-dev track, not Sam's path. Pulls medics toward the air-medical employer.</td>
+        </tr>
+        <tr>
+          <td class="rank">5</td>
+          <td class="src">Association scholarships <small>FAEMSE, NAEMT, SWFL Heroes</small></td>
+          <td>Individual medics</td>
+          <td><span class="pill high">Low</span></td>
+          <td><span class="pill low">Low</span></td>
+          <td class="catch">Small ($500-ish), mostly for initial licensure. Gap-filler for exam fees only — never a cohort source.</td>
+        </tr>
+        <tr style="opacity:.62">
+          <td class="rank" style="color:var(--bad)">✕</td>
+          <td class="src">FEMA AFG <small>Assistance to Firefighters Grant</small></td>
+          <td>Fire depts / nonprofits</td>
+          <td>—</td>
+          <td><span class="pill low">Out</span></td>
+          <td class="catch"><b>Ruled out.</b> AFG's eligible-applicant definition requires fire-based or <b>nonprofit</b> EMS and excludes "local agencies / subsets of a governmental entity." A county third-service EMS division qualifies as neither. Training cost was eligible; the applicant isn't.</td>
+        </tr>
+        <tr style="opacity:.62">
+          <td class="rank" style="color:var(--bad)">✕</td>
+          <td class="src">CareerSource IWT / WIOA <small>workforce dollars</small></td>
+          <td>For-profit employers</td>
+          <td>—</td>
+          <td><span class="pill low">Out</span></td>
+          <td class="catch"><b>Triple-blocked.</b> IWT excludes government employers; cert/exam-prep costs are disallowed; and MedEdPrep can't make the FL ETPL (2-yr in-state history). Dead for this deal.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout warn" style="margin-top:16px">
+      <span class="ic">⚠️</span>
+      <div><b>Why the two federal/workforce paths dropped out (confirmed, not guessed):</b> Both <b>AFG</b> and <b>CareerSource</b> are structurally built for fire departments / for-profit employers. Because Sam works for a <b>county-government EMS division</b>, neither will fund this cohort. That's actually clarifying — it concentrates the plan on the two Florida DOH grants, where a licensed county EMS provider is squarely eligible.</div>
+    </div>
+  </section>
+
+  <!-- FIRST MOVES -->
+  <section>
+    <h2 class="sec"><span class="num">2</span> Sam's first moves this week</h2>
+    <p class="sec-sub">One email and one internal conversation. The County Grant path runs almost entirely inside Lee County government.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <div>
+          <h3>Email FL DOH EMS Grants — <code>EMSGrants@FLHealth.gov</code></h3>
+          <p>One email pins the only soft spot. Ask: <em>"Lee County Public Safety EMS wants to fund a one-time CCP-C certification cohort for ~13 medics via a Georgia state-licensed, accredited critical care program. (1) Can we put this on our annual EMS County Grant (DH 1684) as a Training line item — does a one-time cohort qualify as 'increasing/expanding' rather than a prohibited 'on-going cost' — or do you prefer the Matching Grant (DH 1767, Item 12 Training)? (2) If Matching: confirm the FY2027-28 open and postmark dates."</em></p>
+          <span class="tag">Confirms the County-Grant judgment call + pins the only date</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <div>
+          <h3>Talk to your EMS Chief / County EMS liaison</h3>
+          <p>The County Grant runs through the Board of County Commissioners. Ask the chief whether a slice of Lee County's annual EMS Trust Fund distribution can be earmarked for a CCT-capability cohort, and what's needed for the <b>BCC resolution</b> (a prior continuing-authority resolution may be reusable). Also scope the HR Policy 211 training budget as the 25% match <em>if</em> the Matching Grant is used instead.</p>
+          <span class="tag">The County Grant is an internal earmark, not a competitive bid</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <div>
+          <h3>Get the MedEdPrep vendor packet ready</h3>
+          <p>Either grant needs a named, accredited program with a quote. Have MedEdPrep produce the CAPCE number, cohort pricing for 13, course outline with CEH mapping, and a W-9 (see Section 4). This is the "program" half of the captain's "grant + program" formula.</p>
+          <span class="tag">The half MedEdPrep controls — start it in parallel</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROPOSAL PACKET -->
+  <section>
+    <h2 class="sec"><span class="num">3</span> The proposal Sam hands her captain</h2>
+    <p class="sec-sub">Keep it to 2–3 pages plus attachments. Lead with <b>"outside funding is already identified"</b> — that's the line the captain cares about. <span class="fill">Highlighted fields</span> are fill-ins.</p>
+
+    <div class="doc">
+      <div class="doc-head">
+        <div class="t">CRITICAL CARE PARAMEDIC COHORT — TRAINING &amp; GRANT PROPOSAL</div>
+        <div class="m">Prepared by: <span style="color:#fff">Sam</span>, Paramedic · Routed to: Captain / Training Chief / EMS Chief · Lee County EMS · ~13 medics</div>
+      </div>
+      <div class="doc-body">
+
+        <div class="block">
+          <div class="h"><span class="bn">1</span><h4>Executive Summary</h4><span class="note">3 sentences</span></div>
+          <div class="sample">
+            <span class="lbl">Sample language</span>
+            "This proposal requests department sponsorship to send a cohort of <span class="fill">13</span> Lee County paramedics through a Critical Care Paramedic (CCP-C) certification course delivered by MedEdPrep, a Georgia state-licensed and accredited critical care training program, with the cost offset by an external grant (FEMA Assistance to Firefighters Grant; alternate: Florida EMS Matching Grant). <b>Outside funding has already been identified</b>, which materially improves approval odds and reduces net department cost to roughly the grant match plus in-kind instructor and backfill time. The result is a new in-house critical-care interfacility transport (CCT-IFT) capability, improved retention, and CAPCE-accredited CE hours that double as Florida recertification credit."
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="h"><span class="bn">2</span><h4>Problem Statement — the capability gap</h4><span class="note">quantify where possible</span></div>
+          <div class="sample">
+            <span class="lbl">Sample language</span>
+            "Lee County EMS currently has <span class="fill">[0 / few]</span> paramedics holding the Critical Care Paramedic (CCP-C) credential. As a result, <span class="fill">[we cannot staff critical-care interfacility transports in-house / we rely on outside CCT providers for high-acuity transfers / we forgo reimbursable CCT-IFT billing / we lose advancement-minded medics who must leave to gain critical-care credentials elsewhere]</span>. The need is documented by <span class="fill">[# of high-acuity transfers per month, outside-provider reliance, recent attrition]</span>. Without a structured, funded pathway, this gap persists and our most ambitious medics continue to leave for agencies that offer it."
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="h"><span class="bn">3</span><h4>The Program — named, accredited, credential-producing</h4></div>
+          <div class="sample">
+            <span class="lbl">Sample language</span>
+            "MedEdPrep's Critical Care Paramedic program is a Georgia state-licensed, accredited critical care training program <span class="fill">[GA school license #: ___]</span>, IBSC/BCCTPC-aligned, totaling <span class="fill">[__]</span> contact hours / CEH, preparing each medic to sit for the nationally recognized CCP-C exam. The curriculum maps to the IBSC CCP-C blueprint. CAPCE accreditation is in its final stage <span class="fill">[expected ___]</span>; once issued, completions auto-report as Florida recert CE through CEBroker (the credential and grant eligibility do not depend on it). Delivery format: <span class="fill">[hybrid / in-person / blended]</span>, cohort size <span class="fill">13</span>, over <span class="fill">[__]</span> weeks. Credential earned: CCP-C. Vendor packet (capability statement, Georgia accreditation, IBSC alignment letter, course outline with CEH mapping, cohort pricing, W-9) is attached."
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="h"><span class="bn">4</span><h4>Funding Source — the named grant</h4></div>
+          <div class="sample">
+            <span class="lbl">Primary — Florida EMS County Grant</span>
+            "Lee County already receives an annual EMS Trust Fund county distribution (§401.113(2)(a), F.S.) that may be spent to 'increase existing levels of EMS.' This proposal places a one-time 'Training — CCP-C tuition (MedEdPrep)' line on the county's EMS County Grant budget (Form DH 1684), funding a new critical-care transport capability rather than a recurring operating cost. There is no cash match, no competitive scoring, and no application deadline; it requires only a Board of County Commissioners resolution certifying the funds improve and expand the county pre-hospital EMS system and do not supplant current expenditures. (Precedent: Levy County funded paramedic tuition this same way.)"
+          </div>
+          <div class="sample" style="margin-top:10px">
+            <span class="lbl">Alternate — FL EMS Matching Grant (DH 1767)</span>
+            "If the County Grant is unavailable, the department applies to the Florida DOH Bureau of EMS Matching Grant (75% state / 25% department cash match), which has a dedicated training scoring track (Item 12). A licensed Lee County EMS agency is eligible, and the county's own EMS medical director signs the continuing-education affirmation (Item 9). The application will be framed on patient-outcome impact (critical-care/interfacility transport quality), which is how training projects are scored. Next window: FY2027-28, ~Q3 2026."
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="h"><span class="bn">5</span><h4>Cost-Benefit to the Department</h4></div>
+          <div class="sample">
+            <span class="lbl">Sample cost table</span>
+            • Total cohort cost: $<span class="fill">[__]</span> (MedEdPrep quote, 13 medics) + IBSC exam vouchers $<span class="fill">[__]</span><br>
+            • Less grant (County Grant: full eligible cost, no match / Matching Grant: ~75%): ($<span class="fill">[__]</span>)<br>
+            • Net department cost: $<span class="fill">[0 via County Grant / 25% via Matching]</span> + in-kind (instructor, facility, backfill)<br>
+            • Per-medic effective cost: $<span class="fill">[__]</span>
+          </div>
+          <ul class="tight">
+            <li><b>New in-house CCT-IFT staffing capability</b> — fewer outsourced high-acuity transfers</li>
+            <li><b>Potential new reimbursable</b> critical-care transport billing</li>
+            <li><b>Retention &amp; morale</b> — a funded advancement pathway keeps ambitious medics</li>
+            <li><b>CE hours that also satisfy Florida recert</b> (30 hrs biennial incl. 2 hrs pediatric) once CAPCE accreditation finalizes — medics earn the CCP-C credential <em>and</em> recert hours in one funded cohort</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <div class="h"><span class="bn">6</span><h4>The Ask — one clear sentence</h4></div>
+          <div class="sample">
+            <span class="lbl">Sample language</span>
+            "I am requesting the department's approval to (1) place a one-time CCP-C training line on our <span class="fill">[EMS County Grant budget / FL EMS Matching Grant application]</span>, (2) pursue the Board of County Commissioners resolution (or commit the 25% match from the existing training budget if the Matching Grant is used), and (3) authorize MedEdPrep as the named training vendor for a <span class="fill">13</span>-medic CCP-C cohort beginning <span class="fill">[target term]</span>. I have attached the vendor packet and a draft narrative tying the cohort to improved critical-care transport capability."
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="h"><span class="bn">7</span><h4>Attachments</h4></div>
+          <ul class="tight">
+            <li>MedEdPrep vendor / capability packet (see Section 4 below)</li>
+            <li>Draft grant narrative documenting the capability gap</li>
+            <li>Cohort roster (13 medics) and proposed schedule</li>
+            <li>Cost-benefit one-pager</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    <div class="callout info" style="margin-top:16px">
+      <span class="ic">📌</span>
+      <div><b>Note for Sam:</b> Mark any not-yet-final MedEdPrep credential (CAPCE #, SAM.gov UEI) as "in progress, expected <span class="fill">[date]</span>" rather than leaving it blank — that way the chief isn't blocked while it finalizes.</div>
+    </div>
+  </section>
+
+  <!-- MEDEDPREP CHECKLIST -->
+  <section>
+    <h2 class="sec"><span class="num">4</span> What MedEdPrep must produce to <em>be</em> the fundable program</h2>
+    <p class="sec-sub">This is the half MedEdPrep controls — and the packet is useless without it. <span style="color:var(--gold);font-weight:700">★</span> = gating asset.</p>
+    <div class="checklist">
+      <div class="ck star">
+        <div class="box"></div>
+        <div class="txt"><b>Georgia state school license + accredited CC program documentation</b> <span class="gate">The credential that makes you fundable now</span><br><span>This — not CAPCE — is what establishes MedEdPrep as a named, accredited training program for the Florida grants and the CCP-C credential pathway. Provide the GA license/accreditation number and a short description.</span></div>
+      </div>
+      <div class="ck">
+        <div class="box"></div>
+        <div class="txt"><b>CAPCE accreditation</b> <span style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase">In final stage — not a blocker</span><br><span>In its last revisions. Neither grant nor the CCP-C credential depends on it. Its specific value: once issued, completions auto-report as <b>Florida recert CE</b> via CEBroker. Mark "in progress, expected [date]" in the packet; the cohort can start without it.</span></div>
+      </div>
+      <div class="ck" style="opacity:.6">
+        <div class="box" style="border-color:var(--muted)"></div>
+        <div class="txt"><b>SAM.gov Unique Entity ID (UEI)</b> <span style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase">No longer needed</span><br><span>Was mandatory for AFG — but AFG is now ruled out. Both Florida grants are state-administered and don't require SAM.gov. Skip unless a federal path reopens.</span></div>
+      </div>
+      <div class="ck">
+        <div class="box"></div>
+        <div class="txt"><b>IBSC/BCCTPC curriculum-alignment letter</b><br><span>States the curriculum maps to the CCP-C (and optionally FP-C) exam blueprint and graduates are CCP-C exam-eligible.</span></div>
+      </div>
+      <div class="ck">
+        <div class="box"></div>
+        <div class="txt"><b>One-page capability statement</b><br><span>Company overview, SAM.gov UEI, NAICS code, core competencies, pass-rate / past-performance data if available.</span></div>
+      </div>
+      <div class="ck">
+        <div class="box"></div>
+        <div class="txt"><b>Detailed course outline with CEH mapping</b><br><span>Module-by-module contact hours mapped to Florida recert (30 hrs biennial incl. 2 hrs pediatric); note CEBroker auto-reporting begins once CAPCE finalizes.</span></div>
+      </div>
+      <div class="ck">
+        <div class="box"></div>
+        <div class="txt"><b>Cohort pricing sheet</b><br><span>Per-medic <em>and</em> volume/cohort rate (13 students); state whether the IBSC CCP-C exam voucher is bundled or quoted separately.</span></div>
+      </div>
+      <div class="ck">
+        <div class="box"></div>
+        <div class="txt"><b>Signed W-9 + proof of insurance</b><br><span>Standard vendor paperwork the department's grants/finance office will require.</span></div>
+      </div>
+      <div class="ck">
+        <div class="box"></div>
+        <div class="txt"><b>Bundle into one turnkey vendor packet</b><br><span>So the department can paste it straight into the application. Mark any pending items (CAPCE #, UEI) "in progress, expected [date]."</span></div>
+      </div>
+    </div>
+    <div class="callout info" style="margin-top:16px">
+      <span class="ic">✓</span>
+      <div><b>Don't block on the Florida ETPL.</b> It's <b>not required</b> for AFG, the FL Matching Grant, or IWT/OJT — the relevant lanes here. Pursue State ETPL listing only as a long-term play for individual WIOA-funded learners; the ~2-year Florida operating-history requirement makes it slow for a young Georgia-based company.</div>
+    </div>
+  </section>
+
+  <!-- OPEN QUESTIONS -->
+  <section>
+    <h2 class="sec"><span class="num">5</span> Open questions — who has to confirm</h2>
+    <p class="sec-sub">The three eligibility unknowns have now been researched and resolved <span style="color:var(--good);font-weight:700">✓</span>. What remains is internal-to-Lee-County confirmation plus one DOH email.</p>
+
+    <div class="q" style="border-left:4px solid var(--good)">
+      <div class="who" style="color:var(--good)">✓ RESOLVED — FL DOH County &amp; Matching Grants</div>
+      <p><b>Both fund training.</b> The EMS County Grant can carry a CCP-C tuition line (Florida precedent: Levy County). The Matching Grant has a dedicated training scoring track (Item 12); county EMS is an eligible applicant; 75/25 cash match; the county's own medical director signs. Only open item: one email to confirm the "one-time enhancement vs. ongoing cost" call on the County Grant and pin the FY2027-28 Matching window.</p>
+    </div>
+    <div class="q" style="border-left:4px solid var(--bad)">
+      <div class="who" style="color:var(--bad)">✕ RESOLVED — FEMA AFG: not eligible</div>
+      <p>AFG's applicant definition requires fire-based or <b>nonprofit</b> EMS and excludes "local agencies / subsets of a governmental entity." A county-government third-service EMS division is neither. CCP training <em>cost</em> was eligible; the <em>applicant</em> is not. Removed from the plan. (Only theoretical workaround: a Lee County <b>fire-based</b> agency applies and includes county medics where permissible — not worth pursuing as primary.)</p>
+    </div>
+    <div class="q" style="border-left:4px solid var(--bad)">
+      <div class="who" style="color:var(--bad)">✕ RESOLVED — CareerSource / WIOA: not eligible</div>
+      <p>Triple-blocked: Florida IWT guidelines expressly exclude "county governmental entities"; cert/exam-prep and test fees are disallowed costs; and ITA funding would require MedEdPrep on the FL ETPL (≈2-yr in-state operating history, which a young Georgia company can't meet). Removed from the plan.</p>
+    </div>
+    <div class="q">
+      <div class="who">→ Action · FL DOH EMS Grants · EMSGrants@FLHealth.gov</div>
+      <p>The one email (see Section 2): County-Grant "enhancement vs. ongoing cost" confirmation for a one-time CCP-C cohort, and the FY2027-28 Matching Grant open/postmark dates.</p>
+    </div>
+    <div class="q">
+      <div class="who">→ Internal · Lee County EMS Chief / HR</div>
+      <p>Can a slice of the county's EMS Trust Fund distribution be earmarked for the cohort, and is a reusable BCC resolution on file? Separately: HR Policy 211 education-reimbursement cap, whether CCP books as in-service training, and how much can serve as the 25% Matching-Grant match.</p>
+    </div>
+    <div class="q">
+      <div class="who">→ MedEdPrep · internal</div>
+      <p>Georgia school license / accreditation number for the CC program — this is the "named accredited program" basis and is available now. CAPCE expected issue date (for the Florida CE-recert auto-reporting sweetener, not a gate). SAM.gov UEI is <b>not needed</b> — both Florida grants are state-administered.</p>
+    </div>
+    <div class="q">
+      <div class="who">→ Cohort logistics</div>
+      <p>13 medics, single-agency (clean — all Lee County EMS), target start term, and the current IBSC CCP-C exam voucher fee (bundled in MedEdPrep pricing vs. separate).</p>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    MedEdPrep · Funding Strategy Brief · Generated June 19, 2026 · For internal planning use<br>
+    All grant names, dates, and eligibility points should be confirmed with the issuing agency before submission.
+  </div>
+</footer>
+
+</body>
+</html>

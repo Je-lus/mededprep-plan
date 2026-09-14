@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pulse CE - Checkout</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#36C98D',
+                            hover: '#2DB87E'
+                        },
+                        background: '#0A0A0A',
+                        surface: {
+                            DEFAULT: '#111111',
+                            elevated: '#1A1A1A',
+                            hover: '#1F1F1F'
+                        },
+                        border: {
+                            subtle: 'rgba(255,255,255,0.08)',
+                            DEFAULT: 'rgba(255,255,255,0.12)',
+                            strong: 'rgba(255,255,255,0.2)'
+                        },
+                        text: {
+                            primary: '#FFFFFF',
+                            secondary: 'rgba(255,255,255,0.7)',
+                            tertiary: 'rgba(255,255,255,0.45)'
+                        },
+                        error: '#E5484D',
+                        warning: '#F5A623'
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter", "sans-serif"],
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(54,201,141,0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A;
+            color: #FFFFFF;
+            -webkit-font-smoothing: antialiased;
+        }
+        .bg-gradient-auth {
+            background: linear-gradient(135deg, #0A0A0A 0%, #0D1A12 50%, #0F3D26 75%, #36C98D 100%);
+            position: relative;
+        }
+        .bg-gradient-auth::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            pointer-events: none;
+        }
+        /* Mobile container restriction for preview */
+        .mobile-container {
+            max-width: 390px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background-color: #0A0A0A;
+            position: relative;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body class="bg-[#0A0A0A] flex justify-center min-h-screen">
+<div class="mobile-container w-full shadow-2xl flex flex-col">
+<!-- TopAppBar (from JSON) -->
+<header class="fixed top-0 w-full max-w-[390px] z-50 border-b border-white/10 bg-[rgba(10,10,10,0.85)] backdrop-blur-md h-[56px] flex items-center justify-between px-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-hover transition-colors active:scale-95 text-text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline font-semibold tracking-tight text-[16px] text-text-primary">Checkout</h1>
+<div class="w-10 h-10 flex items-center justify-center">
+<img alt="Pulse CE Logo" class="w-6 h-6 object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uiQuAMb-iPTR_teZtBbpKcjDXlkM3Bcp-UIgLeUUjUEF2W65wSPHVBpP3pJjeWAY99AvnhOqGgxUtccEez9Q_aKHcqrEifRFTh2nLLWFS6AqP6tvBEQ7Yf3QZCRVq_Z-wylzBiSmdPSZqxaOFU18n0RkBJ7ACE0Xhj44fyX-BQLkAhW9i0rnv9faoWKmBq24bp11kDJVtpSHiQLQSir6Yu_hQBp5OAGk2JX54sCzayhCS6WnsJEI3hXwS7Z"/>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 mt-[56px] pb-safe px-4 py-6 space-y-6">
+<!-- Order Summary Section (Collapsible) -->
+<section class="bg-surface rounded-lg border border-border p-4">
+<!-- Header / Toggle -->
+<button class="w-full flex items-center justify-between outline-none" id="orderSummaryToggle">
+<div class="flex items-center gap-2">
+<span class="font-semibold text-[15px] text-text-primary">Order Summary</span>
+<span class="material-symbols-outlined text-text-secondary transition-transform duration-200" id="chevronIcon">expand_more</span>
+</div>
+<span class="font-bold text-[16px] text-text-primary">$29.99</span>
+</button>
+<!-- Expanded Content (Hidden by default) -->
+<div class="hidden mt-4 pt-4 border-t border-border-subtle space-y-4" id="orderSummaryContent">
+<div class="flex items-start justify-between">
+<div>
+<p class="font-medium text-[14px] text-text-primary">ACLS Review</p>
+<span class="inline-block mt-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[11px] font-semibold tracking-wide uppercase">2.0 CEH</span>
+</div>
+<span class="text-[14px] text-text-secondary">$34.99</span>
+</div>
+<div class="flex justify-between items-center text-[14px]">
+<span class="text-text-secondary">Subtotal</span>
+<span class="text-text-primary">$34.99</span>
+</div>
+<div class="flex justify-between items-center text-[14px]">
+<span class="text-text-secondary">Discount (FIRSTCE)</span>
+<span class="text-primary">-$5.00</span>
+</div>
+<div class="flex justify-between items-center text-[16px] font-bold border-t border-border-subtle pt-3">
+<span class="text-text-primary">Total</span>
+<span class="text-text-primary">$29.99</span>
+</div>
+</div>
+</section>
+<!-- Form Section -->
+<section class="space-y-6">
+<!-- 1. Contact -->
+<div class="space-y-3">
+<h2 class="font-headline font-semibold text-[16px] text-text-primary">Contact</h2>
+<div class="relative">
+<input class="w-full h-[48px] bg-surface-elevated border border-border rounded-lg px-4 text-[14px] text-text-primary focus:outline-none focus:border-primary/50" readonly="" type="email" value="sarah.chen@fdny.gov"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-primary text-[20px]">check_circle</span>
+</div>
+<p class="text-primary text-[12px] font-medium">Logged in as Sarah Chen</p>
+</div>
+<!-- 2. Payment -->
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<h2 class="font-headline font-semibold text-[16px] text-text-primary">Payment</h2>
+<div class="flex items-center gap-1 text-text-tertiary">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span class="text-[12px] font-medium">Secured by Stripe</span>
+</div>
+</div>
+<div class="space-y-2">
+<!-- Card Number -->
+<div class="relative">
+<input class="w-full h-[48px] bg-surface-elevated border border-border rounded-lg px-4 text-[14px] text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-primary/50 transition-colors" placeholder="Card number" type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-text-tertiary">credit_card</span>
+</div>
+<!-- Expiry and CVC -->
+<div class="flex gap-2">
+<input class="w-1/2 h-[48px] bg-surface-elevated border border-border rounded-lg px-4 text-[14px] text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-primary/50 transition-colors" placeholder="MM / YY" type="text"/>
+<input class="w-1/2 h-[48px] bg-surface-elevated border border-border rounded-lg px-4 text-[14px] text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-primary/50 transition-colors" placeholder="CVC" type="text"/>
+</div>
+</div>
+</div>
+<!-- 3. Coupon -->
+<div>
+<button class="text-primary text-[14px] font-medium hover:text-primary-hover transition-colors">Have a coupon?</button>
+<!-- Applied State (visible as requested) -->
+<div class="mt-2 inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-3 py-1.5">
+<span class="text-primary text-[12px] font-semibold tracking-wide">FIRSTCE -$5.00</span>
+<button class="text-primary hover:text-primary-hover w-4 h-4 flex items-center justify-center rounded-full">
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+</div>
+</div>
+<!-- 4. Benefits -->
+<div class="bg-surface rounded-lg border border-border p-4">
+<ul class="grid grid-cols-2 gap-y-3 gap-x-2">
+<li class="flex items-center gap-2 text-[12px] text-text-secondary">
+<span class="material-symbols-outlined text-primary text-[16px]">check</span>
+                            CAPCE-accredited
+                        </li>
+<li class="flex items-center gap-2 text-[12px] text-text-secondary">
+<span class="material-symbols-outlined text-primary text-[16px]">check</span>
+                            Adaptive learning
+                        </li>
+<li class="flex items-center gap-2 text-[12px] text-text-secondary">
+<span class="material-symbols-outlined text-primary text-[16px]">check</span>
+                            Diagnostic report
+                        </li>
+<li class="flex items-center gap-2 text-[12px] text-text-secondary">
+<span class="material-symbols-outlined text-primary text-[16px]">check</span>
+                            Certificate
+                        </li>
+</ul>
+</div>
+<!-- 5. Pay Button & Guarantee -->
+<div class="pt-4 pb-8 space-y-4">
+<button class="w-full h-[52px] bg-primary text-[#0A0A0A] font-semibold text-[16px] rounded-lg flex items-center justify-center gap-2 shadow-glow hover:bg-primary-hover active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+                        Pay $29.99
+                    </button>
+<div class="flex items-center justify-center gap-1.5 text-text-tertiary">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+<span class="text-[12px] font-medium">30-day money-back guarantee</span>
+</div>
+</div>
+</section>
+</main>
+</div>
+<script>
+        // Simple toggle for Order Summary
+        const toggleBtn = document.getElementById('orderSummaryToggle');
+        const content = document.getElementById('orderSummaryContent');
+        const icon = document.getElementById('chevronIcon');
+
+        toggleBtn.addEventListener('click', () => {
+            content.classList.toggle('hidden');
+            if(content.classList.contains('hidden')) {
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                icon.style.transform = 'rotate(180deg)';
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Management | Pulse CE Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+    body { background-color: #0A0A0A; color: rgba(255,255,255,0.87); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .pulse-glow { box-shadow: 0 0 15px rgba(54, 201, 141, 0.15); }
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 10px; }
+</style>
+<script>
+    tailwind.config = { darkMode: "class", theme: { extend: { fontFamily: { "sans": ["Inter"], "mono": ["JetBrains Mono"] } } } }
+</script>
+</head>
+<body class="flex min-h-screen overflow-hidden">
+
+<!-- ====== SIDEBAR ====== -->
+<aside class="fixed left-0 top-0 h-full w-[240px] bg-[#0e0e0e] border-r border-[rgba(255,255,255,0.06)] flex flex-col z-50">
+    <div class="p-5 pb-4">
+        <div class="flex items-center gap-2.5 mb-6">
+            <div class="w-8 h-8 rounded-lg bg-[#36C98D] flex items-center justify-center"><span class="material-symbols-outlined text-[18px] text-[#0A0A0A]">favorite</span></div>
+            <div><div class="text-[15px] font-bold text-[rgba(255,255,255,0.87)] leading-none">Pulse CE</div><div class="text-[9px] font-semibold text-[#36C98D] uppercase tracking-[0.1em] mt-0.5">Platform Admin</div></div>
+        </div>
+        <nav class="space-y-0.5">
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="58-platform-dashboard.html"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="59-course-management.html"><span class="material-symbols-outlined text-[20px]">school</span>Courses</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="60-course-editor.html"><span class="material-symbols-outlined text-[20px]">edit_note</span>Course Editor</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="61-item-bank.html"><span class="material-symbols-outlined text-[20px]">database</span>Item Bank</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#36C98D] bg-[rgba(54,201,141,0.08)] border-l-2 border-[#36C98D] text-[13px] font-medium transition-colors" href="62-user-management.html"><span class="material-symbols-outlined text-[20px]">group</span>Users</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="63-agency-management.html"><span class="material-symbols-outlined text-[20px]">corporate_fare</span>Agencies</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="64-analytics-dashboard.html"><span class="material-symbols-outlined text-[20px]">analytics</span>Analytics</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="65-capce-reporting.html"><span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>CAPCE</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="66-content-pipeline.html"><span class="material-symbols-outlined text-[20px]">account_tree</span>Content Pipeline</a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="67-financial-reports.html"><span class="material-symbols-outlined text-[20px]">payments</span>Financial</a>
+        </nav>
+    </div>
+    <div class="mt-auto p-4 border-t border-[rgba(255,255,255,0.06)]">
+        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[rgba(255,255,255,0.87)] text-[13px] transition-colors" href="../batch-3-auth-onboarding/16-login-desktop.html"><span class="material-symbols-outlined text-[20px]">logout</span>Logout</a>
+        <div class="flex items-center gap-3 mt-3 p-2 rounded-[12px] bg-[#111111]">
+            <div class="w-8 h-8 rounded-full bg-[rgba(54,201,141,0.15)] flex items-center justify-center text-[#36C98D] text-[11px] font-bold flex-shrink-0">PA</div>
+            <div class="overflow-hidden"><p class="text-[12px] font-medium text-[rgba(255,255,255,0.87)] truncate">Admin User</p><p class="text-[10px] text-[rgba(255,255,255,0.4)] truncate">admin@pulsece.com</p></div>
+        </div>
+    </div>
+</aside>
+
+<!-- ====== MAIN ====== -->
+<main class="ml-[240px] w-[calc(100%-240px)] flex flex-col h-screen overflow-y-auto custom-scrollbar">
+    <header class="flex justify-between items-center w-full px-8 h-14 bg-[#111111] border-b border-[rgba(255,255,255,0.06)] sticky top-0 z-40">
+        <div class="flex items-center gap-3">
+            <h1 class="text-[15px] font-semibold text-[rgba(255,255,255,0.87)]">User Management</h1>
+            <span class="text-[12px] text-[rgba(255,255,255,0.4)]">/</span>
+            <span class="text-[12px] text-[rgba(255,255,255,0.4)]">All Users</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="relative">
+                <span class="material-symbols-outlined text-[rgba(255,255,255,0.6)] text-[20px] cursor-pointer hover:text-[rgba(255,255,255,0.87)] transition-colors">notifications</span>
+                <span class="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#36C98D] rounded-full border border-[#111111]"></span>
+            </div>
+            <button class="bg-[#36C98D] text-[#0A0A0A] px-4 py-1.5 rounded-lg text-[12px] font-bold flex items-center gap-1.5 pulse-glow hover:brightness-110 transition-all">
+                <span class="material-symbols-outlined text-[16px]">person_add</span>Add User
+            </button>
+        </div>
+    </header>
+
+    <div class="p-8 space-y-6 max-w-[1600px] mx-auto w-full">
+        <div class="flex justify-between items-end">
+            <div>
+                <h2 class="text-[24px] font-extrabold tracking-tight text-[rgba(255,255,255,0.87)] mb-1">User Management</h2>
+                <p class="text-[rgba(255,255,255,0.6)] text-[14px]">2,847 registered users &middot; 1,204 active in last 30 days</p>
+            </div>
+            <div class="flex gap-2">
+                <button class="px-4 py-1.5 border border-[rgba(255,255,255,0.1)] rounded-lg text-[13px] font-medium text-[rgba(255,255,255,0.87)] hover:bg-[rgba(255,255,255,0.04)] transition-colors flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">upload</span>Bulk Import</button>
+                <button class="px-4 py-1.5 border border-[rgba(255,255,255,0.1)] rounded-lg text-[13px] font-medium text-[rgba(255,255,255,0.87)] hover:bg-[rgba(255,255,255,0.04)] transition-colors flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">file_download</span>Export</button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-5 gap-4">
+            <div class="bg-[#111111] p-4 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <p class="text-[rgba(255,255,255,0.4)] text-[10px] font-medium uppercase tracking-wider mb-1">Total Users</p>
+                <h3 class="text-[22px] font-bold">2,847</h3>
+                <span class="text-[#36C98D] text-[10px] font-bold">+12% <span class="text-[rgba(255,255,255,0.4)]">vs last mo</span></span>
+            </div>
+            <div class="bg-[#111111] p-4 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <p class="text-[rgba(255,255,255,0.4)] text-[10px] font-medium uppercase tracking-wider mb-1">Active (30d)</p>
+                <h3 class="text-[22px] font-bold text-[#36C98D]">1,204</h3>
+                <span class="text-[10px] text-[rgba(255,255,255,0.4)]">42.3% of total</span>
+            </div>
+            <div class="bg-[#111111] p-4 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <p class="text-[rgba(255,255,255,0.4)] text-[10px] font-medium uppercase tracking-wider mb-1">Agency Users</p>
+                <h3 class="text-[22px] font-bold">1,892</h3>
+                <span class="text-[10px] text-[rgba(255,255,255,0.4)]">66.4% affiliated</span>
+            </div>
+            <div class="bg-[#111111] p-4 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <p class="text-[rgba(255,255,255,0.4)] text-[10px] font-medium uppercase tracking-wider mb-1">Subscribers</p>
+                <h3 class="text-[22px] font-bold">634</h3>
+                <span class="text-[10px] text-[rgba(255,255,255,0.4)]">22.3% conversion</span>
+            </div>
+            <div class="bg-[#111111] p-4 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <p class="text-[rgba(255,255,255,0.4)] text-[10px] font-medium uppercase tracking-wider mb-1">Suspended</p>
+                <h3 class="text-[22px] font-bold text-[#ffb4ab]">8</h3>
+                <span class="text-[10px] text-[rgba(255,255,255,0.4)]">Pending review</span>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="border-b border-[rgba(255,255,255,0.06)] flex gap-0">
+            <button class="px-5 py-3 text-[#36C98D] border-b-2 border-[#36C98D] font-medium text-[12px]">All Users</button>
+            <button class="px-5 py-3 text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] text-[12px] transition-colors">Learners</button>
+            <button class="px-5 py-3 text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] text-[12px] transition-colors">Instructors</button>
+            <button class="px-5 py-3 text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] text-[12px] transition-colors">Agency Admins</button>
+            <button class="px-5 py-3 text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] text-[12px] transition-colors">Platform Admins</button>
+            <button class="px-5 py-3 text-[rgba(255,255,255,0.6)] hover:text-[rgba(255,255,255,0.87)] text-[12px] transition-colors relative">Suspended<span class="absolute -top-0.5 -right-1 w-4 h-4 bg-[#ffb4ab] text-[8px] text-[#0A0A0A] rounded-full flex items-center justify-center font-bold">8</span></button>
+        </div>
+
+        <!-- Filters -->
+        <div class="flex gap-3 items-center flex-wrap">
+            <select class="bg-[#0e0e0e] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-1.5 text-[12px] text-[rgba(255,255,255,0.87)] focus:border-[rgba(54,201,141,0.5)] focus:ring-0 outline-none"><option>All Roles</option><option>Learner</option><option>Instructor</option><option>Agency Admin</option><option>Platform Admin</option></select>
+            <select class="bg-[#0e0e0e] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-1.5 text-[12px] text-[rgba(255,255,255,0.87)] focus:border-[rgba(54,201,141,0.5)] focus:ring-0 outline-none"><option>All Status</option><option>Active</option><option>Inactive (90d+)</option><option>Suspended</option></select>
+            <select class="bg-[#0e0e0e] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-1.5 text-[12px] text-[rgba(255,255,255,0.87)] focus:border-[rgba(54,201,141,0.5)] focus:ring-0 outline-none"><option>All Agencies</option><option>Metro Fire Rescue</option><option>Valley EMS</option><option>Coastal Ambulance</option></select>
+            <select class="bg-[#0e0e0e] border border-[rgba(255,255,255,0.1)] rounded-lg px-3 py-1.5 text-[12px] text-[rgba(255,255,255,0.87)] focus:border-[rgba(54,201,141,0.5)] focus:ring-0 outline-none"><option>All Cert Levels</option><option>EMT-Basic</option><option>AEMT</option><option>Paramedic</option></select>
+            <div class="ml-auto text-[11px] text-[rgba(255,255,255,0.4)]">Showing <span class="text-[rgba(255,255,255,0.87)] font-medium">1&ndash;25</span> of <span class="text-[rgba(255,255,255,0.87)] font-medium">2,847</span></div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="bg-[#111111] rounded-[12px] border border-[rgba(255,255,255,0.06)] overflow-hidden">
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="border-b border-[rgba(255,255,255,0.06)] text-[10px] uppercase tracking-wider text-[rgba(255,255,255,0.4)]">
+                        <th class="px-4 py-3 font-medium w-[36px]"><input type="checkbox" class="rounded border-[rgba(255,255,255,0.2)] bg-transparent text-[#36C98D] focus:ring-[rgba(54,201,141,0.5)] w-3.5 h-3.5"/></th>
+                        <th class="px-4 py-3 font-medium">User</th>
+                        <th class="px-4 py-3 font-medium w-[90px]">Role</th>
+                        <th class="px-4 py-3 font-medium w-[110px]">Agency</th>
+                        <th class="px-4 py-3 font-medium w-[80px]">Cert Level</th>
+                        <th class="px-4 py-3 font-medium w-[60px] text-center">Courses</th>
+                        <th class="px-4 py-3 font-medium w-[50px] text-center">CEH</th>
+                        <th class="px-4 py-3 font-medium w-[90px]">Last Active</th>
+                        <th class="px-4 py-3 font-medium w-[70px]">Status</th>
+                        <th class="px-4 py-3 font-medium w-[40px]"></th>
+                    </tr>
+                </thead>
+                <tbody class="text-[12px]">
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3"><input type="checkbox" class="rounded border-[rgba(255,255,255,0.2)] bg-transparent text-[#36C98D] focus:ring-[rgba(54,201,141,0.5)] w-3.5 h-3.5"/></td>
+                        <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-[rgba(54,201,141,0.1)] flex items-center justify-center text-[#36C98D] text-[11px] font-bold flex-shrink-0">JC</div><div><p class="font-medium">James Cooper</p><p class="text-[10px] text-[rgba(255,255,255,0.4)]">james.cooper@email.com</p></div></div></td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full">Learner</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px]">Metro Fire Rescue</td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px]">Paramedic</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">12</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">18.5</td>
+                        <td class="px-4 py-3 text-[11px] text-[rgba(255,255,255,0.4)]">2 min ago</td>
+                        <td class="px-4 py-3"><span class="w-2 h-2 bg-[#36C98D] rounded-full inline-block mr-1"></span><span class="text-[10px] text-[rgba(255,255,255,0.6)]">Online</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3"><input type="checkbox" class="rounded border-[rgba(255,255,255,0.2)] bg-transparent text-[#36C98D] focus:ring-[rgba(54,201,141,0.5)] w-3.5 h-3.5"/></td>
+                        <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400 text-[11px] font-bold flex-shrink-0">SR</div><div><p class="font-medium">Sarah Rodriguez</p><p class="text-[10px] text-[rgba(255,255,255,0.4)]">s.rodriguez@valleyems.org</p></div></div></td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded-full">Instructor</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px]">Valley EMS</td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px]">Paramedic</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">8</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">24.0</td>
+                        <td class="px-4 py-3 text-[11px] text-[rgba(255,255,255,0.4)]">1 hour ago</td>
+                        <td class="px-4 py-3"><span class="w-2 h-2 bg-[#36C98D] rounded-full inline-block mr-1"></span><span class="text-[10px] text-[rgba(255,255,255,0.6)]">Active</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3"><input type="checkbox" class="rounded border-[rgba(255,255,255,0.2)] bg-transparent text-[#36C98D] focus:ring-[rgba(54,201,141,0.5)] w-3.5 h-3.5"/></td>
+                        <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 text-[11px] font-bold flex-shrink-0">MJ</div><div><p class="font-medium">Michael Johnson</p><p class="text-[10px] text-[rgba(255,255,255,0.4)]">m.johnson@coastalambulance.com</p></div></div></td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-full">Agency Admin</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px]">Coastal Ambulance</td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px]">AEMT</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">5</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">7.5</td>
+                        <td class="px-4 py-3 text-[11px] text-[rgba(255,255,255,0.4)]">3 hours ago</td>
+                        <td class="px-4 py-3"><span class="w-2 h-2 bg-[#36C98D] rounded-full inline-block mr-1"></span><span class="text-[10px] text-[rgba(255,255,255,0.6)]">Active</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3"><input type="checkbox" class="rounded border-[rgba(255,255,255,0.2)] bg-transparent text-[#36C98D] focus:ring-[rgba(54,201,141,0.5)] w-3.5 h-3.5"/></td>
+                        <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400 text-[11px] font-bold flex-shrink-0">LD</div><div><p class="font-medium">Lisa Davis</p><p class="text-[10px] text-[rgba(255,255,255,0.4)]">l.davis@email.com</p></div></div></td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full">Learner</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px] italic">Unaffiliated</td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px]">EMT-Basic</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">3</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">4.5</td>
+                        <td class="px-4 py-3 text-[11px] text-[rgba(255,255,255,0.4)]">Yesterday</td>
+                        <td class="px-4 py-3"><span class="w-2 h-2 bg-[#36C98D] rounded-full inline-block mr-1"></span><span class="text-[10px] text-[rgba(255,255,255,0.6)]">Active</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3"><input type="checkbox" class="rounded border-[rgba(255,255,255,0.2)] bg-transparent text-[#36C98D] focus:ring-[rgba(54,201,141,0.5)] w-3.5 h-3.5"/></td>
+                        <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-[rgba(54,201,141,0.1)] flex items-center justify-center text-[#36C98D] text-[11px] font-bold flex-shrink-0">RW</div><div><p class="font-medium">Robert Williams</p><p class="text-[10px] text-[rgba(255,255,255,0.4)]">r.williams@summithealthsvc.com</p></div></div></td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full">Learner</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px]">Summit Health Svc</td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px]">Paramedic</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">15</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">22.5</td>
+                        <td class="px-4 py-3 text-[11px] text-[rgba(255,255,255,0.4)]">2 days ago</td>
+                        <td class="px-4 py-3"><span class="w-2 h-2 bg-[rgba(255,255,255,0.2)] rounded-full inline-block mr-1"></span><span class="text-[10px] text-[rgba(255,255,255,0.4)]">Inactive</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3"><input type="checkbox" class="rounded border-[rgba(255,255,255,0.2)] bg-transparent text-[#36C98D] focus:ring-[rgba(54,201,141,0.5)] w-3.5 h-3.5"/></td>
+                        <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center text-red-400 text-[11px] font-bold flex-shrink-0">AP</div><div><p class="font-medium">Amanda Patel</p><p class="text-[10px] text-[rgba(255,255,255,0.4)]">a.patel@metrofire.gov</p></div></div></td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-red-500/10 text-red-400 px-2 py-0.5 rounded-full">Plt. Admin</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px]">Metro Fire Rescue</td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px]">RN</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">&mdash;</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">&mdash;</td>
+                        <td class="px-4 py-3 text-[11px] text-[rgba(255,255,255,0.4)]">5 min ago</td>
+                        <td class="px-4 py-3"><span class="w-2 h-2 bg-[#36C98D] rounded-full inline-block mr-1"></span><span class="text-[10px] text-[rgba(255,255,255,0.6)]">Online</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="border-b border-[rgba(255,255,255,0.03)] hover:bg-[rgba(255,255,255,0.02)] transition-colors bg-[rgba(255,180,171,0.02)]">
+                        <td class="px-4 py-3"><input type="checkbox" class="rounded border-[rgba(255,255,255,0.2)] bg-transparent text-[#36C98D] focus:ring-[rgba(54,201,141,0.5)] w-3.5 h-3.5"/></td>
+                        <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-[rgba(255,180,171,0.1)] flex items-center justify-center text-[#ffb4ab] text-[11px] font-bold flex-shrink-0">TN</div><div><p class="font-medium">Tyler Nguyen</p><p class="text-[10px] text-[rgba(255,255,255,0.4)]">t.nguyen@email.com</p></div></div></td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full">Learner</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px] italic">Unaffiliated</td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px]">EMT-Basic</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">1</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">0.0</td>
+                        <td class="px-4 py-3 text-[11px] text-[rgba(255,255,255,0.4)]">14 days ago</td>
+                        <td class="px-4 py-3"><span class="w-2 h-2 bg-[#ffb4ab] rounded-full inline-block mr-1"></span><span class="text-[10px] text-[#ffb4ab]">Suspended</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                    <tr class="hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                        <td class="px-4 py-3"><input type="checkbox" class="rounded border-[rgba(255,255,255,0.2)] bg-transparent text-[#36C98D] focus:ring-[rgba(54,201,141,0.5)] w-3.5 h-3.5"/></td>
+                        <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-[rgba(54,201,141,0.1)] flex items-center justify-center text-[#36C98D] text-[11px] font-bold flex-shrink-0">KM</div><div><p class="font-medium">Karen Martinez</p><p class="text-[10px] text-[rgba(255,255,255,0.4)]">k.martinez@valleyems.org</p></div></div></td>
+                        <td class="px-4 py-3"><span class="text-[10px] bg-[rgba(54,201,141,0.1)] text-[#36C98D] px-2 py-0.5 rounded-full">Learner</span></td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px]">Valley EMS</td>
+                        <td class="px-4 py-3 text-[rgba(255,255,255,0.6)] text-[11px]">AEMT</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">9</td>
+                        <td class="px-4 py-3 text-center font-mono text-[10px]">13.5</td>
+                        <td class="px-4 py-3 text-[11px] text-[rgba(255,255,255,0.4)]">Today, 8:14am</td>
+                        <td class="px-4 py-3"><span class="w-2 h-2 bg-[#36C98D] rounded-full inline-block mr-1"></span><span class="text-[10px] text-[rgba(255,255,255,0.6)]">Active</span></td>
+                        <td class="px-4 py-3"><button class="text-[rgba(255,255,255,0.4)] hover:text-[rgba(255,255,255,0.87)]"><span class="material-symbols-outlined text-[16px]">more_vert</span></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <p class="text-[11px] text-[rgba(255,255,255,0.4)]">Page 1 of 114</p>
+                <span class="text-[10px] text-[rgba(255,255,255,0.2)]">|</span>
+                <button class="text-[11px] text-[#36C98D] hover:underline">Select all 2,847</button>
+            </div>
+            <div class="flex gap-1">
+                <button class="px-3 py-1.5 bg-[rgba(54,201,141,0.1)] text-[#36C98D] rounded text-[11px] font-bold">1</button>
+                <button class="px-3 py-1.5 text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] rounded text-[11px]">2</button>
+                <button class="px-3 py-1.5 text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] rounded text-[11px]">3</button>
+                <span class="px-2 py-1.5 text-[rgba(255,255,255,0.4)] text-[11px]">...</span>
+                <button class="px-3 py-1.5 text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] rounded text-[11px]">114</button>
+                <button class="px-3 py-1.5 text-[rgba(255,255,255,0.6)] hover:bg-[rgba(255,255,255,0.04)] rounded text-[11px] flex items-center gap-1">Next <span class="material-symbols-outlined text-[14px]">chevron_right</span></button>
+            </div>
+        </div>
+
+        <!-- Bottom Cards -->
+        <div class="grid grid-cols-3 gap-5">
+            <div class="bg-[#111111] p-6 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <h4 class="text-[16px] font-semibold mb-4">Role Distribution</h4>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 bg-[#36C98D] rounded-full"></span><span class="text-[11px] text-[rgba(255,255,255,0.6)]">Learners</span></div><span class="font-mono text-[11px] font-medium">2,198</span></div>
+                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 bg-amber-400 rounded-full"></span><span class="text-[11px] text-[rgba(255,255,255,0.6)]">Instructors</span></div><span class="font-mono text-[11px] font-medium">412</span></div>
+                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 bg-blue-400 rounded-full"></span><span class="text-[11px] text-[rgba(255,255,255,0.6)]">Agency Admins</span></div><span class="font-mono text-[11px] font-medium">224</span></div>
+                    <div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 bg-red-400 rounded-full"></span><span class="text-[11px] text-[rgba(255,255,255,0.6)]">Platform Admins</span></div><span class="font-mono text-[11px] font-medium">13</span></div>
+                </div>
+            </div>
+            <div class="bg-[#111111] p-6 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <h4 class="text-[16px] font-semibold mb-4">New Registrations</h4>
+                <div class="h-[100px] flex items-end gap-2">
+                    <div class="flex-1 bg-[rgba(54,201,141,0.2)] rounded-t-sm" style="height:40%"></div>
+                    <div class="flex-1 bg-[rgba(54,201,141,0.3)] rounded-t-sm" style="height:55%"></div>
+                    <div class="flex-1 bg-[rgba(54,201,141,0.4)] rounded-t-sm" style="height:50%"></div>
+                    <div class="flex-1 bg-[rgba(54,201,141,0.5)] rounded-t-sm" style="height:65%"></div>
+                    <div class="flex-1 bg-[rgba(54,201,141,0.6)] rounded-t-sm" style="height:80%"></div>
+                    <div class="flex-1 bg-[rgba(54,201,141,0.8)] rounded-t-sm" style="height:72%"></div>
+                    <div class="flex-1 bg-[#36C98D] rounded-t-sm pulse-glow" style="height:100%"></div>
+                </div>
+                <div class="flex justify-between mt-2"><span class="text-[9px] text-[rgba(255,255,255,0.4)]">6 wk ago</span><span class="text-[9px] text-[rgba(255,255,255,0.4)]">This wk</span></div>
+            </div>
+            <div class="bg-[#111111] p-6 rounded-[12px] border border-[rgba(255,255,255,0.06)]">
+                <h4 class="text-[16px] font-semibold mb-4">Recent Activity</h4>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#36C98D] text-[14px]">person_add</span><div class="flex-1"><p class="text-[11px]">James Cooper registered</p><p class="text-[9px] text-[rgba(255,255,255,0.4)]">2 min ago</p></div></div>
+                    <div class="flex items-center gap-3"><span class="material-symbols-outlined text-amber-400 text-[14px]">swap_horiz</span><div class="flex-1"><p class="text-[11px]">Role changed: S. Rodriguez &rarr; Instructor</p><p class="text-[9px] text-[rgba(255,255,255,0.4)]">45 min ago</p></div></div>
+                    <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#ffb4ab] text-[14px]">block</span><div class="flex-1"><p class="text-[11px]">T. Nguyen suspended (policy violation)</p><p class="text-[9px] text-[rgba(255,255,255,0.4)]">2 hours ago</p></div></div>
+                    <div class="flex items-center gap-3"><span class="material-symbols-outlined text-blue-400 text-[14px]">corporate_fare</span><div class="flex-1"><p class="text-[11px]">Bulk import: 24 users (Valley EMS)</p><p class="text-[9px] text-[rgba(255,255,255,0.4)]">Yesterday</p></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

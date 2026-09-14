@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedEdPrep — Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0e14;
+    --bg-surface: #111820;
+    --bg-card: #151c25;
+    --bg-card-hover: #1a2331;
+    --bg-elevated: #1e2733;
+    --border: #243040;
+    --border-subtle: #1c2535;
+    --text-primary: #e8edf4;
+    --text-secondary: #8899aa;
+    --text-muted: #5a6a7a;
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+    --teal-glow: rgba(45,212,191,0.06);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.12);
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.12);
+    --orange: #fb923c;
+    --orange-dim: rgba(251,146,60,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.12);
+    --nav-width: 240px;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg-base);
+    background-image: radial-gradient(circle at 1px 1px, rgba(45,212,191,0.02) 1px, transparent 0);
+    background-size: 40px 40px;
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--purple), var(--blue), var(--teal));
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+    z-index: 200;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    width: var(--nav-width);
+    min-width: var(--nav-width);
+    background: rgba(17,24,32,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  nav::-webkit-scrollbar { width: 0; }
+
+  .nav-brand {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .nav-brand-name {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--teal), #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-brand-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links { flex: 1; padding: 4px 0; }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    position: relative;
+  }
+  nav a:hover {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.04);
+    border-left-color: var(--teal);
+  }
+  nav a.active {
+    color: var(--text-primary);
+    background: rgba(45,212,191,0.06);
+    border-left-color: var(--teal);
+  }
+  nav a .nav-icon {
+    font-size: 15px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .nav-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 8px 0;
+  }
+  .nav-section-label {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    padding: 12px 24px 4px;
+  }
+
+  .nav-footer {
+    padding: 20px 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .nav-footer-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .nav-footer-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  /* ── LAYOUT ── */
+  .page-wrap { margin-left: var(--nav-width); }
+
+  .hero {
+    padding: 56px 56px 44px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #080c12 0%, #0d1520 30%, #0a1420 60%, #080e18 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: 10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(45,212,191,0.07) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px; height: 1px;
+    background: var(--teal);
+    vertical-align: middle;
+    margin-left: 12px;
+    opacity: 0.4;
+  }
+  .hero-headline {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f0f4f8 25%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 640px;
+  }
+
+  .quick-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .quick-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .quick-link:hover {
+    color: var(--text-primary);
+    border-color: var(--teal);
+    background: var(--teal-dim);
+  }
+
+  /* ── MAIN ── */
+  .main-inner {
+    padding: 40px 56px 80px;
+    max-width: 1260px;
+  }
+
+  .content-section { margin-bottom: 52px; }
+
+  .section-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .section-count {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  /* ── HERO METRICS ── */
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 32px;
+  }
+  @media (max-width: 900px) { .hero-metrics { grid-template-columns: repeat(2, 1fr); } }
+
+  .hero-metric {
+    background: rgba(17,24,32,0.6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    transition: border-color 0.2s;
+  }
+  .hero-metric:hover { border-color: #344050; }
+  .hero-metric-value {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .hero-metric-value.c-teal { color: var(--teal); }
+  .hero-metric-value.c-purple { color: var(--purple); }
+  .hero-metric-value.c-blue { color: var(--blue); }
+  .hero-metric-value.c-green { color: var(--green); }
+  .hero-metric-value.c-amber { color: var(--amber); }
+  .hero-metric-value.c-pink { color: var(--pink); }
+  .hero-metric-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+  .hero-metric-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  /* ── PRIORITY CARDS ── */
+  .priority-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 900px) { .priority-grid { grid-template-columns: 1fr; } }
+
+  .priority-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .priority-card:hover {
+    border-color: #344050;
+    transform: translateY(-1px);
+  }
+  .priority-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .pc-teal::before { background: linear-gradient(90deg, var(--teal), transparent); }
+  .pc-green::before { background: linear-gradient(90deg, var(--green), transparent); }
+  .pc-purple::before { background: linear-gradient(90deg, var(--purple), transparent); }
+  .pc-blue::before { background: linear-gradient(90deg, var(--blue), transparent); }
+  .pc-amber::before { background: linear-gradient(90deg, var(--amber), transparent); }
+
+  .priority-number {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .pn-teal { color: var(--teal); }
+  .pn-green { color: var(--green); }
+  .pn-purple { color: var(--purple); }
+  .pn-blue { color: var(--blue); }
+  .pn-amber { color: var(--amber); }
+
+  .priority-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .priority-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+  .priority-detail {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .priority-detail strong { color: var(--text-secondary); font-weight: 600; }
+
+  /* ── TEAM CARDS ── */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 900px) { .team-grid { grid-template-columns: 1fr; } }
+
+  .team-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+  .team-card:hover { border-color: #344050; }
+
+  .team-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+  .team-role {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .team-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 12px;
+  }
+  .team-details {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .team-details li {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    line-height: 1.45;
+  }
+  .team-details li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  /* ── COMPETITOR TABLE ── */
+  .comp-table-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow-x: auto;
+  }
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .comp-table th {
+    text-align: left;
+    padding: 14px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    background: rgba(17,24,32,0.5);
+    white-space: nowrap;
+  }
+  .comp-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .comp-table tr:last-child td { border-bottom: none; }
+  .comp-table tr:hover td { background: rgba(45,212,191,0.02); }
+
+  .comp-table .comp-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+  .comp-yes { color: var(--green); font-weight: 600; }
+  .comp-no { color: var(--text-muted); }
+  .comp-partial { color: var(--amber); font-weight: 500; }
+  .comp-highlight { color: var(--teal); font-weight: 700; }
+  .comp-row-mep td {
+    background: rgba(45,212,191,0.04) !important;
+    border-bottom-color: rgba(45,212,191,0.15);
+  }
+  .comp-row-mep .comp-name { color: var(--teal); }
+
+  /* ── GRANT CARDS ── */
+  .grant-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 900px) { .grant-grid { grid-template-columns: 1fr; } }
+
+  .grant-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .grant-card:hover { border-color: #344050; }
+
+  .grant-rank {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .grant-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .grant-amount {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .grant-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .grant-deadline {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+  .gd-soon { background: var(--red-dim); color: var(--red); }
+  .gd-upcoming { background: var(--amber-dim); color: var(--amber); }
+  .gd-anytime { background: var(--green-dim); color: var(--green); }
+
+  /* ── ENTITY CARDS GRID ── */
+  .entity-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (min-width: 1100px) { .entity-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .entity-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .entity-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .entity-card:hover {
+    border-color: #344050;
+    background: var(--bg-card-hover);
+    transform: translateY(-1px);
+  }
+  .entity-card:hover::before { opacity: 1; }
+  .ec-teal::before  { background: linear-gradient(90deg, var(--teal), transparent); }
+  .ec-purple::before { background: linear-gradient(90deg, var(--purple), transparent); }
+  .ec-pink::before  { background: linear-gradient(90deg, var(--pink), transparent); }
+  .ec-blue::before  { background: linear-gradient(90deg, var(--blue), transparent); }
+  .ec-orange::before { background: linear-gradient(90deg, var(--orange), transparent); }
+  .ec-green::before  { background: linear-gradient(90deg, var(--green), transparent); }
+
+  .entity-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .entity-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    flex-shrink: 0;
+  }
+  .ei-teal   { background: var(--teal-dim); }
+  .ei-purple { background: var(--purple-dim); }
+  .ei-pink   { background: var(--pink-dim); }
+  .ei-blue   { background: var(--blue-dim); }
+  .ei-orange { background: var(--orange-dim); }
+  .ei-green  { background: var(--green-dim); }
+
+  .entity-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .entity-badge .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .eb-active { background: var(--green-dim); color: var(--green); }
+  .eb-active .dot { background: var(--green); animation: pulse-live 2s ease infinite; }
+  @keyframes pulse-live {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(74,222,128,0); }
+  }
+  .eb-formation { background: var(--purple-dim); color: var(--purple); }
+  .eb-formation .dot { background: var(--purple); }
+  .eb-future { background: rgba(90,106,122,0.15); color: var(--text-secondary); }
+  .eb-future .dot { background: var(--text-muted); }
+
+  .entity-card-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+  .entity-card-role {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+    font-weight: 500;
+  }
+  .entity-facts {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+  }
+  .entity-facts li {
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    line-height: 1.45;
+  }
+  .entity-facts li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .entity-card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--teal);
+    text-decoration: none;
+    margin-top: auto;
+    padding-top: 4px;
+    border-top: 1px solid var(--border-subtle);
+    transition: gap 0.15s;
+  }
+  .entity-card-link:hover { gap: 8px; }
+
+  /* ── DECISIONS ── */
+  .decisions-panel {
+    background: linear-gradient(135deg, rgba(251,191,36,0.06) 0%, rgba(251,191,36,0.02) 100%);
+    border: 1px solid rgba(251,191,36,0.18);
+    border-radius: var(--radius);
+    padding: 28px 28px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .decisions-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--amber), rgba(251,191,36,0.3), transparent);
+  }
+  .decisions-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .decisions-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .decisions-subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .decisions-count {
+    margin-left: auto;
+    background: var(--amber-dim);
+    color: var(--amber);
+    font-size: 13px;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .decision-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .decision-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: rgba(17,24,32,0.5);
+    border: 1px solid rgba(251,191,36,0.1);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    transition: border-color 0.2s;
+  }
+  .decision-item:hover { border-color: rgba(251,191,36,0.25); }
+  .decision-checkbox {
+    width: 18px; height: 18px;
+    border: 2px solid rgba(251,191,36,0.4);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .decision-content { flex: 1; }
+  .decision-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.35;
+  }
+  .decision-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .decision-entity {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+    letter-spacing: 0.03em;
+  }
+  .de-c   { background: var(--blue-dim); color: var(--blue); }
+  .de-501 { background: var(--pink-dim); color: var(--pink); }
+  .de-all { background: rgba(90,106,122,0.15); color: var(--text-secondary); }
+
+  /* ── RESEARCH LIBRARY ── */
+  .synth-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  @media (min-width: 900px) { .synth-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .synth-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .synth-card:hover { border-color: #344050; background: var(--bg-card-hover); }
+
+  .synth-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+  .synth-card-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    flex: 1;
+  }
+  .synth-card-file {
+    font-size: 10px;
+    color: var(--teal);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-top: 4px;
+    opacity: 0.75;
+  }
+
+  /* ── CURRENT STATE CALLOUT ── */
+  .current-state-callout {
+    background: linear-gradient(135deg, rgba(45,212,191,0.08) 0%, rgba(45,212,191,0.02) 100%);
+    border: 1px solid rgba(45,212,191,0.2);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 24px;
+  }
+  .current-state-callout p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .current-state-callout strong {
+    color: var(--teal);
+    font-weight: 700;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.16s; }
+  .reveal-delay-3 { transition-delay: 0.24s; }
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAVIGATION ═══════ -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-name">MedEdPrep</div>
+    <div class="nav-brand-sub">Command Center</div>
+  </div>
+  <div class="nav-links">
+    <a href="hub.html" class="active"><span class="nav-icon">&#9670;</span> Command Center</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">Now</div>
+    <a href="#state-of-play"><span class="nav-icon">&#9672;</span> State of Play</a>
+    <a href="#priorities"><span class="nav-icon">&#9672;</span> Next 90 Days</a>
+    <a href="#team"><span class="nav-icon">&#9672;</span> The Team</a>
+    <a href="#competitors"><span class="nav-icon">&#9672;</span> Competitors</a>
+    <a href="#grants"><span class="nav-icon">&#9672;</span> Grant Pipeline</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">Architecture</div>
+    <a href="#entities"><span class="nav-icon">&#9671;</span> Entity Roadmap</a>
+    <a href="#decisions"><span class="nav-icon">&#9671;</span> Open Decisions</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">Deep Dives</div>
+    <a href="entity-company-a.html"><span class="nav-icon">&#9671;</span> Company A</a>
+    <a href="entity-company-c.html"><span class="nav-icon">&#9671;</span> Company C</a>
+    <a href="entity-nonprofit.html"><span class="nav-icon">&#9671;</span> Foundation</a>
+    <a href="entity-ip-vault.html"><span class="nav-icon">&#9671;</span> IP &amp; Vault</a>
+    <a href="entity-psychometric.html"><span class="nav-icon">&#9671;</span> Psychometric</a>
+    <a href="entity-market.html"><span class="nav-icon">&#9671;</span> Market Landscape</a>
+    <a href="entity-timeline.html"><span class="nav-icon">&#9671;</span> Timeline</a>
+    <hr class="nav-divider">
+    <a href="dashboard.html"><span class="nav-icon">&#9671;</span> Full Dashboard</a>
+    <a href="action-center.html"><span class="nav-icon">&#9671;</span> Action Center</a>
+    <hr class="nav-divider">
+    <div class="nav-section-label">Plans</div>
+    <a href="one-year-plan.html"><span class="nav-icon">&#9672;</span> One-Year Plan</a>
+  </div>
+  <div class="nav-footer">
+    <div class="nav-footer-label">Last updated</div>
+    <div class="nav-footer-date">April 13, 2026</div>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<div class="page-wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">MedEdPrep, LLC &mdash; Georgia</div>
+    <h1 class="hero-headline">One company. Everything under one roof. Ready to scale.</h1>
+    <p class="hero-subtitle">MedEdPrep is a single LLC doing education, test prep, CE, adaptive testing, accreditation compliance, and gamified learning. The multi-entity structure is the future. Sales are the present.</p>
+    <div class="quick-links">
+      <a href="#priorities" class="quick-link">&#9670; Next 90 Days</a>
+      <a href="#competitors" class="quick-link">&#9670; Competitive Landscape</a>
+      <a href="#grants" class="quick-link">&#9670; Grant Pipeline</a>
+      <a href="#entities" class="quick-link">&#9670; Entity Roadmap</a>
+      <a href="#decisions" class="quick-link">&#9670; Open Decisions</a>
+    </div>
+  </div>
+
+  <div class="main-inner">
+
+    <!-- ═══════ STATE OF PLAY ═══════ -->
+    <div class="content-section reveal" id="state-of-play">
+      <div class="section-title-row">
+        <h2 class="section-title">State of Play</h2>
+        <span class="section-count">As of April 13, 2026</span>
+      </div>
+
+      <div class="hero-metrics">
+        <div class="hero-metric">
+          <div class="hero-metric-value c-teal">$200K</div>
+          <div class="hero-metric-label">2025 Revenue</div>
+          <div class="hero-metric-note">Zero sales staff. Word of mouth only.</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value c-green">$3,275</div>
+          <div class="hero-metric-label">Monthly recurring (current)</div>
+          <div class="hero-metric-note">Stripe. Baseline for sales hires to build from.</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value c-purple">$2,500</div>
+          <div class="hero-metric-label">Monthly burn rate</div>
+          <div class="hero-metric-note">Total infrastructure. Cash-flow positive.</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value c-blue">10,600</div>
+          <div class="hero-metric-label">Items in the bank</div>
+          <div class="hero-metric-note">9,303 published. EMT / AEMT / Paramedic.</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value c-amber">1.55M</div>
+          <div class="hero-metric-label">Student responses captured</div>
+          <div class="hero-metric-note">Peak month: 202K (March 2026)</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value c-pink">200+</div>
+          <div class="hero-metric-label">Programs with student signups</div>
+          <div class="hero-metric-note">100+ using instructor-led testing</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ NEXT 90 DAYS ═══════ -->
+    <div class="content-section reveal reveal-delay-1" id="priorities">
+      <div class="section-title-row">
+        <h2 class="section-title">Next 90 Days</h2>
+        <span class="section-count">The three things that matter</span>
+      </div>
+
+      <div class="priority-grid">
+        <div class="priority-card pc-teal">
+          <div class="priority-number pn-teal">Priority 1</div>
+          <div class="priority-title">Sell</div>
+          <div class="priority-desc">Heather starts generating pipeline immediately. Nationwide relationships. 60% commission, 1099. Zero fixed cost risk. Every program she brings in drives recurring student subscription revenue.</div>
+          <div class="priority-detail"><strong>The math:</strong> 10 new programs at ~20 students each = ~$5,200/month additional recurring. 50 programs = ~$26K/month. The $200K from 2025 was with deliberate restraint.</div>
+        </div>
+
+        <div class="priority-card pc-green">
+          <div class="priority-number pn-green">Priority 2</div>
+          <div class="priority-title">Ship CE Content</div>
+          <div class="priority-desc">CAPCE-accredited continuing education courses are in final stages. This unlocks a new revenue stream from working clinicians &mdash; not just students &mdash; and feeds the certification item calibration pipeline.</div>
+          <div class="priority-detail"><strong>Market:</strong> 620K+ certified EMS clinicians. ~14M CE hours/yr. At 0.5% penetration = 5.2M item responses/yr for calibration.</div>
+        </div>
+
+        <div class="priority-card pc-purple">
+          <div class="priority-number pn-purple">Priority 3</div>
+          <div class="priority-title">Launch CoAssist at ACCREDITCON</div>
+          <div class="priority-desc">Full public release at ACCREDITCON, end of May 2026. Free for programs. No competitor exists in this space. Every program that adopts CoAssist is a program sending students to MedEdPrep.</div>
+          <div class="priority-detail"><strong>The vacuum:</strong> 57% of programs cite cost, 50% cite time as pain points. CoAEMSP is building their own tool but it serves the accreditor, not programs.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ THE TEAM ═══════ -->
+    <div class="content-section reveal reveal-delay-2" id="team">
+      <div class="section-title-row">
+        <h2 class="section-title">The Team</h2>
+        <span class="section-count">Building the engine</span>
+      </div>
+
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-name">Jeramey</div>
+          <div class="team-role" style="color: var(--teal);">Founder &mdash; Everything</div>
+          <div class="team-desc">Built all of it. Product, engineering, sales, support, strategy. The constraint has been doing everything alone. That changes now.</div>
+          <ul class="team-details">
+            <li>Deep psychometric understanding &mdash; designed the bifactor model</li>
+            <li>Full-stack ownership of all platforms</li>
+            <li>$2,500/month total infrastructure cost</li>
+          </ul>
+        </div>
+
+        <div class="team-card">
+          <div class="team-name">Heather</div>
+          <div class="team-role" style="color: var(--green);">Sales &mdash; Starting Immediately</div>
+          <div class="team-desc">Nationwide EMS connections at the state level. 1099 contractor, 60% commission. Self-funding from day one. Converting to W2 salary once recurring revenue supports it.</div>
+          <ul class="team-details">
+            <li>No geographic restriction &mdash; works everywhere</li>
+            <li>Existing relationships across the country</li>
+            <li>Directly addresses the #1 growth constraint</li>
+          </ul>
+        </div>
+
+        <div class="team-card">
+          <div class="team-name">Richard Rhodes</div>
+          <div class="team-role" style="color: var(--blue);">Former OEMST Official &mdash; CE, Grants, State Strategy &mdash; Easing In</div>
+          <div class="team-desc">Former Georgia Office of EMS and Trauma (OEMST) official and current ambulance service director. Deep operational knowledge of state EMS regulatory infrastructure, credentialing, and workforce development. Easing in part-time, full-time when revenue supports it.</div>
+          <ul class="team-details">
+            <li>Direct state-level relationships across the EMS ecosystem</li>
+            <li>Experienced grant writer &mdash; leading SBIR/STTR applications</li>
+            <li>CE content development + instructor course design</li>
+            <li>Knows the Georgia state system from the inside</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ COMPETITIVE LANDSCAPE ═══════ -->
+    <div class="content-section reveal" id="competitors">
+      <div class="section-title-row">
+        <h2 class="section-title">Competitive Landscape</h2>
+        <span class="section-count">Nobody has real adaptive testing</span>
+      </div>
+
+      <div class="comp-table-wrap">
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Adaptive / IRT</th>
+              <th>Instructor Testing</th>
+              <th>Student B2C</th>
+              <th>CE</th>
+              <th>Accred. Compliance</th>
+              <th>Key Weakness</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="comp-row-mep">
+              <td class="comp-name">MedEdPrep</td>
+              <td class="comp-highlight">Real IRT/CAT</td>
+              <td class="comp-yes">Yes</td>
+              <td class="comp-yes">Yes</td>
+              <td class="comp-yes">CAPCE held</td>
+              <td class="comp-yes">CoAssist (free)</td>
+              <td>Sales capacity (solving now)</td>
+            </tr>
+            <tr>
+              <td class="comp-name">Platinum / EMSTesting</td>
+              <td class="comp-partial">Claims IRT, uses CTT</td>
+              <td class="comp-yes">Yes</td>
+              <td class="comp-no">No B2C</td>
+              <td class="comp-no">Workshops only</td>
+              <td class="comp-partial">AccredAssist ($475)</td>
+              <td>No student self-purchase. No real IRT. Wix website.</td>
+            </tr>
+            <tr>
+              <td class="comp-name">J&B / Fisdap</td>
+              <td class="comp-no">Explicitly CTT</td>
+              <td class="comp-yes">Yes</td>
+              <td class="comp-yes">Navigate TestPrep</td>
+              <td class="comp-partial">Recert (200+ courses)</td>
+              <td class="comp-no">No</td>
+              <td>Textbook lock-in. Hostile student sentiment. Fragmented products.</td>
+            </tr>
+            <tr>
+              <td class="comp-name">Brady / Pearson</td>
+              <td class="comp-no">None</td>
+              <td class="comp-yes">MyLab Brady</td>
+              <td class="comp-yes">Yes</td>
+              <td class="comp-no">No</td>
+              <td class="comp-no">No</td>
+              <td>4 fragmented products. EMS is 0.2% of Pearson revenue. Not investing.</td>
+            </tr>
+            <tr>
+              <td class="comp-name">Limmer / LC Ready</td>
+              <td class="comp-no">None</td>
+              <td class="comp-partial">Assign/monitor only</td>
+              <td class="comp-yes">Yes</td>
+              <td class="comp-no">No</td>
+              <td class="comp-no">No</td>
+              <td>No true test bank. Classroom companion, not assessment platform.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+        <a href="03-market-landscape/competitor-deep-dive-platinum.md" class="synth-card">
+          <div class="synth-card-title">Platinum Deep Dive</div>
+          <div class="synth-card-desc">Pricing, item bank, adaptive claims, AccredAssist, student experience gaps</div>
+          <div class="synth-card-file">competitor-deep-dive-platinum.md</div>
+        </a>
+        <a href="03-market-landscape/competitor-deep-dive-jb-fisdap.md" class="synth-card">
+          <div class="synth-card-title">J&B / Fisdap Deep Dive</div>
+          <div class="synth-card-desc">Ascend Learning, Navigate vs Fisdap, CTT confirmation, Recert CE</div>
+          <div class="synth-card-file">competitor-deep-dive-jb-fisdap.md</div>
+        </a>
+        <a href="03-market-landscape/competitor-deep-dive-brady-pearson.md" class="synth-card">
+          <div class="synth-card-title">Brady / Pearson Deep Dive</div>
+          <div class="synth-card-desc">MyLab Brady, fragmentation, Pearson strategy, consolidation risk</div>
+          <div class="synth-card-file">competitor-deep-dive-brady-pearson.md</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ═══════ GRANT PIPELINE ═══════ -->
+    <div class="content-section reveal" id="grants">
+      <div class="section-title-row">
+        <h2 class="section-title">Grant Pipeline</h2>
+        <span class="section-count">For-profit eligible &mdash; no 501(c)(3) required</span>
+      </div>
+
+      <div class="grant-grid">
+        <div class="grant-card">
+          <div class="grant-rank" style="color: var(--teal);">#1 Target</div>
+          <div class="grant-name">ED/IES SBIR Phase IB</div>
+          <div class="grant-amount" style="color: var(--teal);">$250K Phase I / $1M Phase II</div>
+          <div class="grant-desc">Built for ed-tech companies doing exactly what MedEdPrep does. Adaptive testing, IRT, gamification, assessment tools. The 1.55M response dataset is a massive advantage.</div>
+          <span class="grant-deadline gd-upcoming">Solicitation expected Summer 2026</span>
+        </div>
+
+        <div class="grant-card">
+          <div class="grant-rank" style="color: var(--green);">#2 Target</div>
+          <div class="grant-name">NSF SBIR Project Pitch</div>
+          <div class="grant-amount" style="color: var(--green);">$275&ndash;305K Phase I</div>
+          <div class="grant-desc">Rolling 1&ndash;2 page pitch, reviewed in 3 weeks. Fastest path to SBIR funding. Pitch MedEdPrep's adaptive assessment technology.</div>
+          <span class="grant-deadline gd-upcoming">Pitches reopen April&ndash;May 2026</span>
+        </div>
+
+        <div class="grant-card">
+          <div class="grant-rank" style="color: var(--blue);">#3 Quick Win</div>
+          <div class="grant-name">Georgia ETPL Listing</div>
+          <div class="grant-amount" style="color: var(--blue);">Revenue stream (not a grant)</div>
+          <div class="grant-desc">Get on Georgia's Eligible Training Provider List. WIOA-funded students can use federal workforce dollars to pay for MedEdPrep. Low effort, high impact.</div>
+          <span class="grant-deadline gd-anytime">Apply anytime</span>
+        </div>
+
+        <div class="grant-card">
+          <div class="grant-rank" style="color: var(--amber);">Time-Sensitive</div>
+          <div class="grant-name">PCORI Methods Track</div>
+          <div class="grant-amount" style="color: var(--amber);">Up to $750K</div>
+          <div class="grant-desc">Digital health competency measurement research. For-profit eligible. MedEdPrep's dataset is exactly what they fund. Tight turnaround.</div>
+          <span class="grant-deadline gd-soon">LOI due April 28, 2026</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 14px;">
+        <a href="grant-opportunities-2026.md" class="synth-card" style="display: inline-flex; max-width: 400px;">
+          <div class="synth-card-title">Full Grant Research Report</div>
+          <div class="synth-card-desc">8 programs analyzed, priority ranking, action plan, registration checklist</div>
+          <div class="synth-card-file">grant-opportunities-2026.md</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ═══════ ENTITY ROADMAP ═══════ -->
+    <div class="content-section reveal" id="entities">
+      <div class="section-title-row">
+        <h2 class="section-title">Entity Roadmap</h2>
+        <span class="section-count">Current state &rarr; future architecture</span>
+      </div>
+
+      <div class="current-state-callout">
+        <p><strong>Today, everything is MedEdPrep, LLC.</strong> One Georgia LLC. All products, IP, platforms, CAPCE accreditation, CoAssist, Pulse, adaptive testing, revenue &mdash; all under one roof. The entities below are the target architecture that will be built over time as the business scales. Entity separation is downstream of revenue growth.</p>
+      </div>
+
+      <div class="entity-grid">
+        <!-- Company A -->
+        <div class="entity-card ec-teal">
+          <div class="entity-card-top">
+            <div class="entity-icon ei-teal">&#127979;</div>
+            <span class="entity-badge eb-active"><span class="dot"></span> This Is Us Today</span>
+          </div>
+          <div>
+            <div class="entity-card-name">Company A &mdash; MedEdPrep Education</div>
+            <div class="entity-card-role">Everything. Georgia LLC.</div>
+          </div>
+          <ul class="entity-facts">
+            <li>All products, IP, platforms, and CAPCE accreditation live here now</li>
+            <li>CoAssist, Pulse, adaptive testing, unit/exit exams, CE &mdash; all under this entity</li>
+            <li>10,600 items, 1.55M responses, 200+ programs</li>
+            <li>GTC-approved vendor for Georgia state-funded programs</li>
+          </ul>
+          <a href="entity-company-a.html" class="entity-card-link">View Details &#8594;</a>
+        </div>
+
+        <!-- Company C -->
+        <div class="entity-card ec-blue">
+          <div class="entity-card-top">
+            <div class="entity-icon ei-blue">&#127891;</div>
+            <span class="entity-badge eb-future"><span class="dot"></span> Future</span>
+          </div>
+          <div>
+            <div class="entity-card-name">Company C &mdash; Certification</div>
+            <div class="entity-card-role">Independent certification agency. Georgia LLC.</div>
+          </div>
+          <ul class="entity-facts">
+            <li>Bifactor dual-validation: pass/fail + diagnostic from same items</li>
+            <li>5-level hierarchy: EMR &rarr; EMT &rarr; AEMT &rarr; Paramedic &rarr; PP</li>
+            <li>Separate question database. NCCA accreditation path (for-profit allowed)</li>
+            <li>CE "recert by exam" calibrates items at industrial scale</li>
+          </ul>
+          <a href="entity-company-c.html" class="entity-card-link">View Details &#8594;</a>
+        </div>
+
+        <!-- Foundation -->
+        <div class="entity-card ec-pink">
+          <div class="entity-card-top">
+            <div class="entity-icon ei-pink">&#9829;</div>
+            <span class="entity-badge eb-formation"><span class="dot"></span> Board Confirmed</span>
+          </div>
+          <div>
+            <div class="entity-card-name">Foundation &mdash; 501(c)(3)</div>
+            <div class="entity-card-role">Independent nonprofit. Not a subsidiary.</div>
+          </div>
+          <ul class="entity-facts">
+            <li>5 board members confirmed, 4 independent (80%)</li>
+            <li>Filing package drafted &mdash; Articles, bylaws, COI policy</li>
+            <li>Purchases software from MedEdPrep at FMV &mdash; arm's length</li>
+            <li>Next step: attorney/accountant meeting</li>
+          </ul>
+          <a href="entity-nonprofit.html" class="entity-card-link">View Details &#8594;</a>
+        </div>
+
+        <!-- IP Vault -->
+        <div class="entity-card ec-purple">
+          <div class="entity-card-top">
+            <div class="entity-icon ei-purple">&#128274;</div>
+            <span class="entity-badge eb-future"><span class="dot"></span> Future</span>
+          </div>
+          <div>
+            <div class="entity-card-name">The Vault &mdash; IP Holding</div>
+            <div class="entity-card-role">Wyoming LLC. Owns all IP.</div>
+          </div>
+          <ul class="entity-facts">
+            <li>Question banks, algorithms, software, cognitive taxonomy, trademarks</li>
+            <li>Licenses IP to operating companies at arm's length</li>
+            <li>Royalties 0&ndash;15% phased by maturity (Section 482 compliant)</li>
+            <li>Trust (Wyoming DAPT) above The Vault as future ownership layer</li>
+          </ul>
+          <a href="entity-ip-vault.html" class="entity-card-link">View Details &#8594;</a>
+        </div>
+
+        <!-- Company E -->
+        <div class="entity-card ec-green">
+          <div class="entity-card-top">
+            <div class="entity-icon ei-green">&#128202;</div>
+            <span class="entity-badge eb-future"><span class="dot"></span> Future</span>
+          </div>
+          <div>
+            <div class="entity-card-name">Company E &mdash; Data Analytics</div>
+            <div class="entity-card-role">Aggregation, reporting, certification audit.</div>
+          </div>
+          <ul class="entity-facts">
+            <li>Only entity seeing data from both Education and Certification</li>
+            <li>State/regional reports, workforce pipeline, cross-level tracking</li>
+            <li>ATI Nursing ($750M) is the model for EMS data</li>
+            <li>Revenue gated by Company A market penetration</li>
+          </ul>
+          <a href="entity-psychometric.html" class="entity-card-link">View Details &#8594;</a>
+        </div>
+
+        <!-- Company B -->
+        <div class="entity-card ec-orange">
+          <div class="entity-card-top">
+            <div class="entity-icon ei-orange">&#128736;</div>
+            <span class="entity-badge eb-future"><span class="dot"></span> Future</span>
+          </div>
+          <div>
+            <div class="entity-card-name">Company B &mdash; Accreditation</div>
+            <div class="entity-card-role">CoAssist platform. Georgia LLC.</div>
+          </div>
+          <ul class="entity-facts">
+            <li>CoAssist is built and operational (inside Company A today)</li>
+            <li>Free for programs permanently &mdash; loss-leader</li>
+            <li>No integrated compliance tool exists from any competitor</li>
+            <li>ACCREDITCON launch end of May 2026</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ OPEN DECISIONS ═══════ -->
+    <div class="content-section reveal" id="decisions">
+      <div class="section-title-row">
+        <h2 class="section-title">Open Founder Decisions</h2>
+        <span class="section-count">7 items &mdash; research complete, need judgment</span>
+      </div>
+      <div class="decisions-panel">
+        <div class="decisions-header">
+          <span style="font-size:22px;">&#9888;&#65039;</span>
+          <div>
+            <div class="decisions-title">Strategic decisions awaiting input</div>
+            <div class="decisions-subtitle">These require founder judgment, not more research</div>
+          </div>
+          <span class="decisions-count">7 open</span>
+        </div>
+        <div class="decision-list">
+          <div class="decision-item">
+            <div class="decision-checkbox"></div>
+            <div class="decision-content">
+              <div class="decision-label">501(c)(3) name</div>
+              <div class="decision-note">Must not imply MedEdPrep ownership. Mission-focused name recommended (e.g., "Foundation for Out-of-Hospital Care").</div>
+            </div>
+            <span class="decision-entity de-501">501(c)(3)</span>
+          </div>
+          <div class="decision-item">
+            <div class="decision-checkbox"></div>
+            <div class="decision-content">
+              <div class="decision-label">Company C brand name</div>
+              <div class="decision-note">Certification body needs separate identity from MedEdPrep for NCCA credibility and market positioning.</div>
+            </div>
+            <span class="decision-entity de-c">Co. C</span>
+          </div>
+          <div class="decision-item">
+            <div class="decision-checkbox"></div>
+            <div class="decision-content">
+              <div class="decision-label">Exam pricing per level</div>
+              <div class="decision-note">Competitive with NREMT, or premium? Sets revenue projections for Company C.</div>
+            </div>
+            <span class="decision-entity de-c">Co. C</span>
+          </div>
+          <div class="decision-item">
+            <div class="decision-checkbox"></div>
+            <div class="decision-content">
+              <div class="decision-label">Dual-certification positioning</div>
+              <div class="decision-note">NREMT + Company C together, or Company C as replacement? Affects go-to-market and regulatory strategy.</div>
+            </div>
+            <span class="decision-entity de-c">Co. C</span>
+          </div>
+          <div class="decision-item">
+            <div class="decision-checkbox"></div>
+            <div class="decision-content">
+              <div class="decision-label">PP JTA timing</div>
+              <div class="decision-note">Start Paramedic Practitioner Job Task Analysis now (parallel) or wait until lower levels established?</div>
+            </div>
+            <span class="decision-entity de-c">Co. C</span>
+          </div>
+          <div class="decision-item">
+            <div class="decision-checkbox"></div>
+            <div class="decision-content">
+              <div class="decision-label">I-CAPP engagement</div>
+              <div class="decision-note">Contact I-CAPP (Suwanee, GA) about PP credential partnership? Natural ally.</div>
+            </div>
+            <span class="decision-entity de-all">Strategy</span>
+          </div>
+          <div class="decision-item">
+            <div class="decision-checkbox"></div>
+            <div class="decision-content">
+              <div class="decision-label">Kentucky KBEMS outreach</div>
+              <div class="decision-note">Contact Kentucky Board of EMS about PP regulatory pathway? Only state with PP statutory framework.</div>
+            </div>
+            <span class="decision-entity de-c">Co. C</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ RESEARCH LIBRARY ═══════ -->
+    <div class="content-section reveal" id="library">
+      <div class="section-title-row">
+        <h2 class="section-title">Research Library</h2>
+        <span class="section-count">50+ documents across 6 categories</span>
+      </div>
+
+      <div class="synth-grid">
+        <a href="00-overview/STATE-OF-PLAY.md" class="synth-card">
+          <div class="synth-card-title">State of Play</div>
+          <div class="synth-card-desc">Operational snapshot: revenue, burn, team, footprint, blockers, near-term priorities</div>
+          <div class="synth-card-file">STATE-OF-PLAY.md</div>
+        </a>
+        <a href="00-overview/PROJECT-BRIEF.md" class="synth-card">
+          <div class="synth-card-title">Project Brief</div>
+          <div class="synth-card-desc">Master reference: entity map, current state, future architecture, research index</div>
+          <div class="synth-card-file">PROJECT-BRIEF.md</div>
+        </a>
+        <a href="grant-opportunities-2026.md" class="synth-card">
+          <div class="synth-card-title">Grant Opportunities</div>
+          <div class="synth-card-desc">SBIR/STTR, PCORI, Georgia ETPL &mdash; for-profit eligible programs</div>
+          <div class="synth-card-file">grant-opportunities-2026.md</div>
+        </a>
+        <a href="03-market-landscape/competitor-matrix.md" class="synth-card">
+          <div class="synth-card-title">Competitor Matrix</div>
+          <div class="synth-card-desc">Tiered analysis with comparison table across all capabilities</div>
+          <div class="synth-card-file">competitor-matrix.md</div>
+        </a>
+        <a href="competitive-intel-refresh.md" class="synth-card">
+          <div class="synth-card-title">Competitive Intel Refresh</div>
+          <div class="synth-card-desc">NREMT, IBSC, Fisdap, industry-level competitive positioning</div>
+          <div class="synth-card-file">competitive-intel-refresh.md</div>
+        </a>
+        <a href="financial-model-research.md" class="synth-card">
+          <div class="synth-card-title">Financial Model</div>
+          <div class="synth-card-desc">Revenue projections per entity, Year 1&ndash;8, combined trajectory</div>
+          <div class="synth-card-file">financial-model-research.md</div>
+        </a>
+        <a href="timeline-research.md" class="synth-card">
+          <div class="synth-card-title">Master Timeline</div>
+          <div class="synth-card-desc">All 6 entity workstreams, durations and dependencies</div>
+          <div class="synth-card-file">timeline-research.md</div>
+        </a>
+        <a href="consistency-audit.md" class="synth-card">
+          <div class="synth-card-title">Consistency Audit</div>
+          <div class="synth-card-desc">Cross-corpus audit &mdash; critical issues resolved April 13</div>
+          <div class="synth-card-file">consistency-audit.md</div>
+        </a>
+        <a href="founder-decisions-research.md" class="synth-card">
+          <div class="synth-card-title">Founder Decision Briefs</div>
+          <div class="synth-card-desc">Detailed options, pros/cons, and recommendations for each open decision</div>
+          <div class="synth-card-file">founder-decisions-research.md</div>
+        </a>
+      </div>
+    </div>
+
+  </div><!-- main-inner -->
+</div><!-- page-wrap -->
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Active nav on scroll
+  const sections = document.querySelectorAll('.content-section[id]');
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 200) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
