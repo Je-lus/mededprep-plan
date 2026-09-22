@@ -38,7 +38,7 @@
   .salutation { margin: 0 0 14px 0; }
   .para { margin: 0 0 10px 0; text-align: justify; text-indent: 0.3in; }
   .terms { margin: 2px 0 12px 0; padding: 0; list-style: none; counter-reset: clause; }
-  .terms > li { position: relative; margin: 0 0 9px 0; padding-left: 30px; text-align: justify; counter-increment: clause; }
+  .terms > li { position: relative; margin: 0 0 9px 0; padding-left: 30px; text-align: justify; counter-increment: clause; break-inside: avoid; page-break-inside: avoid; }
   .terms > li::before { content: counter(clause) "."; position: absolute; left: 0; top: 0; width: 22px; text-align: right; font-weight: 700; color: var(--gold-deep); }
   .terms .lead { font-weight: 700; }
   .terms .subclause { display: block; margin-top: 8px; text-align: justify; }
@@ -74,58 +74,64 @@
 
   <main class="body">
 
-    <p class="date"><span class="ph">[Date]</span></p>
+    <p class="date">September 21, 2026</p>
 
     <div class="addressee">
       <span class="nm ln">Gene Hoover</span>
-      <span class="ln">Gene@mededprep.com</span>
+      <span class="ln">Delivered by hand</span>
     </div>
 
-    <p class="subject">RE:&nbsp;&nbsp;Offer of Employment, Program Director &amp; Educator</p>
+    <p class="subject">RE:&nbsp;&nbsp;Offer of Employment, Director of Education</p>
 
     <p class="salutation">Dear Gene,</p>
 
-    <p class="para">It is my pleasure to offer you the position of Program Director &amp; Educator with
-    MedEdPrep, LLC. You have shaped this program from its first outline, and there is no one better suited
+    <p class="para">It is my pleasure to offer you the position of Director of Education with
+    MedEdPrep, LLC. You have shaped our education from its first outline, and there is no one better suited
     to lead its delivery. This letter sets out the terms of that offer; the enclosed position description
     details the role.</p>
 
     <ol class="terms">
 
-      <li><span class="lead">Position.</span> You will serve as Program Director &amp; Educator. You will be
-      primarily responsible for the delivery of MedEdPrep education, including didactic and skills-laboratory
-      instruction, course content and examination development, and student progression, and for program
-      administration, including Georgia OEMS&amp;T compliance, faculty coordination, and clinical
-      partnerships. You will also serve as Lead Critical Care Instructor, a dual role confirmed acceptable
-      with OEMS&amp;T. You will report to Jeramey Ricks, Chief Executive Officer.</li>
+      <li><span class="lead">Position.</span> You will serve as Director of Education. You will be
+      primarily responsible for the delivery of MedEdPrep education across the company's programs, including
+      didactic and skills-laboratory instruction, course content and examination development, and student
+      progression, and for program administration, including regulatory compliance for the programs under
+      your direction, faculty coordination, and clinical partnerships. You will hold the Program Director
+      designation for MedEdPrep's state-designated
+      programs. You will also perform such other duties in support of the company's educational mission as
+      the company may reasonably assign from time to time. You will report to Jeramey Ricks, Chief Executive
+      Officer.</li>
 
       <li><span class="lead">Outreach Duties.</span> From time to time, and when coordinated with you in
       advance, you may be asked to travel to partner EMS agencies and facilities to deliver on-site training,
       continuing education, or program presentations on MedEdPrep's behalf. Outreach assignments will be
       scheduled with reasonable notice and with regard to your primary teaching calendar.</li>
 
-      <li><span class="lead">Employment Status.</span> This is a <span class="ph">[full-time / part-time]</span>,
+      <li><span class="lead">Employment Status.</span> This is a part-time, hourly,
       W-2 position. Your employment with MedEdPrep is at-will, which means that either you or MedEdPrep may
       end the employment relationship at any time, with or without cause and with or without notice, although
       we will each endeavor to provide reasonable notice. Nothing in this letter creates a contract of
       employment for any fixed period.</li>
 
-      <li><span class="lead">Start Date.</span> Your employment in this position will begin on
-      <span class="ph">[start date]</span>.</li>
+      <li><span class="lead">Start Date.</span> Your employment in this position will begin on a mutually
+      agreed start date, confirmed in writing.</li>
 
-      <li><span class="lead">Compensation.</span> <span class="ph">[Salary of $X per year, paid through
-      MedEdPrep's regular payroll / $X per hour for hours worked / per-course structure]</span>, less
-      applicable tax withholdings. <span class="ph">[Exempt / non-exempt classification and any
-      overtime language to match.]</span></li>
+      <li><span class="lead">Compensation.</span> You will be paid $40.00 per hour for all hours worked,
+      through MedEdPrep's regular payroll, less applicable tax withholdings. This position is classified as
+      non-exempt; you will be paid overtime at one and one-half times your regular rate for hours worked over
+      forty in a workweek. Your hours will be flexible and scheduled by mutual agreement. You will record
+      all hours worked&mdash;including instruction, preparation, student and faculty communications, and
+      administrative work&mdash;through MedEdPrep's timekeeping system.</li>
 
-      <li><span class="lead">Travel &amp; Expenses.</span> Pre-approved travel for outreach assignments and
-      program business will be reimbursed at the then-current IRS standard mileage rate for use of your
-      personal vehicle, together with reasonable, pre-approved out-of-pocket expenses, upon submission of
-      records through MedEdPrep's internal portal.</li>
+      <li><span class="lead">Travel &amp; Expenses.</span> Travel to outreach and partner sites is part of
+      the position. When the one-way distance to an assigned site exceeds fifty miles, MedEdPrep will
+      reimburse one-way mileage at the then-current IRS standard mileage rate for use of your personal
+      vehicle. Reasonable, pre-approved out-of-pocket expenses will also be reimbursed. Mileage and expense
+      records are submitted through MedEdPrep's internal portal.</li>
 
       <li><span class="lead">Location.</span> Your primary work location is MedEdPrep's Carrollton, Georgia
       campus, together with clinical-affiliate and partner-agency sites as duties require. Administrative
-      work may be performed remotely by arrangement.</li>
+      work may be performed remotely where applicable.</li>
 
       <li><span class="lead">Equipment.</span> Where specialized tools, software, or licenses are needed to
       perform the work, MedEdPrep will provide them or reimburse reasonable, pre-approved costs. Any device
@@ -140,18 +146,24 @@
       proprietary materials, business information, and student records and education data strictly
       confidential; to use them solely for the purposes of your employment; and to handle student records in
       accordance with applicable law and program policy.
-      <span class="subclause">As a condition of employment, you will execute MedEdPrep's Confidentiality and
-      Non-Disclosure Agreement (the &ldquo;NDA&rdquo;). The NDA, including its survival provisions, governs
+      <span class="subclause">A copy of MedEdPrep's Confidentiality and Non-Disclosure Agreement (the
+      &ldquo;NDA&rdquo;) is enclosed with this letter; your execution of it is a condition of employment.
+      The NDA, including its survival provisions, governs
       alongside this letter; in the event of any conflict regarding confidentiality, the NDA controls. Upon
-      conclusion of your employment, or earlier upon MedEdPrep's request, you will return or permanently
-      destroy all MedEdPrep data, materials, and copies in your possession or control.</span></li>
+      conclusion of your employment, or earlier upon MedEdPrep's request, you will return all MedEdPrep
+      data and materials, and remove any copies from applicable devices and accounts in your possession or
+      control.</span></li>
 
       <li><span class="lead">Work Product &amp; Intellectual Property.</span> All curricula, course materials,
       scenarios, examination items, recordings, and other deliverables you create within the scope of your
       employment are works made for hire and the property of MedEdPrep, LLC. To the extent any of it does not
       qualify as a work made for hire, you hereby assign all right, title, and interest in it to MedEdPrep,
-      LLC, and agree to sign any documents reasonably necessary to perfect that assignment. Nothing in this
-      engagement restricts your use of the general skills, methods, and knowledge you develop.</li>
+      LLC, and agree to sign any documents reasonably necessary to perfect that assignment. Materials you
+      created before your employment with MedEdPrep, or that you create wholly outside the scope of it,
+      remain your property; if you incorporate any such material into a MedEdPrep deliverable, you grant
+      MedEdPrep a non-exclusive, royalty-free, perpetual license to use, adapt, and deliver that material as
+      part of its educational programs. Nothing in this engagement restricts your use of the general skills,
+      methods, and knowledge you develop.</li>
 
       <li><span class="lead">Governing Law.</span> This offer and your employment are governed by the laws of
       the State of Georgia, without regard to its conflict-of-laws principles.</li>
@@ -161,7 +173,7 @@
     <p class="para">Gene, this program exists because of the standard you hold it to. I am looking forward to
     building it with you for a long time.</p>
 
-    <p class="para">To accept, please sign below and return a copy at your convenience.</p>
+    <p class="para">To accept, please sign and date below and return this letter to me.</p>
 
     <div class="sign-off">
       <p class="closing sig-line">Warm regards,</p>
